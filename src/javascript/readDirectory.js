@@ -2,18 +2,23 @@
 //  How to read a directory and get information on what files 
 //   exist inside it (and extract helpful information from each file)
 var fs = require('fs');
+const {  ipcMain } = require('electron');  
 
 
 // Call the function with a string representing the path of the directory in question
 // For safe usage, call with the full path. 
-async function readDirectory(path, emitter) {
+//      @param emitter: the ipcMain of the main window (from main.js)
+//      @param evetType: the name of the event to send through the emitter
+async function readDirectory(path, emitter, eventType) {
     let result = [];
     // let items = undefined;
 
     // Look at this website for more explanation (bottom of the page): 
     //      https://code-maven.com/list-content-of-directory-with-nodejs
     // Here, 'items' is a string array holding the names of the files (of the given directory)
-    let items = await readdir(path);
+    let items = await readdir(path).catch(err => {
+        console.log(err);
+    });;
 
     // For each file, call the function fs.stat() to get more information about it
     for (var i = 0; i < items.length; i++) {
@@ -36,8 +41,9 @@ async function readDirectory(path, emitter) {
     console.log("Successfully read the directory: " + path)
     // console.log(result);
 
-    // Since you cannot return, we send the data back through an emit.
-    emitter.emit('readDirectory', result);
+    // Since you cannot return, we send the data back through a send function.
+    emitter.send(eventType, result);
+    // callBack(result);
 }
 
 // Makes a promise from fs.readdir() function call
@@ -90,13 +96,10 @@ function getFileData(file, stats) {
     obj.year = obj.date.getFullYear();
 
     // Will display time in HH:MM:SS format
-    obj.formattedTime = () => {
-        return (this.hours + ':' + this.minutes.substr(-2) + ':' + this.seconds.substr(-2));
-    }
+    obj.formattedTime = obj.hours + ':' + obj.minutes.substr(-2) + ':' + obj.seconds.substr(-2);
+
     // Will display date in MM/DD/YYYY
-    obj.formattedDate = () => {
-        return (this.month + '/' + this.day + '/' + this.year);
-    }
+    obj.formattedDate = obj.month + '/' + obj.day + '/' + obj.year;
 
     // Return the object so it can be resolved by the calling promise
     return obj;

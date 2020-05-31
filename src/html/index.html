@@ -23,6 +23,7 @@
         $("#main_container").load("mainPanel.html");
         $("#player_container").load("playerControls.html");
       });
+
       
     </script>
     <!-- End of script to load files -->
@@ -35,11 +36,14 @@
     <!-- NOTE: the file paths should be in relation to the 'main.js' file -->
     <div class="row">
       <div id="nav_container"    class="col s3 full_height"></div>
-      <div id="main_container"   class="col s9"></div>
+      <div id="main_container"   class="col s9">
+        <!-- <script src="../javascript/mainPanel.js"></script> -->
+      </div>
 
       <div class="row">
         <div class="col s3"></div>
-        <div id="player_container" class="col s9"></div>
+        <div id="player_container" class="col s9">
+        </div>
       </div>
       
 
@@ -49,5 +53,5 @@
     
   </body>
   
-    
+    <script src="../javascript/index.js"></script>
 </html>

@@ -45,28 +45,9 @@ app.on('activate', () => {
     }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
 
-
-// TODO: Change  fs.readdir into a promise too (readDirectory() currently returns the wrong thing)
-// let em = new events.EventEmitter();
-// em.on('readDirectory', (data) => {
-    
-
-// });
-// readDirectory(__dirname, em);
-
-// Catch item:add 
-// ipcMain.on('item:add', function (event, item) {
-//     console.log(item, " was added");
-//     mainWindow.webContents.send('item:add', item);
-//     addWindow.close();
-
-//     console.log(event);
-// });
-
-ipcMain.on('test', function (event) {
-    win.webContents.send('tableFile:addItems', 'this is the sent thingy');
-    console.log(event);
+// This allows for the script to wait until the webpage is loaded 
+ipcMain.on("loadDone", function(e, data) {
+    win.webContents.send('alert');
+    readDirectory(__dirname, win.webContents, 'tableFile:appendItems');
 });
