@@ -1,11 +1,14 @@
-const { app, BrowserWindow } = require('electron');         // For the electron app
+const { app, BrowserWindow, ipcMain } = require('electron');         // For the electron app
 const events = require('events');                           // To use alongside readDirectory() (required in the next line)
 const { readDirectory } = require('./readDirectory.js');    // For the custom external function
+
+let win; 
+
 
 
 function createWindow() {
     // Create the browser window.
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 1200,
         height: 800,
         webPreferences: {
@@ -49,12 +52,21 @@ app.on('activate', () => {
 // TODO: Change  fs.readdir into a promise too (readDirectory() currently returns the wrong thing)
 // let em = new events.EventEmitter();
 // em.on('readDirectory', (data) => {
-//     // console.dir(data);
-//     console.log('event recieved... setting table');
-//     let tbody = document.getElementById("fileTable");
-
-//     tbody.innerHTML("<tr>< td > Alvin</td > <td>Eclair</td><td>$0.87</td><td>$0.87</td></tr >");
-
+    
 
 // });
 // readDirectory(__dirname, em);
+
+// Catch item:add 
+// ipcMain.on('item:add', function (event, item) {
+//     console.log(item, " was added");
+//     mainWindow.webContents.send('item:add', item);
+//     addWindow.close();
+
+//     console.log(event);
+// });
+
+ipcMain.on('test', function (event) {
+    win.webContents.send('tableFile:addItems', 'this is the sent thingy');
+    console.log(event);
+});
