@@ -1,12 +1,11 @@
 // Importing electron
-const { app, BrowserWindow, ipcMain, Menu, dialog} = require('electron');         // For the electron app
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');         // For the electron app
 
 // Importing custom scripts
-const { readDirectory } = require('./readDirectory.js');    // For the custom external function
 const { getMenuTemplate } = require('./MenuTemplate.js');
+
+
 let win; 
-
-
 
 function createWindow() {
     // Create the browser window.
@@ -56,7 +55,6 @@ app.on('activate', () => {
 
 // This allows for the script to wait until the webpage is loaded 
 ipcMain.on("loadDone", function(e, data) {
-    win.webContents.send('alert');
-    readDirectory(__dirname, win.webContents, 'tableFile:appendItems');
+    console.log("Done loading everything");
 });
 

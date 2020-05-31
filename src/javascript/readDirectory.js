@@ -7,41 +7,48 @@ const {  ipcMain } = require('electron');
 
 // Call the function with a string representing the path of the directory in question
 // For safe usage, call with the full path. 
+//      @param path: an array of all the paths that need to read
 //      @param emitter: the ipcMain of the main window (from main.js)
 //      @param evetType: the name of the event to send through the emitter
 //      @return result: an array with informatino of all files in a directory
 //                      the first object in result is an object that contains the path of the directory
-async function readDirectory(path, emitter, eventType) {
-    let result = [{path:path}];
-    // let items = undefined;
+async function readDirectory(paths, emitter, eventType) {
+    let result = [{ path: paths }];
+    
+    // For each path, find al files inside each and add them to "result"
+    let currPath = "";
+    for (let p = 0; p < paths.length; p++) {
+        currPath = paths[p];
 
-    // Look at this website for more explanation (bottom of the page): 
-    //      https://code-maven.com/list-content-of-directory-with-nodejs
-    // Here, 'items' is a string array holding the names of the files (of the given directory)
-    let items = await readdir(path).catch(err => {
-        console.log(err);
-    });;
-
-    // For each file, call the function fs.stat() to get more information about it
-    for (var i = 0; i < items.length; i++) {
-        let file = path + '/' + items[i];
-
-        // After the file path was found, we query for more information and display it
-        // The query happens through the Promise made by the local stat() function
-        // The resolved value is simply the object constructed with useful information
-        // The "await" is placed there to make sure the "result" array contains all needed information 
-        //   before the for-loop continues to the next iteration.
-        await stat(file, items[i]).then(data => {
-            result.push(data);
-        }).catch(err => {
+        // Look at this website for more explanation (bottom of the page): 
+        //      https://code-maven.com/list-content-of-directory-with-nodejs
+        // Here, 'items' is a string array holding the names of the files (of the given directory)
+        let items = await readdir(currPath).catch(err => {
             console.log(err);
-        });
-        // console.log("result is now length: " + result.length);
-    }
+        });;
 
-    // Since you cannot return, we send the data back through a send function.
-    emitter.send(eventType, result);
-    // callBack(result);
+
+        // For each file, call the function fs.stat() to get more information about it
+        for (var i = 0; i < items.length; i++) {
+            let file = currPath + '/' + items[i];
+
+            // After the file path was found, we query for more information and display it
+            // The query happens through the Promise made by the local stat() function
+            // The resolved value is simply the object constructed with useful information
+            // The "await" is placed there to make sure the "result" array contains all needed information 
+            //   before the for-loop continues to the next iteration.
+            await stat(file, items[i]).then(data => {
+                result.push(data);
+            }).catch(err => {
+                console.log(err);
+            });
+            // console.log("result is now length: " + result.length);
+        }
+        // console.log(result);
+        // Since you cannot return, we send the data back through a send function.
+        emitter.send(eventType, result);
+        // callBack(result);
+    }
 }
 
 // Makes a promise from fs.readdir() function call

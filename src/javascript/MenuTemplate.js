@@ -1,6 +1,6 @@
 
 
-
+const {chooseFolder} = require('./PromptFiles');
 
 
 
@@ -17,7 +17,7 @@ function getMenuTemplate(app, win) {
                     click() {
                         // Call function
                         console.log("Need to open a new folder");
-                        win.webContents.send("tableFile:clearAndLoadItems");
+                        chooseFolder(win, "tableFile:clearAndLoadItems");                        
                     }
                 },
                 {
