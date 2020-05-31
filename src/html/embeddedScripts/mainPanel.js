@@ -11,7 +11,7 @@ function createRow(cols) {
     for (let i = 0; i < cols.length; i ++) {
         // Create the elements
         cell = document.createElement("td");
-        txt = document.createTextNode("TEXTTTTTT");
+        txt = document.createTextNode(cols[i]);
 
         // Append the text to the cell, and the cell to the row
         cell.appendChild(txt);
@@ -22,24 +22,6 @@ function createRow(cols) {
     
 }
 
-function changeTable() {
-
-    let t = tableBody;
-    if (tableBody !== null) {
-
-        console.log(tableBody);
-
-        var row = document.createElement("tr");
-        var cell = document.createElement("td");
-        var txt = document.createTextNode("TEXTTTTTT");
-        cell.appendChild(txt);
-        row.appendChild(cell);
-        tableBody.appendChild(row);
-        alert('Changed table');
-    }
-    else
-        alert(false);
-}
 
 // TODO: make diff types of events.
 //      one to append to table from file stats obj
@@ -48,9 +30,21 @@ function changeTable() {
 
 function appendTable(event, data) {
     console.log('inside of ipcRenderer tableFile:appendItems');
-    
+    console.log("Successfully read the directory: " + data[0].path)
+    console.dir(data);
     // Logic to append to table
     if (tableBody) {
+        
+        // A loop to go through all discovered files:
+        // (i starts at 1 since data[0] is not a file)
+        let tempRow;
+        let tempCols;
+        for (let i = 1; i < data.length; i ++) {
+            tempCols = [data[i].name, data[i].formattedDate, data[i].name, data[i].size];
+            tempRow = createRow(tempCols);
+            tableBody.appendChild(tempRow);
+        }
+        
 
     } else {
         alert("Could not get tableBody in mainPanel.js");
@@ -60,7 +54,11 @@ function appendTable(event, data) {
 
 function clearTable(event, data) {
     console.log('inside of ipcRenderer tableFile:clearItems');
-    
+    if (tableBody) {
+        tableBody.innerHTML = "";
+    } else {
+        alert("Could not get tableBody in mainPanel.js");
+    }
 }
 
 function clearAndLoadTable(event, data) {
@@ -68,9 +66,14 @@ function clearAndLoadTable(event, data) {
     
 }
 
+const clearButton = document.getElementById("submit:clearTable");
+clearButton.addEventListener("click", clearTable);
+
 // Here, we want to catch the data that was sent to main.js after each new item is added
+// Setting up all event handlers:
 ipcRenderer.on("tableFile:appendItems", appendTable);
 ipcRenderer.on("tableFile:clearItems", clearTable);
 ipcRenderer.on("tableFile:clearAndLoadItems", clearAndLoadTable);
 
+// Send signal that processing can start:
 ipcRenderer.send('loadDone', "Done setting up everything");

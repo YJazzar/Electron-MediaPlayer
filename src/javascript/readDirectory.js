@@ -9,8 +9,10 @@ const {  ipcMain } = require('electron');
 // For safe usage, call with the full path. 
 //      @param emitter: the ipcMain of the main window (from main.js)
 //      @param evetType: the name of the event to send through the emitter
+//      @return result: an array with informatino of all files in a directory
+//                      the first object in result is an object that contains the path of the directory
 async function readDirectory(path, emitter, eventType) {
-    let result = [];
+    let result = [{path:path}];
     // let items = undefined;
 
     // Look at this website for more explanation (bottom of the page): 
@@ -29,17 +31,13 @@ async function readDirectory(path, emitter, eventType) {
         // The resolved value is simply the object constructed with useful information
         // The "await" is placed there to make sure the "result" array contains all needed information 
         //   before the for-loop continues to the next iteration.
-        await stat(file).then(data => {
+        await stat(file, items[i]).then(data => {
             result.push(data);
         }).catch(err => {
             console.log(err);
         });
-        console.log("result is now length: " + result.length);
+        // console.log("result is now length: " + result.length);
     }
-
-
-    console.log("Successfully read the directory: " + path)
-    // console.log(result);
 
     // Since you cannot return, we send the data back through a send function.
     emitter.send(eventType, result);
@@ -61,25 +59,31 @@ function readdir(path) {
 }
 
 // Makes a promise from the fs.stat() function call
-async function stat(file) {
+async function stat(filePath, fileName) {
     // Return a promise that runs the system call
     return new Promise((resolve, reject) => {
-        fs.stat(file, (err, stat) => {
+        fs.stat(filePath, (err, stat) => {
             if (err) {
                 reject(err);
             }
 
             // Return a resolve value with all of the information extracted
-            resolve(getFileData(file, stat));
+            resolve(getFileData(filePath, fileName, stat));
         });
     });
 }
 
 // Extracts usefule information from the "stats" object
 // More info on the fs.stats object can be found at: https://nodejs.org/api/fs.html#fs_class_fs_stats 
-function getFileData(file, stats) {
+function getFileData(filePath, fileName, stats) {
     let obj = {};
-    obj.path = file;
+
+    // Get basic info:
+    obj.path = filePath;
+    obj.name = fileName;
+    obj.isDirectory = stats.isDirectory();
+    obj.isFile = stats.isFile();
+    obj.size = convertBytes(stats.size);
 
     // The next section will convert time from UNIX EPOCH (which is returned by stats.mtimeMs) into something readable
     // The Date() object (for future reference if needed)
@@ -112,7 +116,7 @@ const convertBytes = function (bytes) {
     const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
 
     if (bytes == 0) {
-        return "n/a"
+        return "0 Bytes"
     }
 
     const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
