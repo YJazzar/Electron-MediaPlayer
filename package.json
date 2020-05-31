@@ -1,0 +1,17 @@
+{
+    "name": "player",
+    "version": "1.0.0",
+    "description": "A simple media player",
+    "main": "./src/javascript/main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "author": "Yousuf Jazzar",
+    "license": "MIT ",
+    "devDependencies": {
+        "electron": "^9.0.0"
+    },
+    "dependencies": {
+        "jquery": "^3.5.1"
+    }
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Hello World!</title>
+
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
+    <!-- Add the materialize style sheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <!-- Add custom style sheets -->
+    <link rel="stylesheet" href="../css/test.css">
+    
+
+    <!-- Here, we can load all of the files needed -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.0.js"></script>  -->
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script>
+
+      $(function () {
+        $("#nav_container").load("navigation.html");
+        $("#main_container").load("mainPanel.html");
+        $("#player_container").load("playerControls.html");
+      });
+      
+    </script>
+    <!-- End of script to load files -->
+  </head>
+
+  <body>
+
+ 
+    <!-- This tag is required to show the place and the file name of where the navigation HTML code is stored -->
+    <!-- NOTE: the file paths should be in relation to the 'main.js' file -->
+    <div class="row">
+      <div id="nav_container"    class="col s3 full_height"  file="./src/html/navigation.html"></div>
+      <div id="main_container"   class="col s9"  file="./src/html/mainPanel.html" script="D:\Projects\Node\Player\src\javascript\mainPanel.js"></div>
+
+      <div class="row">
+        <div class="col s3"></div>
+        <div id="player_container" class="col s9"  file="./src/html/playerControls.html"></div>
+      </div>
+      
+
+
+    </div>
+      
+    <!-- This script file link was tested to work -->
+    <!-- <script>
+      alert('adding files')
+      // Read in the external html files and include them into this html code
+      let { includeHTML } = require("../javascript/includeExternalHTML.js");
+
+      // Create an array of all script run files that need to be executed after being loaded in
+      let runArr = [];
+
+      // Add all html page contents to index.html and add the run() from each script file into the runArr();
+      // includeHTML("nav_container");
+      // includeHTML("main_container");
+      // includeHTML("player_container");
+      
+      alert('finished adding files')
+
+    </script> -->
+    <p>test</p>
+  </body>
+  
+    <!-- <script src="../javascript/index.js"></script> -->
+</html>
