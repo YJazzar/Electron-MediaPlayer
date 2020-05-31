@@ -1,7 +1,9 @@
-const { app, BrowserWindow, ipcMain, Menu} = require('electron');         // For the electron app
-const events = require('events');                           // To use alongside readDirectory() (required in the next line)
-const { readDirectory } = require('./readDirectory.js');    // For the custom external function
+// Importing electron
+const { app, BrowserWindow, ipcMain, Menu, dialog} = require('electron');         // For the electron app
 
+// Importing custom scripts
+const { readDirectory } = require('./readDirectory.js');    // For the custom external function
+const { getMenuTemplate } = require('./MenuTemplate.js');
 let win; 
 
 
@@ -22,52 +24,17 @@ function createWindow() {
     // Open the DevTools.
     win.webContents.openDevTools()
 
-    // Build the menu from the template
-    const mainMenu = Menu.buildFromTemplate();
+   
     // Insert menu:
-    Menu.setApplicationMenu(mainMenu); // if you comment this line out, you will get the boilerplate menu thats already there by default
+    let menuTemplate = Menu.buildFromTemplate(getMenuTemplate(app, win));
+    // if you comment this line out, you will get the boilerplate menu thats already there by default
+    Menu.setApplicationMenu(menuTemplate); 
 }
 
 // This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.whenReady().then(createWindow)
 
 
-// Create a menu template
-// The menu is just an array of objects
-const mainMenuTemplate = [
-{
-    label: 'File',
-    submenu: [
-        {
-            label: 'Add Folder',
-            click() {
-                // Call function
-                console.log("Need to add folder");
-            }
-        },
-        {
-            label: 'Clear Items',
-            click() {
-                mainWindow.webContents.send('item:clear');
-            }
-        },
-        {
-            label: 'Quit',
-            accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-            click() {
-                app.quit();
-            }
-        }
-    ]
-}];
-
-
-// If the current system is a mac, then add an empty object to the beginning of the 
-// mainMenuTemplate array. 
-if (process.platform == 'darwin')
-    mainMenuTemplate.unshift({});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -92,5 +59,4 @@ ipcMain.on("loadDone", function(e, data) {
     win.webContents.send('alert');
     readDirectory(__dirname, win.webContents, 'tableFile:appendItems');
 });
-
 

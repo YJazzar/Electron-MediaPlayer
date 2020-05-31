@@ -23,12 +23,14 @@ function createRow(cols) {
 }
 
 
-// TODO: make diff types of events.
-//      one to append to table from file stats obj
-//      one to delete all entries from the table
-//      one to delete and replace from the table
-
+// Given a list of files (from the data structure returned by readDirectory()), this function will
+//  append all files into the table
 function appendTable(event, data) {
+    if(!data) {
+        console.log("mainPanel.js.appendTable() was called with no data... ending function call")
+        return;
+    }
+
     console.log('inside of ipcRenderer tableFile:appendItems');
     console.log("Successfully read the directory: " + data[0].path)
     console.dir(data);
@@ -52,7 +54,8 @@ function appendTable(event, data) {
 
 }
 
-function clearTable(event, data) {
+// This will erase everything out of the table
+function clearTable(event) {
     console.log('inside of ipcRenderer tableFile:clearItems');
     if (tableBody) {
         tableBody.innerHTML = "";
@@ -61,8 +64,11 @@ function clearTable(event, data) {
     }
 }
 
+// This will erase everything off the table and then populate it again
 function clearAndLoadTable(event, data) {
     console.log('inside of ipcRenderer tableFile:clearAndLoadItems');
+    clearTable(event);
+    appendTable(event, data);
     
 }
 
