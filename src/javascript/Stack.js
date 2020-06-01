@@ -1,7 +1,7 @@
 
 // TODO: add a save feature
 // TODO: make it store to file
-class History {
+class Stack {
     constructor() {
         this.historyStack = [];
     }
@@ -32,4 +32,10 @@ class History {
     toString() {
         console.log(this.historyStack);
     }
+
+    getStack() {
+        return this.historyStack;
+    }
 }
+
+module.exports = { Stack };

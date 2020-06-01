@@ -3,9 +3,10 @@ const { app, BrowserWindow, ipcMain, Menu } = require('electron');         // Fo
 
 // Importing custom scripts
 const { getMenuTemplate } = require('./MenuTemplate.js');
+const { logger } = require('./Logger.js');
 
 
-let win; 
+let win;
 
 function createWindow() {
     // Create the browser window.
@@ -23,11 +24,16 @@ function createWindow() {
     // Open the DevTools.
     win.webContents.openDevTools()
 
-   
+    // Quit app when closed 
+    win.on('closed', function () {
+        logger.log("main.js", "Quitting application");
+        app.quit();
+    });
+
     // Insert menu:
     let menuTemplate = Menu.buildFromTemplate(getMenuTemplate(app, win));
     // if you comment this line out, you will get the boilerplate menu thats already there by default
-    Menu.setApplicationMenu(menuTemplate); 
+    Menu.setApplicationMenu(menuTemplate);
 }
 
 // This method will be called when Electron has finished
@@ -54,7 +60,7 @@ app.on('activate', () => {
 
 
 // This allows for the script to wait until the webpage is loaded 
-ipcMain.on("loadDone", function(e, data) {
-    console.log("Done loading everything");
+ipcMain.on("loadDone", function (e, data) {
+    logger.log("main.js", "Done loading everything");
 });
 

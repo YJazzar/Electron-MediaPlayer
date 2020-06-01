@@ -2,6 +2,7 @@
 //  How to read a directory and get information on what files 
 //   exist inside it (and extract helpful information from each file)
 const fs = require('fs');
+const { logger } = require('./Logger.js');
 
 // Call the function with a string representing the path of the directory in question
 // For safe usage, call with the full path. 
@@ -22,7 +23,7 @@ async function readDirectory(paths, emitter, eventType) {
         //      https://code-maven.com/list-content-of-directory-with-nodejs
         // Here, 'items' is a string array holding the names of the files (of the given directory)
         let items = await readdir(currPath).catch(err => {
-            console.log(err);
+            logger.log("readDirectory.js", err);
         });;
 
 
@@ -38,7 +39,7 @@ async function readDirectory(paths, emitter, eventType) {
             await stat(file, items[i]).then(data => {
                 result.push(data);
             }).catch(err => {
-                console.log(err);
+                logger.log("readDirectory.js", err);
             });
             // console.log("result is now length: " + result.length);
         }
@@ -133,17 +134,5 @@ const convertBytes = function (bytes) {
     return (bytes / Math.pow(1024, i)).toFixed(1) + " " + sizes[i]
 }
 
-/****   An example on how to use the readDirectory() function call:
- * First, you must must create an EventEmitter object and set up an emit
- *      event with the name 'readDirectory'.
- * Next, you must call the function with the folder path you wish to read (as the first 
- *      parameter provided), and pass in the emitter that was created (as the second paramater).
- */
-// let em = new events.EventEmitter();
-// em.on('readDirectory', (data) => {
-//     console.log('recieved emit');
-//     console.log(data);
-// });
-// readDirectory('./', em);
 
 module.exports = { readDirectory };

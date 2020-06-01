@@ -1,4 +1,5 @@
 const { ipcRenderer } = require("electron");
+const { logger } = require('D:/Projects/Electron-MediaPlayer/src/javascript/Logger.js');
 
 const tableBody = document.getElementById("tableBody");
 
@@ -19,7 +20,6 @@ function createRow(cols) {
     }   
 
     return row;
-    
 }
 
 
@@ -27,11 +27,11 @@ function createRow(cols) {
 //  append all files into the table
 function appendTable(event, data) {
     if(!data) {
-        console.log("[mainPanel.js] appendTable() was called with no data... ending function call")
+        logger.log("mainPanel.js", "appendTable() was called with no data... ending function call")
         return;
     }
 
-    console.log('[mainPanel.js] ipcRenderer signal received -> tableFile:appendItems');
+    logger.logVerbose('mainPanel.js', 'ipcRenderer signal received -> tableFile:appendItems');
     
     // Logic to append to table
     if (tableBody) {
@@ -55,7 +55,7 @@ function appendTable(event, data) {
 
 // This will erase everything out of the table
 function clearTable(event) {
-    console.log('[mainPanel.js] ipcRenderer signal received -> tableFile:clearItems');
+    logger.logVerbose('mainPanel.js', 'ipcRenderer signal received -> tableFile:clearItems');
     if (tableBody) {
         tableBody.innerHTML = "";
     } else {
@@ -65,7 +65,7 @@ function clearTable(event) {
 
 // This will erase everything off the table and then populate it again
 function clearAndLoadTable(event, data) {
-    console.log('[mainPanel.js] ipcRenderer signal received -> tableFile:clearAndLoadItems');
+    logger.logVerbose('mainPanel.js', 'ipcRenderer signal received -> tableFile:clearAndLoadItems');
     clearTable(event);
     appendTable(event, data);
     

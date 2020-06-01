@@ -1,0 +1,20 @@
+[05:31:2020 23:29:10] [Logger.js]: App started running
+[05:31:2020 23:29:10] [Logger.js]: App started running
+[05:31:2020 23:29:10] [Logger.js]: Log files finished setting up
+[05:31:2020 23:29:10] [Logger.js]: Log files finished setting up
+[05:31:2020 23:29:10] [main.js]: Done loading everything
+[05:31:2020 23:29:10] [Logger.js]: App started running
+[05:31:2020 23:29:10] [Logger.js]: Log files finished setting up
+[05:31:2020 23:29:14] [main.js]: Quitting application
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:clearAndLoadItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:clearItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:appendItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:clearAndLoadItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:clearItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:appendItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:clearAndLoadItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:clearItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:appendItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:clearAndLoadItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:clearItems
+[05:31:2020 23:34:18] [mainPanel.js]: ipcRenderer signal received -> tableFile:appendItems

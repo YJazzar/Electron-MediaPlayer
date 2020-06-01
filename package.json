@@ -4,7 +4,8 @@
     "description": "A simple media player",
     "main": "./src/javascript/main.js",
     "scripts": {
-        "start": "electron ."
+        "start": "electron .", 
+        "clean": "cd Logs && del /f log.txt & del /f logVerbose.txt"
     },
     "author": "Yousuf Jazzar",
     "license": "MIT ",
