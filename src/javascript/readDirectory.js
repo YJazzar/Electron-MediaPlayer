@@ -1,9 +1,7 @@
 // A test file to experiment with: 
 //  How to read a directory and get information on what files 
 //   exist inside it (and extract helpful information from each file)
-var fs = require('fs');
-const {  ipcMain } = require('electron');  
-
+const fs = require('fs');
 
 // Call the function with a string representing the path of the directory in question
 // For safe usage, call with the full path. 

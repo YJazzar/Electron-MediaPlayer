@@ -27,13 +27,12 @@ function createRow(cols) {
 //  append all files into the table
 function appendTable(event, data) {
     if(!data) {
-        console.log("mainPanel.js.appendTable() was called with no data... ending function call")
+        console.log("[mainPanel.js] appendTable() was called with no data... ending function call")
         return;
     }
 
-    console.log('inside of ipcRenderer tableFile:appendItems');
-    console.log("Successfully read the directory: " + data[0].path)
-    console.dir(data);
+    console.log('[mainPanel.js] ipcRenderer signal received -> tableFile:appendItems');
+    
     // Logic to append to table
     if (tableBody) {
         
@@ -49,24 +48,24 @@ function appendTable(event, data) {
         
 
     } else {
-        alert("Could not get tableBody in mainPanel.js");
+        alert("[mainPanel.js] Could not get tableBody in appendTable()");
     }
 
 }
 
 // This will erase everything out of the table
 function clearTable(event) {
-    console.log('inside of ipcRenderer tableFile:clearItems');
+    console.log('[mainPanel.js] ipcRenderer signal received -> tableFile:clearItems');
     if (tableBody) {
         tableBody.innerHTML = "";
     } else {
-        alert("Could not get tableBody in mainPanel.js");
+        alert("[mainPanel.js] Could not get tableBody in clearTable");
     }
 }
 
 // This will erase everything off the table and then populate it again
 function clearAndLoadTable(event, data) {
-    console.log('inside of ipcRenderer tableFile:clearAndLoadItems');
+    console.log('[mainPanel.js] ipcRenderer signal received -> tableFile:clearAndLoadItems');
     clearTable(event);
     appendTable(event, data);
     

@@ -14,24 +14,28 @@ function getMenuTemplate(app, win) {
             submenu: [
                 {
                     label: 'Open New Folder',
+                    accelerator: process.platform == 'darwin' ? 'Command+O' : 'Ctrl+O',
                     click() {
-                        // Call function
-                        console.log("Need to open a new folder");
+                        // Log action and call the corresponsing function
+                        console.log("[MenuTemplate.js] getMenuTemplate(): Need to open a new folder");
                         chooseFolder(win, "tableFile:clearAndLoadItems");                        
                     }
                 },
                 {
-                    label: 'Add Folder',
+                    label: 'Add Folder to Current List',
+                    accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
                     click() {
-                        // Call function
-                        console.log("Need to add folder");
-                        win.webContents.send("tableFile:appendItems");
+                        // Log action and call the corresponsing function
+                        console.log("[MenuTemplate.js] getMenuTemplate(): Need to add folder");
+                        chooseFolder(win, "tableFile:appendItems");
                     }
                 },
                 {
                     label: 'Clear Items',
+                    // accelerator: process.platform == 'darwin' ? 'Command+A' : 'Ctrl+A',
                     click() {
-                        console.log('Clear Items called');
+                        // Log action and call the corresponsing function
+                        console.log('[MenuTemplate.js] getMenuTemplate(): Clear Items called');
                         win.webContents.send("tableFile:clearItems");
                     }
                 },
