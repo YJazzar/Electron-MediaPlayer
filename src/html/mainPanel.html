@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" /> -->
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/mainPanel.css">
   </head>
 
   <body>
@@ -18,16 +18,16 @@
       <table id="mainTable" class="col12 centered striped responsive-table"> <!--class="centered striped responsive-table"-->
         <thead > 
           <tr style="background-color: rgb(255, 99, 71, 35%);">
-              <th style="position: sticky; top: 0; background-color: rgb(255, 99, 71);" data-field="name">Name</th>
-              <th style="position: sticky; top: 0; background-color: rgb(255, 99, 71);" data-field="dateModified">Date Modified</th>
-              <th style="position: sticky; top: 0; background-color: rgb(255, 99, 71);" data-field="type">Type</th>
-              <th style="position: sticky; top: 0; background-color: rgb(255, 99, 71);" data-field="size">Size</th>
+              <th data-field="name">Name</th>
+              <th data-field="dateModified">Date Modified</th>
+              <th data-field="type">Type</th>
+              <th data-field="size">Size</th>
           </tr>
         </thead>
 
         <tbody id="tableBody">
           <!-- Sample row entry -->
-          <!-- <tr>
+          <!-- <tr filePath="/path/to/file">
             <td>Name</td>
             <td>date Modified</td>
             <td>Type</td>

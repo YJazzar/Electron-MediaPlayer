@@ -1,4 +1,4 @@
-const { Stack } = require('./Stack.js');
+const { List } = require('./List.js');
 
 
 // This class will store all important information:
@@ -8,7 +8,8 @@ const { Stack } = require('./Stack.js');
 class Database {
     // Initialize all database objects
     constructor() {
-        this.playHistory = new Stack();
+        this.playHistory = new List({type: "Stack"});
+        this.playQueue = new List({ type: "Queue" });
 
     }
 }

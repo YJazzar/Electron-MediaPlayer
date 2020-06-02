@@ -1,0 +1,4 @@
+readDirectory.js:
+    - Make it so that only audio files are returned (filter out non-audio files)
+    - Maybe make an exception where a file can have a certain name (such as "youtubePLaylist.txt") where it can read url links and play them with react-player
+    

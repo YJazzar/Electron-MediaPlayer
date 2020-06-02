@@ -4,9 +4,10 @@ const { logger } = require('D:/Projects/Electron-MediaPlayer/src/javascript/Logg
 const tableBody = document.getElementById("tableBody");
 
 // "cols" contains the text of each column in the row
-function createRow(cols) {
+function createRow(cols, path) {
     // Create the row and return it        
     let row = document.createElement("tr");
+    row.setAttribute("filePath", path);
 
     // Iterate through the diff columns that need to make
     for (let i = 0; i < cols.length; i ++) {
@@ -18,6 +19,13 @@ function createRow(cols) {
         cell.appendChild(txt);
         row.appendChild(cell);
     }   
+
+    // Add the eventHandler whenever the row is clicked:
+    row.onclick = function(row) {
+        return function() {
+            logger.log(row.getAttribute("filePath"));
+        };
+    }(row);
 
     return row;
 }
@@ -42,7 +50,7 @@ function appendTable(event, data) {
         let tempCols;
         for (let i = 1; i < data.length; i ++) {
             tempCols = [data[i].name, data[i].formattedDate, data[i].name, data[i].size];
-            tempRow = createRow(tempCols);
+            tempRow = createRow(tempCols, data[i].path);
             tableBody.appendChild(tempRow);
         }
         
