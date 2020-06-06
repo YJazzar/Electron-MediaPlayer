@@ -4,14 +4,15 @@ To run the program, setup the package.json file's "start" script. The configurat
 
 flag: level
 values possible:
+
 - "error"
 - "critical"
 - "info"
 - "debug"
 - "verbose"
 
-examples: 
-
+examples:
+```
     "start": "electron . level error"
 
     "start": "electron . level critical"
@@ -19,9 +20,10 @@ examples:
     "start": "electron . level info"
 
     "start": "electron . level debug"
-
-
-Then, run this script to start the program: 
 ```
-npm run-script start    
+
+Then, run this script to start the program:
+
+```
+npm run-script start
 ```
