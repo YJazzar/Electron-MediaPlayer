@@ -1,7 +1,7 @@
 
 
 const {chooseFolder} = require('./PromptFiles');
-const { logger } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
+const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
 
 
@@ -17,7 +17,7 @@ function getMenuTemplate(app, win) {
                     accelerator: process.platform == 'darwin' ? 'Command+O' : 'Ctrl+O',
                     click() {
                         // Log action and call the corresponsing function
-                        logger.log("MenuTemplate.js", "getMenuTemplate(): Need to open a new folder");
+                        Logger.logInfo(__filename, "getMenuTemplate(): Need to open a new folder");
                         chooseFolder(win, "tableFile:clearAndLoadItems");                        
                     }
                 },
@@ -26,7 +26,7 @@ function getMenuTemplate(app, win) {
                     accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
                     click() {
                         // Log action and call the corresponsing function
-                        logger.log("MenuTemplate.js", "getMenuTemplate(): Need to add folder");
+                        Logger.logInfo(__filename, "getMenuTemplate(): Need to add folder");
                         chooseFolder(win, "tableFile:appendItems");
                     }
                 },
@@ -35,7 +35,7 @@ function getMenuTemplate(app, win) {
                     // accelerator: process.platform == 'darwin' ? 'Command+A' : 'Ctrl+A',
                     click() {
                         // Log action and call the corresponsing function
-                        logger.log("MenuTemplate.js", "getMenuTemplate(): Clear Items called");
+                        Logger.logInfo(__filename, "getMenuTemplate(): Clear Items called");
                         win.webContents.send("tableFile:clearItems");
                     }
                 },
@@ -43,7 +43,7 @@ function getMenuTemplate(app, win) {
                     label: 'Quit',
                     accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
                     click() {
-                        logger.log("MenuTemplate.js", "Quitting application");
+                        Logger.logInfo(__filename, "Quitting application");
                         app.quit();
                     }
                 }

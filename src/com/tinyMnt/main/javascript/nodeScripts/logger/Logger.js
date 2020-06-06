@@ -40,6 +40,6 @@ function logError(source, message) {
     });
 }
 
-logInfo(__dirname, "Log packages initialized!");
+logInfo(__filename, "Log packages initialized!");
 
 module.exports = { logger, log, logInfo, logError, levelNames, getDateTime };

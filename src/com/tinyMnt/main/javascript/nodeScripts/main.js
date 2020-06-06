@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain, Menu } = require('electron');         // Fo
 
 // Importing custom scripts
 const { getMenuTemplate } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/helperFunctions/MenuTemplate.js');
-const { logger, formatMess } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
+const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
 
 let win;
@@ -17,7 +17,9 @@ function createWindow() {
             nodeIntegration: true
         }
     })
-    logger.info("creaewted 2inff");
+
+    Logger.logInfo(__filename, "BrowserWindow created");
+    
     // and load the index.html of the app.
     win.loadFile('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/html/index.html')
 
@@ -26,7 +28,7 @@ function createWindow() {
 
     // Quit app when closed 
     win.on('closed', function () {
-        logger.log("main.js", "Quitting application");
+        Logger.logInfo(__filename, "Quitting application");
         app.quit();
     });
 
@@ -61,6 +63,10 @@ app.on('activate', () => {
 
 // This allows for the script to wait until the webpage is loaded 
 ipcMain.on("loadDone", function (e, data) {
-    logger.log("main.js", "Done loading everything");
+    Logger.logInfo(__filename, "Done loading everything");
 });
 
+// An event to use the logger from the electron browser
+ipcMain.on("Logger", (e, message) => {
+    Logger.log(message.level, message.source, message.message);
+})

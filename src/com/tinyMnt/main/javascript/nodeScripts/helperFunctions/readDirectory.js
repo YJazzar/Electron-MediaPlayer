@@ -2,7 +2,7 @@
 //  How to read a directory and get information on what files 
 //   exist inside it (and extract helpful information from each file)
 const fs = require('fs');
-const { logger } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
+const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
 // TODO: is this "async" necessary?
 // Call the function with a string representing the path of the directory in question
@@ -24,7 +24,7 @@ async function readDirectory(paths, emitter, eventType) {
         //      https://code-maven.com/list-content-of-directory-with-nodejs
         // Here, 'items' is a string array holding the names of the files (of the given directory)
         let items = await readdir(currPath).catch(err => {
-            logger.log("readDirectory.js", err);
+            Logger.logError(__filename, err);
         });;
 
 
@@ -40,7 +40,7 @@ async function readDirectory(paths, emitter, eventType) {
             await stat(file, items[i]).then(data => {
                 result.push(data);
             }).catch(err => {
-                logger.log("readDirectory.js", err);
+                Logger.logError(__filename, err);
             });
             // console.log("result is now length: " + result.length);
         }

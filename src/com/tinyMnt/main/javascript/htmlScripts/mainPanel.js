@@ -1,7 +1,9 @@
 const { ipcRenderer } = require("electron");
-const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
-
 const tableBody = document.getElementById("tableBody");
+
+// Set up the logging elements
+const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/htmlScripts/htmlLoggerWrapper.js');
+const filename = "D:\\Projects\\Electron-MediaPlayer\\src\\com\\tinyMnt\\main\\javascript\\htmlScripts\\mainPanel.js";
 
 // "cols" contains the text of each column in the row
 function createRow(cols, path) {
@@ -23,7 +25,7 @@ function createRow(cols, path) {
     // Add the eventHandler whenever the row is clicked:
     row.onclick = function(row) {
         return function() {
-            Logger.log(Logger.levelNames.info, __dirname, row.getAttribute("filePath"));
+            Logger.log(Logger.levelNames.info, filename, row.getAttribute("filePath"));
         };
     }(row);
 
@@ -35,11 +37,11 @@ function createRow(cols, path) {
 //  append all files into the table
 function appendTable(event, data) {
     if(!data) {
-        Logger.log(Logger.levelNames.info, __dirname, "appendTable() was called with no data... ending function call")
+        Logger.log(Logger.levelNames.info, filename, "appendTable() was called with no data... ending function call")
         return;
     }
 
-    Logger.log(Logger.levelNames.verbose, __dirname, 'ipcRenderer signal received -> tableFile:appendItems');
+    Logger.log(Logger.levelNames.verbose, filename, 'ipcRenderer signal received -> tableFile:appendItems');
     
     // Logic to append to table
     if (tableBody) {
@@ -54,10 +56,10 @@ function appendTable(event, data) {
             tableBody.appendChild(tempRow);
         }
 
-        Logger.log(Logger.levelNames.info, __dirname, "Created rows for the recent files that were opened");
+        Logger.log(Logger.levelNames.info, filename, "Created rows for the recent files that were opened");
 
     } else {
-        Logger.log(Logger.levelNames.critical, __dirname, "Could not get tableBody in appendTable()");
+        Logger.log(Logger.levelNames.critical, filename, "Could not get tableBody in appendTable()");
         alert("[mainPanel.js] Could not get tableBody in appendTable()");
     }
 
@@ -65,18 +67,18 @@ function appendTable(event, data) {
 
 // This will erase everything out of the table
 function clearTable(event) {
-    Logger.log(Logger.levelNames.verbose, __dirname, 'ipcRenderer signal received -> tableFile:clearItems');
+    Logger.log(Logger.levelNames.verbose, filename, 'ipcRenderer signal received -> tableFile:clearItems');
     if (tableBody) {
         tableBody.innerHTML = "";
     } else {
-        Logger.log(Logger.levelNames.critical, __dirname, "Could not get tableBody in clearTable()");
+        Logger.log(Logger.levelNames.critical, filename, "Could not get tableBody in clearTable()");
         alert("[mainPanel.js] Could not get tableBody in clearTable");
     }
 }
 
 // This will erase everything off the table and then populate it again
 function clearAndLoadTable(event, data) {
-    Logger.log(Logger.levelNames.critical, __dirname, 'ipcRenderer signal received -> tableFile:clearAndLoadItems');
+    Logger.log(Logger.levelNames.critical, filename, 'ipcRenderer signal received -> tableFile:clearAndLoadItems');
     clearTable(event);
     appendTable(event, data);
     
@@ -92,5 +94,8 @@ ipcRenderer.on("tableFile:appendItems", appendTable);
 ipcRenderer.on("tableFile:clearItems", clearTable);
 ipcRenderer.on("tableFile:clearAndLoadItems", clearAndLoadTable);
 
+Logger.logInfo(filename, "DOESS THIS WORKKKKK");
+
 // Send signal that processing can start:
 ipcRenderer.send('loadDone', "Done setting up everything");
+

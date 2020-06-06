@@ -1,4 +1,4 @@
-const { logger } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
+const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
 // TODO: add a save feature
 // TODO: make it store to file
@@ -56,7 +56,7 @@ class List {
         if (index < this.length()) {
             this.arr[index] = value;
         } else {
-            logger.log("Stack.js", "Invalid index passed at: set(int)");
+            Logger.logInfo(__filename, "Invalid index passed at: set(int)");
         }
     }
 

@@ -32,7 +32,7 @@ function init() {
                 level: initialLevel
             }),
             new winston.transports.File({
-                filename: 'combined.log',
+                filename: 'LoggerOutput.log',
                 level: initialLevel
             }),
         ]
@@ -48,35 +48,35 @@ function sendStartUpLog(logger, dateAndTime) {
     logger.log({
         level: "info",
         time: dateAndTime,
-        source: __dirname,
+        source: __filename,
         message: "***************************",
     });
 
     logger.log({
         level: "info",
         time: dateAndTime,
-        source: __dirname,
+        source: __filename,
         message: "---------------------------",
     });
 
     logger.log({
         level: "info",
         time: dateAndTime,
-        source: __dirname,
+        source: __filename,
         message: "\t Program started",
     });
 
     logger.log({
         level: "info",
         time: dateAndTime,
-        source: __dirname,
+        source: __filename,
         message: "---------------------------",
     });
 
     logger.log({
         level: "info",
         time: dateAndTime,
-        source: __dirname,
+        source: __filename,
         message: "***************************",
     });
 
