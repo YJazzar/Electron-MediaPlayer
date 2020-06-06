@@ -1,3 +1,5 @@
+// Deprecated since JQuery was used as a replacement
+
 // @param id: the id of the tag that must be substituted with HTML code written from another file.
 // @param fileName: the file path of the external HTML code.
 function includeHTML(id) {

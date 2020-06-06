@@ -2,10 +2,9 @@
     "name": "player",
     "version": "1.0.0",
     "description": "A simple media player",
-    "main": "./src/javascript/main.js",
+    "main": "D:\\Projects\\Electron-MediaPlayer\\src\\com\\tinyMnt\\main\\javascript\\nodeScripts\\main.js",
     "scripts": {
-        "start": "electron .",
-        "clean": "cd Logs && del /f log.txt & del /f logVerbose.txt",
+        "start": "electron ."
     },
     "author": "Yousuf Jazzar",
     "license": "MIT ",

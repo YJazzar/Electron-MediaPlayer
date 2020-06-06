@@ -2,8 +2,9 @@
 //  How to read a directory and get information on what files 
 //   exist inside it (and extract helpful information from each file)
 const fs = require('fs');
-const { logger } = require('./Logger.js');
+const { logger } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
+// TODO: is this "async" necessary?
 // Call the function with a string representing the path of the directory in question
 // For safe usage, call with the full path. 
 //      @param path: an array of all the paths that need to read
@@ -64,6 +65,7 @@ function readdir(path) {
     });
 }
 
+// TODO: is this "async" necessary?
 // Makes a promise from the fs.stat() function call
 async function stat(filePath, fileName) {
     // Return a promise that runs the system call

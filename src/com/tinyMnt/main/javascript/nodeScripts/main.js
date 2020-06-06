@@ -2,8 +2,8 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');         // For the electron app
 
 // Importing custom scripts
-const { getMenuTemplate } = require('./MenuTemplate.js');
-const { logger } = require('./Logger.js');
+const { getMenuTemplate } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/helperFunctions/MenuTemplate.js');
+const { logger } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
 
 let win;
@@ -19,7 +19,7 @@ function createWindow() {
     })
 
     // and load the index.html of the app.
-    win.loadFile('./src/html/index.html')
+    win.loadFile('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/html/index.html')
 
     // Open the DevTools.
     win.webContents.openDevTools()
