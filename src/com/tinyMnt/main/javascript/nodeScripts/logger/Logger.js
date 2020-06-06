@@ -1,86 +1,45 @@
-const fs = require('fs');
-
-class Logger {
-
-    // These two constructors call another function for code reuser
-    /**
-     * 
-     * @param {*} options can put in a variable: flags: 'a' to append (pass in an empty object to ignore)
-     * @param {*} logPath path of the regular log file
-     * @param {*} logVerbosePath path of the verbose log file (more info will be logged there)
-     */
-    constructor(options, logPath, logVerbosePath) {
-        this.options = options;
-
-        // Check if both logPath and logVerbosePath are defined
-        this.logPath = logPath;
-        this.logVerbosePath = logVerbosePath;
-        if (this.logPath == undefined) {
-            this.logPath = "D:\\Projects\\Electron-MediaPlayer\\Logs\\log.txt";
-        }
-        if (this.logVerbosePath == undefined) {
-            this.logVerbosePath = "D:\\Projects\\Electron-MediaPlayer\\Logs\\logVerbose.txt";
-        }
-
-        // Create the file streams
-        if (this.options.flags == 'a') {
-            this.logStream = fs.createWriteStream(this.logPath, { flags: 'a' });
-            this.logVerboseStream = fs.createWriteStream(this.logVerbosePath, { flags: 'a' })
-        } else {
-            this.logStream = fs.createWriteStream(this.logPath);
-            this.logVerboseStream = fs.createWriteStream(this.logVerbosePath)
-        }
-
-        this.log("Logger.js", "App started running");
-        this.log("Logger.js", "Log files finished setting up");
-    }
+const { levelNames } = require('./LevelConstants.js');
+const { init, sendStartUpLog } = require('./LoggerInit.js');
 
 
-    // Function to log normally
-    log(source, mess) {
-        if (!this.options.useRegularConsole) {
-            this.logStream.write(`[${this.getDateTime()}] [${source}]: ${mess}\n`);
-            this.logVerbose(source, mess);
-        } else 
-            console.log(`[${this.getDateTime()}] [${source}]: ${mess}\n`);
-    }
+const { getDateTime } = require('./DateAndTime.js');
 
-    // Function to log verbose
-    logVerbose(source, mess) {
-        if (!this.options.useRegularConsole) {
-            this.logVerboseStream.write(`[${this.getDateTime()}] [${source}]: ${mess}\n`);
-        } else
-            console.log(`[${this.getDateTime()}] [${source}]: ${mess}\n`);
-    }
+// Calls the functionf from LoggerInit.js to make the winston logger instance
+const logger = init();
 
+// Prints that the program has started
+sendStartUpLog(logger, getDateTime());
 
-
-    // Helper functions:
-    getDateTime() {
-
-        let date = new Date();
-
-        let hour = date.getHours();
-        hour = (hour < 10 ? "0" : "") + hour;
-
-        let min = date.getMinutes();
-        min = (min < 10 ? "0" : "") + min;
-
-        let sec = date.getSeconds();
-        sec = (sec < 10 ? "0" : "") + sec;
-
-        let year = date.getFullYear();
-
-        let month = date.getMonth() + 1;
-        month = (month < 10 ? "0" : "") + month;
-
-        let day = date.getDate();
-        day = (day < 10 ? "0" : "") + day;
-
-        return month + ":" + day + ":" + year + " " + hour + ":" + min + ":" + sec;
-    }
+// This function was made to make constructing of the json object needed to log easier
+function log(level, source, message) {
+    logger.log({
+        level: level,
+        time: getDateTime(),
+        source: source,
+        message: message,
+    });
 }
 
-let logger = new Logger({ flags: 'a', useRegularConsole:true});
+// This function was made to quickly log "info" messages
+function logInfo(source, message) {
+    logger.log({
+        level: "info",
+        time: getDateTime(),
+        source: source,
+        message: message,
+    });
+}
 
-module.exports = { logger };
+// This function was made to quickly log "error" messages
+function logError(source, message) {
+    logger.log({
+        level: "error",
+        time: getDateTime(),
+        source: source,
+        message: message,
+    });
+}
+
+logInfo(__dirname, "Log packages initialized!");
+
+module.exports = { logger, log, logInfo, logError, levelNames, getDateTime };
