@@ -21,7 +21,7 @@ function getDateTime() {
     let day = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    return month + ":" + day + ":" + year + " " + hour + ":" + min + ":" + sec;
+    return month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
 }
 
 module.exports = { getDateTime };
