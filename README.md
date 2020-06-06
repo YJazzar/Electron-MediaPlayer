@@ -1,5 +1,6 @@
 # Electron-MediaPlayer
 
+## Running the program
 To run the program, setup the package.json file's "start" script. The configurations possible are as follow:
 
 flag: level
