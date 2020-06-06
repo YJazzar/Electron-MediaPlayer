@@ -11,6 +11,7 @@ values possible:
     - "verbose"
 
 examples: 
+
     "start": "electron . level error"
 
     "start": "electron . level critical"
@@ -19,7 +20,7 @@ examples:
 
     "start": "electron . level debug"
 
-    ...
 
 Then, run this script to start the program: 
+
     npm run-script start    
