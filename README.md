@@ -4,11 +4,11 @@ To run the program, setup the package.json file's "start" script. The configurat
 
 flag: level
 values possible:
-    - "error"
-    - "critical"
-    - "info"
-    - "debug"
-    - "verbose"
+- "error"
+- "critical"
+- "info"
+- "debug"
+- "verbose"
 
 examples: 
 
