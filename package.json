@@ -4,7 +4,7 @@
     "description": "A simple media player",
     "main": "D:\\Projects\\Electron-MediaPlayer\\src\\com\\tinyMnt\\main\\javascript\\nodeScripts\\main.js",
     "scripts": {
-        "start": "electron ."
+        "start": "electron . level verbose"
     },
     "author": "Yousuf Jazzar",
     "license": "MIT ",

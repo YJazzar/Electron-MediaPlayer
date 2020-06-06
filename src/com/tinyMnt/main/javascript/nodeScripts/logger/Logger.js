@@ -1,11 +1,14 @@
 const { levelNames } = require('./LevelConstants.js');
-const { init } = require('./LoggerInit.js');
+const { init, sendStartUpLog } = require('./LoggerInit.js');
 
 
 const { getDateTime } = require('./DateAndTime.js');
 
 // Calls the functionf from LoggerInit.js to make the winston logger instance
 const logger = init();
+
+// Prints that the program has started
+sendStartUpLog(logger, getDateTime());
 
 // This function was made to make constructing of the json object needed to log easier
 function log(level, source, message) {
@@ -36,5 +39,7 @@ function logError(source, message) {
         message: message,
     });
 }
+
+logInfo(__dirname, "Log packages initialized!");
 
 module.exports = { logger, log, logInfo, logError, levelNames, getDateTime };

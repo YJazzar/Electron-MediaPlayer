@@ -6,15 +6,20 @@ const { printf } = format;
 const { levels } = require('./LevelConstants.js');
 
 
-
-function init(initialLevel) {
-    // If no variable was passed in for the level needed, set it to verbose by defualt
-    if (initialLevel == undefined) {
-        initialLevel = "verbose";
+function parseLevelFromCommandLine() {
+    for (let i = 0; i < process.argv.length; i ++) {
+        if (process.argv[i] == "level" && i+1 < process.argv.length)
+            return process.argv[i+1];
     }
 
-    console.log(initialLevel);
+    return "verbose";
+}
 
+function init() {
+    // Figure out what type of log level should be used when creating the logger
+    let initialLevel = parseLevelFromCommandLine();
+    console.log("initial level set to: " + initialLevel);
+ 
     const customFormat = printf(({ level, time, source, message }) => {
         return `[${level}] [${time}] [${source}]: ${message}`;
     });
@@ -33,10 +38,49 @@ function init(initialLevel) {
         ]
     });
 
+    parseLevelFromCommandLine();
     return logger;
 }
 
 
+// Creates the first few messages outputted to a log file
+function sendStartUpLog(logger, dateAndTime) {
+    logger.log({
+        level: "info",
+        time: dateAndTime,
+        source: __dirname,
+        message: "***************************",
+    });
+
+    logger.log({
+        level: "info",
+        time: dateAndTime,
+        source: __dirname,
+        message: "---------------------------",
+    });
+
+    logger.log({
+        level: "info",
+        time: dateAndTime,
+        source: __dirname,
+        message: "\t Program started",
+    });
+
+    logger.log({
+        level: "info",
+        time: dateAndTime,
+        source: __dirname,
+        message: "---------------------------",
+    });
+
+    logger.log({
+        level: "info",
+        time: dateAndTime,
+        source: __dirname,
+        message: "***************************",
+    });
+
+}
 
 
-module.exports = { init };
+module.exports = { init, sendStartUpLog };
