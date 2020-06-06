@@ -79,6 +79,7 @@ function clearAndLoadTable(event, data) {
     
 }
 
+// TODO: remove the button
 const clearButton = document.getElementById("submit:clearTable");
 clearButton.addEventListener("click", clearTable);
 

@@ -4,6 +4,7 @@
 const fs = require('fs');
 const { logger } = require('./Logger.js');
 
+// TODO: is this "async" necessary?
 // Call the function with a string representing the path of the directory in question
 // For safe usage, call with the full path. 
 //      @param path: an array of all the paths that need to read
@@ -64,6 +65,7 @@ function readdir(path) {
     });
 }
 
+// TODO: is this "async" necessary?
 // Makes a promise from the fs.stat() function call
 async function stat(filePath, fileName) {
     // Return a promise that runs the system call
