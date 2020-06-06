@@ -31,7 +31,20 @@ Then, run this script to start the program:
 npm run-script start
 ```
 
-## TODO:
+## Agenda
+
+### Previous day:
+- Played around with the logger files. Changed a lot of the backend structure in the logger file and made it much more robust. 
+- Now logging supports having different levels of logging which will increase readability whenever logging. 
+- Added program functionality to log with a level set by the user (through the command line, as seen in the package.json scripts) 
+
+### Up next:
+- Refactor code that used the old code (implement the logger made yesterday). 
+  - Not many changes needed for requires, as the logging file ("Logger.js") remains with the same name. Only need to change how the logging functions are called/
+- Find a good library that can work well with playing audio/video files (already started using youtube-dl to download video files)
+
+
+## Backlog:
 
 #### readDirectory.js:
 - [ ] Make it so that only audio files are returned (filter out non-audio files)
@@ -45,12 +58,3 @@ npm run-script start
 
 #### Logger.js:
 - [x] Make it utilize the winston library from npm
-
-
-### Previous day:
-- Played around with the logger files. Changed a lot of the backend structure in the logger file and made it much more robust. 
-- Now logging supports having different levels of logging which will increase readability whenever logging. 
-- Added program functionality to log with a level set by the user (through the command line, as seen in the package.json scripts) 
-
-### Up next:
-continue playing with different libraries to see what can play audio.
