@@ -32,8 +32,6 @@ npm run-script start
 ```
 
 
-
-
 ## Agenda
 
 ### Previous day:
@@ -45,7 +43,6 @@ npm run-script start
 - Refactor code that used the old code (implement the logger made yesterday). 
   - Not many changes needed for requires, as the logging file ("Logger.js") remains with the same name. Only need to change how the logging functions are called/
 - Find a good library that can work well with playing audio/video files (already started using youtube-dl to download video files)
-
 
 
 
