@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain, Menu } = require('electron');         // Fo
 
 // Importing custom scripts
 const { getMenuTemplate } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/helperFunctions/MenuTemplate.js');
-const { logger } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
+const { logger, formatMess } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
 
 let win;
@@ -17,7 +17,7 @@ function createWindow() {
             nodeIntegration: true
         }
     })
-
+    logger.info("creaewted 2inff");
     // and load the index.html of the app.
     win.loadFile('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/html/index.html')
 
