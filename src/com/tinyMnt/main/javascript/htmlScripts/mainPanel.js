@@ -1,5 +1,5 @@
 const { ipcRenderer } = require("electron");
-const { logger } = require('D:/Projects/Electron-MediaPlayer/src/javascript/Logger.js');
+const { logger } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
 const tableBody = document.getElementById("tableBody");
 
@@ -23,7 +23,7 @@ function createRow(cols, path) {
     // Add the eventHandler whenever the row is clicked:
     row.onclick = function(row) {
         return function() {
-            logger.log(row.getAttribute("filePath"));
+            logger.log("src/com/tinyMnt/main/javascript/htmlScripts/mainPanel.js", row.getAttribute("filePath"));
         };
     }(row);
 

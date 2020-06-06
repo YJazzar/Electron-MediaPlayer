@@ -1,4 +1,4 @@
-const { logger } = require('./Logger.js');
+const { logger } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
 // TODO: add a save feature
 // TODO: make it store to file

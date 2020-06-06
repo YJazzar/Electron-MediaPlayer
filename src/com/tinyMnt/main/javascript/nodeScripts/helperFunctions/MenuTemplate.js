@@ -1,7 +1,7 @@
 
 
 const {chooseFolder} = require('./PromptFiles');
-const { logger } = require('D:/Projects/Electron-MediaPlayer/src/javascript/Logger.js');
+const { logger } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
 
 
 
