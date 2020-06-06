@@ -32,15 +32,18 @@ npm run-script start
 
 
 readDirectory.js:
--[ ] Make it so that only audio files are returned (filter out non-audio files)
--[ ] Maybe make an exception where a file can have a certain name (such as "youtubePLaylist.txt") where it can read url links and play them with react-player
+
+- [ ] Make it so that only audio files are returned (filter out non-audio files)
+- [ ] Maybe make an exception where a file can have a certain name (such as "youtubePLaylist.txt") where it can read url links and play them with react-player
 
 New Application Requirements:
--[ ] Have a button to add a youtube playlist (or individual video) to the player
-    -[ ] the user might need to choose whether he wants to add the url link to a file, download the actual video, or any other action (that I might think of later).
+
+- [ ] Have a button to add a youtube playlist (or individual video) to the player
+    - [ ] the user might need to choose whether he wants to add the url link to a file, download the actual video, or any other action (that I might think of later).
 
 Logger.js:
--[x] Make it utilize the winston library from npm
+
+- [x] Make it utilize the winston library from npm
 
         
 To pick up: 
