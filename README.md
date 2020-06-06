@@ -23,5 +23,5 @@ examples:
 
 Then, run this script to start the program: 
 ...
-    npm run-script start    
+npm run-script start    
 ...
