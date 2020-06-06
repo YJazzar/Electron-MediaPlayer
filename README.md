@@ -13,13 +13,13 @@ values possible:
 
 examples:
 ```
-    "start": "electron . level error"
+"start": "electron . level error"
 
-    "start": "electron . level critical"
+"start": "electron . level critical"
 
-    "start": "electron . level info"
+"start": "electron . level info"
 
-    "start": "electron . level debug"
+"start": "electron . level debug"
 ```
 
 Then, run this script to start the program:
