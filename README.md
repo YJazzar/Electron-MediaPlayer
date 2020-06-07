@@ -11,7 +11,7 @@ values possible:
 - "critical"
 - "info"
 - "debug"
-- "verbose"
+- "verbose" 
 
 examples:
 
@@ -28,22 +28,20 @@ examples:
 Then, run this script to start the program:
 
 ```
-npm run-script start
-```
 
 
 ## Agenda
 
 ### Previous day:
-- Played around with the logger files. Changed a lot of the backend structure in the logger file and made it much more robust. 
-- Now logging supports having different levels of logging which will increase readability whenever logging. 
-- Added program functionality to log with a level set by the user (through the command line, as seen in the package.json scripts) 
+- [x]Played around with the logger files. Changed a lot of the backend structure in the logger file and made it much more robust. 
+- [x] Now logging supports having different levels of logging which will increase readability whenever logging. 
+- [x] Added program functionality to log with a level set by the user (through the command line, as seen in the package.json scripts) 
 
 ### Up next:
-- Refactor code that used the old code (implement the logger made yesterday). 
-  - Not many changes needed for requires, as the logging file ("Logger.js") remains with the same name. Only need to change how the logging functions are called/
-- Find a good library that can work well with playing audio/video files (already started using youtube-dl to download video files)
-
+- [x] Refactor code that used the old code (implement the logger made yesterday). 
+  - [x] Not many changes needed for requires, as the logging file ("Logger.js") remains with the same name. Only need to change how the logging functions are called/
+- [ ] Find a good library that can work well with playing audio/video files (already started using youtube-dl to download video files)
+- [ ]Learn react to leverage the react-player library 
 
 
 ## Backlog:
