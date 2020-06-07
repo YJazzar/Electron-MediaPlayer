@@ -4,7 +4,8 @@
   "description": "A mini project to test put youtube-dl library",
   "main": "youtubePlayerTest.js",
   "scripts": {
-    "start": "node youtubePlayerTest.js",
+    "downloadvid": "node D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/testing/Youtubedl-tester/youtubPlayerTest.js",
+    "playvid": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Yousuf Jazzar",
