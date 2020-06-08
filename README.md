@@ -28,8 +28,16 @@ examples:
 Then, run this script to start the program:
 
 
+# Currently working on: 
+- Getting babel, gulp, and react setup in a bioler plate project. 
+- Create a separate branch to add these tools named: dev/react
+- Use this website for more directions:
+  - https://medium.com/@michael.m/creating-an-electron-and-react-template-5173d086549a
+- Use this website to make sure the gulp file written in made using the new standards set in: 
+  - https://gulpjs.com/docs/en/getting-started/creating-tasks
 
 
+# On Hold:
 ## Agenda
 
 ### Previous day:
