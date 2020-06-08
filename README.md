@@ -42,7 +42,7 @@ Then, run this script to start the program:
 
 ### Previous day:
 
-- [x]Played around with the logger files. Changed a lot of the backend structure in the logger file and made it much more robust. 
+- [x] Played around with the logger files. Changed a lot of the backend structure in the logger file and made it much more robust. 
 - [x] Now logging supports having different levels of logging which will increase readability whenever logging. 
 - [x] Added program functionality to log with a level set by the user (through the command line, as seen in the package.json scripts) 
 
