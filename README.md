@@ -1,5 +1,29 @@
 # Electron-MediaPlayer
 
+## Dependecies used to create app:
+- electron: For main application windo and backend interface\
+  - npmjs.com/package/electron
+- winston: A logging library
+  - https://www.npmjs.com/package/winston
+- react-player: For playing audio/video files
+  - https://www.npmjs.com/package/react-player
+- Babel: To transpile JSX to JS. Commands used:
+  - ```npm i @babel/core --save-dev```
+  - ```npm i @babel/preset-env @babel/preset-react --save-dev```
+- Gulp: The build tool of choice. Commands used:
+  - ```npm i gulp gulp-babel --save-dev```
+  - ```npm i gulp-concat gulp-clean-css```
+- react and react-dom command:
+  - npm i react react-dom --save-dev
+
+
+## Tutorial for application basic setup: 
+- https://medium.com/@michael.m/creating-an-electron-and-react-template-5173d086549a
+
+## Tutorial for making electron notifications: 
+- https://stackoverflow.com/questions/42851198/how-can-i-send-a-notification-in-electron
+
+
 ## Running the program
 
 To run the program, setup the package.json file's "start" script. The configurations possible are as follow:

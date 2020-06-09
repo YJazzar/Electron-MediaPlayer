@@ -2,16 +2,25 @@
     "name": "player",
     "version": "1.0.0",
     "description": "A simple media player",
-    "main": "D:\\Projects\\Electron-MediaPlayer\\src\\com\\tinyMnt\\main\\javascript\\nodeScripts\\main.js",
+    "main": "./app/electronMain.js",
     "scripts": {
-        "start": "electron . level verbose"
+        "start": "gulp start && electron . "
     },
     "author": "Yousuf Jazzar",
     "license": "MIT ",
     "devDependencies": {
-        "electron": "^9.0.0"
+        "@babel/core": "^7.10.2",
+        "@babel/preset-env": "^7.10.2",
+        "@babel/preset-react": "^7.10.1",
+        "electron": "^9.0.0",
+        "gulp": "^4.0.2",
+        "gulp-babel": "^8.0.0",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
     },
     "dependencies": {
+        "gulp-clean-css": "^4.3.0",
+        "gulp-concat": "^2.6.1",
         "jquery": "^3.5.1",
         "react-player": "^2.1.1",
         "winston": "^3.2.1"
