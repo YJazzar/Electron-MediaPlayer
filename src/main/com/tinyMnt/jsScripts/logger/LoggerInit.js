@@ -1,6 +1,6 @@
 // Require the external library
 const winston = require('winston');
-const { createLogger, format, transports } = require('winston');
+const { createLogger, format } = require('winston');
 const { printf } = format;
 
 const { levels } = require('./LevelConstants.js');

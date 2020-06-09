@@ -1,6 +1,6 @@
 const { dialog } = require('electron');
-const { readDirectory } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/helperFunctions/readDirectory.js');    // For the custom external function
-const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
+const { readDirectory } = require('./readDirectory.js');    // For the custom external function
+const Logger = require('../logger/Logger.js');
 
 function chooseFolder(win, action) {
     dialog.showOpenDialog({ properties: ['openFile', 'multiSelections', 'openDirectory'] }).then(folders => {
