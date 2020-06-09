@@ -2,13 +2,15 @@ const { series } = require('gulp');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const cleanCSS = require('gulp-clean-css');
+const cleanFile = require('gulp-clean');
+
 
 const buildPath = "build/";
 
 
-// Copy the index.html as is
+// Copy all html as is
 function html() {
-    return gulp.src('src/index.html')
+    return gulp.src('src/**/*.html')
         .pipe(gulp.dest(buildPath));
 }
 
@@ -20,7 +22,7 @@ function css() {
 }
 
 
-// Compile JS files and move them to the app folder
+// Compile JS files and move them to the builPath folder
 function js() { 
     return gulp.src('src/**/*.js')
         .pipe(babel())
@@ -28,5 +30,11 @@ function js() {
 }
 
 
+function clean() {
+    return gulp.src(buildPath, { read: false })
+        .pipe(cleanFile());
+}
+
 // Export the "start" task.
-exports.start = series(html, css, js);
+exports.build = series(html, css, js);
+exports.clean = clean;

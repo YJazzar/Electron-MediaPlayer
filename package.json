@@ -4,7 +4,10 @@
     "description": "A simple media player",
     "main": "./app/electronMain.js",
     "scripts": {
-        "start": "gulp start && electron . "
+        "start": "gulp build && electron . level verbose", 
+        "build": "gulp build",
+        "run": "electron . level verbose",
+        "clean": "gulp clean"
     },
     "author": "Yousuf Jazzar",
     "license": "MIT ",
@@ -15,6 +18,7 @@
         "electron": "^9.0.0",
         "gulp": "^4.0.2",
         "gulp-babel": "^8.0.0",
+        "gulp-clean": "^0.4.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     },

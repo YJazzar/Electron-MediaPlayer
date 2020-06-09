@@ -13,6 +13,7 @@
 - Gulp: The build tool of choice. Commands used:
   - ```npm i gulp gulp-babel --save-dev```
   - ```npm i gulp-concat gulp-clean-css```
+  - ```npm install --save-dev gulp-clean```
 - react and react-dom command:
   - npm i react react-dom --save-dev
 
