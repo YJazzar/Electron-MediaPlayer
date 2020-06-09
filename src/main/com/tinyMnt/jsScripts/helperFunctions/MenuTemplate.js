@@ -1,8 +1,5 @@
-
-
-const {chooseFolder} = require('./PromptFiles');
-const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
-
+const { chooseFolder } = require('./PromptFiles.js');
+const Logger = require('../logger/Logger.js');
 
 
 function getMenuTemplate(app, win) {
@@ -18,7 +15,7 @@ function getMenuTemplate(app, win) {
                     click() {
                         // Log action and call the corresponsing function
                         Logger.logInfo(__filename, "getMenuTemplate(): Need to open a new folder");
-                        chooseFolder(win, "tableFile:clearAndLoadItems");                        
+                        chooseFolder(win, "tableFile:clearAndLoadItems");
                     }
                 },
                 {

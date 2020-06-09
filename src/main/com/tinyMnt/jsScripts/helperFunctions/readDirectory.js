@@ -2,7 +2,7 @@
 //  How to read a directory and get information on what files 
 //   exist inside it (and extract helpful information from each file)
 const fs = require('fs');
-const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
+const Logger = require('../logger/Logger.js');
 
 // TODO: is this "async" necessary?
 // Call the function with a string representing the path of the directory in question

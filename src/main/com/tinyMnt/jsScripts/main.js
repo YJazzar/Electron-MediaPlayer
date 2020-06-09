@@ -2,13 +2,16 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');         // For the electron app
 
 // Importing custom scripts
-const { getMenuTemplate } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/helperFunctions/MenuTemplate.js');
-const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/Logger.js');
-
+// TODO: clean up this import so it doesnt need the curly braces
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const { getMenuTemplate } = require('./helperFunctions/MenuTemplate.js');
+const Logger = require('./logger/Logger.js');
 
 let win;
 
 function createWindow() {
+    Logger.logInfo(__filename, "Starting function createWindow()");
+
     // Create the browser window.
     win = new BrowserWindow({
         width: 1200,
@@ -21,7 +24,7 @@ function createWindow() {
     Logger.logInfo(__filename, "BrowserWindow created");
     
     // and load the index.html of the app.
-    win.loadFile('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/html/index.html')
+    win.loadFile(config.buildPath + 'main/com/tinyMnt/html/index.html')
 
     // Open the DevTools.
     win.webContents.openDevTools()
