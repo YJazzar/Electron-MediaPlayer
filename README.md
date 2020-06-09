@@ -76,17 +76,15 @@ Then, run this script to start the program:
   - Gulp feeds all js files into babel and transpiles them from ReactJS into vanilla JS
   - Finally, electron can be called and runs the program. 
 - Set up a config.js file to make configuration easier
-
-_
-- Things to do: 
+- ***Things to do:*** 
   - Need to completely integrate the config.js 
   - Migrate items from the backlog existing in the README.md into a github board/trello/any other alternative
   - Make imports look better with new syntax and/or removing useless curly braces 
-_
+
 
 ### 5/7/2020:
 - Learned react and research how to integrate it with electron
-- Things to do: 
+- ***Things to do:*** 
   - change the code base structure to allow react to become part of the project
 
 ### 5/6/2020:
