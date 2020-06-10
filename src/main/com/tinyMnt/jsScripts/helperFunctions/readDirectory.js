@@ -12,67 +12,59 @@ const Logger = require(config.loggerPath);
 //      @param eventType: the name of the event to send through the emitter
 //      @return result: an array with information of all files in a directory
 //                      the first object in result is an object that contains the path of the directory
-function readDirectory(paths, emitter, eventType) {
+async function readDirectory(paths, emitter, eventType) {
     Logger.logVerbose(__filename, "Starting readDirectory() call with: ")
     Logger.logVerbose(__filename, "\tpaths: " + paths);
     Logger.logVerbose(__filename, "\teventType: " + eventType);
 
-    // let result = [{ path: paths }];
+    let result = [{ path: paths }];
     
     // For each path, find al files inside each and add them to "result"
     let currPath = "";
     for (let p = 0; p < paths.length; p++) {
         currPath = paths[p];
 
-        if (eventType == "tableFile:clearAndLoadItems") {
-            Logger.logDebug(__filename, "Sending clear signal and changing eventType");
-            emitter.send("tableFile:clearItems");
-            eventType = "tableFile:appendItems";
-        }
-
         // Look at this website for more explanation (bottom of the page): 
         //      https://code-maven.com/list-content-of-directory-with-nodejs
         // Here, 'items' is a string array holding the names of the files (of the given directory)
-        readdir(currPath).then(items => {
-
-            let result = [{ empty: "fix to push paths here" }];
-
-            statAt(currPath, i, items, result);
-
-            // For each file, call the function fs.stat() to get more information about it
-            for (var i = 0; i < items.length; i++) {
-                let file = currPath + '/' + items[i];
-
-                // After the file path was found, we query for more information and display it
-                // The query happens through the Promise made by the local stat() function
-                // The resolved value is simply the object constructed with useful information
-                // The "await" is placed there to make sure the "result" array contains all needed information 
-                //   before the for-loop continues to the next iteration.
-                // stat(file, items[i]).then(data => {
-                //     result.push(data);
-                // }).catch(err => {
-                //     Logger.logError(__filename, err);
-                // });
-                Logger.logDebug("result is now length: " + result.length);
-            }
-
-            Logger.loginfo(__filename, "readDirectory() finished processing: " + paths);
-
-            // Since you cannot return, we send the data back through a send function.
-            // emitter.send(eventType, result);
-
-
-        }).catch(err => {
+        let items = await readdir(currPath).catch(err => {
             Logger.logError(__filename, err);
         });;
+
+
+        // For each file, call the function fs.stat() to get more information about it
+        for (var i = 0; i < items.length; i++) {
+            let file = currPath + '/' + items[i];
+
+            // After the file path was found, we query for more information and display it
+            // The query happens through the Promise made by the local stat() function
+            // The resolved value is simply the object constructed with useful information
+            // The "await" is placed there to make sure the "result" array contains all needed information 
+            //   before the for-loop continues to the next iteration.
+            await stat(file, items[i]).then(data => {
+                result.push(data);
+            }).catch(err => {
+                Logger.logError(__filename, err);
+            });
+            Logger.logDebug("result is now length: " + result.length);
+        }
+        
+        Logger.logInfo(__filename, "readDirectory() finished processing: " + paths);
+
+        
     }
+
+    console.log(emitter);
+
+    // Since you cannot return, we send the data back through a send function.
+    emitter.send(eventType, result);
 }
 
 // Makes a promise from fs.readdir() function call
 function readdir(path) {
     // Return a promise that runs the external call
     return new Promise((resolve, reject) => {
-        fs.readdir(path, function (err, items) {
+        fs.readdir(path, async function (err, items) {
             if (err)
                 reject(err);
 
@@ -80,16 +72,6 @@ function readdir(path) {
             resolve(items);
         });
     });
-}
-
-function statAt(currPath, i, items, result) {
-
-    if (i >= items.length)
-        return null;
-
-    const filePath = currPath + items[i];
-    Logger.logDebug(__filename, "Calling statAt() for i = " + i + " and path: " + filePath);
-    return statAt(currPath, i+1, items, result);
 }
 
 // Makes a promise from the fs.stat() function call

@@ -1,3 +1,5 @@
+require("@babel/polyfill");
+
 // Importing electron
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');         // For the electron app
 

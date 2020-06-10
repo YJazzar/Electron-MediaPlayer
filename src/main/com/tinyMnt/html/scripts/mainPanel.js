@@ -55,8 +55,8 @@ function appendTable(event, data) {
         let tempCols;
         for (let i = 1; i < data.length; i ++) {
             tempCols = [data[i].name, data[i].formattedDate, data[i].name, data[i].size];
-            tempRow = createRow(tempCols, data[i].path);
-            tableBody.appendChild(tempRow);
+            // tempRow = createRow(tempCols, data[i].path);
+            // tableBody.appendChild(tempRow);
         }
 
         Logger.log(Logger.levelNames.info, filename, "Created rows for the recent files that were opened");
@@ -97,7 +97,7 @@ ipcRenderer.on("tableFile:appendItems", appendTable);
 ipcRenderer.on("tableFile:clearItems", clearTable);
 ipcRenderer.on("tableFile:clearAndLoadItems", clearAndLoadTable);
 
-console.log("here");
+
 Logger.logInfo(filename, "DOESS THIS WORKKKKK");
 
 // Send signal that processing can start:
