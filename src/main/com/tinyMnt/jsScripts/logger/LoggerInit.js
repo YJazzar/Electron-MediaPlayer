@@ -70,7 +70,7 @@ function sendStartUpLog(logger, dateAndTime) {
         level: "info",
         time: dateAndTime,
         source: __filename,
-        message: "/t Program started",
+        message: "\t Program started",
     });
 
     logger.log({
