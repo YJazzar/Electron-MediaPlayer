@@ -3,55 +3,23 @@
   <head>
     <meta charset="UTF-8" />
 
-    <title>Hello World!</title>
+    <title>tinyMnt - Media Player</title>
 
     <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';"/>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'unsafe-inline';"
+    />
     <!-- Add the materialize style sheets -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
-    <!-- Add custom style sheets -->
-    <link rel="stylesheet" href="../css/index.css">
-    
-
-    <!-- Here, we can load all of the files needed -->
-    <!-- <script src="https://code.jquery.com/jquery-3.5.0.js"></script>  -->
-    <script>window.$ = window.jQuery = require('jquery');</script>
-    <script>
-
-      $(function () {
-        $("#nav_container").load("navigation.html");
-        $("#main_container").load("mainPanel.html");
-        $("#player_container").load("playerControls.html");
-      });
-
-      
-    </script>
-    <!-- End of script to load files -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
   </head>
 
   <body>
-
- 
-    <!-- This tag is required to show the place and the file name of where the navigation HTML code is stored -->
-    <!-- NOTE: the file paths should be in relation to the 'main.js' file -->
-    <div class="row">
-      <div id="nav_container"    class="col s3 full_height"></div>
-      <div id="main_container"   class="col s9">
-        <!-- <script src="../javascript/mainPanel.js"></script> -->
-      </div>
-
-      <div class="row">
-        <div class="col s3"></div>
-        <div id="player_container" class="col s9">
-        </div>
-      </div>
-      
-
-
-    </div>
-      
-    
-  </body>
-  
+    <div id="app-load-point"></div>
     <script src="./scripts/index.js"></script>
+  </body>
+
 </html>
