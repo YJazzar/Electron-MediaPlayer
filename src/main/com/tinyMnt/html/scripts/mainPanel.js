@@ -4,6 +4,7 @@ const tableBody = document.getElementById("tableBody");
 // NOTE: All logging functions required, and the Logger.js object required is inherited from index.js
 
 // "cols" contains the text of each column in the row
+const filename = "mainPanel.js"
 function createRow(cols, path) {
     // Create the row and return it        
     let row = document.createElement("tr");

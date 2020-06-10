@@ -1,6 +1,8 @@
 
 // Set up the logging elements
-const Logger = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/htmlScripts/htmlLoggerWrapper.js');
+
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const Logger = require(config.buildPath + config.htmlSourcePath + 'scripts/htmlLoggerWrapper.js');
 const indexjsPath = "D:\\Projects\\Electron-MediaPlayer\\src\\com\\tinyMnt\\main\\javascript\\htmlScripts\\index.js";
 
 // These values will be available to each of the corresponding files paths due to jquery. They will be used for logging.

@@ -24,4 +24,4 @@ function getDateTime() {
     return month + "/" + day + "/" + year + " " + hour + ":" + min + ":" + sec;
 }
 
-module.exports = { getDateTime };
+module.exports = getDateTime;

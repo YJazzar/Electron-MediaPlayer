@@ -76,3 +76,8 @@ app.on('activate', () => {
 ipcMain.on("loadDone", function (e, data) {
     Logger.logVerbose(__filename, "The main BrowserWindow has been fully loaded.");
 });
+
+// An event to use the logger from the electron browser
+ipcMain.on("Logger", (e, message) => {
+    Logger.log(message.level, message.source, message.message);
+})

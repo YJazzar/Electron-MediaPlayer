@@ -4,6 +4,7 @@ config = {
     cssSourcePath: "main/com/tinyMnt/css/", 
     htmlSourcePath: "main/com/tinyMnt/html/", 
     jsSourcePath: "main/com/tinyMnt/jsScripts/",
+    loggerPath: "D:/Projects/Electron-MediaPlayer/build/" + "main/com/tinyMnt/jsScripts/" + 'logger/Logger.js',
     defaultLoggingLevel: "debug"
 }
 

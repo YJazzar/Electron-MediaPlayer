@@ -2,17 +2,21 @@
 //  How to read a directory and get information on what files 
 //   exist inside it (and extract helpful information from each file)
 const fs = require('fs');
-const Logger = require('../logger/Logger.js');
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const Logger = require(config.loggerPath);
 
-// TODO: is this "async" necessary?
 // Call the function with a string representing the path of the directory in question
 // For safe usage, call with the full path. 
 //      @param path: an array of all the paths that need to read
 //      @param emitter: the ipcMain of the main window (from main.js)
-//      @param evetType: the name of the event to send through the emitter
-//      @return result: an array with informatino of all files in a directory
+//      @param eventType: the name of the event to send through the emitter
+//      @return result: an array with information of all files in a directory
 //                      the first object in result is an object that contains the path of the directory
 async function readDirectory(paths, emitter, eventType) {
+    Logger.logVerbose(__filename, "Starting readDirectory() call with: ")
+    Logger.logVerbose(__filename, "\tpaths: " + paths);
+    Logger.logVerbose(__filename, "\teventType: " + eventType);
+
     let result = [{ path: paths }];
     
     // For each path, find al files inside each and add them to "result"
@@ -42,12 +46,13 @@ async function readDirectory(paths, emitter, eventType) {
             }).catch(err => {
                 Logger.logError(__filename, err);
             });
-            // console.log("result is now length: " + result.length);
+            Logger.logDebug("result is now length: " + result.length);
         }
-        // console.log(result);
+        
+        Logger.loginfo(__filename, "readDirectory() finished processing: " + paths);
+
         // Since you cannot return, we send the data back through a send function.
         emitter.send(eventType, result);
-        // callBack(result);
     }
 }
 
@@ -65,9 +70,8 @@ function readdir(path) {
     });
 }
 
-// TODO: is this "async" necessary?
 // Makes a promise from the fs.stat() function call
-async function stat(filePath, fileName) {
+function stat(filePath, fileName) {
     // Return a promise that runs the system call
     return new Promise((resolve, reject) => {
         fs.stat(filePath, (err, stat) => {
@@ -137,4 +141,4 @@ const convertBytes = function (bytes) {
 }
 
 
-module.exports = { readDirectory };
+module.exports = readDirectory;

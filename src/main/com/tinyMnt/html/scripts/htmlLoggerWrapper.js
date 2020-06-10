@@ -1,6 +1,8 @@
 const { ipcRenderer } = require("electron");
-const { getDateTime } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/DateAndTime.js');
-const { levelNames } = require('D:/Projects/Electron-MediaPlayer/src/com/tinyMnt/main/javascript/nodeScripts/logger/LevelConstants.js');
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+
+const getDateTime = require(config.buildPath + config.jsSourcePath + 'logger/DateAndTime.js');
+const { levelNames } = require(config.buildPath + config.jsSourcePath + 'logger/LevelConstants.js');
 
 // This function was made to make constructing of the json object needed to log easier
 function log(level, source, message) {

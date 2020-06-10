@@ -1,10 +1,10 @@
-const { levelNames } = require('./LevelConstants.js');
-const { init, sendStartUpLog } = require('./LoggerInit.js');
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 
+const { levelNames } = require(config.buildPath + config.jsSourcePath + 'logger/LevelConstants.js');
+const { init, sendStartUpLog } = require(config.buildPath + config.jsSourcePath + 'logger/LoggerInit.js');
+const getDateTime = require(config.buildPath + config.jsSourcePath + 'logger//DateAndTime.js');
 
-const { getDateTime } = require('./DateAndTime.js');
-
-// Calls the functionf from LoggerInit.js to make the winston logger instance
+// Calls the function from LoggerInit.js to make the winston logger instance
 const logger = init();
 
 // Prints that the program has started
