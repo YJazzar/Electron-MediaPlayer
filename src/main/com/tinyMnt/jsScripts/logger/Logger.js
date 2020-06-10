@@ -50,6 +50,15 @@ function logVerbose(source, message) {
     });
 }
 
+function logDebug(source, message) {
+    logger.log({
+        level: "debug",
+        time: getDateTime(),
+        source: source,
+        message: message,
+    });
+}
+
 logInfo(__filename, "Log packages initialized!");
 
-module.exports = { logger, log, logInfo, logError, logVerbose, levelNames, getDateTime };
+module.exports = { logger, log, logInfo, logError, logVerbose, logDebug, levelNames, getDateTime };

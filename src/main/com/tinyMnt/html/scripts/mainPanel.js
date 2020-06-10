@@ -97,6 +97,7 @@ ipcRenderer.on("tableFile:appendItems", appendTable);
 ipcRenderer.on("tableFile:clearItems", clearTable);
 ipcRenderer.on("tableFile:clearAndLoadItems", clearAndLoadTable);
 
+console.log("here");
 Logger.logInfo(filename, "DOESS THIS WORKKKKK");
 
 // Send signal that processing can start:
