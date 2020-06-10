@@ -15,7 +15,7 @@
   - ```npm i gulp-concat gulp-clean-css```
   - ```npm install --save-dev gulp-clean```
 - react and react-dom command:
-  - npm i react react-dom --save-dev
+  - ```npm i react react-dom --save-dev```
 
 
 ## Tutorial for application basic setup: 

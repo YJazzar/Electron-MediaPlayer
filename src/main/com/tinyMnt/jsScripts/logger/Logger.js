@@ -40,6 +40,16 @@ function logError(source, message) {
     });
 }
 
+// This function was made to quickly log "error" messages
+function logVerbose(source, message) {
+    logger.log({
+        level: "verbose",
+        time: getDateTime(),
+        source: source,
+        message: message,
+    });
+}
+
 logInfo(__filename, "Log packages initialized!");
 
-module.exports = { logger, log, logInfo, logError, levelNames, getDateTime };
+module.exports = { logger, log, logInfo, logError, logVerbose, levelNames, getDateTime };

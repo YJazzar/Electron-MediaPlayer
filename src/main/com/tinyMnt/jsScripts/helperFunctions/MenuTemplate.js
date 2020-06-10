@@ -57,4 +57,4 @@ function getMenuTemplate(app, win) {
 }
 
 
-module.exports = { getMenuTemplate };
+module.exports = getMenuTemplate;

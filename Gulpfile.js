@@ -4,8 +4,8 @@ const babel = require('gulp-babel');
 const cleanCSS = require('gulp-clean-css');
 const cleanFile = require('gulp-clean');
 
-
-const buildPath = "build/";
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const buildPath = config.buildPath;
 
 
 // Copy all html as is
