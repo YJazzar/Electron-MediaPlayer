@@ -1,3 +1,6 @@
+
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const Logger = require(config.buildPath + config.htmlSourcePath + 'scripts/htmlLoggerWrapper.js');
 const { List } = require('./List.js');
 
 

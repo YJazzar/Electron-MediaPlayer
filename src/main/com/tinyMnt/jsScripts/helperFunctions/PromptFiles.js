@@ -23,4 +23,4 @@ function chooseFolder(win, action) {
     
 }
 
-module.exports = { chooseFolder };
+module.exports = chooseFolder;

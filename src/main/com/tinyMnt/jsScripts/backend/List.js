@@ -1,4 +1,5 @@
-const Logger = require('../logger/Logger.js');
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const Logger = require(config.buildPath + config.htmlSourcePath + 'scripts/htmlLoggerWrapper.js');
 
 // TODO: add a save feature
 // TODO: make it store to file

@@ -13,7 +13,7 @@ function log(level, source, message) {
         message: message,
     };
 
-    ipcRenderer.send("Logger", temp);
+    // ipcRenderer.send("Logger", temp);
 }
 
 // This function was made to quickly log "info" messages

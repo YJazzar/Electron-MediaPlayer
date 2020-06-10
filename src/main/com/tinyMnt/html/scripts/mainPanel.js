@@ -1,4 +1,8 @@
 const { ipcRenderer } = require("electron");
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const Logger = require(config.buildPath + config.htmlSourcePath + 'scripts/htmlLoggerWrapper.js');
+
+
 const tableBody = document.getElementById("tableBody");
 
 // NOTE: All logging functions required, and the Logger.js object required is inherited from index.js

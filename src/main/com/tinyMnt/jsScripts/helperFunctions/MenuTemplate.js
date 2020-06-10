@@ -1,6 +1,8 @@
-const { chooseFolder } = require('./PromptFiles.js');
-const Logger = require('../logger/Logger.js');
 
+
+const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const Logger = require(config.buildPath + config.htmlSourcePath + 'scripts/htmlLoggerWrapper.js');
+const chooseFolder = require(config.buildPath + config.jsSourcePath + 'helperFunctions/PromptFiles.js');
 
 function getMenuTemplate(app, win) {
     // Create a menu template
