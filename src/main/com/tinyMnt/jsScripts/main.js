@@ -79,7 +79,7 @@ ipcMain.on("loadDone", function (e, data) {
     Logger.logVerbose(__filename, "The main BrowserWindow has been fully loaded.");
 });
 
-// An event to use the logger from the electron browser
+// An event so the html files from the electron browser can use the logger 
 ipcMain.on("Logger", (e, message) => {
     Logger.log(message.level, message.source, message.message);
 })
