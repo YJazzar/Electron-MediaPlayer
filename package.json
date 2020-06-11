@@ -2,7 +2,7 @@
     "name": "player",
     "version": "1.0.0",
     "description": "A simple media player",
-    "main": "./build/main/com/tinyMnt/jsScripts/main.js",
+    "main": "./build/main/com/tinyMnt/jsScripts/electron/main.js",
     "scripts": {
         "start": "gulp build && electron . level verbose",
         "build": "gulp build",

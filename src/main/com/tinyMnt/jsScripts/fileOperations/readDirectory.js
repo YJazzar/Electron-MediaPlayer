@@ -49,12 +49,12 @@ async function readDirectory(paths, emitter, eventType) {
             Logger.logDebug("result is now length: " + result.length);
         }
         
-        Logger.logInfo(__filename, "readDirectory() finished processing: " + paths);
+        Logger.logInfo(__filename, "readDirectory() finished processing: " + currPath);
 
         
     }
 
-    console.log(emitter);
+    // console.log(emitter);
 
     // Since you cannot return, we send the data back through a send function.
     emitter.send(eventType, result);

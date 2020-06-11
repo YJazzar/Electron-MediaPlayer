@@ -28,12 +28,12 @@ function logError(source, message) {
 
 // This function was made to quickly log "verbose" messages
 function logVerbose(source, message) {
-    log(levelNames.error, source, message);
+    log(levelNames.verbose, source, message);
 }
 
 // This function was made to quickly log "debug" messages
 function logDebug(source, message) {
-    log(levelNames.error, source, message);
+    log(levelNames.debug, source, message);
 }
 
 module.exports = { log, logInfo, logError, logVerbose, logDebug,  levelNames };

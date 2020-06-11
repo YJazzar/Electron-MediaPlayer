@@ -22,9 +22,15 @@ function css() {
 }
 
 
-// Compile JS files and move them to the builPath folder
+// Compile JS files and move them to the buildPath folder
 function js() { 
     return gulp.src('src/**/*.js')
+        // .pipe(babel())
+        .pipe(gulp.dest(buildPath));
+}
+
+function jsx() {
+    return gulp.src('src/**/*.jsx')
         .pipe(babel())
         .pipe(gulp.dest(buildPath));
 }
@@ -36,5 +42,5 @@ function clean() {
 }
 
 // Export the "start" task.
-exports.build = series(html, css, js);
+exports.build = series(html, css, js, jsx);
 exports.clean = clean;

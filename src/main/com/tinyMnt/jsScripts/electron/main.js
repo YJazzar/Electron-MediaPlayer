@@ -7,11 +7,11 @@ const { app, BrowserWindow, ipcMain, Menu } = require('electron');         // Fo
 const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 
 // Use config to construct imports:
-const getMenuTemplate = require(config.buildPath + config.jsSourcePath + 'helperFunctions/MenuTemplate.js');
+const getMenuTemplate = require(config.buildPath + config.jsSourcePath + 'electron/MenuTemplate.js');
 const Logger = require(config.buildPath + config.jsSourcePath + 'logger/Logger.js');
 
-let win;
 
+let win;
 
 function createWindow() {
     Logger.log(Logger.levelNames.debug, __filename, "Starting function createWindow()");

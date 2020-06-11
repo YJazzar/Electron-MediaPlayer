@@ -1,26 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+
 const Logger = require(config.htmlLoggerPath);
 
 // Imports for other custom tags and ReactJS classes
-const MainPanel = require(config.buildPath + config.htmlSourcePath + "scripts/MainPanel.js");
-const NavPanel = require(config.buildPath + config.htmlSourcePath + "scripts/NavPanel.js");
-const PlayerPanel = require(config.buildPath + config.htmlSourcePath + "scripts/PlayerPanel.js");
+// Use *.js instead of jsx because that will be their file extension once its compiled
+const MainPanel = require(config.buildPath + config.reactSourcePath + "mainPanel/MainPanel.js");
+const NavPanel = require(config.buildPath + config.reactSourcePath + "navPanel/NavPanel.js");
+const PlayerPanel = require(config.buildPath + config.reactSourcePath + "playerPanel/PlayerPanel.js");
 
 class App extends React.Component {
+
   render() {
     Logger.logVerbose(__filename, "Rendering the <App/> tag");
     return (
       <div className="row">
-        <NavPanel className="col s3 full_height" />
+        <NavPanel className="col s3" />
         <MainPanel className="col s9" />
 
         <div className="row">
-          {/* <div className="col s3"></div> */}
-          <PlayerPanel className="col s9" />
+          <PlayerPanel/>
         </div>
+        
       </div>
     );
   }
