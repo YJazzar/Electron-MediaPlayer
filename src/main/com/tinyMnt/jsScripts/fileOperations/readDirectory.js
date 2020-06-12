@@ -46,7 +46,7 @@ async function readDirectory(paths, emitter, eventType) {
             }).catch(err => {
                 Logger.logError(__filename, err);
             });
-            Logger.logDebug("result is now length: " + result.length);
+            Logger.logDebug(__filename, "result is now length: " + result.length);
         }
         
         Logger.logInfo(__filename, "readDirectory() finished processing: " + currPath);

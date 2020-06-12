@@ -4,7 +4,7 @@
     "description": "A simple media player",
     "main": "./build/main/com/tinyMnt/jsScripts/electron/main.js",
     "scripts": {
-        "start": "gulp build && electron . level verbose",
+        "start": "gulp build && electron . level debug",
         "build": "gulp build",
         "run": "electron . level verbose",
         "clean": "gulp clean"
@@ -20,7 +20,8 @@
         "gulp-babel": "^8.0.0",
         "gulp-clean": "^0.4.0",
         "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "react-dom": "^16.13.1",
+        "react-player": "^2.3.0"
     },
     "dependencies": {
         "@babel/polyfill": "^7.10.1",
@@ -28,7 +29,6 @@
         "gulp-concat": "^2.6.1",
         "jquery": "^3.5.1",
         "materialize-css": "^1.0.0-rc.2",
-        "react-player": "^2.1.1",
         "winston": "^3.2.1"
     }
 }

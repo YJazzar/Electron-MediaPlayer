@@ -1,6 +1,8 @@
 const { ipcRenderer } = require("electron");
 const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 const Logger = require(config.htmlLoggerPath);
+const MediaPlayer = require(config.buildPath + config.reactSourcePath + 'utils/MediaPlayer.js');
+
 
 Logger.logDebug(__filename, "Started running TableEvents.js file");
 
@@ -70,6 +72,7 @@ function clearTable(event) {
     Logger.log(Logger.levelNames.verbose, __filename, 'ipcRenderer signal received -> tableFile:clearItems');
     if (tableBody) {
         tableBody.innerHTML = "";
+        MediaPlayer.run();
     } else {
         Logger.log(Logger.levelNames.critical, __filename, "Could not get tableBody in clearTable()");
         alert("[mainPanel.js] Could not get tableBody in clearTable");
@@ -100,3 +103,4 @@ Logger.logInfo(__filename, "DOESS THIS WORKKKKK");
 
 // Send signal that processing can start:
 ipcRenderer.send('loadDone', "Done setting up everything");
+Logger.logDebug(__filename, "Starting first react player instance");

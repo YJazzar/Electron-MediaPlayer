@@ -19,7 +19,7 @@ class MainPanel extends React.Component {
         <link rel="stylesheet" href={config.buildPath + config.cssSourcePath + "mainPanel.css"}></link>
 
           <Table/>
-
+          <div id="PUTHERE"></div>
       </div>
     );
   }
