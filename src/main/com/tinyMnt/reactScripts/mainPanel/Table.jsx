@@ -21,7 +21,7 @@ class Table extends React.Component {
   render() {
     return (
       // <div className="centered">
-      <div>
+      <div className="container">
         <table
           id="mainTable"
           className="col s12 centered striped responsive-table"
@@ -41,10 +41,10 @@ class TableHead extends React.Component {
     return (
       <thead>
         <tr>
-          <th data-field="name">Name</th>
+          <th data-field="name" className=" ">Name</th>
           <th data-field="dateModified">Date Modified</th>
           <th data-field="type">Type</th>
-          <th data-field="size">Size</th>
+          <th data-field="size" className=" ">Size</th>
         </tr>
       </thead>
     );
