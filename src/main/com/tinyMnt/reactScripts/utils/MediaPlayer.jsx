@@ -5,39 +5,37 @@ const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 
 const Logger = require(config.htmlLoggerPath);
 
-class MediaPlayer extends React.Component {
-  render() {
-    Logger.logVerbose(__filename, "Inside MediaPlayer rendererr");
-    return (
-      <div>
-        <ReactPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" playing={true} controls={true} volume={0.5}/>
-        <h1>TESTT</h1>
-      </div>
-    );
-  }
-}
 
 class ResponsivePlayer extends React.Component {
   render() {
+    Logger.logVerbose(__filename, "Now playing: " + this.props.filePath);
+    
     return (
       <div className="player-wrapper">
         <ReactPlayer
           className="react-player"
-          url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
-          width="100%"
-          height="100%"
+          // url="C:/Users/sfjzz/Videos/2020-05-26 13-17-56.mkv" test file
+          url={this.props.filePath}
+          // width="100%"
+          // height="100%"
+          playing={true}
+          controls={true}
+          volume={0.5}
         />
       </div>
     );
   }
 }
 
-function run() {
+function run(filePath) {
   Logger.logVerbose(__filename, "Starting MediaPlayer.run()");
 
 
   Logger.logVerbose(__filename, "Rendering MediaPlayer at id=render-here");
-  ReactDOM.render(<ResponsivePlayer />, document.getElementById("PUTHERE"));
+  ReactDOM.render(
+    <ResponsivePlayer filePath={filePath}/>,
+    document.getElementById("temp-react-player-loc")
+  );
 }
 
 module.exports = { run };

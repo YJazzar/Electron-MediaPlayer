@@ -28,6 +28,7 @@ function createRow(cols, path) {
     row.onclick = function (row) {
         return function () {
             Logger.log(Logger.levelNames.info, __filename, row.getAttribute("filePath"));
+            MediaPlayer.run(row.getAttribute("filePath"));
         };
     }(row);
 
@@ -72,7 +73,6 @@ function clearTable(event) {
     Logger.log(Logger.levelNames.verbose, __filename, 'ipcRenderer signal received -> tableFile:clearItems');
     if (tableBody) {
         tableBody.innerHTML = "";
-        MediaPlayer.run();
     } else {
         Logger.log(Logger.levelNames.critical, __filename, "Could not get tableBody in clearTable()");
         alert("[mainPanel.js] Could not get tableBody in clearTable");
