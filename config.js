@@ -10,7 +10,10 @@ config = {
     defaultLoggingLevel: "debug",
 
     entryHTML: "app.html",
-    fileExtensions: ["mp3", "mp4", "mkv"]
+    tableOptions: {
+        tableHeaderTitles: ["Name", "Length", "Type", "Size"],
+        fileExtensions: ["mp3", "mp4", "mkv"]
+    }
 }
 
 /**

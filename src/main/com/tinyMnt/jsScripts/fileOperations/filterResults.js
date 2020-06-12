@@ -2,8 +2,8 @@ const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 
 const Logger = require(config.loggerPath);
 
-// TODO: Change how and were these extensions are stored
-const fileExtensions = config.fileExtensions;
+// Get the file extensions that can be used
+const fileExtensions = config.tableOptions.fileExtensions;
 
 function applyFilter(fileObj) {
     Logger.logDebug(__filename, "Using these extensions for filtering: " + fileExtensions);

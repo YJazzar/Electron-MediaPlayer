@@ -37,14 +37,35 @@ class Table extends React.Component {
 }
 
 class TableHead extends React.Component {
+  getCamelCase(str) {
+    return str
+      .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+        return index == 0 ? word.toLowerCase() : word.toUpperCase();
+      })
+      .replace(/\s+/g, "");
+  }
+
+  getHeaders() {
+    let th = [];
+    const headerTitles = config.tableOptions.tableHeaderTitles;
+
+    let title = "";
+    let key = "";
+    for (let i = 0; i < headerTitles.length; i++) {
+      title = headerTitles[i];
+      key = this.getCamelCase(title);
+
+      th.push(<th key={key} data-field={key}>{title}</th>);
+    }
+
+    return th;
+  }
+
   render() {
     return (
       <thead>
         <tr>
-          <th data-field="name" className=" ">Name</th>
-          <th data-field="dateModified">Date Modified</th>
-          <th data-field="type">Type</th>
-          <th data-field="size" className=" ">Size</th>
+          {this.getHeaders()}
         </tr>
       </thead>
     );
