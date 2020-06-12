@@ -11,7 +11,7 @@ config = {
 
     entryHTML: "app.html",
     tableOptions: {
-        tableHeaderTitles: ["Name", "Length", "Type", "Size"],
+        tableHeaderTitles: ["Name", "Length", "Type", "Size", "Date Modified"],
         fileExtensions: ["mp3", "mp4", "mkv"]
     }
 }

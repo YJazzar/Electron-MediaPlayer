@@ -20,20 +20,21 @@ function getFileData(filePath, fileName, stats) {
     obj.date = new Date(stats.mtimeMs);
 
     // Get the sub-information needed to construct HH:MM:SS
-    obj.hours = obj.date.getHours();
-    obj.minutes = "0" + obj.date.getMinutes();
-    obj.seconds = "0" + obj.date.getSeconds();
+    obj.dateElements = {};
+    obj.dateElements.hours = obj.date.getHours();
+    obj.dateElements.minutes = "0" + obj.date.getMinutes();
+    obj.dateElements.seconds = "0" + obj.date.getSeconds();
 
     // Get the sub-information needed to construct MM/DD/YYYY
-    obj.month = obj.date.getMonth() + 1;
-    obj.day = obj.date.getDate();
-    obj.year = obj.date.getFullYear();
+    obj.dateElements.month = obj.date.getMonth() + 1;
+    obj.dateElements.day = obj.date.getDate();
+    obj.dateElements.year = obj.date.getFullYear();
 
     // Will display time in HH:MM:SS format
-    obj.formattedTime = obj.hours + ':' + obj.minutes.substr(-2) + ':' + obj.seconds.substr(-2);
+    obj.formattedTime = obj.dateElements.hours + ':' + obj.dateElements.minutes.substr(-2) + ':' + obj.dateElements.seconds.substr(-2);
 
     // Will display date in MM/DD/YYYY
-    obj.formattedDate = obj.month + '/' + obj.day + '/' + obj.year;
+    obj.formattedDate = obj.dateElements.month + '/' + obj.dateElements.day + '/' + obj.dateElements.year;
 
     // Return the object so it can be resolved by the calling promise
     return obj;
