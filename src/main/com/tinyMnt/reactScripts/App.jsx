@@ -19,8 +19,8 @@ class App extends React.Component {
         <NavPanel className="col s3" />
         <MainPanel className="col s9" />
 
-        <div className="row">
-          <PlayerPanel/>
+        <div className="col s12">
+          <PlayerPanel className="player-panel"/>
         </div>
         
       </div>

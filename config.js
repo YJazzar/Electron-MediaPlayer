@@ -7,7 +7,9 @@ config = {
     reactSourcePath: "main/com/tinyMnt/reactScripts/",
     loggerPath: "D:/Projects/Electron-MediaPlayer/build/" + "main/com/tinyMnt/jsScripts/" + 'logger/Logger.js',
     htmlLoggerPath: "D:/Projects/Electron-MediaPlayer/src/main/com/tinyMnt/jsScripts/logger/htmlLogWrapper.js",
-    defaultLoggingLevel: "debug"
+    defaultLoggingLevel: "debug",
+
+    entryHTML: "app.html"
 }
 
 /**

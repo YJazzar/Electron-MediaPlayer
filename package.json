@@ -28,7 +28,6 @@
         "gulp-clean-css": "^4.3.0",
         "gulp-concat": "^2.6.1",
         "jquery": "^3.5.1",
-        "materialize-css": "^1.0.0-rc.2",
         "winston": "^3.2.1"
     }
 }

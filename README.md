@@ -53,6 +53,18 @@ examples:
 Then, run this script to start the program:
 
 
+# Next action items:
+- Rename the temporary div for MediaPlayer (that is under PlayerPanel.jsx).
+- Rename MediaPlayer.jsx to ResponsivePlayer.jsx (or any other suitable name).
+- Make a new js file under ```fileOperations/``` to extract a file path
+- Add new columns in the table to show more useful info (such as file extensions and time length of each file).
+- Filter out the files whenever they are imported so only media files are kept
+- Make a new button on the Menu to allow the user to change what filters need to be applied (what file extensions should be kept).
+
+# Critical actions items:
+- Create the database class.
+- Figure out how to persist JSON information.
+- Create a database structure thats easy to organize in terms of playlists and the previously imported songs.
 
 # Backlog:
 
@@ -65,9 +77,33 @@ Then, run this script to start the program:
 - [ ] Have a button to add a YouTube playlist (or individual video) to the player
   - [ ] the user might need to choose whether he wants to add the url link to a file, download the actual video, or any other action (that I might think of later).
 
+#### React-Player Changes and features to include:
+- [ ] Find ways to avoid displaying anything with the react-player if it is an audio file (only the seek function will be required)
+- [ ] Find a way to have the PlayerPanel extend all the way to the rest of the screen
+- [ ] Find a way to make a functional seek slider (possibly through svg drawings)
+
 
 
 # Daily log:
+
+### 5/11/2020:
+- Added the first successful React-Player tag.
+- Now the player can functionally play any media file (tested on .mp3 and .mp4 so far)
+- Still needs work on styling the actual window the video/audio is displayed
+
+### 5/10/2020:
+- Added the class TableEvents.js. 
+- Setup the basic actions to full up the table from the readDirectory() response
+- Changed css styling
+- Changed some import file paths to become easier for future changes
+- Converted the old html index.html into a new react-based structure (new file: App.jsx)
+- Added an HTML logger wrapper to allow the web-pages portion of the application to log to console
+
+### 5/9/2020:
+- Experimented with readDirectory() and promptFiles() to try and convert them from async functions to regular ones.
+- Ended up with disallowing babel from transpiling .js code, and only transpile react files (.jsx)
+- Added more elements within the config file and started changing imports according to the config.
+
 ### 5/8/2020:
 - Changed the file structure of the code from the ground up to allow adding react into the program.
 - Added Babel, ReactJS, and Gulp as dependencies. 

@@ -28,7 +28,7 @@ function createWindow() {
     Logger.logVerbose(__filename, "BrowserWindow object created");
     
     // and load the index.html of the app.
-    win.loadFile(config.buildPath + config.htmlSourcePath + 'index.html')
+    win.loadFile(config.buildPath + config.htmlSourcePath + config.entryHTML)
 
     // Open the DevTools.
     win.webContents.openDevTools()

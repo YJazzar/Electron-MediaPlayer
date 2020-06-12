@@ -20,7 +20,6 @@ class MainPanel extends React.Component {
 
           <Table/>
           <br/>
-          <div id="temp-react-player-loc"></div>
       </div>
     );
   }
