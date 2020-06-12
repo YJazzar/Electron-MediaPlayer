@@ -6,6 +6,10 @@ const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 const Logger = require(config.loggerPath);
 const getFileData = require(config.buildPath + config.jsSourcePath + "fileOperations/getFileData.js");
 
+Logger.logDebug(__filename, config.buildPath + config.jsSourcePath + "fileOperations/filterResults.js");
+
+const applyFilter = require(config.buildPath + config.jsSourcePath + "fileOperations/filterResults.js");
+
 // Call the function with a string representing the path of the directory in question
 // For safe usage, call with the full path. 
 //      @param path: an array of all the paths that need to read
@@ -19,7 +23,7 @@ async function readDirectory(paths, emitter, eventType) {
     Logger.logVerbose(__filename, "\teventType: " + eventType);
 
     let result = [{ path: paths }];
-    
+
     // For each path, find al files inside each and add them to "result"
     let currPath = "";
     for (let p = 0; p < paths.length; p++) {
@@ -43,16 +47,17 @@ async function readDirectory(paths, emitter, eventType) {
             // The "await" is placed there to make sure the "result" array contains all needed information 
             //   before the for-loop continues to the next iteration.
             await stat(file, items[i]).then(data => {
-                result.push(data);
+                if (applyFilter(data))
+                    result.push(data);
             }).catch(err => {
                 Logger.logError(__filename, err);
             });
             Logger.logDebug(__filename, "result is now length: " + result.length);
         }
-        
+
         Logger.logInfo(__filename, "readDirectory() finished processing: " + currPath);
 
-        
+
     }
 
     // Since you cannot return, we send the data back through a send function.

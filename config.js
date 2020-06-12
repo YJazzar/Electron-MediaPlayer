@@ -9,7 +9,8 @@ config = {
     htmlLoggerPath: "D:/Projects/Electron-MediaPlayer/src/main/com/tinyMnt/jsScripts/logger/htmlLogWrapper.js",
     defaultLoggingLevel: "debug",
 
-    entryHTML: "app.html"
+    entryHTML: "app.html",
+    fileExtensions: ["mp3", "mp4", "mkv"]
 }
 
 /**

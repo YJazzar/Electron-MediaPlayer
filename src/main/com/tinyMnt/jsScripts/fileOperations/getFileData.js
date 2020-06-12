@@ -8,12 +8,12 @@ function getFileData(filePath, fileName, stats) {
     let obj = {};
 
     // Get basic info:
-    obj.path = filePath;
-    obj.name = fileName;
+    obj.path = filePath;        // Contains the full path (Ex: C:path/to/file.ext)
+    obj.name = fileName;        // Contains the name of the file only (Ex: file.ext)
     obj.isDirectory = stats.isDirectory();
     obj.isFile = stats.isFile();
     obj.size = convertBytes(stats.size);
-
+    obj.extension = getExtension(fileName);
 
     // The next section will convert time from UNIX EPOCH (which is returned by stats.mtimeMs) into something readable
     // The Date() object (for future reference if needed)
@@ -37,6 +37,15 @@ function getFileData(filePath, fileName, stats) {
 
     // Return the object so it can be resolved by the calling promise
     return obj;
+}
+
+function getExtension(fileName) {
+    let temp = fileName.split(".");
+    
+    if (temp.length <= 1) {
+        return "";  // No file extension found
+    }
+    return temp[temp.length-1];
 }
 
 module.exports = getFileData;

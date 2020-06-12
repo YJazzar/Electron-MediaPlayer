@@ -88,6 +88,7 @@ Then, run this script to start the program:
 - Made the player controls panel (at the bottom of the screen) extend through then entire width of the application.
 - Rename the temporary div for MediaPlayer (that is under PlayerPanel.jsx).
 - Rename MediaPlayer.jsx to ResponsivePlayer.jsx (or any other suitable name).
+- Refactored readDirectory() so that unrelated functions are split into their own files
 
 ### 5/11/2020:
 - Added the first successful React-Player tag.
