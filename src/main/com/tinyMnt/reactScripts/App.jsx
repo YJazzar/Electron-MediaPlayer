@@ -15,14 +15,10 @@ class App extends React.Component {
   render() {
     Logger.logVerbose(__filename, "Rendering the <App/> tag");
     return (
-      <div className="row">
-        <NavPanel className="col s3" />
-        <MainPanel className="col s9" />
-
-        <div className="col s12">
-          <PlayerPanel className="player-panel"/>
-        </div>
-        
+      <div className=" ">
+        <NavPanel className=" " />
+        <MainPanel className=" " />
+        <PlayerPanel className="player-panel" />
       </div>
     );
   }
