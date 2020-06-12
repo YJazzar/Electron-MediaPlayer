@@ -34,7 +34,7 @@ function run(filePath) {
   Logger.logVerbose(__filename, "Rendering MediaPlayer at id=render-here. filePath=" + filePath);
   ReactDOM.render(
     <ResponsivePlayer filePath={filePath}/>,
-    document.getElementById("temp-react-player-loc")
+    document.getElementById("player-location")
   );
 }
 

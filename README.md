@@ -54,8 +54,6 @@ Then, run this script to start the program:
 
 
 # Next action items:
-- Rename the temporary div for MediaPlayer (that is under PlayerPanel.jsx).
-- Rename MediaPlayer.jsx to ResponsivePlayer.jsx (or any other suitable name).
 - Make a new js file under ```fileOperations/``` to extract a file path
 - Add new columns in the table to show more useful info (such as file extensions and time length of each file).
 - Filter out the files whenever they are imported so only media files are kept
@@ -85,6 +83,11 @@ Then, run this script to start the program:
 
 
 # Daily log:
+
+### 5/12/2020:
+- Made the player controls panel (at the bottom of the screen) extend through then entire width of the application.
+- Rename the temporary div for MediaPlayer (that is under PlayerPanel.jsx).
+- Rename MediaPlayer.jsx to ResponsivePlayer.jsx (or any other suitable name).
 
 ### 5/11/2020:
 - Added the first successful React-Player tag.
