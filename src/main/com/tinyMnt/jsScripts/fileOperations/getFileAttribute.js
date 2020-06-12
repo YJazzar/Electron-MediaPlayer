@@ -18,7 +18,7 @@ function getCellText(attribute, fileObj) {
             return removeExtension(fileObj.name);
 
         case "Length":
-            return "10 min"; // TODO figure this out
+            return fileObj.duration; // TODO figure this out
         case "Type":
             return fileObj.extension;
         case "Size":

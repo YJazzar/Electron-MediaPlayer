@@ -1,12 +1,11 @@
-const ffprobe = require('ffprobe');
-const ffprobeStatic = require('ffprobe-static');
+const { getVideoDurationInSeconds } = require('get-video-duration')
 const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 const Logger = require(config.loggerPath);
 const convertBytes = require(config.buildPath + config.jsSourcePath + "fileOperations/convertBytes.js");
 
-// Extracts usefule information from the "stats" object
+// Extracts useful information from the "stats" object
 // More info on the fs.stats object can be found at: https://nodejs.org/api/fs.html#fs_class_fs_stats 
-function getFileData(filePath, fileName, stats) {
+async function getFileData(filePath, fileName, stats) {
     let obj = {};
 
     // Get basic info:
@@ -16,6 +15,8 @@ function getFileData(filePath, fileName, stats) {
     obj.isFile = stats.isFile();
     obj.size = convertBytes(stats.size);
     obj.extension = getExtension(fileName);
+    obj.duration = await getDuration(obj.path, obj.extension);
+    Logger.logDebug(__filename, obj.duration);
 
     // The next section will convert time from UNIX EPOCH (which is returned by stats.mtimeMs) into something readable
     // The Date() object (for future reference if needed)
@@ -43,6 +44,7 @@ function getFileData(filePath, fileName, stats) {
 }
 
 function getExtension(fileName) {
+
     let temp = fileName.split(".");
 
     if (temp.length <= 1) {
@@ -52,20 +54,24 @@ function getExtension(fileName) {
 }
 
 // Given the file object (with the same structure as the one generated above), this will return an object with useful info
-async function getMediaInfo(file) {
-    Logger.logInfo(__filename, "calling getMediaInfo() on: " + file.path);
+function getDuration(filePath, fileExtension) {
+    Logger.logInfo(__filename, "calling getDuration() on: " + filePath);
+    Logger.logInfo(__filename, "fileExtension: " + fileExtension);
+    Logger.logInfo(__filename, config.tableOptions.fileExtensions);
+    if (!config.tableOptions.fileExtensions.includes(fileExtension))
+        return 0;
 
-    
-    return await ffprobe(file.path, { path: ffprobeStatic.path })
-        .then(function (result) {
-            Logger.logDebug(__filename, "call was successful on: " + file.path);
-            return result;
-        })
-        .catch(function (err) {
-            Logger.logError(__filename, err);
-            return undefined;
-        });
-    
+
+    // From a local path...
+    return getVideoDurationInSeconds(filePath).then((duration) => {
+        console.log("TEMP: duration for: " + filePath);
+        console.log(duration);
+        return duration;
+    }).catch(err => {
+        Logger.logError(__filename, err);
+    });;
+
+    // return "RADYTIME()";    
 }
 
-module.exports = { getFileData, getMediaInfo};
+module.exports = getFileData;

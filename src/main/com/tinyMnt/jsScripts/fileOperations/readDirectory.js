@@ -4,7 +4,7 @@
 const fs = require('fs');
 const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 const Logger = require(config.loggerPath);
-const FileDetails = require(config.buildPath + config.jsSourcePath + "fileOperations/FileDetails.js");
+const getFileData = require(config.buildPath + config.jsSourcePath + "fileOperations/FileDetails.js");
 const applyFilter = require(config.buildPath + config.jsSourcePath + "fileOperations/filterResults.js");
 
 // Call the function with a string representing the path of the directory in question
@@ -46,9 +46,7 @@ async function readDirectory(paths, emitter, eventType) {
             await stat(file, items[i]).then(data => {
                 if (applyFilter(data)) {
                     result.push(data);
-                    data.mediaInfo = FileDetails.getMediaInfo(data);
-
-                    Logger.logInfo(__filename, data.mediaInfo);
+                    // result[result.length-1].duration = FileDetails.getDuration(data);
                 }
             }).catch(err => {
                 Logger.logError(__filename, err);
@@ -88,7 +86,7 @@ function stat(filePath, fileName) {
             }
 
             // Return a resolve value with all of the information extracted
-            resolve(FileDetails.getFileData(filePath, fileName, stat));
+            resolve(getFileData(filePath, fileName, stat));
         });
     });
 }

@@ -28,6 +28,7 @@
         "@babel/polyfill": "^7.10.1",
         "ffprobe": "^1.1.0",
         "ffprobe-static": "^3.0.0",
+        "get-video-duration": "^3.0.0",
         "gulp-clean-css": "^4.3.0",
         "gulp-concat": "^2.6.1",
         "jquery": "^3.5.1",
