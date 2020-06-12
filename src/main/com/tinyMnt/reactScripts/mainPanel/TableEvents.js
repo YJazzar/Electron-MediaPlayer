@@ -100,8 +100,5 @@ ipcRenderer.on("tableFile:clearItems", clearTable);
 ipcRenderer.on("tableFile:clearAndLoadItems", clearAndLoadTable);
 
 
-Logger.logInfo(__filename, "DOESS THIS WORKKKKK");
-
 // Send signal that processing can start:
 ipcRenderer.send('loadDone', "Done setting up everything");
-Logger.logDebug(__filename, "Starting first react player instance");

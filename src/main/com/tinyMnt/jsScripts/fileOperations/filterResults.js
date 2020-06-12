@@ -6,7 +6,7 @@ const Logger = require(config.loggerPath);
 const fileExtensions = config.tableOptions.fileExtensions;
 
 function applyFilter(fileObj) {
-    Logger.logDebug(__filename, "Using these extensions for filtering: " + fileExtensions);
+    // Logger.logDebug(__filename, "Using these extensions for filtering: " + fileExtensions);
     
     
     for (let i = 0; i < fileExtensions.length; i++) {

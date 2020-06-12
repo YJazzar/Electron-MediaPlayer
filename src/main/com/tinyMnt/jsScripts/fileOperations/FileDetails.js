@@ -1,3 +1,5 @@
+const ffprobe = require('ffprobe');
+const ffprobeStatic = require('ffprobe-static');
 const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 const Logger = require(config.loggerPath);
 const convertBytes = require(config.buildPath + config.jsSourcePath + "fileOperations/convertBytes.js");
@@ -42,11 +44,28 @@ function getFileData(filePath, fileName, stats) {
 
 function getExtension(fileName) {
     let temp = fileName.split(".");
-    
+
     if (temp.length <= 1) {
         return "";  // No file extension found
     }
-    return temp[temp.length-1];
+    return temp[temp.length - 1];
 }
 
-module.exports = getFileData;
+// Given the file object (with the same structure as the one generated above), this will return an object with useful info
+async function getMediaInfo(file) {
+    Logger.logInfo(__filename, "calling getMediaInfo() on: " + file.path);
+
+    
+    return await ffprobe(file.path, { path: ffprobeStatic.path })
+        .then(function (result) {
+            Logger.logDebug(__filename, "call was successful on: " + file.path);
+            return result;
+        })
+        .catch(function (err) {
+            Logger.logError(__filename, err);
+            return undefined;
+        });
+    
+}
+
+module.exports = { getFileData, getMediaInfo};

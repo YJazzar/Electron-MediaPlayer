@@ -59,6 +59,15 @@ function logDebug(source, message) {
     });
 }
 
+function logCritical(source, message) {
+    logger.log({
+        level: "critical",
+        time: getDateTime(),
+        source: source,
+        message: message,
+    });
+}
+
 logInfo(__filename, "Log packages initialized!");
 
-module.exports = { logger, log, logInfo, logError, logVerbose, logDebug, levelNames, getDateTime };
+module.exports = { logger, log, logInfo, logError, logVerbose, logDebug, logCritical, levelNames, getDateTime };

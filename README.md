@@ -16,6 +16,7 @@
   - ```npm install --save-dev gulp-clean```
 - react and react-dom command:
   - ```npm i react react-dom --save-dev```
+- ffprobe: To get info on media files
 
 
 ## Tutorial for application basic setup: 
@@ -55,7 +56,6 @@ Then, run this script to start the program:
 
 # Next action items:
 - Add new columns in the table to show more useful info (such as file extensions and time length of each file).
-- Filter out the files whenever they are imported so only media files are kept
 - Make a new button on the Menu to allow the user to change what filters need to be applied (what file extensions should be kept).
 
 # Critical actions items:
@@ -89,6 +89,8 @@ Then, run this script to start the program:
 - Rename MediaPlayer.jsx to ResponsivePlayer.jsx (or any other suitable name).
 - Refactored readDirectory() so that unrelated functions are split into their own files
 - Applied a filtering function when importing folders. The different file extensions that are allowed are stored in the config file
+- Changed table headers so that they become dynamically selected. To change the ordering and which columns to present, changes only need to happen in the config file.
+- Added ffprobe to dependency.
 
 ### 5/11/2020:
 - Added the first successful React-Player tag.

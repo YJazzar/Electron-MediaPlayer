@@ -4,10 +4,7 @@
 const fs = require('fs');
 const config = require("D:/Projects/Electron-MediaPlayer/config.js");
 const Logger = require(config.loggerPath);
-const getFileData = require(config.buildPath + config.jsSourcePath + "fileOperations/getFileData.js");
-
-Logger.logDebug(__filename, config.buildPath + config.jsSourcePath + "fileOperations/filterResults.js");
-
+const FileDetails = require(config.buildPath + config.jsSourcePath + "fileOperations/FileDetails.js");
 const applyFilter = require(config.buildPath + config.jsSourcePath + "fileOperations/filterResults.js");
 
 // Call the function with a string representing the path of the directory in question
@@ -47,12 +44,15 @@ async function readDirectory(paths, emitter, eventType) {
             // The "await" is placed there to make sure the "result" array contains all needed information 
             //   before the for-loop continues to the next iteration.
             await stat(file, items[i]).then(data => {
-                if (applyFilter(data))
+                if (applyFilter(data)) {
                     result.push(data);
+                    data.mediaInfo = FileDetails.getMediaInfo(data);
+
+                    Logger.logInfo(__filename, data.mediaInfo);
+                }
             }).catch(err => {
                 Logger.logError(__filename, err);
             });
-            Logger.logDebug(__filename, "result is now length: " + result.length);
         }
 
         Logger.logInfo(__filename, "readDirectory() finished processing: " + currPath);
@@ -88,7 +88,7 @@ function stat(filePath, fileName) {
             }
 
             // Return a resolve value with all of the information extracted
-            resolve(getFileData(filePath, fileName, stat));
+            resolve(FileDetails.getFileData(filePath, fileName, stat));
         });
     });
 }

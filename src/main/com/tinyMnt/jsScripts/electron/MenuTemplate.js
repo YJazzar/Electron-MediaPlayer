@@ -1,7 +1,7 @@
 
 
 const config = require("D:/Projects/Electron-MediaPlayer/config.js");
-const Logger = require(config.buildPath + config.htmlSourcePath + 'scripts/htmlLoggerWrapper.js');
+const Logger = require(config.loggerPath);
 const chooseFolder = require(config.buildPath + config.jsSourcePath + 'fileOperations/PromptFiles.js');
 
 function getMenuTemplate(app, win) {

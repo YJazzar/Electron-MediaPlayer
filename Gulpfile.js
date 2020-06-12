@@ -44,3 +44,4 @@ function clean() {
 // Export the "start" task.
 exports.build = series(html, css, js, jsx);
 exports.clean = clean;
+exports.cleanInstall = series(clean, html, css, js, jsx);
