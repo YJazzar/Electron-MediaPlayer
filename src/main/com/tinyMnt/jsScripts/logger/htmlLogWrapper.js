@@ -1,5 +1,5 @@
 const { ipcRenderer } = require("electron");
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 
 const getDateTime = require(config.buildPath + config.jsSourcePath + 'logger/DateAndTime.js');
 const { levelNames } = require(config.buildPath + config.jsSourcePath + 'logger/LevelConstants.js');

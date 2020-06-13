@@ -1,6 +1,6 @@
 import React from "react";
 
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.htmlLoggerPath);
 
 // Imports for other custom tags and ReactJS classes

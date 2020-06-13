@@ -1,5 +1,5 @@
 const { getVideoDurationInSeconds } = require('get-video-duration')
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.loggerPath);
 const convertBytes = require(config.buildPath + config.jsSourcePath + "fileOperations/convertBytes.js");
 

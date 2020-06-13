@@ -4,7 +4,7 @@ require("@babel/polyfill");
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');         // For the electron app
 
 // Importing custom scripts
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 
 // Use config to construct imports:
 const getMenuTemplate = require(config.buildPath + config.jsSourcePath + 'electron/MenuTemplate.js');

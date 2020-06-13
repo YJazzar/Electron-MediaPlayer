@@ -4,7 +4,7 @@ const babel = require('gulp-babel');
 const cleanCSS = require('gulp-clean-css');
 const cleanFile = require('gulp-clean');
 
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 const buildPath = config.buildPath;
 
 

@@ -1,5 +1,5 @@
 const { ipcRenderer } = require("electron");
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.htmlLoggerPath);
 const MediaPlayer = require(config.buildPath + config.reactSourcePath + 'utils/MediaPlayer.js');
 const getCellText = require(config.buildPath + config.jsSourcePath + "fileOperations/getFileAttribute.js");

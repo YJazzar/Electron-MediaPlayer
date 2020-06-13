@@ -1,4 +1,4 @@
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 
 const { levelNames } = require(config.buildPath + config.jsSourcePath + 'logger/LevelConstants.js');
 const { init, sendStartUpLog } = require(config.buildPath + config.jsSourcePath + 'logger/LoggerInit.js');

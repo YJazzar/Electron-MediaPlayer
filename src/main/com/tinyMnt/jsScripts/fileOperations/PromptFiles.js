@@ -1,5 +1,5 @@
 const { dialog } = require('electron');
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 
 const readDirectory = require(config.buildPath + config.jsSourcePath + 'fileOperations/readDirectory.js');    // For the custom external function
 const Logger = require(config.loggerPath);

@@ -1,4 +1,4 @@
-# Electron-MediaPlayer
+# tnyPlayer
 
 ## Dependecies used to create app:
 - electron: For main application window and backend interface\
@@ -55,8 +55,6 @@ Then, run this script to start the program:
 
 
 # Next action items:
-- Add new columns in the table to show more useful info (such as file extensions and time length of each file).
-- Make a new button on the Menu to allow the user to change what filters need to be applied (what file extensions should be kept).
 
 # Critical actions items:
 - Create the database class.
@@ -66,7 +64,6 @@ Then, run this script to start the program:
 # Backlog:
 
 #### readDirectory.js:
-- [ ] Make it so that only audio files are returned (filter out non-audio files)
 - [ ] Maybe make an exception where a file can have a certain name (such as "YouTubePlaylist.txt") where it can read url links and play them with react-player
 
 
@@ -76,10 +73,11 @@ Then, run this script to start the program:
 
 #### React-Player Changes and features to include:
 - [ ] Find ways to avoid displaying anything with the react-player if it is an audio file (only the seek function will be required)
-- [ ] Find a way to have the PlayerPanel extend all the way to the rest of the screen
 - [ ] Find a way to make a functional seek slider (possibly through svg drawings)
 
-
+ #### Other backlog items:
+ - Make a new button on the Menu to allow the user to change what filters need to be applied (what file extensions should be kept).
+  
 
 # Daily log:
 
@@ -91,6 +89,7 @@ Then, run this script to start the program:
 - Applied a filtering function when importing folders. The different file extensions that are allowed are stored in the config file
 - Changed table headers so that they become dynamically selected. To change the ordering and which columns to present, changes only need to happen in the config file.
 - Added functionality to read the duration of a file.
+- Renamed project from Electron-MediaPlayer to tnyPlayer
 
 ### 5/11/2020:
 - Added the first successful React-Player tag.

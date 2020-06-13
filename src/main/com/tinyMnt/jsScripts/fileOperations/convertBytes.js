@@ -1,4 +1,4 @@
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.loggerPath);
 
 // Converts bytes to the most appropriate size indicator

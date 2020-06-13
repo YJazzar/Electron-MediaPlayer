@@ -4,7 +4,7 @@ const { createLogger } = winston;
 const { printf } = winston.format;
 
 
-const config = require('D:/Projects/Electron-MediaPlayer/config.js');
+const config = require('D:/Projects/tnyPlayer/config.js');
 const { levels } = require(config.buildPath + config.jsSourcePath + 'logger/LevelConstants.js');
 
 

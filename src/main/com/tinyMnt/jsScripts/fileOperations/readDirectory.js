@@ -2,7 +2,7 @@
 //  How to read a directory and get information on what files 
 //   exist inside it (and extract helpful information from each file)
 const fs = require('fs');
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.loggerPath);
 const getFileData = require(config.buildPath + config.jsSourcePath + "fileOperations/FileDetails.js");
 const applyFilter = require(config.buildPath + config.jsSourcePath + "fileOperations/filterResults.js");

@@ -3,7 +3,7 @@
 * Ex: getCellText("Name", fileObj) will return the name of the file
 */
 
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.htmlLoggerPath);
 
 function getCellText(attribute, fileObj) {

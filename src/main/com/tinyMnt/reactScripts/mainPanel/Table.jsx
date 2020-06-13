@@ -1,5 +1,5 @@
 import React from "react";
-const config = require("D:/Projects/Electron-MediaPlayer/config.js");
+const config = require("D:/Projects/tnyPlayer/config.js");
 
 // Import other files needed
 const Logger = require(config.htmlLoggerPath);
