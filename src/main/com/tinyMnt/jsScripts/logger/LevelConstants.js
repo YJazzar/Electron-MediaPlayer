@@ -3,14 +3,16 @@
 const levels = {
     error: 0,
     critical: 1,
-    info: 2,
-    verbose: 3,
-    debug: 4
+    warning: 2,
+    info: 3,
+    verbose: 4,
+    debug: 5
 };
 
 const levelNames = {
     error: 'error',
     critical: 'critical',
+    warning: 'warning',
     info: 'info',
     verbose: 'verbose',
     debug: 'debug'

@@ -90,7 +90,7 @@ Then, run this script to start the program:
 - Refactored readDirectory() so that unrelated functions are split into their own files
 - Applied a filtering function when importing folders. The different file extensions that are allowed are stored in the config file
 - Changed table headers so that they become dynamically selected. To change the ordering and which columns to present, changes only need to happen in the config file.
-- Added ffprobe to dependency.
+- Added functionality to read the duration of a file.
 
 ### 5/11/2020:
 - Added the first successful React-Player tag.
