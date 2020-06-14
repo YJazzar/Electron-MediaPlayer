@@ -5,7 +5,9 @@ const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.htmlLoggerPath);
 const TableEvents = require(config.buildPath + config.reactSourcePath + "mainPanel/TableEvents.js");
 const readDirectory = require(config.buildPath + config.jsSourcePath + 'fileOperations/readDirectory.js');
-const dbh = require(config.buildPath + config.jsSourcePath + 'backend/dbHandler.js');
+const dbHandler = require(config.buildPath + config.jsSourcePath + 'backend/dbHandler.js');
+
+let dbh;
 
 //// ****************************************** Functions using ipcRenderer
 
@@ -15,10 +17,10 @@ ipcRenderer.on("sendStartup", evokeStartup);
 
 function evokeStartup() {
     Logger.logInfo(__filename, "Starting database");
-    
-    Logger.logDebug(__filename, "Auto populating table");
+    dbh = new dbHandler(readDirectory);
 
-    readDirectory(["C:\\Users\\sfjzz\\Videos"], em, "tableFile:appendItems");
+    Logger.logDebug(__filename, "Auto populating with the last import");
+    dbh.openRecentImports(em, "tableFile:appendItems");
 }
 
 

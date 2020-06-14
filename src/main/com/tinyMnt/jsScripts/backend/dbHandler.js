@@ -3,46 +3,51 @@ const Logger = require(config.htmlLoggerPath);
 const Database = require(config.buildPath + config.jsSourcePath + "backend/Database.js");
 
 /**
- * This file is another layer added to the database to make some functions faster
+ * This class is another layer added to the database to make some functions faster
  *  (such as saving certain types of actions, making a playlist, etc)
  */
 
-let db;
 
 // Creates the database instance
-function createDatabase() {
-    db = new Database({
-        dir: [
-            config.resourcesPath + "playlists.json",
-            config.resourcesPath + "playHistory.json",
-            config.resourcesPath + "importHistory.json",
-        ],
-        alias: ["playlists", "playHistory", "importHistory"],
-        refreshTime: 10 * 1000,
-    });
-
-    db.refreshFiles();
-}
-
-function addToImportHistory(data) {
-    Logger.logDb(__filename, "Adding to import history");
-
-    // Prepare the data to be pushed into the file:
-    // (Extract all the paths and push them into an array)
-    let paths = [];
-    for (let i = 1; i < data.length; i ++)
-        paths.push(data[i].path);
-
-    let obj = db.get("importHistory").getJson();
-    obj[data[0].path] = paths;
-    db.get("importHistory").setJson(obj);
-    Logger.logDb(__filename, "Added recent \"Open File\" action into \"importHistory.json\"");
-}
-
-function openRecentImports() {
-    console.log("Inside of openRecentImports()");
+class dbHandler  {
     
+    constructor(readDirectory) {
+        this.readDirectory = readDirectory;
+        this.db = new Database({
+            dir: [
+                config.resourcesPath + "playlists.json",
+                config.resourcesPath + "playHistory.json",
+                config.resourcesPath + "importHistory.json",
+            ],
+            alias: ["playlists", "playHistory", "importHistory"],
+            refreshTime: 10 * 1000,
+        });
+        this.db.refreshFiles();
+    }
 
+    addToImportHistory(data) {
+        Logger.logDb(__filename, "Adding to import history");
+
+        // Prepare the data to be pushed into the file:
+        // (Extract all the paths and push them into an array)
+        let paths = [];
+        for (let i = 1; i < data.length; i++)
+            paths.push(data[i].path);
+
+        let obj = this.db.get("importHistory").getJson();
+        obj[data[0].path] = paths;
+        this.db.get("importHistory").setJson(obj);
+        Logger.logDb(__filename, "Added recent \"Open File\" action into \"importHistory.json\"");
+    }
+    
+    openRecentImports(em, action) {
+        let fm = this.db.get("importHistory");
+        let paths = Object.keys(fm.getJson());
+        Logger.logDb(__filename, "The keys retrieved were: " + paths);
+        this.readDirectory([paths[0]], em, action);
+
+
+    }
 }
 
-module.exports = { db, createDatabase, addToImportHistory, openRecentImports };
+module.exports = dbHandler;

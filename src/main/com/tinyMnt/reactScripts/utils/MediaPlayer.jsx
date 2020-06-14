@@ -28,10 +28,7 @@ class ResponsivePlayer extends React.Component {
 }
 
 function run(filePath) {
-  Logger.logVerbose(__filename, "Starting MediaPlayer.run()");
-
-
-  Logger.logVerbose(__filename, "Rendering MediaPlayer at id=render-here. filePath=" + filePath);
+  Logger.logDebug(__filename, "Rendering MediaPlayer at id=render-here. filePath=" + filePath);
   ReactDOM.render(
     <ResponsivePlayer filePath={filePath}/>,
     document.getElementById("player-location")
