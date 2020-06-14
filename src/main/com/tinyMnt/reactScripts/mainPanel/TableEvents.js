@@ -7,7 +7,6 @@ const dbh = require(config.buildPath + config.jsSourcePath + "backend/dbHandler.
 
 Logger.logDebug(__filename, "Started running TableEvents.js file");
 
-const tableBody = document.getElementById("tableBody");
 const tableHeaders = config.tableOptions.tableHeaderTitles;
 
 function createRow(fileObj) {
@@ -48,6 +47,8 @@ function appendTable(event, data) {
     }
     Logger.log(Logger.levelNames.verbose, __filename, 'ipcRenderer signal received -> tableFile:appendItems');
 
+    const tableBody = document.getElementById("tableBody");
+
     // Store the newly imported data:
     // dbh.addToImportHistory(data);
 
@@ -75,6 +76,7 @@ function appendTable(event, data) {
 // This will erase everything out of the table
 function clearTable(event) {
     Logger.log(Logger.levelNames.verbose, __filename, 'ipcRenderer signal received -> tableFile:clearItems');
+    const tableBody = document.getElementById("tableBody");
     if (tableBody) {
         tableBody.innerHTML = "";
     } else {
@@ -102,10 +104,6 @@ ipcRenderer.on("tableFile:appendItems", appendTable);
 ipcRenderer.on("tableFile:clearItems", clearTable);
 ipcRenderer.on("tableFile:clearAndLoadItems", clearAndLoadTable);
 
-ipcRenderer.on("lol", () => {
-    console.log("should display from recent import history ")
-});
-
 
 
 
@@ -116,4 +114,4 @@ function test() {
     console.log(tableBody);
 }
 
-module.exports = { test }
+module.exports = { appendTable, clearTable, clearAndLoadTable}

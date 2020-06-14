@@ -1,7 +1,7 @@
 const { dialog } = require('electron');
 const config = require("D:/Projects/tnyPlayer/config.js");
 
-const readDirectory = require(config.buildPath + config.jsSourcePath + 'fileOperations/readDirectory.js');    // For the custom external function
+// const readDirectory = require(config.buildPath + config.jsSourcePath + 'fileOperations/readDirectory.js');    // For the custom external function
 const Logger = require(config.loggerPath);
 
 function chooseFolder(win, action) {
@@ -16,8 +16,10 @@ function chooseFolder(win, action) {
 
         Logger.logInfo(__filename, "Folder choosing operation was completed");
 
+        win.webContents.send("readDirectory", folders.filePaths, action);
+
         // Run through the directories in "folders" and call readDirectory on each: 
-        readDirectory(folders.filePaths, win.webContents, action);
+        // readDirectory(folders.filePaths, win.webContents, action);
 
     }).catch(err => Logger.log(Logger.levelNames.error, __filename, err));
     

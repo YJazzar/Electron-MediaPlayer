@@ -1,5 +1,5 @@
 const config = require("D:/Projects/tnyPlayer/config.js");
-const Logger = require(config.loggerPath);
+const Logger = require(config.htmlLoggerPath);
 
 // Converts bytes to the most appropriate size indicator
 //      Source: https://coderrocketfuel.com/article/how-to-convert-bytes-to-kb-mb-gb-or-tb-format-in-node-js 

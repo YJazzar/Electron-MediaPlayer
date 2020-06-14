@@ -3,7 +3,7 @@
 //   exist inside it (and extract helpful information from each file)
 const fs = require('fs');
 const config = require("D:/Projects/tnyPlayer/config.js");
-const Logger = require(config.loggerPath);
+const Logger = require(config.htmlLoggerPath);
 const getFileData = require(config.buildPath + config.jsSourcePath + "fileOperations/FileDetails.js");
 const applyFilter = require(config.buildPath + config.jsSourcePath + "fileOperations/filterResults.js");
 
@@ -14,7 +14,7 @@ const applyFilter = require(config.buildPath + config.jsSourcePath + "fileOperat
 //      @param eventType: the name of the event to send through the emitter
 //      @return result: an array with information of all files in a directory
 //                      the first object in result is an object that contains the path of the directory
-async function readDirectory(paths, emitter, eventType, callback) {
+async function readDirectory(paths, emitter, eventType) {
     Logger.logVerbose(__filename, "Starting readDirectory() call with: ")
     Logger.logVerbose(__filename, "\tpaths: " + paths);
     Logger.logVerbose(__filename, "\teventType: " + eventType);
@@ -57,9 +57,9 @@ async function readDirectory(paths, emitter, eventType, callback) {
 
 
     }
-  
+
     // Since you cannot return, we send the data back through a send function.
-    emitter.send(eventType, result);
+    emitter.emit(eventType, result);
 }
 
 // Makes a promise from fs.readdir() function call

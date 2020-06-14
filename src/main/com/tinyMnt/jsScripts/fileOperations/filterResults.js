@@ -1,6 +1,6 @@
 const config = require("D:/Projects/tnyPlayer/config.js");
 
-const Logger = require(config.loggerPath);
+const Logger = require(config.htmlLoggerPath);
 
 // Get the file extensions that can be used
 const fileExtensions = config.tableOptions.fileExtensions;

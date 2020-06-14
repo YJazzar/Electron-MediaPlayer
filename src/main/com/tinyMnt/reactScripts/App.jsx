@@ -2,8 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 const config = require("D:/Projects/tnyPlayer/config.js");
 
+
 const Logger = require(config.htmlLoggerPath);
-const dbh = require(config.buildPath + config.jsSourcePath + 'backend/dbHandler.js');
+const startup = require(config.buildPath + config.reactSourcePath + "startup.js");
 
 
 // Imports for other custom tags and ReactJS classes
@@ -34,7 +35,7 @@ class App extends React.Component {
 // Will run when the electron browser is done initializing
 window.onload = () => {
   Logger.logInfo(__filename, "Creating the database instance");
-  dbh.createDatabase();
+  // dbh.createDatabase();
 
   Logger.logVerbose(__filename, "Rendering <App/> tag and loading into index.html at #app-load-point");
   ReactDOM.render(<App />, document.getElementById("app-load-point"));

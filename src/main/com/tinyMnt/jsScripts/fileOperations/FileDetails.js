@@ -1,6 +1,6 @@
 const { getVideoDurationInSeconds } = require('get-video-duration')
 const config = require("D:/Projects/tnyPlayer/config.js");
-const Logger = require(config.loggerPath);
+const Logger = require(config.htmlLoggerPath);
 const convertBytes = require(config.buildPath + config.jsSourcePath + "fileOperations/convertBytes.js");
 
 // Extracts useful information from the "stats" object

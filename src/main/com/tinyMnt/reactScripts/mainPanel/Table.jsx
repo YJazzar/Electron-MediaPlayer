@@ -15,11 +15,10 @@ class Table extends React.Component {
     );
 
     // Call TableEvents.js
-    const te = require(config.buildPath +
-      config.reactSourcePath +
-      "mainPanel/TableEvents.js");
+    // const te = require(config.buildPath +
+    //   config.reactSourcePath +
+    //   "mainPanel/TableEvents.js");
 
-    te.test();
 
   }
 

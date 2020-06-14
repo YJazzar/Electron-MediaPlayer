@@ -56,6 +56,7 @@ Then, run this script to start the program:
 
 
 # Next action items:
+- Make it so that it auto-imports data on startup
 
 # Critical actions items:
 - Create the database class.
@@ -87,7 +88,9 @@ Then, run this script to start the program:
 - Created a minimal "Database" (not really a database) for managing some of the files that need to be written
 - Created a test implementation in the ```src/test``` folder.
 - Can run the test with the npm script: ```npm run testDb```. 
-- Started making the database track the imports performed
+- Started making the database track the imports performed.
+- Changed the flow of data when reading a directory (readDirectory() should be called from dbHandler.js)
+- Changed the flow of when a folder is opened.
 
 ### 5/12/2020:
 - Made the player controls panel (at the bottom of the screen) extend through then entire width of the application.
