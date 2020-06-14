@@ -3,6 +3,7 @@ const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.htmlLoggerPath);
 const MediaPlayer = require(config.buildPath + config.reactSourcePath + 'utils/MediaPlayer.js');
 const getCellText = require(config.buildPath + config.jsSourcePath + "fileOperations/getFileAttribute.js");
+const dbh = require(config.buildPath + config.jsSourcePath + "backend/dbHandler.js");
 
 Logger.logDebug(__filename, "Started running TableEvents.js file");
 
@@ -10,7 +11,7 @@ const tableBody = document.getElementById("tableBody");
 const tableHeaders = config.tableOptions.tableHeaderTitles;
 
 function createRow(fileObj) {
-    console.log(fileObj);
+
     // Create the row and return it        
     let row = document.createElement("tr");
     row.setAttribute("filePath", fileObj.path);
@@ -45,8 +46,10 @@ function appendTable(event, data) {
         Logger.log(Logger.levelNames.info, __filename, "appendTable() was called with no data... ending function call")
         return;
     }
-
     Logger.log(Logger.levelNames.verbose, __filename, 'ipcRenderer signal received -> tableFile:appendItems');
+
+    // Store the newly imported data:
+    // dbh.addToImportHistory(data);
 
     // Logic to append to table
     if (tableBody) {
@@ -99,6 +102,18 @@ ipcRenderer.on("tableFile:appendItems", appendTable);
 ipcRenderer.on("tableFile:clearItems", clearTable);
 ipcRenderer.on("tableFile:clearAndLoadItems", clearAndLoadTable);
 
+ipcRenderer.on("lol", () => {
+    console.log("should display from recent import history ")
+});
+
+
+
 
 // Send signal that processing can start:
 ipcRenderer.send('loadDone', "Done setting up everything");
+
+function test() {
+    console.log(tableBody);
+}
+
+module.exports = { test }

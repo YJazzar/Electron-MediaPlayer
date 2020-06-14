@@ -36,4 +36,10 @@ function logDebug(source, message) {
     log(levelNames.debug, source, message);
 }
 
-module.exports = { log, logInfo, logError, logVerbose, logDebug,  levelNames };
+// This function was made to quickly log "debug" messages
+function logDb(source, message) {
+    log(levelNames.database, source, message);
+}
+
+
+module.exports = { log, logInfo, logError, logVerbose, logDebug, logDb, levelNames };

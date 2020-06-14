@@ -1,6 +1,6 @@
 
 const config = require("D:/Projects/tnyPlayer/config.js");
-const Logger = require(config.loggerPath);
+const Logger = require(config.htmlLoggerPath);
 const FileManager = require(config.buildPath + config.jsSourcePath + "backend/dbFileManager.js");
 
 // const { List } = require('./List.js');
@@ -23,7 +23,7 @@ class Database {
 
     // Initialize all database objects
     constructor(options) {
-        Logger.logInfo(__filename, "Initializing database...");
+        Logger.logDb(__filename, "Initializing database...");
 
         // Store the logger passed in
         this.log = options.logger;
@@ -40,7 +40,7 @@ class Database {
         // Create the refresh timer
         this.interval = setInterval(this.refreshFiles.bind(this), this.refreshTime);
 
-        Logger.logInfo(__filename, "Done creating database");
+        Logger.logDb(__filename, "Done creating database");
     }
 
     // Pass the paths as a parameter to allow the Database implementor to create and open new files
@@ -52,6 +52,7 @@ class Database {
     }
 
     refreshFiles() {
+        Logger.logDb(__filename, "Issuing refresh command on all open files");
         // Iterate through all FileManager instances and call fresh:
         for (let i = 0; i < this.fileManagers.length; i++) {
             this.fileManagers[i].refresh();
@@ -89,7 +90,7 @@ class Database {
             return false;
 
         // Close this file:
-        Logger.logInfo(__filename, "Closing file: \"" + this.fileManagers[index].fileAlias + "\" with path: \"" + this.fileManagers[index].filePath + "\"");
+        Logger.logDb(__filename, "Closing file: \"" + this.fileManagers[index].fileAlias + "\" with path: \"" + this.fileManagers[index].filePath + "\"");
         this.fileManagers[index].refresh();
         this.fileManagers.splice(index, 1);
         return true;
@@ -104,7 +105,7 @@ class Database {
             
         // Close this file:
         this.fileManagers.length = 0;
-        Logger.logInfo(__filename, "All files have been removed");
+        Logger.logDb(__filename, "All files have been removed");
     }
 
     forceRefresh(identifier) {

@@ -3,6 +3,8 @@ const config = require("D:/Projects/tnyPlayer/config.js");
 
 // Import other files needed
 const Logger = require(config.htmlLoggerPath);
+// const TableEvents = require(config.buildPath + config.reactSourcePath + "mainPanel/TableEvents.js");
+
 
 class Table extends React.Component {
   componentDidMount() {
@@ -13,9 +15,12 @@ class Table extends React.Component {
     );
 
     // Call TableEvents.js
-    require(config.buildPath +
+    const te = require(config.buildPath +
       config.reactSourcePath +
       "mainPanel/TableEvents.js");
+
+    te.test();
+
   }
 
   render() {
@@ -73,6 +78,11 @@ class TableHead extends React.Component {
 }
 
 class TableBody extends React.Component {
+
+  componentDidMount() {
+
+  }
+
   render() {
     return <tbody id="tableBody"></tbody>;
   }

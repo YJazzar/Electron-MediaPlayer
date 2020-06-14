@@ -32,7 +32,7 @@
     bottom: 0;
     right: 0;
     width: 100%;
-
+    overflow: auto;
     /* Setting other properties */
     background-color: rgb(0, 191, 255, 35%);
 }

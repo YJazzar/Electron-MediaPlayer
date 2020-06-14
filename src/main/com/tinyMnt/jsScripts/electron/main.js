@@ -8,10 +8,17 @@ const config = require("D:/Projects/tnyPlayer/config.js");
 
 // Use config to construct imports:
 const getMenuTemplate = require(config.buildPath + config.jsSourcePath + 'electron/MenuTemplate.js');
-const Logger = require(config.buildPath + config.jsSourcePath + 'logger/Logger.js');
-
+const Logger = require(config.loggerPath);
 
 let win;
+
+function startApplication() {
+    // Write any setup scripts here 
+
+    // Create the main instance of the window:
+    createWindow();
+}
+
 
 function createWindow() {
     Logger.log(Logger.levelNames.debug, __filename, "Starting function createWindow()");
@@ -26,7 +33,7 @@ function createWindow() {
     })
 
     Logger.logVerbose(__filename, "BrowserWindow object created");
-    
+
     // and load the index.html of the app.
     win.loadFile(config.buildPath + config.htmlSourcePath + config.entryHTML)
 
@@ -48,9 +55,7 @@ function createWindow() {
 }
 
 // This method will be called when Electron has finished
-app.whenReady().then(createWindow)
-
-
+app.whenReady().then(startApplication)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -73,7 +78,6 @@ app.on('activate', () => {
     }
 })
 
-
 // This allows for the script to wait until the webpage is loaded 
 ipcMain.on("loadDone", function (e, data) {
     Logger.logVerbose(__filename, "The main BrowserWindow has been fully loaded.");
@@ -82,4 +86,4 @@ ipcMain.on("loadDone", function (e, data) {
 // An event so the html files from the electron browser can use the logger 
 ipcMain.on("Logger", (e, message) => {
     Logger.log(message.level, message.source, message.message);
-})
+});

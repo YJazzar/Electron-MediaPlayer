@@ -87,6 +87,7 @@ Then, run this script to start the program:
 - Created a minimal "Database" (not really a database) for managing some of the files that need to be written
 - Created a test implementation in the ```src/test``` folder.
 - Can run the test with the npm script: ```npm run testDb```. 
+- Started making the database track the imports performed
 
 ### 5/12/2020:
 - Made the player controls panel (at the bottom of the screen) extend through then entire width of the application.

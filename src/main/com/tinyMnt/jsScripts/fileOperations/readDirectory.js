@@ -14,7 +14,7 @@ const applyFilter = require(config.buildPath + config.jsSourcePath + "fileOperat
 //      @param eventType: the name of the event to send through the emitter
 //      @return result: an array with information of all files in a directory
 //                      the first object in result is an object that contains the path of the directory
-async function readDirectory(paths, emitter, eventType) {
+async function readDirectory(paths, emitter, eventType, callback) {
     Logger.logVerbose(__filename, "Starting readDirectory() call with: ")
     Logger.logVerbose(__filename, "\tpaths: " + paths);
     Logger.logVerbose(__filename, "\teventType: " + eventType);
@@ -57,7 +57,7 @@ async function readDirectory(paths, emitter, eventType) {
 
 
     }
-
+  
     // Since you cannot return, we send the data back through a send function.
     emitter.send(eventType, result);
 }

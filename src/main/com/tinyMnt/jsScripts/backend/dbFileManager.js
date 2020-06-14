@@ -1,5 +1,5 @@
 const fs = require("fs");
-const Logger = require(config.loggerPath);
+const Logger = require(config.htmlLoggerPath);
 
 class FileManager {
     constructor(filePath, fileAlias) {
@@ -15,7 +15,7 @@ class FileManager {
         this.changedBool = false;
 
         // Log done message
-        Logger.logInfo(__filename, "Done reading: " + this.filePath);
+        Logger.logDb(__filename, "Done reading: " + this.filePath);
     }
 
     readFileContentsSync() {
@@ -33,7 +33,7 @@ class FileManager {
 
             this.fileCache = JSON.parse(data);
 
-            Logger.logInfo(__filename, "Contents of: " + this.filePath + " was done reading.");
+            Logger.logDb(__filename, "Contents of: " + this.filePath + " was done reading.");
 
             return this.fileCache;
         }.bind(this));
@@ -48,7 +48,7 @@ class FileManager {
                 return false;
             }
 
-            Logger.logInfo(__filename, "Wrote to file: " + this.filePath);
+            Logger.logDb(__filename, "Wrote to file: " + this.filePath);
 
             return true;
         }.bind(this))
@@ -58,7 +58,7 @@ class FileManager {
     writeFileContentsSync() {
         fs.writeFileSync(this.filePath, JSON.stringify(this.fileCache));
 
-        Logger.logInfo(__filename, "Wrote to file: " + this.filePath);
+        Logger.logDb(__filename, "Wrote to file: " + this.filePath);
 
         return true;
     }
@@ -94,9 +94,13 @@ class FileManager {
     }
 
     // A function to completely reset the contents of a file to whatever the implementor likes:
-    overrideObj(obj) {
+    setJson(obj) {
         this.fileCache = obj;
         this.changedBool = true;
+    }
+
+    getJson() {
+        return this.fileCache;
     }
 
 }

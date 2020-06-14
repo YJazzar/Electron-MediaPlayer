@@ -29,6 +29,13 @@ function js() {
         .pipe(gulp.dest(buildPath));
 }
 
+// Copy JSON files 
+function json() {
+    return gulp.src('src/**/*.json')
+        // .pipe(babel())
+        .pipe(gulp.dest(buildPath));
+}
+
 function jsx() {
     return gulp.src('src/**/*.jsx')
         .pipe(babel())
@@ -42,6 +49,6 @@ function clean() {
 }
 
 // Export the "start" task.
-exports.build = series(html, css, js, jsx);
+exports.build = series(html, css, js, jsx, json);
 exports.clean = clean;
-exports.cleanInstall = series(clean, html, css, js, jsx);
+exports.cleanInstall = series(clean, html, css, js, jsx, json);
