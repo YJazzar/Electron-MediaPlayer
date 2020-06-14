@@ -9,9 +9,9 @@ const Logger = require(config.htmlLoggerPath);
 function getCellText(attribute, fileObj) {
 
     // tableHeaderTitles: ["Name", "Length", "Type", "Size"],
-    Logger.logDebug(__filename, "getting attribute: " + attribute);
-    Logger.logDebug(__filename, JSON.stringify(fileObj));
-    Logger.logDebug(__filename, "The file name is: " + removeExtension(fileObj.name));
+    // Logger.logDebug(__filename, "getting attribute: " + attribute);
+    // Logger.logDebug(__filename, JSON.stringify(fileObj));
+    // Logger.logDebug(__filename, "The file name is: " + removeExtension(fileObj.name));
 
     switch(attribute) {
         case "Name": 

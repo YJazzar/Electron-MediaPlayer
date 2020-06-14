@@ -40,7 +40,7 @@ function createRow(fileObj) {
 
 // Given a list of files (from the data structure returned by readDirectory()), this function will
 //  append all files into the table
-function appendTable(event, data) {
+function appendTable(data) {
     if (!data) {
         Logger.log(Logger.levelNames.info, __filename, "appendTable() was called with no data... ending function call")
         return;
@@ -74,7 +74,7 @@ function appendTable(event, data) {
 }
 
 // This will erase everything out of the table
-function clearTable(event) {
+function clearTable() {
     Logger.log(Logger.levelNames.verbose, __filename, 'ipcRenderer signal received -> tableFile:clearItems');
     const tableBody = document.getElementById("tableBody");
     if (tableBody) {
@@ -86,10 +86,9 @@ function clearTable(event) {
 }
 
 // This will erase everything off the table and then populate it again
-function clearAndLoadTable(event, data) {
+function clearAndLoadTable(data) {
     Logger.log(Logger.levelNames.debug, __filename, 'ipcRenderer signal received -> tableFile:clearAndLoadItems');
-    clearTable(event);
-    appendTable(event, data);
+    appendTable(data);
 
 }
 
@@ -100,8 +99,8 @@ if (clearButton)
 
 // Here, we want to catch the data that was sent to main.js after each new item is added
 // Setting up all event handlers:
-ipcRenderer.on("tableFile:appendItems", appendTable);
-ipcRenderer.on("tableFile:clearItems", clearTable);
+// ipcRenderer.on("tableFile:appendItems", appendTable);
+// ipcRenderer.on("tableFile:clearItems", clearTable);
 ipcRenderer.on("tableFile:clearAndLoadItems", clearAndLoadTable);
 
 

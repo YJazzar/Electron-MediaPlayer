@@ -16,6 +16,8 @@ ipcRenderer.on("readDirectory", evokeReadDirectory);
 // This function is called when PromptFile.js receives a valid set of paths to import
 function evokeReadDirectory(event, paths, action) {
     Logger.logDebug(__filename, "evokeReadDirectory() is now calling readDirectory()");
+    Logger.logDebug(__filename, "\tpaths: " + paths);
+    Logger.logDebug(__filename, "\tction: " + action);
     readDirectory(paths, em, action);
 }
 
@@ -24,16 +26,18 @@ function evokeReadDirectory(event, paths, action) {
 // These functions are called when readDirectory() sends back the result to this event emitter
 //  which then sends it back to TableEvents
 em.on("tableFile:appendItems", (data) => {
-    Logger.logDebug(__filename, "ipcRenderer signal received -> tableFile:clearItems. Now forwarding to TableEvents.appendTable()");
+    Logger.logDebug(__filename, "Custom EventEmitter signal received -> tableFile:appendItems. Now forwarding to TableEvents.appendTable()");
+    Logger.logDb(__filename, "\tData of received from readDirectory() is of length: " + JSON.stringify(data).length)
     TableEvents.appendTable(data);
 });
 
 em.on("tableFile:clearItems", (data) => {
-    Logger.logDebug(__filename, "ipcRenderer signal received -> tableFile:clearItems. Now forwarding to TableEvents.appendTable()");
-    TableEvents.clearTable(data);
+    Logger.logDebug(__filename, "Custom EventEmitter signal received -> tableFile:clearItems. Now forwarding to TableEvents.clearTable()");
+    TableEvents.clearTable();
 });
 
 em.on("tableFile:clearAndLoadItems", (data) => {
-    Logger.logDebug(__filename, "ipcRenderer signal received -> tableFile:clearItems. Now forwarding to TableEvents.appendTable()");
+    Logger.logDebug(__filename, "Custom EventEmitter signal received -> tableFile:clearAndLoadItems. Now forwarding to TableEvents.clearAndLoadItems()");
+    Logger.logDb(__filename, "\tData of received from readDirectory() is of length: " + JSON.stringify(data).length)
     TableEvents.clearAndLoadTable(data);
 });

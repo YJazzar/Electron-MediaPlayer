@@ -16,7 +16,6 @@ async function getFileData(filePath, fileName, stats) {
     obj.size = convertBytes(stats.size);
     obj.extension = getExtension(fileName);
     obj.duration = await getDuration(obj.path, obj.extension);
-    Logger.logDebug(__filename, obj.duration);
 
     // The next section will convert time from UNIX EPOCH (which is returned by stats.mtimeMs) into something readable
     // The Date() object (for future reference if needed)
@@ -56,8 +55,8 @@ function getExtension(fileName) {
 // Given the file object (with the same structure as the one generated above), this will return an object with useful info
 function getDuration(filePath, fileExtension) {
     Logger.logDebug(__filename, "calling getDuration() on: " + filePath);
-    Logger.logDebug(__filename, "fileExtension: " + fileExtension);
-    Logger.logDebug(__filename, config.tableOptions.fileExtensions);
+    // Logger.logDebug(__filename, "fileExtension: " + fileExtension);
+    // Logger.logDebug(__filename, config.tableOptions.fileExtensions);
     // if (!config.tableOptions.fileExtensions.includes(fileExtension))
     //     return 0;
 
@@ -66,8 +65,8 @@ function getDuration(filePath, fileExtension) {
     return getVideoDurationInSeconds(filePath).then((duration) => {
         return duration;
     }).catch(err => {
-        Logger.log(Logger.levelNames.warning, __filename, "Could not get the duration of a file. Error dump can be on the next file:");
-        Logger.log(Logger.levelNames.warning, __filename, err);
+        Logger.log(Logger.levelNames.warning, __filename, "\tCould not get the duration of file: " + filePath);
+        // Logger.log(Logger.levelNames.warning, __filename, err);
         return 0;
     });  
     
