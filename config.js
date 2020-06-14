@@ -5,7 +5,7 @@ config = {
     htmlSourcePath: "main/com/tinyMnt/html/", 
     jsSourcePath: "main/com/tinyMnt/jsScripts/",
     reactSourcePath: "main/com/tinyMnt/reactScripts/",
-    resourcesPath: "D:/Projects/tnyPlayer/resources/",
+    resourcesPath: "D:/Projects/tnyPlayer/src/main/resources/",
 
     loggerPath: "D:/Projects/tnyPlayer/build/main/com/tinyMnt/jsScripts/logger/Logger.js",
     htmlLoggerPath: "D:/Projects/tnyPlayer/src/main/com/tinyMnt/jsScripts/logger/htmlLogWrapper.js",
