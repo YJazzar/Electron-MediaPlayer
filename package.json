@@ -8,7 +8,8 @@
         "build": "gulp build",
         "run": "electron . level verbose",
         "clean": "gulp clean",
-        "cleanInstall": "gulp cleanInstall && electron . level debug"
+        "cleanInstall": "gulp cleanInstall && electron . level debug", 
+        "testDb": "gulp build && node D:/Projects/tnyPlayer/src/main/tests/backend/DatabaseTestImpl.js"
     },
     "author": "Yousuf Jazzar",
     "license": "MIT ",

@@ -1,5 +1,5 @@
 const config = require("D:/Projects/tnyPlayer/config.js");
-const Logger = require(config.buildPath + config.htmlSourcePath + 'scripts/htmlLoggerWrapper.js');
+const Logger = require(config.loggerPath);
 
 // TODO: add a save feature
 // TODO: make it store to file

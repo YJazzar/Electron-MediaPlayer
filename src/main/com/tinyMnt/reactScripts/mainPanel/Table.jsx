@@ -21,7 +21,7 @@ class Table extends React.Component {
   render() {
     return (
       // <div className="centered">
-      <div className="container">
+      <div className=" ">
         <table
           id="mainTable"
           className="col s12 centered striped responsive-table"

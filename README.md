@@ -16,7 +16,8 @@
   - ```npm install --save-dev gulp-clean```
 - react and react-dom command:
   - ```npm i react react-dom --save-dev```
-- ffprobe: To get info on media files
+- get-video-duration: 
+  - https://www.npmjs.com/package/get-video-duration
 
 
 ## Tutorial for application basic setup: 
@@ -60,6 +61,7 @@ Then, run this script to start the program:
 - Create the database class.
 - Figure out how to persist JSON information.
 - Create a database structure thats easy to organize in terms of playlists and the previously imported songs.
+- make a loading screen for whenever the program is loading in a folder/importing something
 
 # Backlog:
 
@@ -81,6 +83,11 @@ Then, run this script to start the program:
 
 # Daily log:
 
+### 5/13/2020
+- Created a minimal "Database" (not really a database) for managing some of the files that need to be written
+- Created a test implementation in the ```src/test``` folder.
+- Can run the test with the npm script: ```npm run testDb```. 
+
 ### 5/12/2020:
 - Made the player controls panel (at the bottom of the screen) extend through then entire width of the application.
 - Rename the temporary div for MediaPlayer (that is under PlayerPanel.jsx).
@@ -90,7 +97,8 @@ Then, run this script to start the program:
 - Changed table headers so that they become dynamically selected. To change the ordering and which columns to present, changes only need to happen in the config file.
 - Added functionality to read the duration of a file.
 - Renamed project from Electron-MediaPlayer to tnyPlayer
-
+- Made all table headers to have equal width 
+- 
 ### 5/11/2020:
 - Added the first successful React-Player tag.
 - Now the player can functionally play any media file (tested on .mp3 and .mp4 so far)
