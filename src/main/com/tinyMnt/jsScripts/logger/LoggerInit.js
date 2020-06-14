@@ -29,9 +29,10 @@ function init() {
     console.log("initial level set to: " + initialLevel);
  
     const customFormat = printf(({ level, time, source, message }) => {
-        // let te = (`[${level}]   `).substring(0, 9) 
-        // let temp = source.substring(source.length-35, source.length);
-        return `${(`[${level}]       `).substring(0, 10)} [${time}] [${source.substring(source.length - 35, source.length)}]: ${message}`;
+        let formattedLevel = (`         [${level}]`);
+        formattedLevel = formattedLevel.substring(formattedLevel.length-10);
+        let formattedSource = source.substring(source.length-35, source.length);
+        return `${formattedLevel} [${time}] [${formattedSource}]: ${message}`;
         // Old format:
         // return `[${level}] [${time}] [${source}]: ${message}`;
     });

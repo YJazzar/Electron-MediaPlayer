@@ -25,8 +25,8 @@ ipcRenderer.on("readDirectory", evokeReadDirectory);
 // This function is called when PromptFile.js receives a valid set of paths to import
 function evokeReadDirectory(event, paths, action) {
     Logger.logDebug(__filename, "evokeReadDirectory() is now calling readDirectory()");
-    Logger.logDebug(__filename, "/tpaths:  " + paths);
-    Logger.logDebug(__filename, "/taction: " + action);
+    Logger.logDebug(__filename, "\tpaths:  " + paths);
+    Logger.logDebug(__filename, "\taction: " + action);
     readDirectory(paths, em, action);
 }
 
@@ -40,7 +40,7 @@ const em = new EventEmitter();
 //  which then sends it back to TableEvents
 em.on("tableFile:appendItems", (data) => {
     Logger.logDebug(__filename, "Custom EventEmitter signal received -> tableFile:appendItems. Now forwarding to TableEvents.appendTable()");
-    Logger.logDb(__filename, "/tData of received from readDirectory() is of length: " + JSON.stringify(data).length)
+    Logger.logDb(__filename, "\tData of received from readDirectory() is of length: " + JSON.stringify(data).length)
     TableEvents.appendTable(data);
 });
 

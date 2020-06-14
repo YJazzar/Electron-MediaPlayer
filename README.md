@@ -85,7 +85,8 @@ Then, run this script to start the program:
 # Daily log:
 
 ### 5/14/2020
-- Fixed some issues with passing data from readDirectory() to TableEvents functions
+- Fixed some issues with passing data from readDirectory() to TableEvents functions.
+- Minor logging formatting changes (looks more uniform now).
 
 ### 5/13/2020
 - Created a minimal "Database" (not really a database) for managing some of the files that need to be written
