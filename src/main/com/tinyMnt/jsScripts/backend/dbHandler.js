@@ -1,7 +1,11 @@
 const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.htmlLoggerPath);
 const Database = require(config.buildPath + config.jsSourcePath + "backend/Database.js");
-// const TableEvents = require(config.buildPath + config.reactSourcePath + "mainPanel/TableEvents.js");
+
+/**
+ * This file is another layer added to the database to make some functions faster
+ *  (such as saving certain types of actions, making a playlist, etc)
+ */
 
 let db;
 

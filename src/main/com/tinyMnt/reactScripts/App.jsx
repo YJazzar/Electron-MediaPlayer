@@ -34,9 +34,6 @@ class App extends React.Component {
 
 // Will run when the electron browser is done initializing
 window.onload = () => {
-  Logger.logInfo(__filename, "Creating the database instance");
-  // dbh.createDatabase();
-
   Logger.logVerbose(__filename, "Rendering <App/> tag and loading into index.html at #app-load-point");
   ReactDOM.render(<App />, document.getElementById("app-load-point"));
 };

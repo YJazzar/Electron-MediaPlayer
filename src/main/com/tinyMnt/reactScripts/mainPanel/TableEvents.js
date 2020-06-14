@@ -3,7 +3,6 @@ const config = require("D:/Projects/tnyPlayer/config.js");
 const Logger = require(config.htmlLoggerPath);
 const MediaPlayer = require(config.buildPath + config.reactSourcePath + 'utils/MediaPlayer.js');
 const getCellText = require(config.buildPath + config.jsSourcePath + "fileOperations/getFileAttribute.js");
-const dbh = require(config.buildPath + config.jsSourcePath + "backend/dbHandler.js");
 
 Logger.logDebug(__filename, "Started running TableEvents.js file");
 
@@ -48,9 +47,6 @@ function appendTable(data) {
     Logger.log(Logger.levelNames.verbose, __filename, 'ipcRenderer signal received -> tableFile:appendItems');
 
     const tableBody = document.getElementById("tableBody");
-
-    // Store the newly imported data:
-    // dbh.addToImportHistory(data);
 
     // Logic to append to table
     if (tableBody) {
