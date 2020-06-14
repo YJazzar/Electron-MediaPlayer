@@ -7,8 +7,17 @@ const TableEvents = require(config.buildPath + config.reactSourcePath + "mainPan
 const readDirectory = require(config.buildPath + config.jsSourcePath + 'fileOperations/readDirectory.js');
 // const dbh = require(config.buildPath + config.jsSourcePath + 'backend/dbHandler.js');
 
-// Make the event emitter at the core of the application:
-const em = new EventEmitter();
+//// ****************************************** Functions using ipcRenderer
+
+// This is the signal received when content can be loaded into the webpage
+// This is sent from "jsScripts/electron/main.js"
+ipcRenderer.on("sendStartup", evokeStartup);
+
+function evokeStartup() {
+    Logger.logDebug(__filename, "Auto populating table");
+    readDirectory(["C:\\Users\\sfjzz\\Videos"], em, "tableFile:appendItems");
+}
+
 
 // Set up the receiving end for PromptFiles.js's event signal
 ipcRenderer.on("readDirectory", evokeReadDirectory);
@@ -16,18 +25,22 @@ ipcRenderer.on("readDirectory", evokeReadDirectory);
 // This function is called when PromptFile.js receives a valid set of paths to import
 function evokeReadDirectory(event, paths, action) {
     Logger.logDebug(__filename, "evokeReadDirectory() is now calling readDirectory()");
-    Logger.logDebug(__filename, "\tpaths: " + paths);
-    Logger.logDebug(__filename, "\tction: " + action);
+    Logger.logDebug(__filename, "/tpaths:  " + paths);
+    Logger.logDebug(__filename, "/taction: " + action);
     readDirectory(paths, em, action);
 }
 
+//// ****************************************** Functions using custom EventEmitter
+
+// Make the event emitter at the core of the application:
+const em = new EventEmitter();
 
 // Setting up all event handlers:
 // These functions are called when readDirectory() sends back the result to this event emitter
 //  which then sends it back to TableEvents
 em.on("tableFile:appendItems", (data) => {
     Logger.logDebug(__filename, "Custom EventEmitter signal received -> tableFile:appendItems. Now forwarding to TableEvents.appendTable()");
-    Logger.logDb(__filename, "\tData of received from readDirectory() is of length: " + JSON.stringify(data).length)
+    Logger.logDb(__filename, "/tData of received from readDirectory() is of length: " + JSON.stringify(data).length)
     TableEvents.appendTable(data);
 });
 

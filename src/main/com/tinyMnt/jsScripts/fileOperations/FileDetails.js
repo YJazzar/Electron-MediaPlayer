@@ -54,7 +54,7 @@ function getExtension(fileName) {
 
 // Given the file object (with the same structure as the one generated above), this will return an object with useful info
 function getDuration(filePath, fileExtension) {
-    Logger.logDebug(__filename, "calling getDuration() on: " + filePath);
+    // Logger.logDebug(__filename, "calling getDuration() on: " + filePath);
     // Logger.logDebug(__filename, "fileExtension: " + fileExtension);
     // Logger.logDebug(__filename, config.tableOptions.fileExtensions);
     // if (!config.tableOptions.fileExtensions.includes(fileExtension))
@@ -65,7 +65,7 @@ function getDuration(filePath, fileExtension) {
     return getVideoDurationInSeconds(filePath).then((duration) => {
         return duration;
     }).catch(err => {
-        Logger.log(Logger.levelNames.warning, __filename, "\tCould not get the duration of file: " + filePath);
+        Logger.log(Logger.levelNames.warning, __filename, "Could not get the duration of file: " + filePath);
         // Logger.log(Logger.levelNames.warning, __filename, err);
         return 0;
     });  

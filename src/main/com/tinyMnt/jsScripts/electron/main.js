@@ -46,6 +46,12 @@ function createWindow() {
         app.quit();
     });
 
+    win.webContents.on('did-finish-load', () => {
+        Logger.logInfo(__filename, "Did-Finish-Load event was received");
+        win.webContents.send("sendStartup");
+    })
+
+
     // Insert menu:
     let menuTemplate = Menu.buildFromTemplate(getMenuTemplate(app, win));
     // if you comment this line out, you will get the boilerplate menu thats already there by default
@@ -87,3 +93,4 @@ ipcMain.on("loadDone", function (e, data) {
 ipcMain.on("Logger", (e, message) => {
     Logger.log(message.level, message.source, message.message);
 });
+
