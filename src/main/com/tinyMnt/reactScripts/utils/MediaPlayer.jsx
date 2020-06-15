@@ -16,8 +16,8 @@ class ResponsivePlayer extends React.Component {
           className="react-player"
           // url="C:/Users/sfjzz/Videos/2020-05-26 13-17-56.mkv" test file
           url={this.props.filePath}
-          // width="100%"
-          // height="100%"
+          width="90%"
+          height="80%"
           playing={true}
           controls={true}
           volume={0.5}

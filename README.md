@@ -78,9 +78,9 @@ Then, run this script to start the program:
 - [ ] Find ways to avoid displaying anything with the react-player if it is an audio file (only the seek function will be required)
 - [ ] Find a way to make a functional seek slider (possibly through svg drawings)
 
- #### Other backlog items:
- - Make a new button on the Menu to allow the user to change what filters need to be applied (what file extensions should be kept).
-  
+#### Other backlog items:
+- Make a new button on the Menu to allow the user to change what filters need to be applied (what file extensions should be kept).
+- In the table, make sure to convert the seconds value into something more readable (ex: min:sec)
 
 # Daily log:
 
