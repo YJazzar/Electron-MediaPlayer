@@ -105,8 +105,5 @@ ipcRenderer.on("tableFile:clearAndLoadItems", clearAndLoadTable);
 // Send signal that processing can start:
 ipcRenderer.send('loadDone', "Done setting up everything");
 
-function test() {
-    console.log(tableBody);
-}
 
 module.exports = { appendTable, clearTable, clearAndLoadTable}
