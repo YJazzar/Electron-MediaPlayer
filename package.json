@@ -1,7 +1,7 @@
 {
     "name": "tny-player",
-    "version": "1.0.0",
-    "description": "A simple media player",
+    "version": "2.0.0",
+    "description": "A simple media player.",
     "main": "./build/main/com/tinyMnt/jsScripts/electron/main.js",
     "scripts": {
         "start": "gulp build && electron . level debug",
