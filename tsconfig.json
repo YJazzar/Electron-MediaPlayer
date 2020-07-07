@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"module": "commonjs",
+		"jsx": "react",
+		"baseUrl": "src"
+	}
+}

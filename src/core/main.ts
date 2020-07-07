@@ -1,8 +1,10 @@
+import {log} from 'libs/logLib';
+const {app, BrowserWindow} = require('electron');
 
+function createWindow() {
 
-const { app, BrowserWindow } = require('electron');
+    log("HIIII");
 
-function createWindow () {
     // Create the browser window.
     let win = new BrowserWindow({
         width: 800,

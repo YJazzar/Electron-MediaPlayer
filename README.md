@@ -9,7 +9,10 @@
     - ```npm install --save-dev typescript```
 - Webpack: 
     - ```npm install --save-dev webpack webpack-cli ts-loader```
-  
+    - ```npm install --save-dev html-webpack-plugin```
+- React:
+    - ```npm install --save-dev react react-dom @types/react @types/react-dom```
+
   
 - winston: A logging library
   - https://www.npmjs.com/package/winston
