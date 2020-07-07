@@ -1,4 +1,4 @@
-# tnyPlayer
+# tnyPlayer - Status: migrating to use webpack
 
 ## Dependecies used to create app:
 - electron: For main application window and backend interface\
@@ -86,6 +86,9 @@ Then, run this script to start the program:
 - In the table, make sure to convert the seconds value into something more readable (ex: min:sec)
 
 # Daily log:
+
+### 6/6/2020
+- Started moving the project to use webpack
 
 ### 5/14/2020
 - Fixed some issues with passing data from readDirectory() to TableEvents functions.
