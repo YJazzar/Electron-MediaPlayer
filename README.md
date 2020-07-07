@@ -3,10 +3,12 @@
 
 
 ## Dependecies used to create app:
-- electron: For main application window and backend interface\
+- electron:
     - ```npm install --save-dev electron```
 - Typescript compiler:
     - ```npm install --save-dev typescript```
+- Webpack: 
+    - ```npm install --save-dev webpack webpack-cli ts-loader```
   
   
 - winston: A logging library
