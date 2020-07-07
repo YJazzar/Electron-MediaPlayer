@@ -5,3 +5,4 @@ dist/
 deprecated/
 .idea/*
 package-lock.json
+/.idea/
