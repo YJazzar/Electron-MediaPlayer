@@ -10,6 +10,7 @@
 - Babel: To transpile JSX to JS. Commands used:
   - ```npm i @babel/core --save-dev```
   - ```npm i @babel/preset-env @babel/preset-react --save-dev```
+  - ```@babel/plugin-syntax-class-properties```
 - Gulp: The build tool of choice. Commands used:
   - ```npm i gulp gulp-babel --save-dev```
   - ```npm i gulp-concat gulp-clean-css```
@@ -73,6 +74,8 @@ Then, run this script to start the program:
 #### New Application Requirements:
 - [ ] Have a button to add a YouTube playlist (or individual video) to the player
   - [ ] the user might need to choose whether he wants to add the url link to a file, download the actual video, or any other action (that I might think of later).
+- [ ] Give the user an option to rate a song. This rating can then be used to create playlists or randomly queue in some of the more rated songs
+- [ ] keep track of how many times each song is played (and maybe for how long?)
 
 #### React-Player Changes and features to include:
 - [ ] Find ways to avoid displaying anything with the react-player if it is an audio file (only the seek function will be required)

@@ -54,8 +54,6 @@ async function readDirectory(paths, emitter, eventType) {
         }
 
         Logger.logInfo(__filename, "readDirectory() finished processing: " + currPath);
-
-
     }
 
     // Since you cannot return, we send the data back through a send function.
