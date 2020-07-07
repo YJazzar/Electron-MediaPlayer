@@ -12,6 +12,11 @@
     - ```npm install --save-dev html-webpack-plugin```
 - React:
     - ```npm install --save-dev react react-dom @types/react @types/react-dom```
+- Mocka: 
+    - ```npm install --save-dev mocha chai```
+    - ```npm install --save-dev ts-node```    
+    - ```npm install --save-dev @types/chai @types/mocha```
+
 
   
 - winston: A logging library
