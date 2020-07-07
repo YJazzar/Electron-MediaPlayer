@@ -1,8 +1,14 @@
 # tnyPlayer - Status: migrating to use webpack
 
+
+
 ## Dependecies used to create app:
 - electron: For main application window and backend interface\
-  - npmjs.com/package/electron
+    - ```npm install --save-dev electron```
+- Typescript compiler:
+    - ```npm install --save-dev typescript```
+  
+  
 - winston: A logging library
   - https://www.npmjs.com/package/winston
 - react-player: For playing audio/video files
