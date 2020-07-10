@@ -1,0 +1,41 @@
+#player-location {
+    width: 20%;
+    height: 20%;
+    background-color: whitesmoke;
+    position: fixed;
+    left: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 7px;
+    overflow: auto;
+}
+
+#seeker_container {
+    width: 80%;
+    height: 20%;
+    background-color: blanchedalmond;
+    right: 0px;
+    position: fixed;
+
+    overflow: auto;
+}
+
+#seek-bar-full-width {
+    fill: rgb(0, 0, 255);
+    stroke-width: 3;
+    stroke: rgb(0, 0, 0);
+
+    width: 100%;
+}
+
+#seek-bar-played-width {
+    fill: rgb(255, 0, 0);
+    stroke-width: 3;
+    stroke: rgb(0, 0, 0);
+
+    width: 50%;
+}
+
+/* .player-wrapper {
+  display: none;
+} */

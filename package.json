@@ -1,39 +1,38 @@
 {
-	"name": "tnyPlayer",
-	"version": "2.0.0",
-	"description": "A simple media player - using webpack",
-	"main": "src/core/main.ts",
-	"scripts": {
-		"test": "mocha --require ts-node/register test/**/*.ts",
-		"build": "webpack --config ./webpack.config.js",
-		"start": "npm run build && electron ./dist/core/main.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/YJazzar/tnyPlayer.git"
-	},
-	"keywords": [],
-	"author": "Yousuf J.",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/YJazzar/tnyPlayer/issues"
-	},
-	"homepage": "https://github.com/YJazzar/tnyPlayer#readme",
-	"devDependencies": {
-		"@types/chai": "^4.2.11",
-		"@types/mocha": "^7.0.2",
-		"@types/react": "^16.9.41",
-		"@types/react-dom": "^16.9.8",
-		"chai": "^4.2.0",
-		"electron": "^9.1.0",
-		"html-webpack-plugin": "^4.3.0",
-		"mocha": "^8.0.1",
-		"react": "^16.13.1",
-		"react-dom": "^16.13.1",
-		"ts-loader": "^7.0.5",
-		"ts-node": "^8.10.2",
-		"typescript": "^3.9.6",
-		"webpack": "^4.43.0",
-		"webpack-cli": "^3.3.12"
-	}
+    "name": "tny-player",
+    "version": "1.0.0",
+    "description": "A simple media player",
+    "main": "./build/main/com/tinyMnt/jsScripts/electron/main.js",
+    "scripts": {
+        "start": "gulp build && electron . level debug",
+        "build": "gulp build",
+        "run": "electron . level verbose",
+        "clean": "gulp clean",
+        "cleanInstall": "gulp cleanInstall && electron . level debug", 
+        "testDb": "gulp build && node D:/Projects/tnyPlayer/src/main/tests/backend/DatabaseTestImpl.js"
+    },
+    "author": "Yousuf Jazzar",
+    "license": "MIT ",
+    "devDependencies": {
+        "@babel/core": "^7.10.2",
+        "@babel/preset-env": "^7.10.2",
+        "@babel/preset-react": "^7.10.1",
+        "electron": "^9.0.0",
+        "gulp": "^4.0.2",
+        "gulp-babel": "^8.0.0",
+        "gulp-clean": "^0.4.0",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "react-player": "^2.3.0"
+    },
+    "dependencies": {
+        "@babel/polyfill": "^7.10.1",
+        "ffprobe": "^1.1.0",
+        "ffprobe-static": "^3.0.0",
+        "get-video-duration": "^3.0.0",
+        "gulp-clean-css": "^4.3.0",
+        "gulp-concat": "^2.6.1",
+        "jquery": "^3.5.1",
+        "winston": "^3.2.1"
+    }
 }
