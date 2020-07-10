@@ -4,6 +4,7 @@
 	"description": "A simple media player - using webpack",
 	"main": "src/core/main.ts",
 	"scripts": {
+		"update": "npm update",
 		"test": "mocha --require ts-node/register test/**/*.ts",
 		"build": "webpack --config ./webpack.config.js",
 		"start": "npm run build && electron ./dist/core/main.js"

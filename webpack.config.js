@@ -20,9 +20,11 @@ module.exports = [
         },
         resolve: {
             alias: {
-                'libs': path.resolve(__dirname, 'src/libs')
+                'libs': path.resolve(__dirname, 'src/libs'),
+                'core': path.resolve(__dirname, 'src/core'),
+                'app': path.resolve(__dirname, 'app/app')
             },
-            extensions: [ '.tsx', '.ts', '.js' ]
+            extensions: ['.tsx', '.ts', '.js']
         }
     },
     {
