@@ -3,7 +3,7 @@ import {logLevelNames, logLevels} from "./logLevelConstants";
 import {getDateTime} from "../utils/DateTime";
 const { printf } = winston.format;
 
-class Logger {
+export class Logger {
 
     private logger: winston.Logger;
     private readonly logLevel: string;
@@ -27,7 +27,7 @@ class Logger {
                     level: this.logLevel
                 }),
                 new winston.transports.File({
-                    filename: 'LoggerOutput.log',
+                    filename: './LoggerOutput.log',     // TODO: add this as a property in the config files
                     level: this.logLevel
                 }),
             ]
@@ -73,5 +73,9 @@ class Logger {
 
     debug(source: string, message: string): void {
         this.log(logLevelNames.debug, source, message);
+    }
+
+    get LogLevel(): string {
+        return this.logLevel;
     }
 }
