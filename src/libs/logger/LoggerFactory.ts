@@ -12,11 +12,15 @@ export class LoggerFactory {
             this.init();
         }
 
-        return new LoggerInstance(this.logger, sourcePath)
+        return new LoggerInstance(this.logger, this.trimPath(sourcePath))
     }
 
     static init(): void {
         this.logger = new LoggerImpl(null);
         this.logger.init();
+    }
+
+    private static trimPath(sourcePath: string) {
+        return sourcePath.substring(sourcePath.length-35, sourcePath.length);
     }
 }

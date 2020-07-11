@@ -6,3 +6,4 @@ deprecated/
 .idea/*
 package-lock.json
 /.idea/
+*.map

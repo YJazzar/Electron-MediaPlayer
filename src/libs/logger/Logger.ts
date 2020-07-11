@@ -46,8 +46,7 @@ export class LoggerImpl  {
         return printf(({ level, time, source, message }) => {
             let formattedLevel = (`         [${level}]`);
             formattedLevel = formattedLevel.substring(formattedLevel.length-10);
-            let formattedSource = source.substring(source.length-35, source.length);
-            return `${formattedLevel} [${time}] [${formattedSource}]: ${message}`;
+            return `${formattedLevel} [${time}] [${source}]: ${message}`;
             // Old format:
             // return `[${level}] [${time}] [${source}]: ${message}`;
         });
@@ -55,7 +54,6 @@ export class LoggerImpl  {
 
     // The function that will log all messages
     log(level: string, source: string, message: string): void {
-        console.dir(this.logger)
         this.logger.log({
             level: level,
             time: getDateTime(),

@@ -16,8 +16,12 @@ app.whenReady().then(startApplication).catch((err)=>{
 function startApplication() : void {
     console.log("startApplication() called");
 
-    // Initialize logger
-    log.info('testing this thing and seeing if it can actually work')
+    // Show startup message
+    log.info('*******************************')
+    log.info('-------------------------------')
+    log.info('*****  Program started   *****')
+    log.info('-------------------------------')
+    log.info('*******************************')
 
     // Create the browser window.
     window = new BrowserWindow({
