@@ -25,6 +25,10 @@ module.exports = [
                 'app': path.resolve(__dirname, 'app/app')
             },
             extensions: ['.tsx', '.ts', '.js']
+        },
+        node: {
+            __filename: true,
+            __dirname: true
         }
     },
     {
@@ -47,6 +51,10 @@ module.exports = [
             new HtmlWebpackPlugin({
                 template: './src/app/index.html'
             })
-        ]
+        ],
+        node: {
+            __filename: true,
+            __dirname: true
+        }
     }
 ];

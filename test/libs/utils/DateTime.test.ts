@@ -1,6 +1,5 @@
-import { expect } from "chai";
+import {expect} from "chai";
 import {getDateTime} from "../../../src/libs/utils/DateTime";
-
 
 
 describe('Test DateTime() function returns values with the correct properties', function () {

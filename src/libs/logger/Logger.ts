@@ -3,17 +3,25 @@ import {logLevelNames, logLevels} from "./logLevelConstants";
 import {getDateTime} from "../utils/DateTime";
 const { printf } = winston.format;
 
-export class Logger {
+// export interface Logger {
+//
+//     logger: winston.Logger;
+//     logLevel: string;
+//     init(): void;
+//     log(level: string, source: string, message: string): void;
+//
+// }
 
-    private logger: winston.Logger;
-    private readonly logLevel: string;
+export class LoggerImpl  {
+
+    logger: winston.Logger;
+    readonly logLevel: string;
 
     constructor(logLevel: string) {
         if (!logLevel) {
             logLevel = logLevelNames.debug;
         }
         this.logLevel = logLevel;
-        this.init();
     }
 
     // TODO: Make a config file to create this portion of the logger
@@ -47,32 +55,13 @@ export class Logger {
 
     // The function that will log all messages
     log(level: string, source: string, message: string): void {
+        console.dir(this.logger)
         this.logger.log({
             level: level,
             time: getDateTime(),
             message: message,
             source: source
         });
-    }
-
-    error(source: string, message: string): void {
-        this.log(logLevelNames.error, source, message);
-    }
-
-    warning(source: string, message: string): void {
-        this.log(logLevelNames.warning, source, message);
-    }
-
-    database(source: string, message: string): void {
-        this.log(logLevelNames.database, source, message);
-    }
-
-    info(source: string, message: string): void {
-        this.log(logLevelNames.info, source, message);
-    }
-
-    debug(source: string, message: string): void {
-        this.log(logLevelNames.debug, source, message);
     }
 
     get LogLevel(): string {
