@@ -1,25 +1,32 @@
-import {log} from "libs/logLib";
-
-const {app, BrowserWindow} = require('electron');
-
+import {app, BrowserWindow} from 'electron';
+import {ApplicationEntry} from "./electron/ApplicationEntry";
 
 
-function createWindow() {
+let window : BrowserWindow;
+
+app.whenReady().then(startApplication).catch((err)=>{
+    console.log('Could not start tnyPlayer');
+    console.log(err);
+    process.exit();
+});
 
 
-    log("Hello")
+function startApplication() : void {
+    console.log("startApplication() called");
 
     // Create the browser window.
-    let win = new BrowserWindow({
-        width: 800,
-        height: 600,
+    window = new BrowserWindow({
+        width: 1420,
+        height: 850,
         webPreferences: {
             nodeIntegration: true
         }
     });
 
-    // and load the index.html of the app.
-    win.loadFile('../app/index.html');
+    // Load the webPage into electron
+    window.loadFile('../app/index.html');
+
+    new ApplicationEntry(window);
 }
 
-app.on('ready', createWindow);
+
