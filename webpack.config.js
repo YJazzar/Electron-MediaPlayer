@@ -51,7 +51,14 @@ module.exports = [
             new HtmlWebpackPlugin({
                 template: './src/app/index.html'
             })
-        ],
+        ], resolve: {
+            alias: {
+                'libs': path.resolve(__dirname, 'src/libs'),
+                'core': path.resolve(__dirname, 'src/core'),
+                'app': path.resolve(__dirname, 'app/app')
+            },
+            extensions: ['.tsx', '.ts', '.js']
+        },
         node: {
             __filename: true,
             __dirname: true

@@ -1,16 +1,8 @@
 import winston, {createLogger} from "winston";
 import {logLevelNames, logLevels} from "./logLevelConstants";
 import {getDateTime} from "../utils/DateTime";
-const { printf } = winston.format;
+import {customWinstonFormatter} from "./LogFormatter";
 
-// export interface Logger {
-//
-//     logger: winston.Logger;
-//     logLevel: string;
-//     init(): void;
-//     log(level: string, source: string, message: string): void;
-//
-// }
 
 export class LoggerImpl  {
 
@@ -28,7 +20,7 @@ export class LoggerImpl  {
     init(): void {
         // Create the logger
         this.logger = createLogger({
-            format: this.customFormatter(),
+            format: customWinstonFormatter(),
             levels: logLevels,
             transports: [
                 new winston.transports.Console({
@@ -39,16 +31,6 @@ export class LoggerImpl  {
                     level: this.logLevel
                 }),
             ]
-        });
-    }
-
-    customFormatter() {
-        return printf(({ level, time, source, message }) => {
-            let formattedLevel = (`         [${level}]`);
-            formattedLevel = formattedLevel.substring(formattedLevel.length-10);
-            return `${formattedLevel} [${time}] [${source}]: ${message}`;
-            // Old format:
-            // return `[${level}] [${time}] [${source}]: ${message}`;
         });
     }
 
