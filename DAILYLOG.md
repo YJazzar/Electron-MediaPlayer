@@ -1,7 +1,8 @@
 
 ### 6/10/2020 :: S001
 - Created trello board and placed in first few stories
-- 
+- Created the initial logger setup. 
+- Made a logger factory and logger instance to manage logging and make things easier
 
 ### 6/6/2020
 - Started moving the project to use webpack
