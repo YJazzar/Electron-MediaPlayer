@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 import { logLevelNames } from './logLevelConstants';
 import { loggingStringFormatter } from './LogFormatter';
-import { getDateTime } from '../utils/DateTime';
+import getDateTime from '../utils/DateTime';
 
 export default class UILoggerInstance {
     private readonly sourcePath: string;

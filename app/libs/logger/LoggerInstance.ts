@@ -1,4 +1,4 @@
-import { LoggerImpl } from './Logger';
+import LoggerImpl from './Logger';
 import { logLevelNames } from './logLevelConstants';
 
 /**

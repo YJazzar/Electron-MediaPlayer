@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron';
 import LoggerFactory from '../libs/logger/LoggerFactory';
-import MenuBuilder from './utils/menu';
+import MenuBuilder from '../libs/utils/menu';
 import IpcMainController from './controller/IpcMainController';
 
 const log = LoggerFactory.getLogger(__filename);

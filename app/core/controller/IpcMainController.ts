@@ -15,7 +15,7 @@ export default class IpcMainController {
 
     init(): void {
         this.mainWindow.webContents.on('did-finish-load', () => {
-            log.info('Did-Finish-Load event was received');
+            log.debug('Did-Finish-Load event was received');
         });
 
         // This allows for the script to wait until the webpage is loaded

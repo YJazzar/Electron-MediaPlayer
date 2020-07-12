@@ -11,7 +11,7 @@
 import { app, BrowserWindow } from 'electron';
 import log from 'electron-log';
 import path from 'path';
-import MenuBuilder from './core/utils/menu';
+import MenuBuilder from './libs/utils/menu';
 import ApplicationEntry from './core/ApplicationEntry';
 
 let mainWindow: BrowserWindow | null = null;
@@ -65,6 +65,7 @@ const createWindow = async () => {
         mainWindow = null;
     });
 
+    // Entry point for my application
     const appEntry = new ApplicationEntry(mainWindow);
     appEntry.init();
 };
