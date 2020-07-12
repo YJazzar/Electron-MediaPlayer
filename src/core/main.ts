@@ -33,7 +33,7 @@ function startApplication() : void {
     });
 
     // Load the webPage into electron
-    window.loadFile('../app/index.html');
+    window.loadFile('D:/Projects/tnyPlayer/dist/app/index.html');
 
     new ApplicationEntry(window);
 }

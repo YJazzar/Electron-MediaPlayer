@@ -44,7 +44,7 @@ export class LoggerImpl  {
         });
     }
 
-    get LogLevel(): string {
+    getLogLevel(): string {
         return this.logLevel;
     }
 }
