@@ -1,6 +1,6 @@
-export function getDateTime(): string {
+export default function getDateTime(): string {
     return new Date()
         .toISOString()
-        .replace(/T/, ' ')      // replace T with a space
-        .replace(/\..+/, '')     // delete the dot and everything after
+        .replace(/T/, ' ') // replace T with a space
+        .replace(/\..+/, ''); // delete the dot and everything after
 }

@@ -6,8 +6,6 @@ import LoggerFactory from './libs/logger/LoggerFactory';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-log.info("HELLO WORLLDDD");
-
 document.addEventListener('DOMContentLoaded', () =>
     render(
         <h1>DOES THIS WORK???? PLEASE TELL ME IT DOES</h1>,

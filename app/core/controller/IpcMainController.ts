@@ -28,7 +28,7 @@ export default class IpcMainController {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    sendLogMessage(event: Event, message: LogMessage) {
+    sendLogMessage(_event: Event, message: LogMessage) {
         LoggerFactory.getLoggerImpl().log(
             message.logLevelName,
             message.sourcePath,

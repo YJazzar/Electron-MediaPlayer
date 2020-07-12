@@ -14,6 +14,14 @@ export default class ApplicationEntry {
 
     constructor(mainWindow: BrowserWindow) {
         log.info('Application entry point initialized!');
+
+        // Show startup message
+        log.info('*******************************');
+        log.info('-------------------------------');
+        log.info('*****  Program started   *****');
+        log.info('-------------------------------');
+        log.info('*******************************');
+
         this.mainWindow = mainWindow;
         this.ipcMainController = new IpcMainController(this.mainWindow);
         this.menuBuilder = new MenuBuilder(this.mainWindow);
