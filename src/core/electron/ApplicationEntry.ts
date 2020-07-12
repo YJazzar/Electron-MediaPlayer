@@ -1,11 +1,11 @@
-import {app, BrowserWindow} from "electron";
-import {LoggerFactory} from "libs/logger/LoggerFactory";
-import {IpcMainController} from "../controller/IpcMainController";
+import { app, BrowserWindow } from 'electron';
+import { LoggerFactory } from 'libs/logger/LoggerFactory';
+import { IpcMainController } from '../controller/IpcMainController';
+import MenuBuilder from '../../../app/core/utils/menu';
 
 const log = LoggerFactory.getLogger(__filename);
 
-export class ApplicationEntry {
-
+export default class ApplicationEntry {
     private window: BrowserWindow;
     private ipcMainController: IpcMainController;
 
@@ -20,13 +20,18 @@ export class ApplicationEntry {
         });
 
         app.on('window-all-closed', () => {
-            log.info('All windows of the application was closed... Quitting application now.')
+            log.info(
+                'All windows of the application was closed... Quitting application now.'
+            );
             app.exit();
-        })
+        });
 
         window.webContents.on('did-finish-load', () => {
             log.info('Did-Finish-Load event was received');
             window.webContents.send('sendStartup');
         });
+
+        const menuBuilder = new MenuBuilder(mainWindow);
+        menuBuilder.buildMenu();
     }
 }

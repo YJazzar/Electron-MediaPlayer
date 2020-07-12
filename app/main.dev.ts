@@ -12,14 +12,7 @@ import { app, BrowserWindow } from 'electron';
 import log from 'electron-log';
 import path from 'path';
 import MenuBuilder from './core/utils/menu';
-
-// export default class AppUpdater {
-//     constructor() {
-//         log.transports.file.level = 'info';
-//         autoUpdater.logger = log;
-//         autoUpdater.checkForUpdatesAndNotify();
-//     }
-// }
+import ApplicationEntry from './core/ApplicationEntry';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -35,30 +28,11 @@ if (
     require('electron-debug')();
 }
 
-const installExtensions = async () => {
-    const installer = require('electron-devtools-installer');
-    const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-    const extensions = ['REACT_DEVELOPER_TOOLS', 'REACT_PERF'];
-
-    return Promise.all(
-        extensions.map((name) =>
-            installer.default(installer[name], forceDownload)
-        )
-    ).catch(console.log);
-};
-
 const createWindow = async () => {
-    if (
-        process.env.NODE_ENV === 'development' ||
-        process.env.DEBUG_PROD === 'true'
-    ) {
-        await installExtensions();
-    }
-
     mainWindow = new BrowserWindow({
         show: false,
-        width: 1024,
-        height: 728,
+        width: 1420,
+        height: 850,
         webPreferences:
             (process.env.NODE_ENV === 'development' ||
                 process.env.E2E_BUILD === 'true') &&
@@ -73,10 +47,9 @@ const createWindow = async () => {
 
     mainWindow.loadURL(`file://${__dirname}/app.html`);
 
-    // @TODO: Use 'ready-to-show' event
+    // TODO: Use 'ready-to-show' event
     //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
     mainWindow.webContents.on('did-finish-load', () => {
-        log.info('testing electron log');
         if (!mainWindow) {
             throw new Error('"mainWindow" is not defined');
         }
@@ -92,12 +65,8 @@ const createWindow = async () => {
         mainWindow = null;
     });
 
-    const menuBuilder = new MenuBuilder(mainWindow);
-    menuBuilder.buildMenu();
-
-    // Remove this if your app does not use auto updates
-    // eslint-disable-next-line
-    // new AppUpdater();
+    const appEntry = new ApplicationEntry(mainWindow);
+    appEntry.init();
 };
 
 /**

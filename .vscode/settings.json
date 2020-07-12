@@ -21,7 +21,8 @@
         "**/configs": true,
         "**/.idea": true,
         "**/yarn.lock": true,
-        "**/.eslint*": true
+        "**/.eslintcache": true,
+        "**/.eslintignore": true
     },
 
     "javascript.validate.enable": false,

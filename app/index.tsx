@@ -1,8 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import './styles/app.global.css';
+import LoggerFactory from './libs/logger/LoggerFactory';
 
 
+const log = LoggerFactory.getUILogger(__filename);
+
+log.info("HELLO WORLLDDD");
 
 document.addEventListener('DOMContentLoaded', () =>
     render(
