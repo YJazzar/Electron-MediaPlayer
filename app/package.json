@@ -1,5 +1,5 @@
 {
-  "name": "tnyPlayer",
+  "name": "tny-layer",
   "productName": "TnyPlayer",
   "version": "3.0.0",
   "description": "A simple media player - based on electron-react-boilerplate",
