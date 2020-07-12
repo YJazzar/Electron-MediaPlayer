@@ -51,6 +51,7 @@
       "prettier --ignore-path .eslintignore --single-quote --write"
     ]
   },
+  "react/jsx-indent": [true, 4, {"checkAttributes": true, "indentLogicalExpressions": true}],
   "build": {
     "productName": "TnyPlayer",
     "appId": "com.tnyMnt.TnyPlayer",
