@@ -1,35 +1,35 @@
-import {app, BrowserWindow} from 'electron';
-import {ApplicationEntry} from "./electron/ApplicationEntry";
-import {LoggerFactory} from "../libs/logger/LoggerFactory";
+import { app, BrowserWindow } from 'electron';
+import { ApplicationEntry } from './electron/ApplicationEntry';
+import { LoggerFactory } from '../libs/logger/LoggerFactory';
 
 const log = LoggerFactory.getLogger(__filename);
-let window : BrowserWindow;
+let window: BrowserWindow;
 
+app.whenReady()
+    .then(startApplication)
+    .catch((err) => {
+        console.log('Could not start tnyPlayer');
+        console.log(err);
+        process.exit();
+    });
 
-app.whenReady().then(startApplication).catch((err)=>{
-    console.log('Could not start tnyPlayer');
-    console.log(err);
-    process.exit();
-});
-
-
-function startApplication() : void {
-    console.log("startApplication() called");
+function startApplication(): void {
+    console.log('startApplication() called');
 
     // Show startup message
-    log.info('*******************************')
-    log.info('-------------------------------')
-    log.info('*****  Program started   *****')
-    log.info('-------------------------------')
-    log.info('*******************************')
+    log.info('*******************************');
+    log.info('-------------------------------');
+    log.info('*****  Program started   *****');
+    log.info('-------------------------------');
+    log.info('*******************************');
 
     // Create the browser window.
     window = new BrowserWindow({
         width: 1420,
         height: 850,
         webPreferences: {
-            nodeIntegration: true
-        }
+            nodeIntegration: true,
+        },
     });
 
     // Load the webPage into electron
@@ -37,5 +37,3 @@ function startApplication() : void {
 
     new ApplicationEntry(window);
 }
-
-
