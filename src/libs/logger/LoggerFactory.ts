@@ -4,7 +4,7 @@ import {LoggerInstance, UILoggerInstance} from "./LoggerInstance";
 
 export class LoggerFactory {
 
-    private static logger: LoggerImpl;
+    static logger: LoggerImpl;
     private static printToDevTools: boolean;
 
     static getLogger(sourcePath: string): LoggerInstance {
@@ -32,5 +32,9 @@ export class LoggerFactory {
 
     private static trimPath(sourcePath: string) {
         return sourcePath.substring(sourcePath.length - 35, sourcePath.length);
+    }
+
+    static getLoggerImpl(): LoggerImpl {
+        return this.logger;
     }
 }

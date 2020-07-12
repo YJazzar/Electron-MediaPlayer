@@ -2,12 +2,15 @@
 	"name": "tnyPlayer",
 	"version": "2.0.0",
 	"description": "A simple media player - using webpack",
-	"main": "src/core/main.ts",
+	"main": "./dist/core/main.js",
 	"scripts": {
 		"update": "npm update",
 		"test": "mocha --require ts-node/register test/**/*.ts",
 		"build": "webpack --config ./webpack.config.js",
-		"start": "npm run build && electron ./dist/core/main.js"
+		"start": "npm run build && electron .",
+		"debug": "electron --inspect=9229 ./dist/core/main.js",
+
+		"start-main-debug": "npm run start-main-dev --inspect=5858 --remote-debugging-port=9223"
 	},
 	"repository": {
 		"type": "git",
@@ -38,5 +41,6 @@
 		"webpack": "^4.43.0",
 		"webpack-cli": "^3.3.12",
 		"winston": "^3.3.3"
-	}
+	},
+	"dependencies": {}
 }
