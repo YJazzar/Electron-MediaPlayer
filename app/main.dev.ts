@@ -8,19 +8,18 @@
  * When running `yarn build` or `yarn build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
-import path from 'path';
 import { app, BrowserWindow } from 'electron';
-import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import MenuBuilder from './menu';
+import path from 'path';
+import MenuBuilder from './core/utils/menu';
 
-export default class AppUpdater {
-    constructor() {
-        log.transports.file.level = 'info';
-        autoUpdater.logger = log;
-        autoUpdater.checkForUpdatesAndNotify();
-    }
-}
+// export default class AppUpdater {
+//     constructor() {
+//         log.transports.file.level = 'info';
+//         autoUpdater.logger = log;
+//         autoUpdater.checkForUpdatesAndNotify();
+//     }
+// }
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -39,7 +38,7 @@ if (
 const installExtensions = async () => {
     const installer = require('electron-devtools-installer');
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-    const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+    const extensions = ['REACT_DEVELOPER_TOOLS', 'REACT_PERF'];
 
     return Promise.all(
         extensions.map((name) =>
@@ -77,6 +76,7 @@ const createWindow = async () => {
     // @TODO: Use 'ready-to-show' event
     //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
     mainWindow.webContents.on('did-finish-load', () => {
+        log.info("testing electron log");
         if (!mainWindow) {
             throw new Error('"mainWindow" is not defined');
         }
@@ -97,7 +97,7 @@ const createWindow = async () => {
 
     // Remove this if your app does not use auto updates
     // eslint-disable-next-line
-    new AppUpdater();
+    // new AppUpdater();
 };
 
 /**

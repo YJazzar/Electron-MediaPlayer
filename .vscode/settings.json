@@ -27,6 +27,17 @@
     "javascript.format.enable": false,
     "typescript.format.enable": false,
 
+    "[typescript]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "[typescriptreact]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+
     "search.exclude": {
         ".git": true,
         ".eslintcache": true,
