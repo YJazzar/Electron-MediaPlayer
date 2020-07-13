@@ -1,5 +1,5 @@
 import React from 'react';
-import { Resizable } from 're-resizable';
+import { Resizable, Enable } from 're-resizable';
 // import '../styles/app.global.css';
 import '../styles/RootComponent.global.css';
 // import ReactDOM from 'react-dom';
@@ -19,6 +19,8 @@ export default class ResizableContainer extends React.Component<
         panelType: string;
         defaultWidth: number | string;
         defaultHeight: number | string;
+        enable: Enable;
+        element?: React.ReactNode;
     },
     {}
 > {
@@ -32,8 +34,10 @@ export default class ResizableContainer extends React.Component<
                     width: this.props.defaultWidth,
                     height: this.props.defaultHeight,
                 }}
+                enable={this.props.enable}
             >
                 {this.props.panelType}
+                {this.props.element}
             </Resizable>
             // </div>
         );
