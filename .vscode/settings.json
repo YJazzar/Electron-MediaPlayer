@@ -6,7 +6,7 @@
         ".stylelintrc": "json",
         ".dockerignore": "ignore",
         ".eslintignore": "ignore",
-        "*.tsx": "typescript"
+        // "*.tsx": "typescript"
     },
 
     "files.exclude": {
@@ -17,8 +17,8 @@
         "**/.DS_Store": true,
         "**/node_modules": true,
         "**/dll": true,
-        "**/internals": true,
-        "**/configs": true,
+        // "**/internals": true,
+        // "**/configs": true,
         "**/.idea": true,
         "**/yarn.lock": true,
         "**/.eslintcache": true,

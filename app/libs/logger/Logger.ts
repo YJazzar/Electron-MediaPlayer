@@ -1,6 +1,6 @@
 import winston, { createLogger } from 'winston';
 import { logLevelNames, logLevels } from './logLevelConstants';
-import { getDateTime } from '../utils/DateTime';
+import getDateTime from '../utils/DateTime';
 import { customWinstonFormatter } from './LogFormatter';
 
 export default class LoggerImpl {

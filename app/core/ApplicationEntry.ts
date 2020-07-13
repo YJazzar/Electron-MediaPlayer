@@ -24,11 +24,11 @@ export default class ApplicationEntry {
 
         this.mainWindow = mainWindow;
         this.ipcMainController = new IpcMainController(this.mainWindow);
-        this.menuBuilder = new MenuBuilder(this.mainWindow);
+        // this.menuBuilder = new MenuBuilder(this.mainWindow);
     }
 
     init(): void {
         this.ipcMainController.init();
-        this.menuBuilder.buildMenu();
+        // this.menuBuilder.buildMenu();
     }
 }
