@@ -1,6 +1,5 @@
 import React from 'react';
 import ResizableContainer from '../containers/ResizableContainer';
-import '../styles/app.global.css';
 import panelConfigs from '../constants/ResizableContainerConstants';
 // import ReactDOM from 'react-dom';
 
