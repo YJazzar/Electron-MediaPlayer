@@ -1,7 +1,7 @@
 import React from 'react';
 import { Resizable } from 're-resizable';
 // import '../styles/app.global.css';
-import '../styles/RootComponent.global.css'
+import '../styles/RootComponent.global.css';
 // import ReactDOM from 'react-dom';
 
 const style = {
@@ -17,24 +17,25 @@ export default class ResizableContainer extends React.Component<
         id: string;
         className: string;
         panelType: string;
-        defaultWidth: number;
-        defaultHeight: number;
+        defaultWidth: number | string;
+        defaultHeight: number | string;
     },
     {}
 > {
     render() {
         return (
-            <div id={this.props.id} className={this.props.className}>
-                <Resizable
-                    style={style}
-                    // defaultSize={{
-                    //     width: this.props.defaultWidth,
-                    //     height: this.props.defaultHeight,
-                    // }}
-                >
-                    {this.props.panelType}
-                </Resizable>
-            </div>
+            // <div id={this.props.id} className={this.props.className}>
+            <Resizable
+                className={this.props.className}
+                style={style}
+                defaultSize={{
+                    width: this.props.defaultWidth,
+                    height: this.props.defaultHeight,
+                }}
+            >
+                {this.props.panelType}
+            </Resizable>
+            // </div>
         );
     }
 }

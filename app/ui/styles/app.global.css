@@ -4,8 +4,18 @@
  */
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
+html,
+body,
+#wrapper {
+    overflow: hidden;
+}
+
 body {
     position: relative;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
     height: 100vh;
     background-color: #232c39;
     background-image: linear-gradient(
@@ -13,23 +23,49 @@ body {
         rgba(0, 216, 255, 0.5) 10%,
         rgba(0, 1, 127, 0.7)
     );
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
-/* #root {
-    height: 100vh;
+#root {
+    /* margin: 0; */
+    /* height: 100%; */
     display: flex;
     align-items: center;
-    position: relative;
-} */
+    /* position: relative; */
+}
 
 
 .resizableContainerWrapper {
     margin: auto;
-    padding: auto;
     width: 100%;
-    height: 100%;
+    height: 99vh;
+    background-color: black;
     /* position: absolute; */
     /* top: 50%;
     transform: translate(0, -50%); */
 }
+
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}
+
+/* .nav-panel-resizable {
+    background-color: aqua;
+}
+
+.main-panel-resizable {
+    background-color: aqua;
+}
+
+.player-controls-panel-resizable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px #ddd;
+    background-color: #f0f0f0;
+} */

@@ -29,16 +29,16 @@ const styles = {
 
 const sizes = {
     navPanel: {
-        defaultWidth: window.innerWidth * 0.99 * 0.2,
-        defaultHeight: window.innerHeight * 0.99,
+        defaultWidth: '20%',
+        defaultHeight: '100%',
     },
     mainPanel: {
-        defaultWidth: window.innerWidth * 0.99 - window.innerWidth * 0.1,
-        defaultHeight: window.innerHeight * 0.99,
+        defaultWidth: '80%',
+        defaultHeight: '80%',
     },
     playerControlsPanel: {
-        defaultWidth: window.innerWidth * 0.99 * 0.8,
-        defaultHeight: window.innerHeight * 0.99 * 0.8,
+        defaultWidth: '80%',
+        defaultHeight: '20%',
     },
 };
 
@@ -53,13 +53,20 @@ export default class RootComponent extends React.Component {
                     defaultWidth={sizes.navPanel.defaultWidth}
                     defaultHeight={sizes.navPanel.defaultHeight}
                 />
-                {/* <ResizableContainer
+                <ResizableContainer
                     id="main-contents-panel-id"
                     className="floatRight"
                     panelType="This is the main panel"
                     defaultWidth={sizes.mainPanel.defaultWidth}
                     defaultHeight={sizes.mainPanel.defaultHeight}
-                /> */}
+                />
+                <ResizableContainer
+                    id="nav-panel-id"
+                    className="floatRight"
+                    panelType="This is the navigation panel"
+                    defaultWidth={sizes.playerControlsPanel.defaultWidth}
+                    defaultHeight={sizes.playerControlsPanel.defaultHeight}
+                />
             </div>
         );
     }
