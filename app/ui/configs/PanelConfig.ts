@@ -6,7 +6,14 @@ export enum PanelType {
     playerControlsPanel,
 }
 
+export interface ContainerSize {
+    panelType?: PanelType;
+    width?: number;
+    height?: number;
+}
+
 export interface PanelConfig {
+    temp?: number;
     id: string;
     panelType: PanelType;
     panelName: string;
@@ -18,6 +25,10 @@ export interface PanelConfig {
         defaultWidth: number | string;
         defaultHeight: number | string;
     };
+
+    currentSize?: ContainerSize;
+    initSize?(actualSize: ContainerSize): unknown;
+    onResize?(newSize: ContainerSize): unknown;
 
     element?: React.ReactNode; // The child element for the panel
 }

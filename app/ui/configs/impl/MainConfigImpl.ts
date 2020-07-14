@@ -2,6 +2,7 @@ import { Enable } from 're-resizable';
 import { PanelConfig, PanelType } from '../PanelConfig';
 
 const mainConfig = {
+    temp: 0,
     id: 'main-panel-id',
     panelType: PanelType.mainPanel,
     panelName: 'Main panel',

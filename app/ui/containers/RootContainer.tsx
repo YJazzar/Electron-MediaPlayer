@@ -4,37 +4,50 @@ import ResizableContainer from './ResizableContainer';
 import mainConfig from '../configs/impl/MainConfigImpl';
 import NavConfig from '../configs/impl/NavConfigImpl';
 import playerConfig from '../configs/impl/PlayerControlsConfigImpl';
+import LoggerFactory from '../../libs/logger/LoggerFactory';
+import { PanelType, ContainerSize } from '../configs/PanelConfig';
 
+const log = LoggerFactory.getUILogger(__filename);
 
-export default class RootContainer extends React.Component {
+log.info('Creating the rootContainer');
+export default class RootContainer extends React.Component<
+    any,
+    { containerSizes: ContainerSize[] }
+> {
+    componentDidMount() {
+        // setInterval(() => {
+        //     log.info("Intervale is running");
+        //     if (!mainConfig.temp)
+        //         mainConfig.temp = 0;
+        //     mainConfig.temp += 1;
+        // }, 1000);
+    }
+
+    initSize(initSize: ContainerSize) {
+        log.info(
+            'A new resizable container has just called RootContainer.initSize()'
+        );
+        log.info(
+            `Pushing to state: [${initSize.panelType}] width:[${initSize.width}] height:[${initSize.height}]`
+        );
+    }
+
+    onResize() {}
+
     render() {
         return (
             <div className="resizableContainerWrapper">
                 <ResizableContainer
-                    id="nav-panel-id"
-                    className="floatLeft bg-gray-400 border border-gray-600"
-                    panelType="This is the navigation panel"
-                    defaultWidth={panelConfigs.navPanel.defaultWidth}
-                    defaultHeight={panelConfigs.navPanel.defaultHeight}
-                    enable={panelConfigs.navPanel.enableSides}
-                ></ResizableContainer>
-                <ResizableContainer
-                    id="main-panel-id"
-                    className="floatRight bg-red-400 border border-gray-600"
-                    panelType="This is the main panel"
-                    defaultWidth={panelConfigs.mainPanel.defaultWidth}
-                    defaultHeight={panelConfigs.mainPanel.defaultHeight}
-                    enable={panelConfigs.mainPanel.enableSides}
+                    {...NavConfig}
+                    initSize={this.initSize.bind(this)}
                 />
                 <ResizableContainer
-                    id="player-controls-panel-id"
-                    className="floatRight bg-blue-400 border border-gray-600"
-                    panelType="This is the player controls panel"
-                    defaultWidth={panelConfigs.playerControlsPanel.defaultWidth}
-                    defaultHeight={
-                        panelConfigs.playerControlsPanel.defaultHeight
-                    }
-                    enable={panelConfigs.playerControlsPanel.enableSides}
+                    {...mainConfig}
+                    initSize={this.initSize.bind(this)}
+                />
+                <ResizableContainer
+                    {...playerConfig}
+                    initSize={this.initSize.bind(this)}
                 />
             </div>
         );
