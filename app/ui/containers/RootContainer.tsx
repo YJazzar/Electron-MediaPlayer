@@ -3,21 +3,24 @@ import LoggerFactory from '../../libs/logger/LoggerFactory';
 import mainConfig from '../configs/impl/MainConfigImpl';
 import NavConfig from '../configs/impl/NavConfigImpl';
 import playerConfig from '../configs/impl/PlayerControlsConfigImpl';
-import { ContainerSize } from '../configs/PanelConfig';
+import { ContainerSize, PanelType } from '../configs/PanelConfig';
 import ResizableContainer from './ResizableContainer';
-import { DefaultDeserializer } from 'v8';
 
 const log = LoggerFactory.getUILogger(__filename);
 
 interface ContainerSizes {
-    containerSizes?: ContainerSize[];
+    navPanel?: ContainerSize;
+    mainPanel?: ContainerSize;
+    playerPanel?: ContainerSize;
 }
 
 export default class RootContainer extends React.Component<{}, ContainerSizes> {
     constructor(props: {}) {
         super(props);
         this.state = {
-            containerSizes: [],
+            navPanel: undefined,
+            mainPanel: undefined,
+            playerPanel: undefined,
         };
     }
 
@@ -36,52 +39,48 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
             `Pushing to RootContainer's state: [${initSize.panelType}] width:[${initSize.width}] height:[${initSize.height}]`
         );
 
-        this.setState(
-            () => {
-                const currState = this.state;
-                if (currState.containerSizes) {
-                    // Find out if the currentState contains initSize that was passed in:
-                    const existsInState = currState.containerSizes.find(
-                        (containerSize: ContainerSize) =>
-                            initSize.panelType === containerSize.panelType
-                    );
-
-                    if (existsInState) {
-                        const newState = currState.containerSizes.map(
-                            (containerSize: ContainerSize, index: number) => {
-                                if (
-                                    initSize.panelType ===
-                                    containerSize.panelType
-                                ) {
-                                    return initSize;
-                                } else {
-                                    return containerSize;
-                                }
-                            }
-                        ) as ContainerSizes;
-                        return { ...newState };
-                    } else {
-                        const arr = currState.containerSizes.concat(initSize);
-                        return { containerSizes: arr } as ContainerSizes;
-                    }
-                } else {
-                    return { containerSizes: [] } as ContainerSizes;
-                }
-            },
-            () => this.printSize.bind(this)
-
-        );
-    }
-
-    printSize() {
-        log.info(
-            `new state size = ${this.state.containerSizes?.length}`
-        )
+        this.setState(() => {
+            if (initSize.panelType === PanelType.navPanel) {
+                return { navPanel: initSize };
+            }
+            if (initSize.panelType === PanelType.mainPanel) {
+                return { mainPanel: initSize };
+            }
+            if (initSize.panelType === PanelType.playerControlsPanel) {
+                return { playerPanel: initSize };
+            }
+            return {};
+        });
     }
 
     // Called by child components every time it is resized
     onResize(newSize: ContainerSize) {
         // console.log(`[${newSize.panelType}] [${newSize.width}] [${newSize.height}]`);
+
+        // First check if the element being resized is the Nav Panel.
+        if (newSize.panelType == PanelType.navPanel) this.resizeNav(newSize);
+    }
+
+    resizeNav(newNavSize: ContainerSize) {
+        let newMainSize = this.state.mainPanel;
+        let newPlayerSize = this.state.playerPanel;
+
+        if (
+            newNavSize.width &&
+            this.state.navPanel?.width &&
+            newMainSize?.width &&
+            newPlayerSize?.width
+        ) {
+            const widthChange = this.state.navPanel.width - newNavSize.width;
+
+            newMainSize.width += widthChange;
+            newPlayerSize.width += widthChange;
+
+            this.setState({
+                mainPanel: newMainSize,
+                playerPanel: newPlayerSize,
+            }, ()=> console.log("updating sizes now"));
+        }
     }
 
     render() {
