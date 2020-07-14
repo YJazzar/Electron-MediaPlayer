@@ -1,42 +1,26 @@
 import React from 'react';
-import { Resizable, Enable } from 're-resizable';
-// import '../styles/app.global.css';
+import { Resizable } from 're-resizable';
 import '../styles/RootComponent.global.css';
-// import ReactDOM from 'react-dom';
+import { PanelConfig } from '../configs/PanelConfig';
 
-const style = {
-    // display: 'float',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    border: 'solid 1px #ddd',
-    backgroundColor: '#f0f0f0',
-};
-
-export default class ResizableContainer extends React.Component<
-    {
-        id: string;
-        className: string;
-        panelType: string;
-        defaultWidth: number | string;
-        defaultHeight: number | string;
-        enable: Enable;
-        element?: React.ReactNode;
-    },
-    {}
-> {
+/**
+ * Vars not used that are defined in PanelConfig:
+ *      - id
+ */
+export default class ResizableContainer extends React.Component<PanelConfig,{}> {
     render() {
         return (
             // <div id={this.props.id} className={this.props.className}>
             <Resizable
-                className={this.props.className}
-                style={style}
+                className={`${this.props.className} ${this.props.classStyles}`}
                 defaultSize={{
-                    width: this.props.defaultWidth,
-                    height: this.props.defaultHeight,
+                    width: this.props.defaultSize.defaultWidth,
+                    height: this.props.defaultSize.defaultHeight,
                 }}
-                enable={this.props.enable}
+                enable={this.props.resizableSides}
             >
                 {this.props.panelType}
+                {this.props.panelName}
                 {this.props.element}
             </Resizable>
             // </div>
