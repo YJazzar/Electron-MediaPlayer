@@ -5,10 +5,11 @@
 
 /* @import '~@fortawesome/fontawesome-free/css/all.css'; */
 
+/* eslint-disable-next-line */
 @tailwind base;
-
+/* eslint-disable-next-line */
 @tailwind components;
-
+/* eslint-disable-next-line */
 @tailwind utilities;
 
 body {
