@@ -63,10 +63,10 @@ export default class ResizableContainer extends React.Component<
 
     // This function will always be called when a div is being resized
     onResize() {
-        this.updateState();
         if (this.props.onResize) {
-            this.props.onResize(this.state);
+            this.updateState(() => this.props.onResize(this.state));
         } else {
+            this.updateState();
             log.error(
                 `The onResize() callback was undefined in the panel ${this.props.panelName}.`
             );
@@ -116,7 +116,7 @@ export default class ResizableContainer extends React.Component<
                     width: this.props.defaultSize.defaultWidth,
                     height: this.props.defaultSize.defaultHeight,
                 }}
-                onResize={this.onResize}
+                onResize={this.onResize.bind(this)}
             >
                 {this.props.panelType}
                 {this.props.panelName}

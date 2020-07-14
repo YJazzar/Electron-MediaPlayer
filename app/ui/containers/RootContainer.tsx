@@ -41,7 +41,9 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
     }
 
     // Called by child components every time it is resized
-    onResize() {}
+    onResize(newSize: ContainerSize) {
+        console.log(`[${newSize.panelType}] [${newSize.width}] [${newSize.height}]`);
+    }
 
 
     render() {
@@ -52,14 +54,17 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
                 <ResizableContainer
                     {...NavConfig}
                     initSize={this.initSize.bind(this)}
+                    onResize={this.onResize.bind(this)}
                 />
                 <ResizableContainer
                     {...mainConfig}
                     initSize={this.initSize.bind(this)}
+                    onResize={this.onResize.bind(this)}
                 />
                 <ResizableContainer
                     {...playerConfig}
                     initSize={this.initSize.bind(this)}
+                    onResize={this.onResize.bind(this)}
                 />
             </div>
         );
