@@ -28,14 +28,14 @@
         "tailwind.config.js": true,
         "tsconfig.json": true,
         ".eslintrc.js": true,
-        ".editorconfig": true,
+        // ".editorconfig": true,
         ".gitignore": true
     },
 
     "javascript.validate.enable": false,
     "javascript.format.enable": false,
     "typescript.format.enable": false,
-
+    "editor.formatOnPaste": false,
     // "[typescript]": {
     //     "editor.codeActionsOnSave": {
     //         "source.organizeImports": true

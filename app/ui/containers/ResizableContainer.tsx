@@ -3,7 +3,6 @@ import { Resizable } from 're-resizable';
 import '../styles/RootComponent.global.css';
 import { PanelConfig, ContainerSize } from '../configs/PanelConfig';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import { underline } from 'chalk';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -20,29 +19,35 @@ export default class ResizableContainer extends React.Component<
     constructor(panelConfig: PanelConfig) {
         super(panelConfig);
         this.state = {
+            panelType: this.props.panelType,
             width: undefined,
             height: undefined,
         };
         this.resizeRef = React.createRef();
     }
 
-    // Initialize the state
-    componentDidMount() {
-        if (this.resizeRef.current) {
+    updateState(callBack?: (...args: any[]) => void): void {
+        if (this.resizeRef.current && callBack) {
             this.setState(
                 {
                     width: this.resizeRef.current.size.width,
                     height: this.resizeRef.current.size.height,
                 },
-                () => this.initComponentSizeToParent()
+                callBack
             );
+        } else if (this.resizeRef.current) {
+            this.setState({
+                width: this.resizeRef.current.size.width,
+                height: this.resizeRef.current.size.height,
+            });
         } else {
             this.nullRefErrorMess();
         }
     }
 
-    nullRefErrorMess() {
-        log.error(`resizeRef for the panel {${this.props.panelName}} was null`);
+    // Initialize the state
+    componentDidMount() {
+        this.updateState(this.initComponentSizeToParent);
     }
 
     // This function will pass the initial sizes of the containers to the parent
@@ -51,18 +56,46 @@ export default class ResizableContainer extends React.Component<
         // log.debug(`[${this.props.className}] height: ${this.state.height}`);
 
         // Store the size with the parent:
-        if (this.props.initSize && this.state.width && this.state.height) {
-            const containerSize = {
+        if (this.props.initSize) {
+            this.props.initSize(this.state);
+        }
+    }
+
+    // This function will always be called when a div is being resized
+    onResize() {
+        this.updateState();
+        if (this.props.onResize) {
+            this.props.onResize(this.state);
+        } else {
+            log.error(
+                `The onResize() callback was undefined in the panel ${this.props.panelName}.`
+            );
+            log.error(
+                `Please check the props were passed in correctly when initializing ResizableContainer through RootContainer!`
+            );
+        }
+    }
+
+    getContainerSize(): ContainerSize | undefined {
+        // Store the size with the parent:
+        if (this.state.width && this.state.height) {
+            return {
                 panelType: this.props.panelType,
                 width: this.state.width,
                 height: this.state.height,
             } as ContainerSize;
-            this.props.initSize(containerSize);
         } else {
             this.couldNotReadSizeError();
+            return undefined;
         }
     }
 
+    // helper method used in componentDidMount() to print error
+    nullRefErrorMess() {
+        log.error(`resizeRef for the panel {${this.props.panelName}} was null`);
+    }
+
+    // helper method used in initComponentSizeToParent() to print error
     couldNotReadSizeError() {
         log.error(
             `An error occurred when trying to send the size of ${this.props.panelName} to the parent`
@@ -70,16 +103,6 @@ export default class ResizableContainer extends React.Component<
         log.error(
             'Please confirm the log files printed that a size was stored'
         );
-    }
-
-    onResize() {
-        if (this.resizeRef.current) {
-            let size = this.resizeRef.current.size;
-        } else {
-            log.error(
-                'The size object for the resizableRef in a panel was null'
-            );
-        }
     }
 
     render() {
