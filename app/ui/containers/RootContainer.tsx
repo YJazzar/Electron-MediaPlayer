@@ -1,9 +1,9 @@
 import React from 'react';
-import ResizableContainer from '../containers/ResizableContainer';
+import ResizableContainer from './ResizableContainer';
 import panelConfigs from '../constants/ResizableContainerConstants';
 // import ReactDOM from 'react-dom';
 
-export default class RootComponent extends React.Component {
+export default class RootContainer extends React.Component {
     render() {
         return (
             <div className="resizableContainerWrapper">

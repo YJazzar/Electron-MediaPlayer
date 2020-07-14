@@ -13,3 +13,7 @@ enrty for main:
 ## Running the program
 
 examples:
+
+# TODO: 
+- use the chalk package to make interesting changes
+
