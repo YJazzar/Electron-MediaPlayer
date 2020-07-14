@@ -20,7 +20,7 @@
         "**/.idea": true,
         "**/yarn.lock": true,
         "**/.eslintcache": true,
-        "**/.eslintignore": true,
+        // "**/.eslintignore": true,
         "**/internals": true,
         "**/configs": true,
         "babel.config.js": true,
@@ -28,7 +28,7 @@
         "tailwind.config.js": true,
         "tsconfig.json": true,
         ".eslintrc.js": true,
-        ".editorconfig": true,
+        ".editorconfig": true
     },
 
     "javascript.validate.enable": false,

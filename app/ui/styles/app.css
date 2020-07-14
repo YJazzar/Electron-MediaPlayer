@@ -28,7 +28,6 @@ body {
     overflow-y: hidden;
 }
 
-
 html,
 body,
 #wrapper {
@@ -69,7 +68,6 @@ p {
     margin: 0;
     height: 100%;
 }
-
 
 /* .nav-panel-resizable {
     background-color: aqua;
