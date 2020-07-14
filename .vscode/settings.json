@@ -5,7 +5,7 @@
         ".prettierrc": "jsonc",
         ".stylelintrc": "json",
         ".dockerignore": "ignore",
-        ".eslintignore": "ignore",
+        ".eslintignore": "ignore"
         // "*.tsx": "typescript"
     },
 
@@ -17,12 +17,19 @@
         "**/.DS_Store": true,
         "**/node_modules": true,
         "**/dll": true,
-        // "**/internals": true,
-        // "**/configs": true,
         "**/.idea": true,
         "**/yarn.lock": true,
         "**/.eslintcache": true,
-        "**/.eslintignore": true
+        // "**/.eslintignore": true,
+        "**/internals": true,
+        // "**/configs": true,
+        "babel.config.js": true,
+        "postcss.config.js": true,
+        "tailwind.config.js": true,
+        "tsconfig.json": true,
+        ".eslintrc.js": true,
+        ".editorconfig": true,
+        ".gitignore": true
     },
 
     "javascript.validate.enable": false,

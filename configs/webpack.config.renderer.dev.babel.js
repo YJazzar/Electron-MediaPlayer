@@ -73,6 +73,9 @@ export default merge.smart(baseConfig, {
                             sourceMap: true,
                         },
                     },
+                    {
+                        loader: 'postcss-loader',
+                    },
                 ],
             },
             {
@@ -84,13 +87,11 @@ export default merge.smart(baseConfig, {
                     {
                         loader: 'css-loader',
                         options: {
-                            modules: {
-                                localIdentName:
-                                    '[name]__[local]__[hash:base64:5]',
-                            },
                             sourceMap: true,
-                            importLoaders: 1,
                         },
+                    },
+                    {
+                        loader: 'postcss-loader',
                     },
                 ],
             },
@@ -220,7 +221,7 @@ export default merge.smart(baseConfig, {
          * NODE_ENV should be production so that modules do not perform certain
          * development checks
          *
-         * By default, use 'development' as NODE_ENV. This can be overriden with
+         * By default, use 'development' as NODE_ENV. This can be overridden with
          * 'staging', for example, by changing the ENV variables in the npm scripts
          */
         new webpack.EnvironmentPlugin({
@@ -233,8 +234,8 @@ export default merge.smart(baseConfig, {
     ],
 
     node: {
-        __dirname: false,
-        __filename: false,
+        __dirname: true,
+        __filename: true,
     },
 
     devServer: {

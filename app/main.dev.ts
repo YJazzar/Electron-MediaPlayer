@@ -9,9 +9,7 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
 import { app, BrowserWindow } from 'electron';
-import log from 'electron-log';
 import path from 'path';
-import MenuBuilder from './libs/utils/menu';
 import ApplicationEntry from './core/ApplicationEntry';
 
 let mainWindow: BrowserWindow | null = null;

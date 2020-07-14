@@ -12,7 +12,7 @@
     "dev": "cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev",
     "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --module-dir app",
     "lint": "cross-env NODE_ENV=development eslint . --cache --ext .js,.jsx,.ts,.tsx",
-    "lint-fix": "yarn --silent lint --fix; exit 0",
+    "lint-fix":"cross-env NODE_ENV=development eslint . --cache --ext .js,.jsx,.ts,.tsx --fix",
     "lint-styles": "stylelint --ignore-path .eslintignore '**/*.*(css|scss)' --syntax scss",
     "lint-styles-fix": "yarn --silent lint-styles --fix; exit 0",
     "package": "yarn build && electron-builder build --publish never",
@@ -44,7 +44,6 @@
       "prettier --ignore-path .eslintignore --parser json --write"
     ],
     "*.{css,scss}": [
-      "stylelint --ignore-path .eslintignore --syntax scss --fix",
       "prettier --ignore-path .eslintignore --single-quote --write"
     ],
     "*.{html,md,yml}": [
@@ -176,6 +175,7 @@
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
+    "autoprefixer": "^9.8.5",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
     "babel-loader": "^8.1.0",
@@ -218,6 +218,8 @@
     "mini-css-extract-plugin": "^0.9.0",
     "opencollective-postinstall": "^2.0.3",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-cli": "^7.1.1",
+    "postcss-loader": "^3.0.0",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.12.0",
     "redux-logger": "^3.0.6",
@@ -227,6 +229,7 @@
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
+    "tailwindcss": "^1.4.6",
     "terser-webpack-plugin": "^3.0.6",
     "testcafe": "^1.8.6",
     "testcafe-browser-provider-electron": "^0.0.15-alpha.1",
