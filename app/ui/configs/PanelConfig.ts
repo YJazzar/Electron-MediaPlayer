@@ -28,7 +28,7 @@ export interface PanelConfig {
 
     currentSize?: ContainerSize;
     initSize?(actualSize: ContainerSize): unknown;
-    onResize?(newSize: ContainerSize): unknown;
+    onResize?(oldSize: ContainerSize, newSize: ContainerSize): unknown;
 
     element?: React.ReactNode; // The child element for the panel
 }

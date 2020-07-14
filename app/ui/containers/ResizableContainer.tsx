@@ -1,8 +1,9 @@
 import React from 'react';
-import { Resizable } from 're-resizable';
+import { Resizable, ResizeDirection, Size } from 're-resizable';
 import '../styles/RootComponent.global.css';
 import { PanelConfig, ContainerSize } from '../configs/PanelConfig';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
+import cloneDeep from 'lodash.clonedeep';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -32,7 +33,7 @@ export default class ResizableContainer extends React.Component<
     }
 
     private updateState(callBack?: (...args: any[]) => void): void {
-        if (this.resizeRef.current && callBack) {
+        if (this.resizeRef.current) {
             this.setState(
                 {
                     width: this.resizeRef.current.size.width,
@@ -40,11 +41,6 @@ export default class ResizableContainer extends React.Component<
                 },
                 callBack
             );
-        } else if (this.resizeRef.current) {
-            this.setState({
-                width: this.resizeRef.current.size.width,
-                height: this.resizeRef.current.size.height,
-            });
         } else {
             this.nullRefErrorMess();
         }
@@ -62,12 +58,22 @@ export default class ResizableContainer extends React.Component<
     }
 
     // This function will always be called when a div is being resized
-    private onResize() {
-        const cb = this.props.onResize;
-        if (cb) {
-            this.updateState(() => cb(this.state));
+    private onResize(
+        event: MouseEvent | TouchEvent,
+        direction: ResizeDirection,
+        refToElement: HTMLDivElement,
+        delta: Size
+    ) {
+        const parentCallBack = this.props.onResize;
+        if (this.resizeRef.current && parentCallBack) {
+            const oldSize = cloneDeep(this.state);
+            const newSize = {
+                width: this.resizeRef.current.size.width,
+                height: this.resizeRef.current.size.height,
+            };
+
+            parentCallBack(oldSize, newSize);
         } else {
-            this.updateState();
             log.error(
                 `The onResize() callback was undefined in the panel ${this.props.panelName}.`
             );
@@ -78,14 +84,11 @@ export default class ResizableContainer extends React.Component<
     }
 
     forceResize(newSize: ContainerSize) {
-
         if (newSize.height && newSize.width)
-        this.resizeRef.current?.updateSize(
-            {
+            this.resizeRef.current?.updateSize({
                 width: newSize.width,
                 height: newSize.height,
-            }
-        );
+            });
 
         // if (this.state.width && newSize.width)
         // console.log(this.state.width + " :: " + newSize.width);
@@ -100,7 +103,6 @@ export default class ResizableContainer extends React.Component<
         //         height: newSize.height,
         //     });
     }
-
 
     // helper method used in componentDidMount() to print error
     nullRefErrorMess() {
@@ -133,17 +135,10 @@ export default class ResizableContainer extends React.Component<
                 ref={this.resizeRef}
                 className={`${this.props.className} ${this.props.classStyles}`}
                 enable={this.props.resizableSides}
-
                 defaultSize={{
                     width: this.props.defaultSize.defaultWidth,
-                    height: this.props.defaultSize.defaultHeight    ,
+                    height: this.props.defaultSize.defaultHeight,
                 }}
-                // size={{
-                //     width: this.getWidth(),
-                //     height: this.getHeight(),
-                // }}
-                scale={0.5}
-                resizeRatio={1}
                 onResize={this.onResize.bind(this)}
             >
                 {this.props.panelType}
