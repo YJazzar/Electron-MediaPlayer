@@ -42,7 +42,7 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
 
     // Called by child components every time it is resized
     onResize(newSize: ContainerSize) {
-        console.log(`[${newSize.panelType}] [${newSize.width}] [${newSize.height}]`);
+        // console.log(`[${newSize.panelType}] [${newSize.width}] [${newSize.height}]`);
     }
 
 

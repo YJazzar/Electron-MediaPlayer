@@ -63,8 +63,9 @@ export default class ResizableContainer extends React.Component<
 
     // This function will always be called when a div is being resized
     onResize() {
-        if (this.props.onResize) {
-            this.updateState(() => this.props.onResize(this.state));
+        const cb = this.props.onResize;
+        if (cb) {
+            this.updateState(() => cb(this.state));
         } else {
             this.updateState();
             log.error(
