@@ -5,6 +5,7 @@ import NavConfig from '../configs/impl/NavConfigImpl';
 import playerConfig from '../configs/impl/PlayerControlsConfigImpl';
 import { ContainerSize, PanelType } from '../configs/PanelConfig';
 import ResizableContainer from './ResizableContainer';
+import cloneDeep from 'lodash.clonedeep';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -15,6 +16,10 @@ interface ContainerSizes {
 }
 
 export default class RootContainer extends React.Component<{}, ContainerSizes> {
+    navPanelRef: React.RefObject<ResizableContainer>;
+    mainPanelRef: React.RefObject<ResizableContainer>;
+    playerPanelRef: React.RefObject<ResizableContainer>;
+
     constructor(props: {}) {
         super(props);
         this.state = {
@@ -22,6 +27,10 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
             mainPanel: undefined,
             playerPanel: undefined,
         };
+
+        this.navPanelRef = React.createRef();
+        this.mainPanelRef = React.createRef();
+        this.playerPanelRef = React.createRef();
     }
 
     componentDidMount() {
@@ -62,46 +71,58 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
     }
 
     resizeNav(newNavSize: ContainerSize) {
-        let newMainSize = this.state.mainPanel;
-        let newPlayerSize = this.state.playerPanel;
+        let newMainSize = cloneDeep(this.state.mainPanel);
+        let newPlayerSize = cloneDeep(this.state.playerPanel);
 
         if (
+            // Check that all values that will be used are not undefined
             newNavSize.width &&
             this.state.navPanel?.width &&
             newMainSize?.width &&
             newPlayerSize?.width
         ) {
-            const widthChange = this.state.navPanel.width - newNavSize.width;
+            const widthChange = newNavSize.width - this.state.navPanel.width;
 
-            newMainSize.width += widthChange;
-            newPlayerSize.width += widthChange;
+            newMainSize.width -= widthChange;
+            newPlayerSize.width -= widthChange;
 
-            this.setState({
-                mainPanel: newMainSize,
-                playerPanel: newPlayerSize,
-            }, ()=> console.log("updating sizes now"));
+            this.setState(() => {
+                return {
+                    mainPanel: newMainSize,
+                    playerPanel: newPlayerSize,
+                };
+            }, this.updateChildrenStates);
         }
     }
 
-    render() {
-        log.info('Creating the rootContainer');
+    updateChildrenStates() {
+        if (this.mainPanelRef.current && this.state.mainPanel)
+            this.mainPanelRef.current.forceResize(this.state.mainPanel);
 
+        if (this.playerPanelRef.current && this.state.playerPanel)
+            this.playerPanelRef.current.forceResize(this.state.playerPanel);
+    }
+
+    render() {
         return (
-            <div className="resizableContainerWrapper">
+            <div id="root-container" className="resizableContainerWrapper">
                 <ResizableContainer
                     {...NavConfig}
                     initSize={this.initSize.bind(this)}
                     onResize={this.onResize.bind(this)}
+                    ref={this.navPanelRef}
                 />
                 <ResizableContainer
                     {...mainConfig}
                     initSize={this.initSize.bind(this)}
                     onResize={this.onResize.bind(this)}
+                    ref={this.mainPanelRef}
                 />
                 <ResizableContainer
                     {...playerConfig}
                     initSize={this.initSize.bind(this)}
                     onResize={this.onResize.bind(this)}
+                    ref={this.playerPanelRef}
                 />
             </div>
         );

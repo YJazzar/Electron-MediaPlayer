@@ -26,7 +26,12 @@ export default class ResizableContainer extends React.Component<
         this.resizeRef = React.createRef();
     }
 
-    updateState(callBack?: (...args: any[]) => void): void {
+    // Initialize the state
+    componentDidMount() {
+        this.updateState(this.initComponentSizeToParent);
+    }
+
+    private updateState(callBack?: (...args: any[]) => void): void {
         if (this.resizeRef.current && callBack) {
             this.setState(
                 {
@@ -45,13 +50,8 @@ export default class ResizableContainer extends React.Component<
         }
     }
 
-    // Initialize the state
-    componentDidMount() {
-        this.updateState(this.initComponentSizeToParent);
-    }
-
     // This function will pass the initial sizes of the containers to the parent
-    initComponentSizeToParent() {
+    private initComponentSizeToParent() {
         // log.debug(`[${this.props.className}] width: ${this.state.width}`);
         // log.debug(`[${this.props.className}] height: ${this.state.height}`);
 
@@ -62,7 +62,7 @@ export default class ResizableContainer extends React.Component<
     }
 
     // This function will always be called when a div is being resized
-    onResize() {
+    private onResize() {
         const cb = this.props.onResize;
         if (cb) {
             this.updateState(() => cb(this.state));
@@ -77,19 +77,30 @@ export default class ResizableContainer extends React.Component<
         }
     }
 
-    getContainerSize(): ContainerSize | undefined {
-        // Store the size with the parent:
-        if (this.state.width && this.state.height) {
-            return {
-                panelType: this.props.panelType,
-                width: this.state.width,
-                height: this.state.height,
-            } as ContainerSize;
-        } else {
-            this.couldNotReadSizeError();
-            return undefined;
-        }
+    forceResize(newSize: ContainerSize) {
+
+        if (newSize.height && newSize.width)
+        this.resizeRef.current?.updateSize(
+            {
+                width: newSize.width,
+                height: newSize.height,
+            }
+        );
+
+        // if (this.state.width && newSize.width)
+        // console.log(this.state.width + " :: " + newSize.width);
+
+        // this.setState({
+        //     width: newSize.width,
+        //     height: newSize.height,
+        // });
+        //     if (this.state.width)
+        //     this.setState({
+        //         width: this.state.width + 1,
+        //         height: newSize.height,
+        //     });
     }
+
 
     // helper method used in componentDidMount() to print error
     nullRefErrorMess() {
@@ -106,17 +117,33 @@ export default class ResizableContainer extends React.Component<
         );
     }
 
+    getWidth() {
+        if (this.state.width) return this.state.width;
+        return this.props.defaultSize.defaultWidth;
+    }
+
+    getHeight() {
+        if (this.state.height) return this.state.height;
+        return this.props.defaultSize.defaultHeight;
+    }
+
     render() {
         return (
-            // <div id={this.props.id} className={this.props.className}>
             <Resizable
                 ref={this.resizeRef}
                 className={`${this.props.className} ${this.props.classStyles}`}
                 enable={this.props.resizableSides}
+
                 defaultSize={{
                     width: this.props.defaultSize.defaultWidth,
-                    height: this.props.defaultSize.defaultHeight,
+                    height: this.props.defaultSize.defaultHeight    ,
                 }}
+                // size={{
+                //     width: this.getWidth(),
+                //     height: this.getHeight(),
+                // }}
+                scale={0.5}
+                resizeRatio={1}
                 onResize={this.onResize.bind(this)}
             >
                 {this.props.panelType}
@@ -124,7 +151,6 @@ export default class ResizableContainer extends React.Component<
                 {this.props.element}
                 {this.props.temp}
             </Resizable>
-            // </div>
         );
     }
 }
