@@ -1,4 +1,4 @@
-import { Enable } from 're-resizable';
+import { Enable, Size, ResizeDirection } from 're-resizable';
 
 export enum PanelType {
     navPanel,
@@ -8,8 +8,18 @@ export enum PanelType {
 
 export interface ContainerSize {
     panelType?: PanelType;
-    width?: number;
-    height?: number;
+
+    // Will be used to have a responsive changing side
+    liveWidth: number | any;
+    liveHeight: number | any;
+
+    // Will be used to counteract the delta variable
+    //  from exponentially adding to itself
+    currWidth: number | any;
+    currHeight: number | any;
+
+    // To make decisions easier, use this variable:
+    isBeingResized: boolean;
 }
 
 export interface PanelConfig {
@@ -27,8 +37,8 @@ export interface PanelConfig {
     };
 
     currentSize?: ContainerSize;
-    initSize?(actualSize: ContainerSize): unknown;
-    onResize?(oldSize: ContainerSize, newSize: ContainerSize): unknown;
+    broadcastResize?(panelType: PanelType, isResizing: boolean): unknown;
+    onResize?(panelType: PanelType, delta: any): unknown;
 
     element?: React.ReactNode; // The child element for the panel
 }

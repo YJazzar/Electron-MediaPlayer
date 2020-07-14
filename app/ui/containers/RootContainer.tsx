@@ -5,7 +5,6 @@ import NavConfig from '../configs/impl/NavConfigImpl';
 import playerConfig from '../configs/impl/PlayerControlsConfigImpl';
 import { ContainerSize, PanelType } from '../configs/PanelConfig';
 import ResizableContainer from './ResizableContainer';
-import cloneDeep from 'lodash.clonedeep';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -30,78 +29,65 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
 
     componentDidMount() {}
 
-    // Called by child components every time it mounts
-    initSize(initSize: ContainerSize) {
-        log.info(`The panel [${initSize.panelType}] finished initializing.`);
-    }
-
-    // Called by child components every time it is resized
-    onResize(oldSize: ContainerSize, newSize: ContainerSize) {
+    // Continuously Called by child components every time it is resized
+    onResize(panelType: PanelType, delta: any) {
         // First check if the element being resized is the Nav Panel.
-        if (newSize.panelType == PanelType.navPanel) {
-            this.resizeNav(oldSize, newSize);
+        if (panelType == PanelType.navPanel) {
+            this.resizeBasedOnNavPanel(delta);
+        }
+
+        if (panelType == PanelType.mainPanel) {
+            this.resizeBasedOnMainPanel(delta);
         }
     }
 
-    resizeNav(oldSize: ContainerSize, newSize: ContainerSize) {
-        console.log("Need to resize nav");
+    resizeBasedOnNavPanel(delta: any) {
+        if (this.navPanelRef.current) {
+            this.navPanelRef.current.liveResizeWidth(delta.width);
+        }
+        if (this.mainPanelRef.current) {
+            this.mainPanelRef.current.liveResizeWidth(-1 * delta.width);
+        }
+        if (this.playerPanelRef.current) {
+            this.playerPanelRef.current.liveResizeWidth(-1 * delta.width);
+        }
     }
 
-    // resizeNavOld(newNavSize: ContainerSize) {
-    //     let newMainSize = cloneDeep(this.state.mainPanel);
-    //     let newPlayerSize = cloneDeep(this.state.playerPanel);
+    // Only need to update main panel and player panel heights
+    resizeBasedOnMainPanel(delta: any) {
+        if (this.mainPanelRef.current) {
+            this.mainPanelRef.current.liveResizeHeight(delta.height);
+        }
+        if (this.playerPanelRef.current) {
+            this.playerPanelRef.current.liveResizeHeight(-1 * delta.height);
+        }
+    }
 
-    //     if (
-    //         // Check that all values that will be used are not undefined
-    //         newNavSize.width &&
-    //         this.state.navPanel?.width &&
-    //         newMainSize?.width &&
-    //         newPlayerSize?.width
-    //     ) {
-    //         const widthChange = newNavSize.width - this.state.navPanel.width;
-
-    //         newMainSize.width -= widthChange;
-    //         newPlayerSize.width -= widthChange;
-
-    //         this.setState(() => {
-    //             return {
-    //                 mainPanel: newMainSize,
-    //                 playerPanel: newPlayerSize,
-    //             };
-    //         }, this.updateChildrenStates);
-    //     }
-    // }
-
-    // updateChildrenStates() {
-    //     if (this.navPanelRef.current && this.state.navPanel)
-    //         this.navPanelRef.current.forceResize(this.state.navPanel);
-
-    //     if (this.mainPanelRef.current && this.state.mainPanel)
-    //         this.mainPanelRef.current.forceResize(this.state.mainPanel);
-
-    //     if (this.playerPanelRef.current && this.state.playerPanel)
-    //         this.playerPanelRef.current.forceResize(this.state.playerPanel);
-    // }
+    broadcastResize(panelType: PanelType, isResizing: boolean) {
+        this.mainPanelRef.current?.setIsResizing(isResizing);
+        this.playerPanelRef.current?.setIsResizing(isResizing);
+        this.navPanelRef.current?.setIsResizing(isResizing);
+    }
 
     render() {
         return (
             <div id="root-container" className="resizableContainerWrapper">
                 <ResizableContainer
                     {...NavConfig}
-                    initSize={this.initSize.bind(this)}
                     onResize={this.onResize.bind(this)}
+                    broadcastResize={this.broadcastResize.bind(this)}
                     ref={this.navPanelRef}
                 />
                 <ResizableContainer
                     {...mainConfig}
-                    initSize={this.initSize.bind(this)}
                     onResize={this.onResize.bind(this)}
+                    broadcastResize={this.broadcastResize.bind(this)}
                     ref={this.mainPanelRef}
                 />
                 <ResizableContainer
                     {...playerConfig}
-                    initSize={this.initSize.bind(this)}
                     onResize={this.onResize.bind(this)}
+                    broadcastResize={this.broadcastResize.bind(this)}
                     ref={this.playerPanelRef}
                 />
             </div>
