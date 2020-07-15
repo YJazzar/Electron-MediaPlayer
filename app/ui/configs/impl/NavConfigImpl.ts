@@ -12,6 +12,11 @@ const navConfig = {
         defaultWidth: '20%',
         defaultHeight: '100%',
     },
+    minWidth: '10%',
+    minHeight: '100%',
+    maxWidth: '90%',
+    maxHeight: '100%',
+
     resizableSides: {
         top: false,
         left: false,

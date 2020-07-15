@@ -1,4 +1,8 @@
 
+### 6/14/2020
+- Major feature of resizable panels nearing completion
+
+
 ### 6/10/2020 :: S001
 - Created trello board and placed in first few stories
 - Created the initial logger setup. 

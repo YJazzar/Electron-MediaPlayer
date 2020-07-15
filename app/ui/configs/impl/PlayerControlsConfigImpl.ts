@@ -12,6 +12,11 @@ const playerControlsConfig = {
         defaultWidth: '80%',
         defaultHeight: '20%',
     },
+    minWidth: '5%',
+    minHeight: '5%',
+    maxWidth: '90%',
+    maxHeight: '90%',
+
     resizableSides: {
         top: false,
         left: false,

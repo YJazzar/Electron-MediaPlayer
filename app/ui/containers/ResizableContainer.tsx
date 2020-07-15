@@ -32,9 +32,7 @@ export default class ResizableContainer extends React.Component<
     // Initialize the state
     componentDidMount() {
         this.updateState(() =>
-            log.info(
-                `The panel [${this.state.panelType}] finished initializing.`
-            )
+            log.info(`The panel [${this.props.panelName}] finished mounting.`)
         );
     }
 
@@ -84,6 +82,10 @@ export default class ResizableContainer extends React.Component<
         }
     }
     liveResizeHeight(delta: number) {
+        // Check the minHeight is not being violated:
+
+
+
         if (this.state.liveHeight) {
             this.setState({
                 liveHeight: this.state.currHeight + delta,
@@ -102,7 +104,6 @@ export default class ResizableContainer extends React.Component<
 
         // If it just stopped resizing, then update state based on live
         if (!isResizing) {
-            console.log("updating state bc resizing stopped");
             this.setState({
                 currWidth: this.state.liveWidth,
                 currHeight: this.state.liveHeight,
@@ -135,6 +136,11 @@ export default class ResizableContainer extends React.Component<
                     width: this.getWidth(),
                     height: this.getHeight(),
                 }}
+                minWidth={this.props.minWidth}
+                minHeight={this.props.minHeight}
+                maxWidth={this.props.maxWidth}
+                maxHeight={this.props.maxHeight}
+
                 onResize={this.onResize.bind(this)}
                 onResizeStart={this.onResizeStart.bind(this)}
                 onResizeStop={this.onResizeStop.bind(this)}

@@ -35,6 +35,10 @@ export interface PanelConfig {
         defaultWidth: number | string;
         defaultHeight: number | string;
     };
+    minWidth: number | string;
+    minHeight: number | string;
+    maxWidth: number | string;
+    maxHeight: number | string;
 
     currentSize?: ContainerSize;
     broadcastResize?(panelType: PanelType, isResizing: boolean): unknown;

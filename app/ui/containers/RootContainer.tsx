@@ -27,7 +27,9 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
         this.playerPanelRef = React.createRef();
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        log.info(`Root container finished mounting.`);
+    }
 
     // Continuously Called by child components every time it is resized
     onResize(panelType: PanelType, delta: any) {

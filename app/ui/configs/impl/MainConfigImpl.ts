@@ -13,6 +13,11 @@ const mainConfig = {
         defaultWidth: '80%',
         defaultHeight: '80%',
     },
+    minWidth: '5%',
+    minHeight: '15%',
+    maxWidth: '90%',
+    maxHeight: '85%',
+
     resizableSides: {
         top: false,
         left: false,
