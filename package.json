@@ -26,7 +26,7 @@
     "postlint-styles-fix": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{css,scss}'",
     "preinstall": "node ./internals/scripts/CheckYarn.js",
     "prestart": "yarn build",
-    "fix-prettier": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{js,jsx,json,html,css,less,scss,yml}' --fix",
+    "fix-prettier": "prettier --ignore-path .eslintignore --single-quote --write \"**/*.{js,jsx,json,html,css,less,scss,yml}\" --write .",
     "start": "cross-env NODE_ENV=production electron ./app/main.prod.js",
     "start-main-debug": "yarn start-main-dev --inspect=5858 --remote-debugging-port=9223",
     "start-main-dev": "cross-env START_HOT=1 NODE_ENV=development electron -r ./internals/scripts/BabelRegister ./app/main.dev.ts",
@@ -304,7 +304,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "fix-prettier"
+      "pre-commit": "lint-staged"
     }
   }
 }

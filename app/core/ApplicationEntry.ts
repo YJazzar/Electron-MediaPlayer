@@ -10,7 +10,7 @@ export default class ApplicationEntry {
 
     private ipcMainController: IpcMainController;
 
-    private menuBuilder: MenuBuilder;
+    // private menuBuilder: MenuBuilder;
 
     constructor(mainWindow: BrowserWindow) {
         log.info('Application entry point initialized!');

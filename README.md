@@ -14,6 +14,6 @@ enrty for main:
 
 examples:
 
-# TODO: 
-- use the chalk package to make interesting changes
+# TODO:
 
+-   use the chalk package to make interesting changes
