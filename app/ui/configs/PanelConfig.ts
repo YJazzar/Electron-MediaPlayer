@@ -1,28 +1,8 @@
 import { Enable } from 're-resizable';
+import ContainerSize from './ContainerSize';
+import PanelType from './PanelType';
 
-export enum PanelType {
-    navPanel,
-    mainPanel,
-    playerControlsPanel,
-}
-
-export interface ContainerSize {
-    panelType?: PanelType;
-
-    // Will be used to have a responsive changing side
-    liveWidth: number | any;
-    liveHeight: number | any;
-
-    // Will be used to counteract the delta variable
-    //  from exponentially adding to itself
-    currWidth: number | any;
-    currHeight: number | any;
-
-    // To make decisions easier, use this variable:
-    isBeingResized: boolean;
-}
-
-export interface PanelConfig {
+export default interface PanelConfig {
     temp?: number;
     id: string;
     panelType: PanelType;

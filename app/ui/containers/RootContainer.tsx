@@ -1,10 +1,11 @@
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
+import ContainerSize from '../configs/ContainerSize';
 import mainConfig from '../configs/impl/MainConfigImpl';
 import NavConfig from '../configs/impl/NavConfigImpl';
 import playerConfig from '../configs/impl/PlayerControlsConfigImpl';
-import { ContainerSize, PanelType } from '../configs/PanelConfig';
 import ResizableContainer from './ResizableContainer';
+import PanelType from '../configs/PanelType';
 
 const log = LoggerFactory.getUILogger(__filename);
 

@@ -16,6 +16,10 @@ export default class IpcMainController {
     init(): void {
         this.mainWindow.webContents.on('did-finish-load', () => {
             log.debug('Did-Finish-Load event was received');
+            const size = this.mainWindow.getSize();
+            const width = size[0];
+            const height = size[1];
+            this.mainWindow.webContents.send('window-size', width, height);
         });
 
         // This allows for the script to wait until the webpage is loaded
@@ -25,6 +29,10 @@ export default class IpcMainController {
 
         // An event so the html files from the electron browser can use the logger
         ipcMain.on('Logger', this.sendLogMessage);
+
+        this.mainWindow.on('will-resize', () => {
+            log.info('will-resize was emitted');
+        });
 
         // TODO: use this function to call ipcRenderer to control how the panels will be resized
         // this.mainWindow.on('resize', () => {

@@ -1,7 +1,8 @@
 import { Resizable, ResizeDirection } from 're-resizable';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import { ContainerSize, PanelConfig } from '../configs/PanelConfig';
+import ContainerSize from '../configs/ContainerSize';
+import PanelConfig from '../configs/PanelConfig';
 import '../styles/RootComponent.global.css';
 
 const log = LoggerFactory.getUILogger(__filename);
@@ -31,6 +32,7 @@ export default class ResizableContainer extends React.Component<
 
     // Initialize the state
     componentDidMount() {
+        log.info(`The panel [${this.props.panelName}] finished mounting!`)
         this.updateState(() =>
             log.info(`The panel [${this.props.panelName}] finished mounting.`)
         );
