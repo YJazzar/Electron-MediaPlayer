@@ -25,6 +25,15 @@ export default class IpcMainController {
 
         // An event so the html files from the electron browser can use the logger
         ipcMain.on('Logger', this.sendLogMessage);
+
+        // TODO: use this function to call ipcRenderer to control how the panels will be resized
+        // this.mainWindow.on('resize', () => {
+        //     const size = this.mainWindow.getSize();
+        //     const width = size[0];
+        //     const height = size[1];
+        //     console.log(`width: ${width}`);
+        //     console.log(`height: ${height}`);
+        // });
     }
 
     // eslint-disable-next-line class-methods-use-this
