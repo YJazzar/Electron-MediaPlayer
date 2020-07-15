@@ -11,11 +11,14 @@ export default class IpcRendererController {
         log.info('Initializing ipcMainController...');
         this.events = new EventEmitter();
         // this.createIpcRendererListeners();
+    }
+
+    init() {
         this.createEventListeners();
     }
 
     // createIpcRendererListeners() {
-    //     ipcRenderer.on('window-size', (e, widht, height) => {
+    //     ipcRenderer.on('window-size', (e, width, height) => {
     //         this.events.
     //     });
     // }

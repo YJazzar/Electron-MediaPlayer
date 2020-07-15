@@ -5,7 +5,11 @@ import RootComponent from './ui/containers/RootContainer'
 import './ui/styles/app.css';
 // import './ui/styles/test.global.css';
 
-LoggerFactory.getUILogger(__filename).info("DOMContentLoaded was received... Adding RootContainer");
+const log = LoggerFactory.getUILogger(__filename);
+log.info("UI now starting to initialize");
+
+
+new UIEntry();
 
 document.addEventListener('DOMContentLoaded', () =>
     render(
