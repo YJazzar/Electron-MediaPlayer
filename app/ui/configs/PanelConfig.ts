@@ -1,4 +1,4 @@
-import { Enable, Size, ResizeDirection } from 're-resizable';
+import { Enable } from 're-resizable';
 
 export enum PanelType {
     navPanel,

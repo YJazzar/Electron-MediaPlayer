@@ -27,11 +27,12 @@
         "postcss.config.js": true,
         "tailwind.config.js": true,
         "tsconfig.json": true,
-        ".eslintrc.js": true,
-        ".editorconfig": true,
+        // ".eslintrc.js": true,
+        // ".editorconfig": true,
         ".gitignore": true
     },
 
+    "prettier.endOfLine": "lf",
     "javascript.validate.enable": false,
     "javascript.format.enable": false,
     "typescript.format.enable": false,
