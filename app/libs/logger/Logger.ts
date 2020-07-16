@@ -36,13 +36,18 @@ export default class LoggerImpl {
 
     // The function that will log all messages
     log(level: string, source: string, message: string): void {
+        // if (this.logger) {
+        //     this.logger.log({
+        //         level,
+        //         time: getDateTime(),
+        //         message,
+        //         source,
+        //     });
+        // }
         if (this.logger) {
-            this.logger.log({
-                level,
-                time: getDateTime(),
-                message,
-                source,
-            });
+            console.log(message);
+        } else {
+            console.log(message);
         }
     }
 

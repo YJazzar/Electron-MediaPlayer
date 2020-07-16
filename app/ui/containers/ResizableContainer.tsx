@@ -32,7 +32,7 @@ export default class ResizableContainer extends React.Component<
 
     // Initialize the state
     componentDidMount() {
-        log.info(`The panel [${this.props.panelName}] finished mounting!`)
+        log.info(`The panel [${this.props.panelName}] finished mounting!`);
         this.updateState(() =>
             log.info(`The panel [${this.props.panelName}] finished mounting.`)
         );
@@ -75,24 +75,30 @@ export default class ResizableContainer extends React.Component<
         }
     }
 
+    // To be used when the containers themselves are being resized
     liveResizeWidth(delta: number) {
-        // console.log('delta = ' + delta);
-        if (this.state.liveWidth) {
-            this.setState({
-                liveWidth: this.state.currWidth + delta,
-            });
-        }
+        this.setState({
+            liveWidth: this.state.currWidth + delta,
+        });
     }
     liveResizeHeight(delta: number) {
-        // Check the minHeight is not being violated:
+        this.setState({
+            liveHeight: this.state.currHeight + delta,
+        });
+    }
 
-
-
-        if (this.state.liveHeight) {
-            this.setState({
-                liveHeight: this.state.currHeight + delta,
-            });
-        }
+    // To be used when the main window of the application is being resized
+    currResizeWidth(delta: number) {
+        this.setState({
+            liveWidth: this.state.currWidth + delta,
+            currWidth: this.state.currWidth + delta,
+        });
+    }
+    currResizeHeight(delta: number) {
+        this.setState({
+            liveHeight: this.state.currHeight + delta,
+            currHeight: this.state.currHeight + delta,
+        });
     }
 
     // Called by the parent when a neighboring panel starts/stops resizing
@@ -142,7 +148,6 @@ export default class ResizableContainer extends React.Component<
                 minHeight={this.props.minHeight}
                 maxWidth={this.props.maxWidth}
                 maxHeight={this.props.maxHeight}
-
                 onResize={this.onResize.bind(this)}
                 onResizeStart={this.onResizeStart.bind(this)}
                 onResizeStop={this.onResizeStop.bind(this)}

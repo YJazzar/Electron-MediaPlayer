@@ -1,19 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
 import LoggerFactory from './libs/logger/LoggerFactory';
-import RootComponent from './ui/containers/RootContainer'
+import RootContainer from './ui/containers/RootContainer';
 import './ui/styles/app.css';
+import UIEntry from './ui/UIEntry';
+
 // import './ui/styles/test.global.css';
 
 const log = LoggerFactory.getUILogger(__filename);
-log.info("UI now starting to initialize");
+log.info('UI now starting to initialize');
 
+document.addEventListener('DOMContentLoaded', initUI);
 
-new UIEntry();
+function initUI() {
+    const ref = React.createRef<RootContainer>();
 
-document.addEventListener('DOMContentLoaded', () =>
-    render(
-        <RootComponent/>,
-        document.getElementById('root')
-    )
-);
+    render(<RootContainer ref={ref} />, document.getElementById('root'));
+
+    new UIEntry(ref).init();
+}

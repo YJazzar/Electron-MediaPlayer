@@ -1,4 +1,4 @@
-import { ipcMain, BrowserWindow } from 'electron';
+import { ipcMain, BrowserWindow, Rectangle } from 'electron';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import LogMessage from '../../libs/logger/LogMessage';
 
@@ -19,7 +19,11 @@ export default class IpcMainController {
             const size = this.mainWindow.getSize();
             const width = size[0];
             const height = size[1];
-            this.mainWindow.webContents.send('window-size', width, height);
+            this.mainWindow.webContents.send(
+                'initial-window-size',
+                width,
+                height
+            );
         });
 
         // This allows for the script to wait until the webpage is loaded
@@ -30,8 +34,11 @@ export default class IpcMainController {
         // An event so the html files from the electron browser can use the logger
         ipcMain.on('Logger', this.sendLogMessage);
 
-        this.mainWindow.on('will-resize', () => {
-            log.info('will-resize was emitted');
+        this.mainWindow.on('will-resize', (e, newWindowSize: Rectangle) => {
+            if (newWindowSize.width < 100 || newWindowSize.height < 100) {
+                e.preventDefault();
+            }
+            this.mainWindow.webContents.send('window-resized', newWindowSize);
         });
 
         // TODO: use this function to call ipcRenderer to control how the panels will be resized

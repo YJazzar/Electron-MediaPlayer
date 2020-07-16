@@ -1,24 +1,32 @@
+import { Rectangle } from 'electron';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import ContainerSize from '../configs/ContainerSize';
 import mainConfig from '../configs/impl/MainConfigImpl';
 import NavConfig from '../configs/impl/NavConfigImpl';
 import playerConfig from '../configs/impl/PlayerControlsConfigImpl';
-import ResizableContainer from './ResizableContainer';
+import NumericalSize from '../configs/NumericalSize';
 import PanelType from '../configs/PanelType';
+import '../styles/app.css';
+import ResizableContainer from './ResizableContainer';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-interface ContainerSizes {
-    navPanel?: ContainerSize;
-    mainPanel?: ContainerSize;
-    playerPanel?: ContainerSize;
-}
+// interface ContainerSizes {
+//     mainWindow?: ContainerSize; // The main window of the application. Used to keep track of resizing panels when the window itself is resized
+//     navPanel?: ContainerSize;
+//     mainPanel?: ContainerSize;
+//     playerPanel?: ContainerSize;
+// }
 
-export default class RootContainer extends React.Component<{}, ContainerSizes> {
+// NOTE: The state of type 'Size' is the size of the main window spawned for the application
+export default class RootContainer extends React.Component<{}, NumericalSize> {
     navPanelRef: React.RefObject<ResizableContainer>;
+
     mainPanelRef: React.RefObject<ResizableContainer>;
+
     playerPanelRef: React.RefObject<ResizableContainer>;
+
+    mainWindowSize: NumericalSize;
 
     constructor(props: {}) {
         super(props);
@@ -26,10 +34,41 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
         this.navPanelRef = React.createRef();
         this.mainPanelRef = React.createRef();
         this.playerPanelRef = React.createRef();
+        this.mainWindowSize = {
+            width: 0,
+            height: 0,
+        }
     }
 
     componentDidMount() {
         log.info(`Root container finished mounting.`);
+    }
+
+    initialWindowSize(width: number, height: number) {
+        log.debug(`now setting the width ${width} ${height}`);
+        this.mainWindowSize = {
+            width: width,
+            height: height,
+        }
+    }
+
+    windowResized(newWindowSize: Rectangle) {
+        // Calculate the change in pixels and change the recorded state:
+        const deltaWidth =
+            newWindowSize.width - this.mainWindowSize.width;
+        const deltaHeight =
+            newWindowSize.height - this.mainWindowSize.height;
+        this.mainWindowSize = {
+                width: newWindowSize.width,
+                height: newWindowSize.height,
+        };
+
+        // Send signals for the panels to increase their width and height accordingly:
+        // Nav panel resizing: whenever the width changes (height changes automatically with this panel due to css styling)
+        this.navPanelRef.current?.currResizeWidth(deltaWidth);
+
+        // Main panel resizing: whenever the height changes
+        this.mainPanelRef.current?.currResizeHeight(deltaHeight);
     }
 
     // Continuously Called by child components every time it is resized
@@ -45,15 +84,9 @@ export default class RootContainer extends React.Component<{}, ContainerSizes> {
     }
 
     resizeBasedOnNavPanel(delta: any) {
-        if (this.navPanelRef.current) {
-            this.navPanelRef.current.liveResizeWidth(delta.width);
-        }
-        if (this.mainPanelRef.current) {
-            this.mainPanelRef.current.liveResizeWidth(-1 * delta.width);
-        }
-        if (this.playerPanelRef.current) {
-            this.playerPanelRef.current.liveResizeWidth(-1 * delta.width);
-        }
+            this.navPanelRef.current?.liveResizeWidth(delta.width);
+            this.mainPanelRef.current?.liveResizeWidth(-1 * delta.width);
+            this.playerPanelRef.current?.liveResizeWidth(-1 * delta.width);
     }
 
     // Only need to update main panel and player panel heights

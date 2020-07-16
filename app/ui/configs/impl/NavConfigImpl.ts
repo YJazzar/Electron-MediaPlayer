@@ -1,5 +1,6 @@
 import { Enable } from 're-resizable';
-import { PanelConfig, PanelType } from '../PanelConfig';
+import PanelType from '../PanelType';
+import PanelConfig from '../PanelConfig';
 
 const navConfig = {
     id: 'nav-panel-id',
