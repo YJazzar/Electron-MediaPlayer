@@ -169,22 +169,22 @@ export default class HorizontalResizableContainer extends React.Component<
         return document.getElementById(this.props.leftDivId);
     }
 
-    getRightResizableElement() {
-        return document.getElementById(this.props.rightDivId);
-    }
+    // getRightResizableElement() {
+    //     return document.getElementById(this.props.rightDivId);
+    // }
 
-    getRightResizableElementWidth(): number {
-        const element = this.getRightResizableElement();
+    // getRightResizableElementWidth(): number {
+    //     const element = this.getRightResizableElement();
 
-        if (element) {
-            const pxWidth = getComputedStyle(element).getPropertyValue(
-                this.props.cssRightWidthVarName
-            );
-            return parseInt(pxWidth, 10);
-        }
+    //     if (element) {
+    //         const pxWidth = getComputedStyle(element).getPropertyValue(
+    //             this.props.cssRightWidthVarName
+    //         );
+    //         return parseInt(pxWidth, 10);
+    //     }
 
-        return this.getMinWidth();
-    }
+    //     return this.getMinWidth();
+    // }
 
     getPaneWidth() {
         const element = this.getLeftResizableElement();
@@ -209,10 +209,10 @@ export default class HorizontalResizableContainer extends React.Component<
             `${width}px`
         );
 
-        this.getRightResizableElement()?.style.setProperty(
-            this.props.cssRightWidthVarName,
-            newRight
-        );
+        // this.getRightResizableElement()?.style.setProperty(
+        //     this.props.cssRightWidthVarName,
+        //     newRight
+        // );
     }
 
     mainWindowResized(deltaWidth: number) {
@@ -223,7 +223,10 @@ export default class HorizontalResizableContainer extends React.Component<
         //     this.props.cssRightWidthVarName,
         //     `${newRightWidth}px`
         // );
-        this.setPaneWidth(this.getPaneWidth());
+        const newWidth = this.getPaneWidth() + deltaWidth/5;
+        if (newWidth > this.getMinWidth() && newWidth < this.getMaxWidth()) {
+            this.setPaneWidth(newWidth);
+        }
     }
 
     getMinWidth(): number {

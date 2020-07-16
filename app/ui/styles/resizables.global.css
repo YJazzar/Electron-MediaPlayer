@@ -9,15 +9,8 @@
 }
 
 #resizable-right {
-    --resizable-width-right: calc(100%-300px);
-    /* --resizable-width-right: 1120px; */
     height: 100vh;
-    width: var(--resizable-width-right);
-    /* width: calc(100% - var(--resizable-width-left)); */
-    /* min-width: var(--min-width);
-    max-width: var(--max-width); */
     background-color: aqua;
-    float: right;
 }
 
 #horz-handle {

@@ -45,7 +45,7 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
             height: 0,
         };
 
-        ipcRenderer.on('resize-pages', this.mainWindowResized.bind(this));
+        ipcRenderer.on('resize-window', this.mainWindowResized.bind(this));
     }
 
     componentDidMount() {
