@@ -5,6 +5,7 @@ import PanelType from './PanelType';
 export default interface PanelConfig {
     temp?: number;
     id: string;
+    handleId: string;
     panelType: PanelType;
     panelName: string;
     className: string;
@@ -15,10 +16,12 @@ export default interface PanelConfig {
         defaultWidth: number | string;
         defaultHeight: number | string;
     };
-    minWidth: number | string;
-    minHeight: number | string;
-    maxWidth: number | string;
-    maxHeight: number | string;
+
+    // These will be used as percentages
+    minWidth: number;
+    minHeight: number;
+    maxWidth: number;
+    maxHeight: number;
 
     currentSize?: ContainerSize;
     broadcastResize?(panelType: PanelType, isResizing: boolean): unknown;

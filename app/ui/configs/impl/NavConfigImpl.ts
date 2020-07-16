@@ -3,7 +3,8 @@ import PanelType from '../PanelType';
 import PanelConfig from '../PanelConfig';
 
 const navConfig = {
-    id: 'nav-panel-id',
+    id: 'resizable',
+    handleId: 'handle',
     panelType: PanelType.navPanel,
     panelName: 'Navigation panel',
     className: '',
@@ -13,10 +14,10 @@ const navConfig = {
         defaultWidth: '20%',
         defaultHeight: '100%',
     },
-    minWidth: '10%',
-    minHeight: '100%',
-    maxWidth: '90%',
-    maxHeight: '100%',
+    minWidth: 100,
+    minHeight: 100,
+    maxWidth: 100000,
+    maxHeight: 100,
 
     resizableSides: {
         top: false,

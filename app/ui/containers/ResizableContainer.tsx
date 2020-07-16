@@ -1,4 +1,3 @@
-import { Resizable } from 're-resizable';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import ContainerSize from '../configs/ContainerSize';
@@ -16,12 +15,7 @@ export default class ResizableContainer extends React.Component<
     PanelConfig,
     ContainerSize
 > {
-    minPaneSize = 150;
-    maxPaneSize = document.body.clientWidth * 0.5;
-    host: HTMLElement | null;
-    startingPaneWidth: number;
-    xOffset: number;
-    isBeingDragged: boolean;
+    divRef: HTMLElement | null;
 
     constructor(panelConfig: PanelConfig) {
         super(panelConfig);
@@ -37,13 +31,13 @@ export default class ResizableContainer extends React.Component<
             isBeingResized: false,
         };
 
-        // this.resizeRef = React.createRef();
+        this.divRef = null;
 
         // Temp vars
-        this.host = this.getResizableElement();
-        this.startingPaneWidth = this.getPaneWidth();
-        this.xOffset = 0;
-        this.isBeingDragged = false;
+        // this.host = this.getResizableElement();
+        // this.startingPaneWidth = this.getPaneWidth();
+        // this.xOffset = 0;
+        // this.isBeingDragged = false;
     }
 
     // Initialize the state
@@ -51,32 +45,101 @@ export default class ResizableContainer extends React.Component<
         log.info(`The panel [${this.props.panelName}] finished mounting!`);
         this.getResizableElement()?.style.setProperty(
             '--max-width',
-            `${this.maxPaneSize}px`
+            `${this.props.maxWidth}px`
         );
         this.getResizableElement()?.style.setProperty(
             '--min-width',
-            `${this.minPaneSize}px`
+            `${this.props.maxHeight}px`
         );
 
-        // Temp vars
-        this.host = this.getResizableElement();
-        this.startingPaneWidth = this.getPaneWidth();
+        this.divRef = this.getResizableElement();
+        this.setState({
+            liveWidth: this.getPaneWidth(),
+            currWidth: this.getPaneWidth(),
+        });
     }
 
-    setPaneWidth(e: MouseEvent, width: number) {
-        console.log('new width=' + width);
-        this.getResizableElement()?.style.setProperty(
-            '--resizable-width',
-            `${width}px`
+    onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+        event.preventDefault();
+        console.log('On mouse down');
+        this.setState(
+            {
+                currWidth: this.getPaneWidth(),
+                liveWidth: this.getPaneWidth(),
+                isBeingResized: true,
+            },
+            this.addListener
         );
     }
 
-    getResizableElement() {
-        return document.getElementById('resizable');
+    onMouseMove(event: MouseEvent) {
+        console.log('On mouse move');
+
+        // Reject the even if it is not actually being dragged
+        if (!this.state.isBeingResized) {
+            console.log('rejecting action');
+            this.removeListener();
+            return;
+        }
+
+        // If the dragging just finished, then store the new size
+        const primaryButtonPressed = event.buttons === 1;
+        if (!primaryButtonPressed) {
+            console.log('the user is not clicking anymore::');
+            this.setPaneWidth(
+                Math.min(
+                    Math.max(this.getPaneWidth(), this.props.minWidth),
+                    this.props.maxWidth
+                )
+            );
+            this.setState({
+                isBeingResized: false,
+            });
+            this.removeListener();
+            return;
+        }
+
+        const paneOriginAdjustment = -1; //'left' === 'right' ? 1 : -1;
+        const newWidth =
+            (this.state.liveWidth - event.pageX) * paneOriginAdjustment + this.state.currWidth;
+
+        this.setPaneWidth(newWidth);
+        if (newWidth < this.props.minWidth) {
+            this.setState({
+                isBeingResized: false,
+            });
+        }
+    }
+    newMethod = this.onMouseMove.bind(this);
+
+    addListener() {
+        window.addEventListener('mousemove', this.newMethod);
+    }
+
+    removeListener() {
+        console.log('removing listener mousemove');
+        window.removeEventListener('mousemove', this.newMethod);
+    }
+
+    render() {
+        return (
+            <div id={this.props.id}>
+                <div
+                    id={this.props.handleId}
+                    draggable="true"
+                    onMouseDown={this.onMouseDown.bind(this)}
+                    // onMouseMove={this.onMouseMove.bind(this)}
+                ></div>
+            </div>
+        );
     }
 
     getHandleElement() {
-        return document.getElementById('handle');
+        return document.getElementById(this.props.handleId);
+    }
+
+    getResizableElement() {
+        return document.getElementById(this.props.id);
     }
 
     getPaneWidth() {
@@ -89,150 +152,14 @@ export default class ResizableContainer extends React.Component<
             return parseInt(pxWidth, 10);
         }
 
-        return this.minPaneSize;
+        return this.props.minWidth;
     }
 
-    // startDragging(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    //     event.preventDefault();
-
-    //     console.log('Dragging event detected FIRST');
-    //     this.xOffset = event.pageX;
-    //     this.isBeingDragged = true;
-
-    //     this.getHandleElement()?.addEventListener(
-    //         'mousedown',
-    //         this.mouseDragHandler
-    //     );
-    // }
-
-    // mouseDragHandler(moveEvent: MouseEvent) {
-    //     moveEvent.preventDefault();
-
-    //     console.log('Dragging event detected SECOND');
-    //     // Reject the even if it is not actually being dragged
-
-    //     // If the dragging just finished, then store the new size
-    //     const primaryButtonPressed = moveEvent.buttons === 1;
-    //     if (!primaryButtonPressed) {
-    //         this.setPaneWidth(
-    //             Math.min(
-    //                 Math.max(this.getPaneWidth(), this.minPaneSize),
-    //                 this.maxPaneSize
-    //             )
-    //         );
-    //         return;
-    //     }
-
-    //     const paneOriginAdjustment = -1; //'left' === 'right' ? 1 : -1;
-    //     this.setPaneWidth(
-    //         (this.xOffset - moveEvent.pageX) * paneOriginAdjustment +
-    //             this.startingPaneWidth
-    //     );
-    // }
-
-    onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-        event.preventDefault();
-        console.log('On mouse down');
-        this.startingPaneWidth = this.getPaneWidth();
-        this.isBeingDragged = true;
-        this.xOffset = event.pageX;
-        // window.addEventListener('mousemove', this.onMouseMove.bind(this));
-    }
-
-    onMouseMove(event: MouseEvent) {
-        console.log('On mouse move');
-
-        // Reject the even if it is not actually being dragged
-        if (!this.isBeingDragged) {
-            console.log('rejecting action');
-            return;
-        }
-
-        // If the dragging just finished, then store the new size
-        const primaryButtonPressed = event.buttons === 1;
-        if (!primaryButtonPressed) {
-            console.log('the user is not clicking anymore::');
-            this.setPaneWidth(
-                event,
-                Math.min(
-                    Math.max(this.getPaneWidth(), this.minPaneSize),
-                    this.maxPaneSize
-                )
-            );
-            this.isBeingDragged = false;
-            window.removeEventListener('mousemove', this.onMouseMove.bind(this));
-            return;
-        }
-
-        const paneOriginAdjustment = -1; //'left' === 'right' ? 1 : -1;
-        const newWidth =
-            (this.xOffset - event.pageX) * paneOriginAdjustment +
-            this.startingPaneWidth;
-
-        this.setPaneWidth(
-            event,
-            (this.xOffset - event.pageX) * paneOriginAdjustment +
-                this.startingPaneWidth
-        );
-        if (newWidth <= 1) {
-            this.isBeingDragged = false;
-        }
-    }
-
-    render() {
-        return (
-            <div id="resizable">
-                <div
-                    id="handle"
-                    draggable="true"
-                    onMouseDown={this.onMouseDown.bind(this)}
-                    // onMouseMove={this.onMouseMove.bind(this)}
-                ></div>
-            </div>
-
-            // <div
-            //     className={`${this.props.className} ${this.props.classStyles}`}
-            // >
-            //     <Resizable
-            //         ref={this.resizeRef}
-            //         enable={this.props.resizableSides}
-            //         defaultSize={{
-            //             width: this.props.defaultSize.defaultWidth,
-            //             height: this.props.defaultSize.defaultHeight,
-            //         }}
-            //         size={{
-            //             width: this.getWidth(),
-            //             height: this.getHeight(),
-            //         }}
-            //         minWidth={this.props.minWidth}
-            //         minHeight={this.props.minHeight}
-            //         maxWidth={this.props.maxWidth}
-            //         maxHeight={this.props.maxHeight}
-            //         onResize={this.onResize.bind(this)}
-            //         onResizeStart={this.onResizeStart.bind(this)}
-            //         onResizeStop={this.onResizeStop.bind(this)}
-            //     >
-            //         {this.props.panelType}
-            //         {this.props.panelName}
-            //         {this.props.element}
-            //         {this.props.temp}
-            //     </Resizable>
-            // </div>
-        );
-    }
-
-    // helper method used in componentDidMount() to print error
-    nullRefErrorMess() {
-        log.error(`resizeRef for the panel {${this.props.panelName}} was null`);
-    }
-
-    // helper method used in initComponentSizeToParent() to print error
-    couldNotReadSizeError() {
-        log.error(
-            `An error occurred when trying to send the size of ${this.props.panelName} to the parent`
-        );
-        log.error(
-            'Please confirm the log files printed that a size was stored'
+    setPaneWidth(width: number) {
+        console.log('new width=' + width);
+        this.getResizableElement()?.style.setProperty(
+            '--resizable-width',
+            `${width}px`
         );
     }
 }
