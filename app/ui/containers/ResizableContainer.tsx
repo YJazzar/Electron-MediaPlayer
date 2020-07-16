@@ -1,10 +1,10 @@
-import { Resizable, ResizeDirection } from 're-resizable';
+import { Resizable } from 're-resizable';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import ContainerSize from '../configs/ContainerSize';
 import PanelConfig from '../configs/PanelConfig';
-import '../styles/RootComponent.global.css';
 import '../styles/resizables.global.css';
+import '../styles/RootComponent.global.css';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -16,7 +16,6 @@ export default class ResizableContainer extends React.Component<
     PanelConfig,
     ContainerSize
 > {
-    resizeRef: React.RefObject<Resizable>;
     minPaneSize = 150;
     maxPaneSize = document.body.clientWidth * 0.5;
     host: HTMLElement | null;
@@ -28,13 +27,17 @@ export default class ResizableContainer extends React.Component<
         super(panelConfig);
         this.state = {
             panelType: this.props.panelType,
-            liveWidth: undefined,
-            liveHeight: undefined,
-            currWidth: undefined,
-            currHeight: undefined,
+            // live lengths will always be rendered
+            liveWidth: 0,
+            liveHeight: 0,
+            // curr lengths will be used to use in calculating new lengths (when being dragged)
+            currWidth: 0,
+            currHeight: 0,
+
             isBeingResized: false,
         };
-        this.resizeRef = React.createRef();
+
+        // this.resizeRef = React.createRef();
 
         // Temp vars
         this.host = this.getResizableElement();
@@ -58,11 +61,9 @@ export default class ResizableContainer extends React.Component<
         // Temp vars
         this.host = this.getResizableElement();
         this.startingPaneWidth = this.getPaneWidth();
-
-        window.addEventListener('mousemove', this.onMouseMove.bind(this));
     }
 
-    setPaneWidth(width: number) {
+    setPaneWidth(e: MouseEvent, width: number) {
         console.log('new width=' + width);
         this.getResizableElement()?.style.setProperty(
             '--resizable-width',
@@ -135,6 +136,7 @@ export default class ResizableContainer extends React.Component<
         this.startingPaneWidth = this.getPaneWidth();
         this.isBeingDragged = true;
         this.xOffset = event.pageX;
+        // window.addEventListener('mousemove', this.onMouseMove.bind(this));
     }
 
     onMouseMove(event: MouseEvent) {
@@ -151,12 +153,14 @@ export default class ResizableContainer extends React.Component<
         if (!primaryButtonPressed) {
             console.log('the user is not clicking anymore::');
             this.setPaneWidth(
+                event,
                 Math.min(
                     Math.max(this.getPaneWidth(), this.minPaneSize),
                     this.maxPaneSize
                 )
             );
             this.isBeingDragged = false;
+            window.removeEventListener('mousemove', this.onMouseMove.bind(this));
             return;
         }
 
@@ -166,6 +170,7 @@ export default class ResizableContainer extends React.Component<
             this.startingPaneWidth;
 
         this.setPaneWidth(
+            event,
             (this.xOffset - event.pageX) * paneOriginAdjustment +
                 this.startingPaneWidth
         );

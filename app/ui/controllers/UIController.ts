@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import RootContainer from '../containers/RootContainer';
 
-const log = LoggerFactory.getLogger(__filename);
+const log = LoggerFactory.getUILogger(__filename);
 
 // This class is made to be used statically to prevent from making
 //  more than one instance of the event emitter inside it
@@ -37,7 +37,7 @@ export default class UIController {
         });
 
         ipcRenderer.on('window-resized', (e, newWindowSize: Rectangle) => {
-            this.rootContainerRef.current?.windowResized(newWindowSize);
+            // this.rootContainerRef.current?.windowResized(newWindowSize);
         });
 
         // These functions are called when readDirectory() sends back the result to this event emitter
