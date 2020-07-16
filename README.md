@@ -17,3 +17,7 @@ examples:
 # TODO:
 
 -   use the chalk package to make interesting changes
+
+# Bugs:
+
+-   When resizing the window to become larger, the right resizable div sometimes gains a big border that would only go away if resized again.

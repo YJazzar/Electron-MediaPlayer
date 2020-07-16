@@ -24,7 +24,9 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
 
     playerPanelRef: React.RefObject<ResizableContainer>;
 
-    mainWindowSize: NumericalSize;
+    // mainWindowSize: NumericalSize;
+
+    horizontalResizableContainerRef: React.RefObject<HorizontalResizableContainer>;
 
     constructor(props: {}) {
         super(props);
@@ -32,12 +34,18 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
         this.navPanelRef = React.createRef();
         this.mainPanelRef = React.createRef();
         this.playerPanelRef = React.createRef();
-        this.mainWindowSize = {
+        this.horizontalResizableContainerRef = React.createRef();
+        // this.mainWindowSize = {
+        //     width: 0,
+        //     height: 0,
+        // };
+
+        this.state ={
             width: 0,
             height: 0,
         };
 
-        ipcRenderer.on('resize-pages', this.refreshOnResize.bind(this));
+        ipcRenderer.on('resize-pages', this.mainWindowResized.bind(this));
     }
 
     componentDidMount() {
@@ -46,15 +54,26 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
 
     initialWindowSize(width: number, height: number) {
         log.debug(`now setting the width ${width} ${height}`);
-        this.mainWindowSize = {
+        this.setState({
             width: width,
             height: height,
-        };
+        });
+        this.horizontalResizableContainerRef.current?.initWindowSize(width, height);
     }
 
 
-    refreshOnResize() {
-        this.forceUpdate();
+    mainWindowResized(e: Event, newScreenWidth: number, newScreenHeight: number) {
+        // console.log('updating root');
+        const delta = newScreenWidth-this.state.width;
+
+        // console.log('newScreenWidth = ' + newScreenWidth);
+        // console.log('state width = ' + this.state.width);
+        console.log('delta = ' + delta);
+
+        this.horizontalResizableContainerRef.current?.mainWindowResized(delta);
+        this.setState({
+            width: newScreenWidth
+        });
     }
 
     render() {
@@ -62,6 +81,7 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
         return (
             // <div id="root-container">
                 <HorizontalResizableContainer
+                    ref={this.horizontalResizableContainerRef}
                     leftDivId={'resizable-left'}
                     rightDivId={'resizable-right'}
                     handleDivId={'horz-handle'}

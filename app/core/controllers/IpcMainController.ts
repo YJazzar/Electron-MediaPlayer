@@ -41,16 +41,18 @@ export default class IpcMainController {
             this.mainWindow.webContents.send('window-resized', newWindowSize);
         });
 
-        let timer: number;
+        let timer: NodeJS.Timeout;
         // TODO: use this function to call ipcRenderer to control how the panels will be resized
         this.mainWindow.on('resize', () => {
-            // clearTimeout(timer);
-            // timer = setTimeout(() =>
-            this.mainWindow.webContents.send('resize-pages');
-            // );
-            // const size = this.mainWindow.getSize();
-            // const width = size[0];
-            // const height = size[1];
+            clearTimeout(timer);
+
+            const size = this.mainWindow.getSize();
+            const width = size[0];
+            const height = size[1];
+
+            timer = setTimeout(() => {
+                this.mainWindow.webContents.send('resize-pages', width, height);
+            }, 100);
             // console.log(`width: ${width}`);
             // console.log(`height: ${height}`);
         });

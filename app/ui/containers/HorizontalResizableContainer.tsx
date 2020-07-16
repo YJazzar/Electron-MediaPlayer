@@ -116,6 +116,13 @@ export default class HorizontalResizableContainer extends React.Component<
         }
     }
 
+    // This function makes it so that both divs can reliably show up upon starting the application
+    initWindowSize(width: number, height: number) {
+        width = (this.props.minWidth + this.props.maxWidth)/4* document.body.clientWidth;
+        this.setPaneWidth(width);
+    }
+
+
 
     addListener() {
         window.addEventListener('mousemove', this.newMethod);
@@ -166,6 +173,19 @@ export default class HorizontalResizableContainer extends React.Component<
         return document.getElementById(this.props.rightDivId);
     }
 
+    getRightResizableElementWidth(): number {
+        const element = this.getRightResizableElement();
+
+        if (element) {
+            const pxWidth = getComputedStyle(element).getPropertyValue(
+                this.props.cssRightWidthVarName
+            );
+            return parseInt(pxWidth, 10);
+        }
+
+        return this.getMinWidth();
+    }
+
     getPaneWidth() {
         const element = this.getLeftResizableElement();
 
@@ -180,7 +200,9 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     setPaneWidth(width: number) {
+        // Calculate for performance gain
         const rightChange = document.body.clientWidth - width
+        const newRight = `${rightChange}px`;
 
         this.getLeftResizableElement()?.style.setProperty(
             this.props.cssLeftWidthVarName,
@@ -189,8 +211,19 @@ export default class HorizontalResizableContainer extends React.Component<
 
         this.getRightResizableElement()?.style.setProperty(
             this.props.cssRightWidthVarName,
-            `${rightChange}px`
+            newRight
         );
+    }
+
+    mainWindowResized(deltaWidth: number) {
+        // console.log('window-resized... changing left div');
+        // const newRightWidth = this.getRightResizableElementWidth() + deltaWidth;
+        // console.log(newRightWidth);
+        // this.getRightResizableElement()?.style.setProperty(
+        //     this.props.cssRightWidthVarName,
+        //     `${newRightWidth}px`
+        // );
+        this.setPaneWidth(this.getPaneWidth());
     }
 
     getMinWidth(): number {
