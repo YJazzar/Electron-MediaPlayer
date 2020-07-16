@@ -31,11 +31,11 @@ export default class UILoggerInstance {
         }
 
         // interface definition of this message structure is found in LogMessage.ts
-        // ipcRenderer.send('Logger', {
-        //     logLevelName,
-        //     sourcePath,
-        //     message,
-        // });
+        ipcRenderer.send('Logger', {
+            logLevelName,
+            sourcePath,
+            message,
+        });
     }
 
     error(message: string): void {

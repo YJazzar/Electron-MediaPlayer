@@ -1,5 +1,9 @@
 module.exports = {
-    purge: [],
+    // purge: {
+    //     enabled: true,
+    //     content: ['./app/ui/configs/**/*.tsx'],
+    // },
+    purge: false,
     theme: {
         extend: {},
     },

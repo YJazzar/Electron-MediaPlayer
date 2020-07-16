@@ -6,7 +6,7 @@ import NavConfig from '../configs/impl/NavConfigImpl';
 import playerConfig from '../configs/impl/PlayerControlsConfigImpl';
 import NumericalSize from '../configs/NumericalSize';
 import PanelType from '../configs/PanelType';
-import '../styles/app.css';
+import '../styles/app.global.css';
 import ResizableContainer from './ResizableContainer';
 
 const log = LoggerFactory.getUILogger(__filename);

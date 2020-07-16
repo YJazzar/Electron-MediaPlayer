@@ -25,7 +25,7 @@
         // "**/configs": true,
         "babel.config.js": true,
         "postcss.config.js": true,
-        "tailwind.config.js": true,
+        // "tailwind.config.js": true,
         "tsconfig.json": true,
         // ".eslintrc.js": true,
         // ".editorconfig": true,

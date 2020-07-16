@@ -49,6 +49,9 @@ export default merge.smart(baseConfig, {
                             sourceMap: true,
                         },
                     },
+                    {
+                        loader: 'postcss-loader',
+                    },
                 ],
             },
             // Pipe other styles through css modules and append to style.css
@@ -61,12 +64,11 @@ export default merge.smart(baseConfig, {
                     {
                         loader: 'css-loader',
                         options: {
-                            modules: {
-                                localIdentName:
-                                    '[name]__[local]__[hash:base64:5]',
-                            },
                             sourceMap: true,
                         },
+                    },
+                    {
+                        loader: 'postcss-loader',
                     },
                 ],
             },

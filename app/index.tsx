@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import LoggerFactory from './libs/logger/LoggerFactory';
 import RootContainer from './ui/containers/RootContainer';
-import './ui/styles/app.css';
 import UIEntry from './ui/UIEntry';
 
 // import './ui/styles/test.global.css';
