@@ -9,12 +9,13 @@
 }
 
 #resizable-right {
-    --resizable-width-right: 300px;
+    --resizable-width-right: calc(100%-300px);
     height: 100vh;
     width: var(--resizable-width-right);
+    /* width: calc(100% - var(--resizable-width-left)); */
     /* min-width: var(--min-width);
     max-width: var(--max-width); */
-    background-color: white;
+    background-color: aqua;
     float: right;
 }
 

@@ -39,6 +39,9 @@ export default class HorizontalResizableContainer extends React.Component<
     Props,
     State
 > {
+
+    newMethod = this.onMouseMove.bind(this);
+
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -59,7 +62,11 @@ export default class HorizontalResizableContainer extends React.Component<
             liveWidth: this.getPaneWidth(),
             currWidth: this.getPaneWidth(),
         });
+
+        // this.setPaneWidth(this.getPaneWidth());
     }
+
+
 
     onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         event.preventDefault();
@@ -108,7 +115,7 @@ export default class HorizontalResizableContainer extends React.Component<
             });
         }
     }
-    newMethod = this.onMouseMove.bind(this);
+
 
     addListener() {
         window.addEventListener('mousemove', this.newMethod);
@@ -126,6 +133,10 @@ export default class HorizontalResizableContainer extends React.Component<
         };
         style[this.props.cssMaxWidthVarName] = `${this.getMaxWidth()}px`;
         style[this.props.cssMinWidthVarName] = `${this.getMinWidth()}px`;
+
+        if (!this.state.isBeingResized){
+            // this.setPaneWidth(this.getPaneWidth());
+        }
 
         return (
             <div>
@@ -169,8 +180,6 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     setPaneWidth(width: number) {
-        console.log('new width=' + width);
-
         const rightChange = document.body.clientWidth - width
 
         this.getLeftResizableElement()?.style.setProperty(

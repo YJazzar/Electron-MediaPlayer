@@ -5,6 +5,7 @@ import NumericalSize from '../configs/NumericalSize';
 import '../styles/app.global.css';
 import ResizableContainer from './ResizableContainer';
 import HorizontalResizableContainer from './HorizontalResizableContainer';
+import { ipcRenderer } from 'electron';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -35,6 +36,8 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
             width: 0,
             height: 0,
         };
+
+        ipcRenderer.on('resize-pages', this.refreshOnResize.bind(this));
     }
 
     componentDidMount() {
@@ -50,11 +53,12 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
     }
 
 
-
-
-
+    refreshOnResize() {
+        this.forceUpdate();
+    }
 
     render() {
+
         return (
             // <div id="root-container">
                 <HorizontalResizableContainer
