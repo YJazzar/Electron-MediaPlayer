@@ -4,6 +4,7 @@ import NavConfig from '../configs/impl/NavConfigImpl';
 import NumericalSize from '../configs/NumericalSize';
 import '../styles/app.global.css';
 import ResizableContainer from './ResizableContainer';
+import HorizontalResizableContainer from './HorizontalResizableContainer';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -56,11 +57,20 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
     render() {
         return (
             // <div id="root-container">
-                <ResizableContainer
-                    {...NavConfig}
+                <HorizontalResizableContainer
+                    leftDivId={'resizable-left'}
+                    rightDivId={'resizable-right'}
+                    handleDivId={'horz-handle'}
+                    minWidth={0.1}
+                    maxWidth={0.9}
+                    cssLeftWidthVarName={'--resizable-width-left'}
+                    cssRightWidthVarName={'--resizable-width-right'}
+                    cssMinWidthVarName={'--min-width'}
+                    cssMaxWidthVarName={'--max-width'}
+                    // {...NavConfig}
                     // onResize={this.onResize.bind(this)}
                     // broadcastResize={this.broadcastResize.bind(this)}
-                    ref={this.navPanelRef}
+                    // ref={this.navPanelRef}
                 />
                     /* <ResizableContainer
                         {...mainConfig}
@@ -78,3 +88,16 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
         );
     }
 }
+
+/**
+ *  divId: string;
+    handleDivId: string;
+    // Used for controller resizing behavior:
+    // Note: these will be percentages (ex: 0.5 for 50%)
+    minWidth: number;
+    maxWidth: number;
+
+    cssWidthVarName: string;    // = --resizable-width
+    cssMinWidthVarName: string;    // = --min-width
+    cssMaxWidthVarName: string;    // = --max-width
+ */
