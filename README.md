@@ -21,3 +21,8 @@ examples:
 # Bugs:
 
 -   When resizing the window to become larger, the right resizable div sometimes gains a big border that would only go away if resized again.
+
+*   When i come back:
+    -   RENAME HORIZONTAL RESIZER TO VERTICAL RESIZER
+    -   clean the old code that was using the re-resize library (the panel configs, their impls, and clean up state variables for the vertical resizer)
+    -   Start making the horizontal rezizer
