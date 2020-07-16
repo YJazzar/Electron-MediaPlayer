@@ -7,7 +7,7 @@ const navConfig = {
     panelType: PanelType.navPanel,
     panelName: 'Navigation panel',
     className: '',
-    classStyles: 'floatLeft bg-gray-400 border border-gray-600',
+    classStyles: 'floatLeft bg-gray-400 border border-gray-600 full-h',
 
     defaultSize: {
         defaultWidth: '20%',

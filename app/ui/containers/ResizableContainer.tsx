@@ -132,31 +132,34 @@ export default class ResizableContainer extends React.Component<
     render() {
         // console.log('rendering: ' + this.props.panelName);
         return (
-            <Resizable
-                ref={this.resizeRef}
+            <div
                 className={`${this.props.className} ${this.props.classStyles}`}
-                enable={this.props.resizableSides}
-                defaultSize={{
-                    width: this.props.defaultSize.defaultWidth,
-                    height: this.props.defaultSize.defaultHeight,
-                }}
-                size={{
-                    width: this.getWidth(),
-                    height: this.getHeight(),
-                }}
-                minWidth={this.props.minWidth}
-                minHeight={this.props.minHeight}
-                maxWidth={this.props.maxWidth}
-                maxHeight={this.props.maxHeight}
-                onResize={this.onResize.bind(this)}
-                onResizeStart={this.onResizeStart.bind(this)}
-                onResizeStop={this.onResizeStop.bind(this)}
             >
-                {this.props.panelType}
-                {this.props.panelName}
-                {this.props.element}
-                {this.props.temp}
-            </Resizable>
+                <Resizable
+                    ref={this.resizeRef}
+                    enable={this.props.resizableSides}
+                    defaultSize={{
+                        width: this.props.defaultSize.defaultWidth,
+                        height: this.props.defaultSize.defaultHeight,
+                    }}
+                    size={{
+                        width: this.getWidth(),
+                        height: this.getHeight(),
+                    }}
+                    minWidth={this.props.minWidth}
+                    minHeight={this.props.minHeight}
+                    maxWidth={this.props.maxWidth}
+                    maxHeight={this.props.maxHeight}
+                    onResize={this.onResize.bind(this)}
+                    onResizeStart={this.onResizeStart.bind(this)}
+                    onResizeStop={this.onResizeStop.bind(this)}
+                >
+                    {this.props.panelType}
+                    {this.props.panelName}
+                    {this.props.element}
+                    {this.props.temp}
+                </Resizable>
+            </div>
         );
     }
 

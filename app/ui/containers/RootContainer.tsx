@@ -37,7 +37,7 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
         this.mainWindowSize = {
             width: 0,
             height: 0,
-        }
+        };
     }
 
     componentDidMount() {
@@ -49,18 +49,16 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
         this.mainWindowSize = {
             width: width,
             height: height,
-        }
+        };
     }
 
     windowResized(newWindowSize: Rectangle) {
         // Calculate the change in pixels and change the recorded state:
-        const deltaWidth =
-            newWindowSize.width - this.mainWindowSize.width;
-        const deltaHeight =
-            newWindowSize.height - this.mainWindowSize.height;
+        const deltaWidth = newWindowSize.width - this.mainWindowSize.width;
+        const deltaHeight = newWindowSize.height - this.mainWindowSize.height;
         this.mainWindowSize = {
-                width: newWindowSize.width,
-                height: newWindowSize.height,
+            width: newWindowSize.width,
+            height: newWindowSize.height,
         };
 
         // Send signals for the panels to increase their width and height accordingly:
@@ -84,9 +82,9 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
     }
 
     resizeBasedOnNavPanel(delta: any) {
-            this.navPanelRef.current?.liveResizeWidth(delta.width);
-            this.mainPanelRef.current?.liveResizeWidth(-1 * delta.width);
-            this.playerPanelRef.current?.liveResizeWidth(-1 * delta.width);
+        this.navPanelRef.current?.liveResizeWidth(delta.width);
+        this.mainPanelRef.current?.liveResizeWidth(-1 * delta.width);
+        this.playerPanelRef.current?.liveResizeWidth(-1 * delta.width);
     }
 
     // Only need to update main panel and player panel heights
@@ -107,25 +105,25 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
 
     render() {
         return (
-            <div id="root-container" className="resizableContainerWrapper">
+            <div id="root-container">
                 <ResizableContainer
                     {...NavConfig}
                     onResize={this.onResize.bind(this)}
                     broadcastResize={this.broadcastResize.bind(this)}
                     ref={this.navPanelRef}
                 />
-                <ResizableContainer
-                    {...mainConfig}
-                    onResize={this.onResize.bind(this)}
-                    broadcastResize={this.broadcastResize.bind(this)}
-                    ref={this.mainPanelRef}
-                />
-                <ResizableContainer
-                    {...playerConfig}
-                    onResize={this.onResize.bind(this)}
-                    broadcastResize={this.broadcastResize.bind(this)}
-                    ref={this.playerPanelRef}
-                />
+                    {/* <ResizableContainer
+                        {...mainConfig}
+                        onResize={this.onResize.bind(this)}
+                        broadcastResize={this.broadcastResize.bind(this)}
+                        ref={this.mainPanelRef}
+                    />
+                    <ResizableContainer
+                        {...playerConfig}
+                        onResize={this.onResize.bind(this)}
+                        broadcastResize={this.broadcastResize.bind(this)}
+                        ref={this.playerPanelRef}
+                    /> */}
             </div>
         );
     }

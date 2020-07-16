@@ -33,26 +33,24 @@ body,
     overflow: hidden;
 }
 
-#root {
+#root-container {
     display: flex;
     align-items: center;
+    width: 100vw;
+    height: 99vw;
 }
 
-.resizableContainerWrapper {
-    margin: auto;
-    width: 100%;
-    height: 99vh;
-    /* background-color: black; */
+full-h {
+    height: 99vw;
 }
 
-.floatLeft {
+/* .floatLeft {
     float: left;
 }
 
 .floatRight {
     float: right;
-}
-
+} */
 p {
     margin: 0;
     height: 100%;
