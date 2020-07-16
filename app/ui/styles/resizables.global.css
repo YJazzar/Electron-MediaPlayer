@@ -1,0 +1,36 @@
+#resizable {
+    --resizable-width: 300px;
+    height: 100vh;
+    width: var(--resizable-width);
+    min-width: var(--min-width);
+    max-width: var(--max-width);
+    background-color: grey;
+}
+
+#handle {
+    float: right;
+    height: 100%;
+    width: 1px;
+    background-color: blue;
+    z-index: 1;
+}
+
+#handle::after {
+    content: '';
+    width: 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -4px;
+    background-color: black;
+    cursor: ew-resize;
+    z-index: 2;
+}
+
+body {
+    margin: 0px;
+}
+
+* {
+    box-sizing: border-box;
+}
