@@ -1,6 +1,8 @@
 #content-panel-resizable-top {
     --content-panel-resizable-height-top: 300px;
-    width: 100vw;
+    --horizontal-panel-resizable-width: calc(100vw - 300px);
+
+    width: var(--horizontal-panel-resizable-width);
     height: var(--content-panel-resizable-height-top);
     min-height: var(--content-panel-min-height);
     max-height: var(--content-panel-max-height);
@@ -10,7 +12,9 @@
 
 #player-panel-resizable-bottom {
     --player-panel-resizable-height-bottom: calc(100vh - 300px);
-    width: 100vw;
+    --horizontal-panel-resizable-width: calc(100vw - 300px);
+
+    width: var(--horizontal-panel-resizable-width);
     background-color: rgb(255, 0, 13);
     height: var(--player-panel-resizable-height-bottom);
     /* float: top; */
@@ -35,4 +39,9 @@ content-panel-handle {
     background-color: transparent;
     cursor: ns-resize;
     z-index: 2;
+}
+
+.box {
+    width: inherit;
+    height: inherit;
 }

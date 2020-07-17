@@ -5,7 +5,7 @@ import NavigationComponent from '../components/NavigationComponent';
 import NumericalSize from '../configs/NumericalSize';
 import '../styles/app.global.css';
 import '../styles/contentResizables.global.css';
-// import '../styles/navResizables.global.css';
+import '../styles/navResizables.global.css';
 import '../styles/RootComponent.global.css';
 import HorizontalResizableContainer from './HorizontalResizableContainer';
 import VerticalResizableContainer from './VerticalResizableContainer';
@@ -69,7 +69,7 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
     render() {
         return (
             <div id="root-container">
-                {/* <VerticalResizableContainer
+                <VerticalResizableContainer
                     ref={this.verticalResizableContainerRef}
                     leftDivId={'nav-panel-resizable-left'}
                     rightDivId={'main-player-panel-combined-resizable-right'}
@@ -81,8 +81,7 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                     cssMaxWidthVarName={'--nav-panel-max-width'}
                     leftPanelComponent={this.getNavigationPanel()}
                     rightPanelComponent={this.getHorizontalResizableContainer()}
-                /> */}
-                {this.getHorizontalResizableContainer()}
+                />
             </div>
         );
     }
@@ -98,15 +97,17 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                 topDivId={'content-panel-resizable-top'}
                 bottomDivId={'player-panel-resizable-bottom'}
                 handleDivId={'content-panel-handle'}
+                leftDivId={'nav-panel-resizable-left'}
                 minHeight={0}
                 maxHeight={1}
                 cssTopHeightVarName={'--content-panel-resizable-height-top'}
                 cssBottomHeightVarName={'--player-panel-resizable-height-bottom'}
+                cssLeftWidthVarName={'--horizontal-panel-resizable-width'}
+                cssNavWidthVarName={'--nav-panel-resizable-width-left'}
                 cssMinHeightVarName={'--content-panel-min-height'}
                 cssMaxHeightVarName={'--content-panel-max-height'}
                 // TODO: add component props
             />
         );
-        // return <h2>here be donzo</h2>;
     }
 }
