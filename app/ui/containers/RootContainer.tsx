@@ -80,7 +80,8 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                     cssMinWidthVarName={'--nav-panel-min-width'}
                     cssMaxWidthVarName={'--nav-panel-max-width'}
                     leftPanelComponent={this.getNavigationPanel()}
-                    rightPanelComponent={this.getHorizontalResizableContainer()}
+                    rightPanelComponent={this.getNavigationPanel()}
+                    // rightPanelComponent={this.getHorizontalResizableContainer()}
                 />
             </div>
         );
@@ -97,13 +98,10 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                 topDivId={'content-panel-resizable-top'}
                 bottomDivId={'player-panel-resizable-bottom'}
                 handleDivId={'content-panel-handle'}
-                leftDivId={'nav-panel-resizable-left'}
                 minHeight={0}
                 maxHeight={1}
                 cssTopHeightVarName={'--content-panel-resizable-height-top'}
                 cssBottomHeightVarName={'--player-panel-resizable-height-bottom'}
-                cssLeftWidthVarName={'--horizontal-panel-resizable-width'}
-                cssNavWidthVarName={'--nav-panel-resizable-width-left'}
                 cssMinHeightVarName={'--content-panel-min-height'}
                 cssMaxHeightVarName={'--content-panel-max-height'}
                 // TODO: add component props

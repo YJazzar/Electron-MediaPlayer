@@ -10,7 +10,6 @@ const log = LoggerFactory.getUILogger(__filename);
 interface Props {
     topDivId: string;
     bottomDivId: string;
-    leftDivId: string;
     handleDivId: string;
 
     // Used for controller resizing behavior:
@@ -20,8 +19,6 @@ interface Props {
 
     cssTopHeightVarName: string;
     cssBottomHeightVarName: string;
-    cssLeftWidthVarName: string;
-    cssNavWidthVarName: string;
     cssMinHeightVarName: string;
     cssMaxHeightVarName: string;
 }
@@ -177,8 +174,6 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     setPaneHeight(height: number) {
-        this.setPaneWidth();
-
         this.getTopResizableElement()?.style.setProperty(
             this.props.cssTopHeightVarName,
             `${height}px`
@@ -189,34 +184,6 @@ export default class HorizontalResizableContainer extends React.Component<
             this.props.cssBottomHeightVarName,
             `${newBottomHeight}px`
         );
-    }
-
-    setPaneWidth() {
-        const leftPanelWidth = window.innerWidth - this.getNavPanelWidth();
-
-        this.getTopResizableElement()?.style.setProperty(
-            this.props.cssLeftWidthVarName,
-            `${leftPanelWidth}px`
-        );
-
-        this.getBottomResizableElement()?.style.setProperty(
-            this.props.cssLeftWidthVarName,
-            `${leftPanelWidth}px`
-        );
-    }
-
-    getNavPanelWidth() {
-        console.log('here');
-        const leftDivElement = document.getElementById(this.props.leftDivId);
-
-        if (leftDivElement) {
-            const pxWidth = getComputedStyle(leftDivElement).getPropertyValue(
-                this.props.cssNavWidthVarName
-            );
-            return parseInt(pxWidth, 10);
-        }
-
-        return this.getMinHeight();
     }
 
     mainWindowResized(deltaHeight: number) {
