@@ -1,0 +1,42 @@
+#content-panel-resizable-top {
+    --content-panel-resizable-height-top: 300px;
+    height: 100vh;
+    width: var(--content-panel-resizable-height-top);
+    min-width: var(--content-panel-min-height);
+    max-width: var(--content-panel-max-height);
+    background-color: grey;
+    float: left;
+}
+
+#player-panel-resizable-bottom {
+    height: 100vh;
+    background-color: aqua;
+}
+
+#content-panel-handle {
+    float: right;
+    height: 100%;
+    width: 1px;
+    background-color: transparent;
+    z-index: 1;
+}
+
+#content-panel-handle::after {
+    content: '';
+    width: 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -4px;
+    background-color: transparent;
+    cursor: ew-resize;
+    z-index: 2;
+}
+
+body {
+    margin: 0px;
+}
+
+* {
+    box-sizing: border-box;
+}

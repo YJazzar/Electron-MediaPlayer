@@ -1,6 +1,5 @@
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import '../styles/RootComponent.global.css';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -23,6 +22,8 @@ interface Props {
     cssMaxWidthVarName: string;
 
     // Components passed to be rendered as a child of each side of the panels
+    leftPanelComponent: React.ReactChild;
+    rightPanelComponent: React.ReactChild;
 }
 
 interface State {
@@ -112,7 +113,7 @@ export default class VerticalResizableContainer extends React.Component<
     }
 
     // This function makes it so that both divs can reliably show up upon starting the application
-    initWindowSize(width: number, height: number) {
+    initWindowSize(width: number) {
         width =
             ((this.props.minWidth + this.props.maxWidth) / 4) *
             document.body.clientWidth;
@@ -136,10 +137,6 @@ export default class VerticalResizableContainer extends React.Component<
         style[this.props.cssMaxWidthVarName] = `${this.getMaxWidth()}px`;
         style[this.props.cssMinWidthVarName] = `${this.getMinWidth()}px`;
 
-        if (!this.state.isBeingResized) {
-            // this.setPaneWidth(this.getPaneWidth());
-        }
-
         return (
             <div>
                 <div id={this.props.leftDivId} style={style}>
@@ -147,10 +144,10 @@ export default class VerticalResizableContainer extends React.Component<
                         id={this.props.handleDivId}
                         onMouseDown={this.onMouseDown.bind(this)}
                     />
-
+                    {this.props.leftPanelComponent}
                 </div>
                 <div id={this.props.rightDivId} style={style}>
-
+                    {this.props.rightPanelComponent}
                 </div>
             </div>
         );

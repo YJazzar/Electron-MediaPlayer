@@ -1,7 +1,5 @@
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import '../styles/resizables.global.css';
-import '../styles/RootComponent.global.css';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -10,27 +8,26 @@ const log = LoggerFactory.getUILogger(__filename);
  *      - id
  */
 interface Props {
-    leftDivId: string;
-    rightDivId: string;
+    topDivId: string;
+    bottomDivId: string;
     handleDivId: string;
 
     // Used for controller resizing behavior:
     // Note: these will be percentages (ex: 0.5 for 50%)
-    minWidth: number;
-    maxWidth: number;
+    minHeight: number;
+    maxHeight: number;
 
-    cssLeftWidthVarName: string; // = --resizable-width
-    cssRightWidthVarName: string; // = --resizable-width
-    cssMinWidthVarName: string; // = --min-width
-    cssMaxWidthVarName: string; // = --max-width
+    cssTopHeightVarName: string;
+    cssMinHeightVarName: string;
+    cssMaxHeightVarName: string;
 }
 
 interface State {
     // live lengths will always be rendered
-    liveWidth: number;
+    liveHeight: number;
 
     // curr lengths will be used to use in calculating new lengths (when being dragged)
-    currWidth: number;
+    currHeight: number;
 
     isBeingResized: boolean;
 }
@@ -39,16 +36,16 @@ export default class HorizontalResizableContainer extends React.Component<
     Props,
     State
 > {
-
     newMethod = this.onMouseMove.bind(this);
 
     constructor(props: Props) {
         super(props);
         this.state = {
             // live lengths will always be rendered
-            liveWidth: 0,
+            liveHeight: 0,
+
             // curr lengths will be used to use in calculating new lengths (when being dragged)
-            currWidth: 0,
+            currHeight: 0,
 
             isBeingResized: false,
         };
@@ -59,21 +56,17 @@ export default class HorizontalResizableContainer extends React.Component<
         log.info(`The horizontally resizable panel finished mounting!`);
 
         this.setState({
-            liveWidth: this.getPaneWidth(),
-            currWidth: this.getPaneWidth(),
+            liveHeight: this.getPaneHeight(),
+            currHeight: this.getPaneHeight(),
         });
-
-        // this.setPaneWidth(this.getPaneWidth());
     }
-
-
 
     onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         event.preventDefault();
         this.setState(
             {
-                currWidth: this.getPaneWidth(),
-                liveWidth: this.getPaneWidth(),
+                currHeight: this.getPaneHeight(),
+                liveHeight: this.getPaneHeight(),
                 isBeingResized: true,
             },
             this.addListener
@@ -88,17 +81,17 @@ export default class HorizontalResizableContainer extends React.Component<
         }
 
         const paneOriginAdjustment = -1; //'left' === 'right' ? 1 : -1;
-        const newWidth =
-            (this.state.liveWidth - event.pageX) * paneOriginAdjustment +
-            this.state.currWidth;
+        const newHeight =
+            (this.state.liveHeight - event.pageY) * paneOriginAdjustment +
+            this.state.currHeight;
 
         // If the dragging just finished, then store the new size
         const primaryButtonPressed = event.buttons === 1;
         if (!primaryButtonPressed) {
-            this.setPaneWidth(
+            this.setPaneHeight(
                 Math.min(
-                    Math.max(this.getPaneWidth(), this.getMinWidth()),
-                    this.getMaxWidth()
+                    Math.max(this.getPaneHeight(), this.getMinHeight()),
+                    this.getMaxHeight()
                 )
             );
             this.setState({
@@ -108,8 +101,8 @@ export default class HorizontalResizableContainer extends React.Component<
             return;
         }
 
-        this.setPaneWidth(newWidth);
-        if (newWidth < this.getMinWidth() * 0.5) {
+        this.setPaneHeight(newHeight);
+        if (newHeight < this.getMinHeight() * 0.5) {
             this.setState({
                 isBeingResized: false,
             });
@@ -117,12 +110,12 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     // This function makes it so that both divs can reliably show up upon starting the application
-    initWindowSize(width: number, height: number) {
-        width = (this.props.minWidth + this.props.maxWidth)/4* document.body.clientWidth;
-        this.setPaneWidth(width);
+    initWindowSize(height: number) {
+        height =
+            ((this.props.minHeight + this.props.maxHeight) / 4) *
+            document.body.clientHeight;
+        this.setPaneHeight(height);
     }
-
-
 
     addListener() {
         window.addEventListener('mousemove', this.newMethod);
@@ -134,28 +127,22 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     render() {
-        // The following style object is placed here to make sure min and max widths are re-calculated
+        // The following style object is placed here to make sure min and max heights are re-calculated
         const style = {} as {
             [key: string]: string;
         };
-        style[this.props.cssMaxWidthVarName] = `${this.getMaxWidth()}px`;
-        style[this.props.cssMinWidthVarName] = `${this.getMinWidth()}px`;
-
-        if (!this.state.isBeingResized){
-            // this.setPaneWidth(this.getPaneWidth());
-        }
+        style[this.props.cssMaxHeightVarName] = `${this.getMaxHeight()}px`;
+        style[this.props.cssMinHeightVarName] = `${this.getMinHeight()}px`;
 
         return (
             <div>
-                <div id={this.props.leftDivId} style={style}>
+                <div id={this.props.topDivId} style={style}>
                     <div
                         id={this.props.handleDivId}
                         onMouseDown={this.onMouseDown.bind(this)}
                     />
                 </div>
-                <div id={this.props.rightDivId} style={style}>
-
-                </div>
+                <div id={this.props.bottomDivId} style={style}></div>
             </div>
         );
     }
@@ -165,75 +152,42 @@ export default class HorizontalResizableContainer extends React.Component<
         return document.getElementById(this.props.handleDivId);
     }
 
-    getLeftResizableElement() {
-        return document.getElementById(this.props.leftDivId);
+    getTopResizableElement() {
+        return document.getElementById(this.props.topDivId);
     }
 
-    // getRightResizableElement() {
-    //     return document.getElementById(this.props.rightDivId);
-    // }
-
-    // getRightResizableElementWidth(): number {
-    //     const element = this.getRightResizableElement();
-
-    //     if (element) {
-    //         const pxWidth = getComputedStyle(element).getPropertyValue(
-    //             this.props.cssRightWidthVarName
-    //         );
-    //         return parseInt(pxWidth, 10);
-    //     }
-
-    //     return this.getMinWidth();
-    // }
-
-    getPaneWidth() {
-        const element = this.getLeftResizableElement();
+    getPaneHeight() {
+        const element = this.getTopResizableElement();
 
         if (element) {
-            const pxWidth = getComputedStyle(element).getPropertyValue(
-                this.props.cssLeftWidthVarName
+            const pxHeight = getComputedStyle(element).getPropertyValue(
+                this.props.cssTopHeightVarName
             );
-            return parseInt(pxWidth, 10);
+            return parseInt(pxHeight, 10);
         }
 
-        return this.getMinWidth();
+        return this.getMinHeight();
     }
 
-    setPaneWidth(width: number) {
-        // Calculate for performance gain
-        const rightChange = document.body.clientWidth - width
-        const newRight = `${rightChange}px`;
-
-        this.getLeftResizableElement()?.style.setProperty(
-            this.props.cssLeftWidthVarName,
-            `${width}px`
+    setPaneHeight(height: number) {
+        this.getTopResizableElement()?.style.setProperty(
+            this.props.cssTopHeightVarName,
+            `${height}px`
         );
-
-        // this.getRightResizableElement()?.style.setProperty(
-        //     this.props.cssRightWidthVarName,
-        //     newRight
-        // );
     }
 
-    mainWindowResized(deltaWidth: number) {
-        // console.log('window-resized... changing left div');
-        // const newRightWidth = this.getRightResizableElementWidth() + deltaWidth;
-        // console.log(newRightWidth);
-        // this.getRightResizableElement()?.style.setProperty(
-        //     this.props.cssRightWidthVarName,
-        //     `${newRightWidth}px`
-        // );
-        const newWidth = this.getPaneWidth() + deltaWidth/5;
-        if (newWidth > this.getMinWidth() && newWidth < this.getMaxWidth()) {
-            this.setPaneWidth(newWidth);
+    mainWindowResized(deltaHeight: number) {
+        const newHeight = this.getPaneHeight() + deltaHeight / 5;
+        if (newHeight > this.getMinHeight() && newHeight < this.getMaxHeight()) {
+            this.setPaneHeight(newHeight);
         }
     }
 
-    getMinWidth(): number {
-        return this.props.minWidth * document.body.clientWidth;
+    getMinHeight(): number {
+        return this.props.minHeight * document.body.clientHeight;
     }
 
-    getMaxWidth(): number {
-        return this.props.maxWidth * document.body.clientWidth;
+    getMaxHeight(): number {
+        return this.props.maxHeight * document.body.clientHeight;
     }
 }
