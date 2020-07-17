@@ -5,7 +5,7 @@ import NavigationComponent from '../components/NavigationComponent';
 import NumericalSize from '../configs/NumericalSize';
 import '../styles/app.global.css';
 import '../styles/contentResizables.global.css';
-import '../styles/navResizables.global.css';
+// import '../styles/navResizables.global.css';
 import '../styles/RootComponent.global.css';
 import HorizontalResizableContainer from './HorizontalResizableContainer';
 import VerticalResizableContainer from './VerticalResizableContainer';
@@ -51,15 +51,18 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
         newScreenHeight: number
     ) {
         // console.log('updating root');
-        const delta = newScreenWidth - this.state.width;
+        const deltaWidth = newScreenWidth - this.state.width;
+        const deltaHeight = newScreenHeight - this.state.height;
 
         // console.log('newScreenWidth = ' + newScreenWidth);
         // console.log('state width = ' + this.state.width);
-        console.log('delta = ' + delta);
+        // console.log('delta = ' + delta);
 
-        this.verticalResizableContainerRef.current?.mainWindowResized(delta);
+        this.verticalResizableContainerRef.current?.mainWindowResized(deltaWidth);
+        this.horizontalResizableContainerRef.current?.mainWindowResized(deltaHeight);
         this.setState({
             width: newScreenWidth,
+            height: newScreenHeight,
         });
     }
 
@@ -95,9 +98,10 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                 topDivId={'content-panel-resizable-top'}
                 bottomDivId={'player-panel-resizable-bottom'}
                 handleDivId={'content-panel-handle'}
-                minHeight={0.5}
-                maxHeight={0.8}
+                minHeight={0}
+                maxHeight={1}
                 cssTopHeightVarName={'--content-panel-resizable-height-top'}
+                cssBottomHeightVarName={'--player-panel-resizable-height-bottom'}
                 cssMinHeightVarName={'--content-panel-min-height'}
                 cssMaxHeightVarName={'--content-panel-max-height'}
                 // TODO: add component props

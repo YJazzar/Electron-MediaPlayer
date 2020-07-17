@@ -18,6 +18,7 @@ interface Props {
     maxHeight: number;
 
     cssTopHeightVarName: string;
+    cssBottomHeightVarName: string;
     cssMinHeightVarName: string;
     cssMaxHeightVarName: string;
 }
@@ -135,13 +136,12 @@ export default class HorizontalResizableContainer extends React.Component<
         style[this.props.cssMinHeightVarName] = `${this.getMinHeight()}px`;
 
         return (
-            <div>
-                <div id={this.props.topDivId} style={style}>
-                    <div
-                        id={this.props.handleDivId}
-                        onMouseDown={this.onMouseDown.bind(this)}
-                    />
-                </div>
+            <div className='box'>
+                <div id={this.props.topDivId} style={style}></div>
+                <div
+                    id={this.props.handleDivId}
+                    onMouseDown={this.onMouseDown.bind(this)}
+                />
                 <div id={this.props.bottomDivId} style={style}></div>
             </div>
         );
@@ -154,6 +154,10 @@ export default class HorizontalResizableContainer extends React.Component<
 
     getTopResizableElement() {
         return document.getElementById(this.props.topDivId);
+    }
+
+    getBottomResizableElement() {
+        return document.getElementById(this.props.bottomDivId);
     }
 
     getPaneHeight() {
@@ -174,20 +178,29 @@ export default class HorizontalResizableContainer extends React.Component<
             this.props.cssTopHeightVarName,
             `${height}px`
         );
+
+        const newBottomHeight = window.innerHeight - height;
+        this.getBottomResizableElement()?.style.setProperty(
+            this.props.cssBottomHeightVarName,
+            `${newBottomHeight}px`
+        );
     }
 
     mainWindowResized(deltaHeight: number) {
-        const newHeight = this.getPaneHeight() + deltaHeight / 5;
-        if (newHeight > this.getMinHeight() && newHeight < this.getMaxHeight()) {
+        const newHeight = this.getPaneHeight() + deltaHeight;
+        if (
+            newHeight > this.getMinHeight() &&
+            newHeight < this.getMaxHeight()
+        ) {
             this.setPaneHeight(newHeight);
         }
     }
 
     getMinHeight(): number {
-        return this.props.minHeight * document.body.clientHeight;
+        return this.props.minHeight * window.innerHeight;
     }
 
     getMaxHeight(): number {
-        return this.props.maxHeight * document.body.clientHeight;
+        return this.props.maxHeight * window.innerHeight;
     }
 }

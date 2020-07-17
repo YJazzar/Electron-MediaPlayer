@@ -154,10 +154,6 @@ export default class VerticalResizableContainer extends React.Component<
     }
 
     // Helper functions
-    getHandleElement() {
-        return document.getElementById(this.props.handleDivId);
-    }
-
     getLeftResizableElement() {
         return document.getElementById(this.props.leftDivId);
     }

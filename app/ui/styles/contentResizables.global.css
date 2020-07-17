@@ -1,42 +1,38 @@
 #content-panel-resizable-top {
     --content-panel-resizable-height-top: 300px;
-    height: 100vh;
-    width: var(--content-panel-resizable-height-top);
-    min-width: var(--content-panel-min-height);
-    max-width: var(--content-panel-max-height);
-    background-color: grey;
-    float: left;
+    width: 100vw;
+    height: var(--content-panel-resizable-height-top);
+    min-height: var(--content-panel-min-height);
+    max-height: var(--content-panel-max-height);
+    background-color: rgb(12, 141, 70);
+    float: top;
 }
 
 #player-panel-resizable-bottom {
-    height: 100vh;
-    background-color: aqua;
+    --player-panel-resizable-height-bottom: calc(100vh - 300px);
+    width: 100vw;
+    background-color: rgb(255, 0, 13);
+    height: var(--player-panel-resizable-height-bottom);
+    /* float: top; */
 }
 
-#content-panel-handle {
-    float: right;
-    height: 100%;
-    width: 1px;
+content-panel-handle {
+    float: bottom;
+    height: 1px;
+    width: 100%;
     background-color: transparent;
     z-index: 1;
 }
 
 #content-panel-handle::after {
     content: '';
-    width: 5px;
+    width: 100%;
+    height: 5px;
     position: absolute;
-    top: 0;
-    bottom: 0;
-    margin-left: -4px;
+    left: 0;
+    right: 0;
+    margin-top: -4px;
     background-color: transparent;
-    cursor: ew-resize;
+    cursor: ns-resize;
     z-index: 2;
-}
-
-body {
-    margin: 0px;
-}
-
-* {
-    box-sizing: border-box;
 }
