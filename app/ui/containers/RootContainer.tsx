@@ -1,46 +1,23 @@
+import { ipcRenderer } from 'electron';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import NavConfig from '../configs/impl/NavConfigImpl';
 import NumericalSize from '../configs/NumericalSize';
 import '../styles/app.global.css';
-import ResizableContainer from './ResizableContainer';
-import HorizontalResizableContainer from './HorizontalResizableContainer';
-import { ipcRenderer } from 'electron';
+import '../styles/navResizables.global.css';
+import VerticalResizableContainer from './VerticalResizableContainer';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-// interface ContainerSizes {
-//     mainWindow?: ContainerSize; // The main window of the application. Used to keep track of resizing panels when the window itself is resized
-//     navPanel?: ContainerSize;
-//     mainPanel?: ContainerSize;
-//     playerPanel?: ContainerSize;
-// }
-
-// NOTE: The state of type 'Size' is the size of the main window spawned for the application
 export default class RootContainer extends React.Component<{}, NumericalSize> {
-    navPanelRef: React.RefObject<ResizableContainer>;
-
-    mainPanelRef: React.RefObject<ResizableContainer>;
-
-    playerPanelRef: React.RefObject<ResizableContainer>;
-
-    // mainWindowSize: NumericalSize;
-
-    horizontalResizableContainerRef: React.RefObject<HorizontalResizableContainer>;
+    horizontalResizableContainerRef: React.RefObject<
+        VerticalResizableContainer
+    >;
 
     constructor(props: {}) {
         super(props);
 
-        this.navPanelRef = React.createRef();
-        this.mainPanelRef = React.createRef();
-        this.playerPanelRef = React.createRef();
         this.horizontalResizableContainerRef = React.createRef();
-        // this.mainWindowSize = {
-        //     width: 0,
-        //     height: 0,
-        // };
-
-        this.state ={
+        this.state = {
             width: 0,
             height: 0,
         };
@@ -58,13 +35,19 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
             width: width,
             height: height,
         });
-        this.horizontalResizableContainerRef.current?.initWindowSize(width, height);
+        this.horizontalResizableContainerRef.current?.initWindowSize(
+            width,
+            height
+        );
     }
 
-
-    mainWindowResized(e: Event, newScreenWidth: number, newScreenHeight: number) {
+    mainWindowResized(
+        e: Event,
+        newScreenWidth: number,
+        newScreenHeight: number
+    ) {
         // console.log('updating root');
-        const delta = newScreenWidth-this.state.width;
+        const delta = newScreenWidth - this.state.width;
 
         // console.log('newScreenWidth = ' + newScreenWidth);
         // console.log('state width = ' + this.state.width);
@@ -72,56 +55,26 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
 
         this.horizontalResizableContainerRef.current?.mainWindowResized(delta);
         this.setState({
-            width: newScreenWidth
+            width: newScreenWidth,
         });
     }
 
     render() {
-
         return (
-            // <div id="root-container">
-                <HorizontalResizableContainer
+            <div id="root-container">
+                <VerticalResizableContainer
                     ref={this.horizontalResizableContainerRef}
-                    leftDivId={'resizable-left'}
-                    rightDivId={'resizable-right'}
-                    handleDivId={'horz-handle'}
+                    leftDivId={'nav-panel-resizable-left'}
+                    rightDivId={'main-player-panel-combined-resizable-right'}
+                    handleDivId={'nav-panel-handle'}
                     minWidth={0.1}
                     maxWidth={0.9}
-                    cssLeftWidthVarName={'--resizable-width-left'}
-                    cssRightWidthVarName={'--resizable-width-right'}
-                    cssMinWidthVarName={'--min-width'}
-                    cssMaxWidthVarName={'--max-width'}
-                    // {...NavConfig}
-                    // onResize={this.onResize.bind(this)}
-                    // broadcastResize={this.broadcastResize.bind(this)}
-                    // ref={this.navPanelRef}
+                    cssLeftWidthVarName={'--nav-panel-resizable-width-left'}
+                    cssMinWidthVarName={'--nav-panel-min-width'}
+                    cssMaxWidthVarName={'--nav-panel-max-width'}
                 />
-                    /* <ResizableContainer
-                        {...mainConfig}
-                        onResize={this.onResize.bind(this)}
-                        broadcastResize={this.broadcastResize.bind(this)}
-                        ref={this.mainPanelRef}
-                    />
-                    <ResizableContainer
-                        {...playerConfig}
-                        onResize={this.onResize.bind(this)}
-                        broadcastResize={this.broadcastResize.bind(this)}
-                        ref={this.playerPanelRef}
-                    /> */
-            // </div>
+
+            </div>
         );
     }
 }
-
-/**
- *  divId: string;
-    handleDivId: string;
-    // Used for controller resizing behavior:
-    // Note: these will be percentages (ex: 0.5 for 50%)
-    minWidth: number;
-    maxWidth: number;
-
-    cssWidthVarName: string;    // = --resizable-width
-    cssMinWidthVarName: string;    // = --min-width
-    cssMaxWidthVarName: string;    // = --max-width
- */

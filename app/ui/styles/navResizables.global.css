@@ -1,19 +1,19 @@
-#resizable-left {
-    --resizable-width-left: 300px;
+#nav-panel-resizable-left {
+    --nav-panel-resizable-width-left: 300px;
     height: 100vh;
-    width: var(--resizable-width-left);
-    min-width: var(--min-width);
-    max-width: var(--max-width);
+    width: var(--nav-panel-resizable-width-left);
+    min-width: var(--nav-panel-min-width);
+    max-width: var(--nav-panel-max-width);
     background-color: grey;
     float: left;
 }
 
-#resizable-right {
+#main-player-panel-combined-resizable-right {
     height: 100vh;
     background-color: aqua;
 }
 
-#horz-handle {
+#nav-panel-handle {
     float: right;
     height: 100%;
     width: 1px;
@@ -21,7 +21,7 @@
     z-index: 1;
 }
 
-#horz-handle::after {
+#nav-panel-handle::after {
     content: '';
     width: 5px;
     position: absolute;
