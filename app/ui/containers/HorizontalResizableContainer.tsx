@@ -1,5 +1,6 @@
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
+import NavigationComponent from '../components/NavigationComponent';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -137,12 +138,16 @@ export default class HorizontalResizableContainer extends React.Component<
 
         return (
             <div className="box">
-                <div id={this.props.topDivId} style={style}></div>
+                <div id={this.props.topDivId} style={style}>
+                    <NavigationComponent />
+                </div>
                 <div
                     id={this.props.handleDivId}
                     onMouseDown={this.onMouseDown.bind(this)}
                 />
-                <div id={this.props.bottomDivId} style={style}></div>
+                <div id={this.props.bottomDivId} style={style}>
+                    <NavigationComponent />
+                </div>
             </div>
         );
     }

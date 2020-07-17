@@ -80,8 +80,8 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                     cssMinWidthVarName={'--nav-panel-min-width'}
                     cssMaxWidthVarName={'--nav-panel-max-width'}
                     leftPanelComponent={this.getNavigationPanel()}
-                    rightPanelComponent={this.getNavigationPanel()}
-                    // rightPanelComponent={this.getHorizontalResizableContainer()}
+                    // rightPanelComponent={this.getNavigationPanel()}
+                    rightPanelComponent={this.getHorizontalResizableContainer()}
                 />
             </div>
         );
