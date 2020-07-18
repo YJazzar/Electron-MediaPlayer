@@ -4,20 +4,20 @@
     width: var(--nav-panel-resizable-width-left);
     min-width: var(--nav-panel-min-width);
     max-width: var(--nav-panel-max-width);
-    background-color: grey;
+    /* background-color: grey; */
     float: left;
 }
 
 #main-player-panel-combined-resizable-right {
     height: 100vh;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 #nav-panel-handle {
     float: right;
     height: 100%;
     width: 1px;
-    background-color: transparent;
+    /* background-color: transparent; */
     z-index: 1;
 }
 

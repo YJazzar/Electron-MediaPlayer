@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default class NavigationComponent extends React.Component<{}, {}> {
+export default class PlayerPanelContainer extends React.Component<{}, {}> {
     render() {
         return (
             <div className="h-full overflow-auto">
-                <h1>Navigation Panel</h1>
+                <h1>Player Panel</h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna

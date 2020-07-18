@@ -1,7 +1,6 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import NavigationComponent from '../components/NavigationComponent';
 import NumericalSize from '../configs/NumericalSize';
 import '../styles/app.global.css';
 import '../styles/contentResizables.global.css';
@@ -9,6 +8,9 @@ import '../styles/navResizables.global.css';
 import '../styles/RootComponent.global.css';
 import HorizontalResizableContainer from './HorizontalResizableContainer';
 import VerticalResizableContainer from './VerticalResizableContainer';
+import NavigationPanelContainer from './panels/NavigationPanelContainer';
+import MainContentsPanelContainer from './panels/MainContentsPanelContainer';
+import PlayerPanelContainer from './panels/PlayerPanelContainer';
 
 
 const log = LoggerFactory.getUILogger(__filename);
@@ -80,15 +82,10 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                     cssMinWidthVarName={'--nav-panel-min-width'}
                     cssMaxWidthVarName={'--nav-panel-max-width'}
                     leftPanelComponent={this.getNavigationPanel()}
-                    // rightPanelComponent={this.getNavigationPanel()}
                     rightPanelComponent={this.getHorizontalResizableContainer()}
                 />
             </div>
         );
-    }
-
-    getNavigationPanel(): React.ReactChild {
-        return <NavigationComponent />;
     }
 
     getHorizontalResizableContainer(): React.ReactChild {
@@ -104,8 +101,23 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                 cssBottomHeightVarName={'--player-panel-resizable-height-bottom'}
                 cssMinHeightVarName={'--content-panel-min-height'}
                 cssMaxHeightVarName={'--content-panel-max-height'}
-                // TODO: add component props
+                topPanelComponent={this.getMainContentsPanel()}
+                bottomPanelComponent={this.getPlayerPanel()}
             />
         );
     }
+
+    // Helper functions to get the contents of each panel
+    getNavigationPanel(): React.ReactChild {
+        return <NavigationPanelContainer/>;
+    }
+
+    getMainContentsPanel(): React.ReactChild {
+        return <MainContentsPanelContainer/>
+    }
+
+    getPlayerPanel(): React.ReactChild {
+        return <PlayerPanelContainer/>
+    }
+
 }

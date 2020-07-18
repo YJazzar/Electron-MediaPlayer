@@ -1,6 +1,5 @@
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import NavigationComponent from '../components/NavigationComponent';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -22,6 +21,10 @@ interface Props {
     cssBottomHeightVarName: string;
     cssMinHeightVarName: string;
     cssMaxHeightVarName: string;
+
+    // Components passed to be rendered as a child of each side of the panels
+    topPanelComponent: React.ReactChild;
+    bottomPanelComponent: React.ReactChild;
 }
 
 interface State {
@@ -139,14 +142,14 @@ export default class HorizontalResizableContainer extends React.Component<
         return (
             <div className="box">
                 <div id={this.props.topDivId} style={style}>
-                    <NavigationComponent />
+                    {this.props.topPanelComponent}
                 </div>
                 <div
                     id={this.props.handleDivId}
                     onMouseDown={this.onMouseDown.bind(this)}
                 />
                 <div id={this.props.bottomDivId} style={style}>
-                    <NavigationComponent />
+                    {this.props.bottomPanelComponent}
                 </div>
             </div>
         );

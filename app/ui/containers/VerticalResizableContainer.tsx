@@ -139,7 +139,7 @@ export default class VerticalResizableContainer extends React.Component<
 
         return (
             <div>
-                <div id={this.props.leftDivId} style={style}>
+                <div id={this.props.leftDivId} className={'bg-transparent border-white border-2 p-1 text-gray-100'} style={style}>
                     <div
                         id={this.props.handleDivId}
                         onMouseDown={this.onMouseDown.bind(this)}
