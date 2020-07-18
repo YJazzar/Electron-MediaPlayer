@@ -41,7 +41,3 @@ content-panel-handle {
     width: inherit;
     height: inherit;
 }
-.scroll {
-    overflow-y: auto;
-    height: 100%;
-}

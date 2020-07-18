@@ -3,7 +3,7 @@ import React from 'react';
 export default class NavigationComponent extends React.Component<{}, {}> {
     render() {
         return (
-            <div className="scroll">
+            <div className="h-full overflow-auto">
                 <h1>Navigation Panel</h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
