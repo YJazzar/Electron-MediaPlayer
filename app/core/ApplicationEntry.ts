@@ -1,6 +1,7 @@
 import { BrowserWindow } from 'electron';
 import LoggerFactory from '../libs/logger/LoggerFactory';
 import IpcMainController from './controllers/IpcMainController';
+import ConfigManager from './persist/ConfigManager';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -29,5 +30,6 @@ export default class ApplicationEntry {
     init(): void {
         this.ipcMainController.init();
         // this.menuBuilder.buildMenu();
+        const db = new ConfigManager();
     }
 }
