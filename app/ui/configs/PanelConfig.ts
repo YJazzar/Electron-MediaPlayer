@@ -19,9 +19,12 @@ export default interface PanelConfig {
     };
 }
 
+// TODO: store this as the dark theme
 export const SharedPanelClassStyles =
-    'bg-transparent p-10 text-black panel-border';
-// 'bg-transparent p-10 text-gray-400 panel-border';
+    'bg-transparent p-10 text-gray-400 panel-border';
+// TODO: store this as the light theme:
+// 'bg-transparent p-10 text-black panel-border';
+
 /** Styles Explanation:
  * .b--transparent = transparent background
  * .p-10 = padding
