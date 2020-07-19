@@ -1,5 +1,6 @@
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
+import PanelConfig from '../configs/PanelConfig';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -8,15 +9,12 @@ const log = LoggerFactory.getUILogger(__filename);
  *      - id
  */
 interface Props {
+    // The div ID's used to match with the css (look inside navResizable.global.css)
     leftDivId: string;
     rightDivId: string;
     handleDivId: string;
 
-    // Used for controller resizing behavior:
-    // Note: these will be percentages (ex: 0.5 for 50%)
-    minWidth: number;
-    maxWidth: number;
-
+    // Css var names (look inside navResizable.global.css)
     cssLeftWidthVarName: string;
     cssMinWidthVarName: string;
     cssMaxWidthVarName: string;
@@ -24,15 +22,15 @@ interface Props {
     // Components passed to be rendered as a child of each side of the panels
     leftPanelComponent: React.ReactChild;
     rightPanelComponent: React.ReactChild;
+
+    leftPanelConfig: PanelConfig;
 }
 
+// live lengths will always be rendered
+// curr lengths will be used to use in calculating new lengths (when being dragged)
 interface State {
-    // live lengths will always be rendered
     liveWidth: number;
-
-    // curr lengths will be used to use in calculating new lengths (when being dragged)
     currWidth: number;
-
     isBeingResized: boolean;
 }
 
@@ -104,18 +102,16 @@ export default class VerticalResizableContainer extends React.Component<
             return;
         }
 
-        this.setPaneWidth(newWidth);
-        if (newWidth < this.getMinWidth() * 0.5) {
-            this.setState({
-                isBeingResized: false,
-            });
+        if (newWidth > this.getMinWidth()) {
+            this.setPaneWidth(newWidth);
         }
     }
 
+    // TODO: get the default width here
     // This function makes it so that both divs can reliably show up upon starting the application
-    initWindowSize(width: number) {
-        width =
-            ((this.props.minWidth + this.props.maxWidth) / 4) *
+    initWindowSize() {
+        const width =
+            this.props.leftPanelConfig.sizeProps.defaultWidth *
             document.body.clientWidth;
         this.setPaneWidth(width);
     }
@@ -139,7 +135,7 @@ export default class VerticalResizableContainer extends React.Component<
 
         return (
             <div>
-                <div id={this.props.leftDivId} className={'bg-transparent border-white border-2 p-1 text-gray-100'} style={style}>
+                <div id={this.props.leftDivId} className={''} style={style}>
                     <div
                         id={this.props.handleDivId}
                         onMouseDown={this.onMouseDown.bind(this)}
@@ -186,10 +182,16 @@ export default class VerticalResizableContainer extends React.Component<
     }
 
     getMinWidth(): number {
-        return this.props.minWidth * document.body.clientWidth;
+        return (
+            this.props.leftPanelConfig.sizeProps.minWidth *
+            document.body.clientWidth
+        );
     }
 
     getMaxWidth(): number {
-        return this.props.maxWidth * document.body.clientWidth;
+        return (
+            this.props.leftPanelConfig.sizeProps.maxWidth *
+            document.body.clientWidth
+        );
     }
 }

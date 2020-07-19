@@ -1,9 +1,10 @@
 import React from 'react';
+import navConfig from '../../configs/impl/NavConfigImpl';
 
 export default class NavigationPanelContainer extends React.Component<{}, {}> {
     render() {
         return (
-            <div className="h-full overflow-auto">
+            <div className={navConfig.className + ' ' + navConfig.cssClassStyles}>
                 <h1>Navigation Panel</h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed

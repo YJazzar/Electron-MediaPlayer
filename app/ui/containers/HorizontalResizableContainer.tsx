@@ -1,5 +1,6 @@
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
+import PanelConfig from '../configs/PanelConfig';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -12,11 +13,6 @@ interface Props {
     bottomDivId: string;
     handleDivId: string;
 
-    // Used for controller resizing behavior:
-    // Note: these will be percentages (ex: 0.5 for 50%)
-    minHeight: number;
-    maxHeight: number;
-
     cssTopHeightVarName: string;
     cssBottomHeightVarName: string;
     cssMinHeightVarName: string;
@@ -25,15 +21,15 @@ interface Props {
     // Components passed to be rendered as a child of each side of the panels
     topPanelComponent: React.ReactChild;
     bottomPanelComponent: React.ReactChild;
+
+    topPanelConfig: PanelConfig;
 }
 
+// live lengths will always be rendered
+// curr lengths will be used to use in calculating new lengths (when being dragged)
 interface State {
-    // live lengths will always be rendered
     liveHeight: number;
-
-    // curr lengths will be used to use in calculating new lengths (when being dragged)
     currHeight: number;
-
     isBeingResized: boolean;
 }
 
@@ -45,13 +41,11 @@ export default class HorizontalResizableContainer extends React.Component<
 
     constructor(props: Props) {
         super(props);
+        // live lengths will always be rendered
+        // curr lengths will be used to use in calculating new lengths (when being dragged)
         this.state = {
-            // live lengths will always be rendered
             liveHeight: 0,
-
-            // curr lengths will be used to use in calculating new lengths (when being dragged)
             currHeight: 0,
-
             isBeingResized: false,
         };
     }
@@ -93,6 +87,7 @@ export default class HorizontalResizableContainer extends React.Component<
         // If the dragging just finished, then store the new size
         const primaryButtonPressed = event.buttons === 1;
         if (!primaryButtonPressed) {
+            console.log('here');
             this.setPaneHeight(
                 Math.min(
                     Math.max(this.getPaneHeight(), this.getMinHeight()),
@@ -105,20 +100,22 @@ export default class HorizontalResizableContainer extends React.Component<
             this.removeListener();
             return;
         }
-
-        this.setPaneHeight(newHeight);
-        if (newHeight < this.getMinHeight() * 0.5) {
-            this.setState({
-                isBeingResized: false,
-            });
+        if (newHeight > this.getMinHeight() && newHeight < this.getMaxHeight()) {
+            this.setPaneHeight(newHeight);
         }
+        // if (newHeight < this.getMinHeight() * 0.5) {
+        //     this.setState({
+        //         isBeingResized: false,
+        //     });
+        // }
     }
 
     // This function makes it so that both divs can reliably show up upon starting the application
-    initWindowSize(height: number) {
-        height =
-            ((this.props.minHeight + this.props.maxHeight) / 4) *
-            document.body.clientHeight;
+    initWindowSize() {
+        const height =
+            this.props.topPanelConfig.sizeProps.defaultHeight *
+            window.innerHeight;
+            console.log('calculated height = ' + height);
         this.setPaneHeight(height);
     }
 
@@ -188,6 +185,7 @@ export default class HorizontalResizableContainer extends React.Component<
         );
 
         const newBottomHeight = window.innerHeight - height;
+        console.log(`${newBottomHeight} :: ${height}`);
         this.getBottomResizableElement()?.style.setProperty(
             this.props.cssBottomHeightVarName,
             `${newBottomHeight}px`
@@ -205,10 +203,10 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     getMinHeight(): number {
-        return this.props.minHeight * window.innerHeight;
+        return this.props.topPanelConfig.sizeProps.minHeight * window.innerHeight;
     }
 
     getMaxHeight(): number {
-        return this.props.maxHeight * window.innerHeight;
+        return this.props.topPanelConfig.sizeProps.maxHeight * window.innerHeight;
     }
 }

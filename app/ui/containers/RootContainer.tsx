@@ -1,21 +1,28 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import NumericalSize from '../configs/NumericalSize';
 import '../styles/app.global.css';
 import '../styles/contentResizables.global.css';
 import '../styles/navResizables.global.css';
 import '../styles/RootComponent.global.css';
 import HorizontalResizableContainer from './HorizontalResizableContainer';
-import VerticalResizableContainer from './VerticalResizableContainer';
-import NavigationPanelContainer from './panels/NavigationPanelContainer';
 import MainContentsPanelContainer from './panels/MainContentsPanelContainer';
+import NavigationPanelContainer from './panels/NavigationPanelContainer';
 import PlayerPanelContainer from './panels/PlayerPanelContainer';
-
+import VerticalResizableContainer from './VerticalResizableContainer';
+import navConfig from '../configs/impl/NavConfigImpl';
+import mainConfig from '../configs/impl/MainConfigImpl';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-export default class RootContainer extends React.Component<{}, NumericalSize> {
+interface Props {}
+
+interface State {
+    width: number;
+    height: number;
+}
+
+export default class RootContainer extends React.Component<Props, State> {
     verticalResizableContainerRef: React.RefObject<VerticalResizableContainer>;
     horizontalResizableContainerRef: React.RefObject<
         HorizontalResizableContainer
@@ -44,7 +51,8 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
             width: width,
             height: height,
         });
-        this.verticalResizableContainerRef.current?.initWindowSize(width);
+        this.verticalResizableContainerRef.current?.initWindowSize();
+        this.horizontalResizableContainerRef.current?.initWindowSize();
     }
 
     mainWindowResized(
@@ -60,8 +68,12 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
         // console.log('state width = ' + this.state.width);
         // console.log('delta = ' + delta);
 
-        this.verticalResizableContainerRef.current?.mainWindowResized(deltaWidth);
-        this.horizontalResizableContainerRef.current?.mainWindowResized(deltaHeight);
+        this.verticalResizableContainerRef.current?.mainWindowResized(
+            deltaWidth
+        );
+        this.horizontalResizableContainerRef.current?.mainWindowResized(
+            deltaHeight
+        );
         this.setState({
             width: newScreenWidth,
             height: newScreenHeight,
@@ -76,13 +88,12 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                     leftDivId={'nav-panel-resizable-left'}
                     rightDivId={'main-player-panel-combined-resizable-right'}
                     handleDivId={'nav-panel-handle'}
-                    minWidth={0.1}
-                    maxWidth={0.9}
                     cssLeftWidthVarName={'--nav-panel-resizable-width-left'}
                     cssMinWidthVarName={'--nav-panel-min-width'}
                     cssMaxWidthVarName={'--nav-panel-max-width'}
                     leftPanelComponent={this.getNavigationPanel()}
                     rightPanelComponent={this.getHorizontalResizableContainer()}
+                    leftPanelConfig={navConfig}
                 />
             </div>
         );
@@ -95,29 +106,29 @@ export default class RootContainer extends React.Component<{}, NumericalSize> {
                 topDivId={'content-panel-resizable-top'}
                 bottomDivId={'player-panel-resizable-bottom'}
                 handleDivId={'content-panel-handle'}
-                minHeight={0}
-                maxHeight={1}
                 cssTopHeightVarName={'--content-panel-resizable-height-top'}
-                cssBottomHeightVarName={'--player-panel-resizable-height-bottom'}
+                cssBottomHeightVarName={
+                    '--player-panel-resizable-height-bottom'
+                }
                 cssMinHeightVarName={'--content-panel-min-height'}
                 cssMaxHeightVarName={'--content-panel-max-height'}
                 topPanelComponent={this.getMainContentsPanel()}
                 bottomPanelComponent={this.getPlayerPanel()}
+                topPanelConfig={mainConfig}
             />
         );
     }
 
     // Helper functions to get the contents of each panel
     getNavigationPanel(): React.ReactChild {
-        return <NavigationPanelContainer/>;
+        return <NavigationPanelContainer />;
     }
 
     getMainContentsPanel(): React.ReactChild {
-        return <MainContentsPanelContainer/>
+        return <MainContentsPanelContainer />;
     }
 
     getPlayerPanel(): React.ReactChild {
-        return <PlayerPanelContainer/>
+        return <PlayerPanelContainer />;
     }
-
 }

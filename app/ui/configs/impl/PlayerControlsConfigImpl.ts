@@ -1,29 +1,24 @@
-import { Enable } from 're-resizable';
+import PanelConfig, { SharedPanelClassStyles } from '../PanelConfig';
 import PanelType from '../PanelType';
-import PanelConfig from '../PanelConfig';
+import mainConfig from './MainConfigImpl';
+import navConfig from './NavConfigImpl';
 
 const playerControlsConfig = {
-    id: 'player-controls-panel-id',
     panelType: PanelType.playerControlsPanel,
     panelName: 'Player Controls panel',
     className: '',
-    classStyles: 'floatLeft bg-gray-400 border border-gray-600',
+    cssClassStyles: `${SharedPanelClassStyles} h-full overflow-auto`,
+    // cssClassStyles: 'floatLeft bg-gray-400 border border-gray-600',
 
-    defaultSize: {
-        defaultWidth: '80%',
-        defaultHeight: '20%',
+    sizeProps: {
+        defaultWidth: 1 - navConfig.sizeProps.defaultWidth,
+        minWidth: 1 - navConfig.sizeProps.maxWidth,
+        maxWidth: 1 - navConfig.sizeProps.minWidth,
+
+        defaultHeight: 1 - mainConfig.sizeProps.defaultHeight,
+        minHeight: 1 - mainConfig.sizeProps.maxHeight,
+        maxHeight: 1 - mainConfig.sizeProps.minHeight,
     },
-    minWidth: '5%',
-    minHeight: '5%',
-    maxWidth: '90%',
-    maxHeight: '90%',
-
-    resizableSides: {
-        top: false,
-        left: false,
-        right: false,
-        bottom: false,
-    } as Enable,
 } as PanelConfig;
 
 export default playerControlsConfig;

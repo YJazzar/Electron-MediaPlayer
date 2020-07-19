@@ -1,30 +1,23 @@
-import { Enable } from 're-resizable';
+import PanelConfig, { SharedPanelClassStyles } from '../PanelConfig';
 import PanelType from '../PanelType';
-import PanelConfig from '../PanelConfig';
+import navConfig from './NavConfigImpl';
 
 const mainConfig = {
-    temp: 0,
-    id: 'main-panel-id',
     panelType: PanelType.mainPanel,
     panelName: 'Main panel',
     className: '',
-    classStyles: 'floatLeft bg-gray-400 border border-gray-600',
+    cssClassStyles: `${SharedPanelClassStyles} h-full overflow-auto`,
+    // cssClassStyles: 'floatLeft bg-gray-400 border border-gray-600',
 
-    defaultSize: {
-        defaultWidth: '80%',
-        defaultHeight: '80%',
+    sizeProps: {
+        defaultWidth: 1 - navConfig.sizeProps.defaultWidth,
+        minWidth: 1 - navConfig.sizeProps.maxWidth,
+        maxWidth: 1 - navConfig.sizeProps.minWidth,
+
+        defaultHeight: 0.85,
+        minHeight: 0.15,
+        maxHeight: 0.85,
     },
-    minWidth: '5%',
-    minHeight: '15%',
-    maxWidth: '90%',
-    maxHeight: '85%',
-
-    resizableSides: {
-        top: false,
-        left: false,
-        right: false,
-        bottom: true,
-    } as Enable,
 } as PanelConfig;
 
 export default mainConfig;

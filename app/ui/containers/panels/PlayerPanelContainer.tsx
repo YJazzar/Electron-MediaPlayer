@@ -1,9 +1,10 @@
 import React from 'react';
+import playerControlsConfig from '../../configs/impl/PlayerControlsConfigImpl';
 
 export default class PlayerPanelContainer extends React.Component<{}, {}> {
     render() {
         return (
-            <div className="h-full overflow-auto">
+            <div className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
                 <h1>Player Panel</h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
