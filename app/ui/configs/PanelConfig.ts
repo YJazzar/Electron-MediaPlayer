@@ -20,7 +20,7 @@ export default interface PanelConfig {
 }
 
 export const SharedPanelClassStyles =
-    'bg-transparent p-10 font-sans text-gray-400 border-gray-800';
+    'bg-transparent p-10 text-gray-400 panel-border';
 /** Styles Explanation:
  * .b--transparent = transparent background
  * .p-10 = padding

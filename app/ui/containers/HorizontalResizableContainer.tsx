@@ -103,11 +103,6 @@ export default class HorizontalResizableContainer extends React.Component<
         if (newHeight > this.getMinHeight() && newHeight < this.getMaxHeight()) {
             this.setPaneHeight(newHeight);
         }
-        // if (newHeight < this.getMinHeight() * 0.5) {
-        //     this.setState({
-        //         isBeingResized: false,
-        //     });
-        // }
     }
 
     // This function makes it so that both divs can reliably show up upon starting the application

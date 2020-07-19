@@ -17,21 +17,24 @@ body {
         45deg,
          rgb(37, 37, 37)
     ); */
+    overflow: hidden;
+    font-family: 'Barriecito';
+}
+
+.panel-border {
+    border-color: #3b404b;
 }
 
 /* Create the scroll-bar design */
+/* The scroll bar's overall width */
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 15px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-    /* box-shadow: inset 0 0 5px grey; */
-    border-radius: 10px;
-}
-
-/* Handle */
+/* The actual scroll handle (the one users can move by clicking and dragging) */
 ::-webkit-scrollbar-thumb {
-    background: #475774;
-    border-radius: 10px;
+    border: 5px solid rgba(0, 0, 0, 0);
+    border-radius: 100px;
+    background-color: rgb(77, 77, 77);
+    background-clip: padding-box;
 }
