@@ -20,4 +20,11 @@ export default interface PanelConfig {
 }
 
 export const SharedPanelClassStyles =
-    'bg-transparent border-white border-2 p-1 text-gray-100';
+    'bg-transparent p-10 font-sans text-gray-400 border-gray-800';
+/** Styles Explanation:
+ * .b--transparent = transparent background
+ * .p-10 = padding
+ * .font-sans = use a sans-font
+ * .text-gray-400 = set the text to gray
+ * .border-gray-800 = set the borders (between the panels) to gray
+ */

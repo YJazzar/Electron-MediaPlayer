@@ -4,7 +4,6 @@ import LoggerFactory from '../../libs/logger/LoggerFactory';
 import '../styles/app.global.css';
 import '../styles/contentResizables.global.css';
 import '../styles/navResizables.global.css';
-import '../styles/RootComponent.global.css';
 import HorizontalResizableContainer from './HorizontalResizableContainer';
 import MainContentsPanelContainer from './panels/MainContentsPanelContainer';
 import NavigationPanelContainer from './panels/NavigationPanelContainer';

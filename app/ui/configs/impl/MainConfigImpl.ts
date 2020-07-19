@@ -14,7 +14,7 @@ const mainConfig = {
         minWidth: 1 - navConfig.sizeProps.maxWidth,
         maxWidth: 1 - navConfig.sizeProps.minWidth,
 
-        defaultHeight: 0.85,
+        defaultHeight: 0.8,
         minHeight: 0.15,
         maxHeight: 0.85,
     },
