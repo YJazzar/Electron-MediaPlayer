@@ -11,6 +11,7 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import ApplicationEntry from './core/ApplicationEntry';
+import ConfigManager from './libs/persist/ConfigManager';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -29,8 +30,8 @@ if (
 const createWindow = async () => {
     mainWindow = new BrowserWindow({
         show: false,
-        width: 1420,
-        height: 850,
+        width: ConfigManager.getInstance().getApplicationWindowWidth(),
+        height: ConfigManager.getInstance().getApplicationWindowHeight(),
         webPreferences:
             (process.env.NODE_ENV === 'development' ||
                 process.env.E2E_BUILD === 'true') &&

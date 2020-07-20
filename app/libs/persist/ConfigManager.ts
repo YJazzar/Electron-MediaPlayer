@@ -33,4 +33,12 @@ export default class ConfigManager {
     getTheme(): string {
         return this.store.get('theme', 'dark') as string;
     }
+
+    getApplicationWindowWidth() {
+        return this.store.get('applicationWindow.width', 1420) as number;
+    }
+
+    getApplicationWindowHeight() {
+        return this.store.get('applicationWindow.height', 850) as number;
+    }
 }
