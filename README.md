@@ -21,6 +21,8 @@ examples:
 
 *   use the chalk package to make interesting changes
 
+Possible features: - Have users create and define their own themes
+
 <br/>
 
 # Config file options:

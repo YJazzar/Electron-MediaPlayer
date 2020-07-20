@@ -12,6 +12,7 @@ const navConfig = {
      * .border-r-4 = border right 4px
      * .rounded-ful;
      */
+
     sizeProps: {
         defaultWidth: ipcRenderer.sendSync('config:getNavPanelWidth'),
         minWidth: 0.15,
