@@ -1,0 +1,12 @@
+body {
+    background-color: rgb(33, 33, 34);
+}
+
+.panel-border {
+    border-color: rgb(107, 161, 185);
+}
+
+/* The actual scroll handle (the one users can move by clicking and dragging) */
+::-webkit-scrollbar-thumb {
+    background-color: #d6d58d;
+}

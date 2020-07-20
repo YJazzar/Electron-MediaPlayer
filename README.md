@@ -16,15 +16,11 @@ examples:
 
 # TODO:
 
--   use the chalk package to make interesting changes
+-   separate style sheets for different themes (light and dark themes)
+-   find a way to dynamically change the style sheet or styles added to each element? idk lol have fun!11!
+-   Add some kind of button to test out changing the themes
 
-*   When i come back:
-
-    -   TEST THE CURRENT WINDOW BOUNDS:
-        -   Add a dummy table in the main contents panel (main panel) and see if it can correctly resize on its own
-
-
-    -   clean the old code that was using the re-resize library (the panel configs, their impls, and clean up state variables for the vertical resizer)
+*   use the chalk package to make interesting changes
 
 <br/>
 

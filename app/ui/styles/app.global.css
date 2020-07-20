@@ -16,20 +16,6 @@
 body {
     overflow: hidden;
     font-family: 'Cambay';
-
-    /* Dark theme: */
-    background-color: rgb(33, 33, 34);
-
-    /* Light theme: */
-    /* background-color: rgb(234, 219, 203); */
-}
-
-.panel-border {
-    /* Dark theme: */
-    border-color: rgb(107, 161, 185);
-
-    /* Light theme */
-    /* border-color: #8dadd6; */
 }
 
 /* Create the scroll-bar design */
@@ -43,9 +29,4 @@ body {
     border: 5px solid rgba(0, 0, 0, 0);
     border-radius: 100px;
     background-clip: padding-box;
-
-    /* Dark theme */
-    background-color: #d6d58d;
-    /* Light theme */
-    /* background-color: #9e9e9e; */
 }
