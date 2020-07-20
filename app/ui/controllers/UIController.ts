@@ -1,4 +1,4 @@
-import { ipcRenderer, Rectangle, IpcRendererEvent } from 'electron';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { EventEmitter } from 'events';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import RootContainer from '../containers/RootContainer';
@@ -20,6 +20,11 @@ export default class UIController {
     ): UIController {
         if (!UIController.instance && rootContainerRef) {
             UIController.instance = new UIController(rootContainerRef);
+        }
+        if (!UIController.instance && !rootContainerRef) {
+            log.error(
+                'Could not create an instance of UIController without a reference to rootContainer'
+            );
         }
         return UIController.instance;
     }
@@ -47,10 +52,6 @@ export default class UIController {
         log.debug('initial-window-size was received');
         this.rootContainerRef.current?.initialWindowSize(width, height);
     }
-
-    // windowResizedEvent(_e: IpcRendererEvent, newWindowSize: Rectangle) {
-    //     // this.rootContainerRef.current?.windowResized(newWindowSize);
-    // }
 
     // For any class to use when they want to get the event emitter instance
     getEventEmitter(): EventEmitter {

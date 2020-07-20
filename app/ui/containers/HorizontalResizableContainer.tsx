@@ -100,7 +100,10 @@ export default class HorizontalResizableContainer extends React.Component<
             this.removeListener();
             return;
         }
-        if (newHeight > this.getMinHeight() && newHeight < this.getMaxHeight()) {
+        if (
+            newHeight > this.getMinHeight() &&
+            newHeight < this.getMaxHeight()
+        ) {
             this.setPaneHeight(newHeight);
         }
     }
@@ -110,7 +113,7 @@ export default class HorizontalResizableContainer extends React.Component<
         const height =
             this.props.topPanelConfig.sizeProps.defaultHeight *
             window.innerHeight;
-            console.log('calculated height = ' + height);
+        console.log('calculated height = ' + height);
         this.setPaneHeight(height);
     }
 
@@ -188,7 +191,7 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     mainWindowResized(deltaHeight: number) {
-        const newHeight = this.getPaneHeight() + deltaHeight;
+        const newHeight = this.getPaneHeight() + deltaHeight / 5;
         if (
             newHeight > this.getMinHeight() &&
             newHeight < this.getMaxHeight()
@@ -198,10 +201,14 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     getMinHeight(): number {
-        return this.props.topPanelConfig.sizeProps.minHeight * window.innerHeight;
+        return (
+            this.props.topPanelConfig.sizeProps.minHeight * window.innerHeight
+        );
     }
 
     getMaxHeight(): number {
-        return this.props.topPanelConfig.sizeProps.maxHeight * window.innerHeight;
+        return (
+            this.props.topPanelConfig.sizeProps.maxHeight * window.innerHeight
+        );
     }
 }

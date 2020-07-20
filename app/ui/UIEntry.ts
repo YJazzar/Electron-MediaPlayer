@@ -11,8 +11,6 @@ export default class UIEntry {
 
     private theme: string;
 
-    private uiController: UIController;
-
     // Called by index.tsx
     constructor(rootComponentRef: React.RefObject<RootContainer>) {
         log.info('Starting UIEntry instance');
@@ -20,7 +18,7 @@ export default class UIEntry {
         this.rootComponentRef = rootComponentRef;
 
         // Call all other init functions needed
-        this.uiController = UIController.getInstance(this.rootComponentRef);
+        UIController.getInstance(this.rootComponentRef);
 
         this.theme = ipcRenderer.sendSync('config:getTheme');
         log.info(`Current theme set is [${this.theme}]`);
