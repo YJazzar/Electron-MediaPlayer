@@ -32,6 +32,16 @@ export default class IpcMainController {
 
         ipcMain.on('config:getTheme', this.configGetTheme.bind(this));
 
+        ipcMain.on(
+            'config:getNavPanelWidth',
+            this.configGetNavPanelWidth.bind(this)
+        );
+
+        ipcMain.on(
+            'config:getPlayerControlsHeight',
+            this.configGetPlayerControlsHeight.bind(this)
+        );
+
         /**
          * The following are events that are not implemented but could be useful in the future
          */
@@ -79,6 +89,17 @@ export default class IpcMainController {
     // This is made to be used synchronously
     configGetTheme(event: IpcMainEvent) {
         event.returnValue = this.configManager.getTheme();
-        // event.returnValue = 'DARRKKK';
+    }
+
+    // eventName = 'config:getNavPanelWidth'
+    // This is made to be used synchronously
+    configGetNavPanelWidth(event: IpcMainEvent) {
+        event.returnValue = this.configManager.getNavPanelWidth();
+    }
+
+    // eventName = 'config:getPlayerControlsHeight'
+    // This is made to be used synchronously
+    configGetPlayerControlsHeight(event: IpcMainEvent) {
+        event.returnValue = this.configManager.getPlayerControlsHeight();
     }
 }

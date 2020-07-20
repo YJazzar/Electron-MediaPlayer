@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import PanelConfig, { SharedPanelClassStyles } from '../PanelConfig';
 import PanelType from '../PanelType';
 import navConfig from './NavConfigImpl';
@@ -14,7 +15,8 @@ const mainConfig = {
         minWidth: 1 - navConfig.sizeProps.maxWidth,
         maxWidth: 1 - navConfig.sizeProps.minWidth,
 
-        defaultHeight: 0.85,
+        defaultHeight:
+            1 - ipcRenderer.sendSync('config:getPlayerControlsHeight'),
         minHeight: 0.15,
         maxHeight: 0.85,
     },

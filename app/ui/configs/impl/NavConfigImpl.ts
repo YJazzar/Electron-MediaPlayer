@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import PanelConfig, { SharedPanelClassStyles } from '../PanelConfig';
 import PanelType from '../PanelType';
 
@@ -12,7 +13,7 @@ const navConfig = {
      * .rounded-ful;
      */
     sizeProps: {
-        defaultWidth: 0.25,
+        defaultWidth: ipcRenderer.sendSync('config:getNavPanelWidth'),
         minWidth: 0.15,
         maxWidth: 0.4,
 

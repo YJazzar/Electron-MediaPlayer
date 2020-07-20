@@ -41,4 +41,18 @@ export default class ConfigManager {
     getApplicationWindowHeight() {
         return this.store.get('applicationWindow.height', 850) as number;
     }
+
+    getNavPanelWidth() {
+        return this.store.get(
+            'applicationWindow.navPanelWidth',
+            0.25
+        ) as number;
+    }
+
+    getPlayerControlsHeight() {
+        return this.store.get(
+            'applicationWindow.playerControlsHeight',
+            0.15
+        ) as number;
+    }
 }
