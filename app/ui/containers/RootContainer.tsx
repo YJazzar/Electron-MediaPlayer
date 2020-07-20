@@ -14,35 +14,19 @@ import mainConfig from '../configs/impl/MainConfigImpl';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-import darkTheme from '../styles/darkTheme.global.css'
-import lightTheme from '../styles/lightTheme.global.css'
-
-// let theme = true;
-// setInterval(() => {
-//     console.log('inside interval!');
-//     if (theme) {
-//         console.log('Light theme');
-//         delete require.cache['../styles/lightTheme.global.css']
-//         require('../styles/lightTheme.global.css');
-//     } else {
-//         console.log('dark theme');
-//         delete require.cache['../styles/darkTheme.global.css']
-//         require('../styles/darkTheme.global.css');
-//     }
-//     theme = !theme;
-// }, 2000);
-
-// if (ipcRenderer.sendSync('config:getTheme').toLowerCase() === 'light') {
-
-// } else {
-// }
+const theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
+log.debug('setting theme to: ' + theme);
+if (theme === 'light') {
+    require('../styles/lightTheme.global.css');
+} else {
+    require('../styles/darkTheme.global.css');
+}
 
 interface Props {}
 
 interface State {
     width: number;
     height: number;
-    theme: boolean;
 }
 
 export default class RootContainer extends React.Component<Props, State> {
@@ -59,12 +43,7 @@ export default class RootContainer extends React.Component<Props, State> {
         this.state = {
             width: 0,
             height: 0,
-            theme: false,
         };
-
-        setInterval(() => {
-            this.setState({theme: !this.state.theme})
-        }, 2000);
 
         ipcRenderer.on('resize-window', this.mainWindowResized.bind(this));
     }
@@ -109,12 +88,8 @@ export default class RootContainer extends React.Component<Props, State> {
     }
 
     render() {
-        console.log('theme = ' + this.state.theme);
-
-        const style = this.state.theme? darkTheme: lightTheme;
-        //
         return (
-            <div id="root-container" style={style}>
+            <div id="root-container">
                 <VerticalResizableContainer
                     ref={this.verticalResizableContainerRef}
                     leftDivId={'nav-panel-resizable-left'}

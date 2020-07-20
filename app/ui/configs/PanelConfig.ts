@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import PanelType from './PanelType';
 
 export default interface PanelConfig {
@@ -19,16 +20,22 @@ export default interface PanelConfig {
     };
 }
 
-// TODO: store this as the dark theme
-export const SharedPanelClassStyles =
-    'bg-transparent p-10 text-gray-400 panel-border';
-// TODO: store this as the light theme:
-// 'bg-transparent p-10 text-black panel-border';
+const darkThemeClassStyles = 'bg-transparent p-10 text-gray-400 panel-border';
+const lightThemeClassStyles = 'bg-transparent p-10 text-black panel-border';
 
-/** Styles Explanation:
- * .b--transparent = transparent background
+export const SharedPanelClassStyles =
+    ipcRenderer.sendSync('config:getTheme').toLowerCase() === 'light'
+        ? lightThemeClassStyles
+        : darkThemeClassStyles;
+
+/** Styles Explanation (tailwind styles):
+ * .bg-transparent = transparent background
  * .p-10 = padding
  * .font-sans = use a sans-font
- * .text-gray-400 = set the text to gray
+ * .text-gray-400 = set the text to gray (dark theme only)
+ * .text-black = set the text to gray (light theme only)
  * .border-gray-800 = set the borders (between the panels) to gray
+ *
+ * (Custom styles):
+ * .panel-border = set colors of the borders between the panels
  */

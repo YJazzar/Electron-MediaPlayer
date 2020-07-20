@@ -17,8 +17,7 @@ examples:
 # TODO:
 
 -   separate style sheets for different themes (light and dark themes)
--   find a way to dynamically change the style sheet or styles added to each element? idk lol have fun!11!
--   Add some kind of button to test out changing the themes
+-   find a way to dynamically change the style sheet or styles added to each element without needing a refresh
 
 *   use the chalk package to make interesting changes
 
