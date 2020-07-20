@@ -16,5 +16,5 @@ function initUI() {
 
     render(<RootContainer ref={ref} />, document.getElementById('root'));
 
-    new UIEntry(ref).init();
+    new UIEntry(ref);
 }

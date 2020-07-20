@@ -30,6 +30,5 @@ export default class ApplicationEntry {
     init(): void {
         this.ipcMainController.init();
         // this.menuBuilder.buildMenu();
-        const db = new ConfigManager();
     }
 }
