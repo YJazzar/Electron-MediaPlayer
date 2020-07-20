@@ -33,3 +33,8 @@ examples:
 -   `theme` to set the theme of the application
     -   `dark` (default)
     -   `light`
+-   `applicationWindow` an object to set default application behavior:
+    -   `width`: The width of the main window spawned in pixels (Ex: `1420`)
+    -   `height`: The height of the main window spawned in pixels (Ex: `800`)
+    -   `navPanelWidth`: The default width of the navigation pane set as a percent of the screen's width (Ex: `0.2` for `20%` of the screen's width)
+    -   `playerControlsHeight`: The default height of the navigation pane set as a percent of the screen's height (Ex: `0.15` for `15%` of the screen's height)

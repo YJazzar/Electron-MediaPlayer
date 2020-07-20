@@ -1,7 +1,6 @@
 import { BrowserWindow } from 'electron';
 import LoggerFactory from '../libs/logger/LoggerFactory';
 import IpcMainController from './controllers/IpcMainController';
-import ConfigManager from '../libs/persist/ConfigManager';
 
 const log = LoggerFactory.getLogger(__filename);
 
