@@ -25,3 +25,10 @@ examples:
 
 
     -   clean the old code that was using the re-resize library (the panel configs, their impls, and clean up state variables for the vertical resizer)
+
+# Config file options:
+
+## `theme`
+
+-   `light`
+-   `dark`

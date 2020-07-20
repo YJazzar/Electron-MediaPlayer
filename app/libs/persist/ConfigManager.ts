@@ -1,7 +1,7 @@
 import { app } from 'electron';
 import Store from 'electron-store';
 import path from 'path';
-import LoggerFactory from '../../libs/logger/LoggerFactory';
+import LoggerFactory from '../logger/LoggerFactory';
 
 const log = LoggerFactory.getLogger(__filename);
 
