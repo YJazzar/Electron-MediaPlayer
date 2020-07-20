@@ -1,0 +1,18 @@
+.rectangle {
+    width: 1000px;
+    height: 500px;
+    background-color: rgb(23, 131, 255);
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    margin: auto;
+}
+
+.peng {
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    margin: auto;
+}
