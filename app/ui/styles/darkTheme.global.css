@@ -3,10 +3,10 @@ body {
 }
 
 .panel-border {
-    border-color: rgb(107, 161, 185);
+    border-color: rgb(0, 170, 235);
 }
 
 /* The actual scroll handle (the one users can move by clicking and dragging) */
 ::-webkit-scrollbar-thumb {
-    background-color: #d6d58d;
+    background-color: rgb(232, 144, 64);
 }
