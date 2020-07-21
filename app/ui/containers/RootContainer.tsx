@@ -45,7 +45,7 @@ export default class RootContainer extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        log.info(`Root container finished mounting.`);
+        log.debug(`Root container finished mounting.`);
     }
 
     initialWindowSize(width: number, height: number) {

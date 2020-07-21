@@ -7,7 +7,7 @@ import UIEntry from './ui/UIEntry';
 // import './ui/styles/test.global.css';
 
 const log = LoggerFactory.getUILogger(__filename);
-log.info('UI now starting to initialize');
+log.debug('UI now starting to initialize');
 
 document.addEventListener('DOMContentLoaded', initUI);
 

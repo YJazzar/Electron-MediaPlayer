@@ -54,7 +54,7 @@ export default class VerticalResizableContainer extends React.Component<
 
     // Initialize the state
     componentDidMount() {
-        log.info(`The horizontally resizable nav panel finished mounting!`);
+        log.debug(`The horizontally resizable nav panel finished mounting!`);
 
         this.setState({
             liveWidth: this.getPaneWidth(),

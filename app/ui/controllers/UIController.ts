@@ -30,7 +30,7 @@ export default class UIController {
     }
 
     private constructor(rootContainerRef: React.RefObject<RootContainer>) {
-        log.info('Initializing ipcMainController...');
+        log.info('Initializing UIController...');
         this.events = new EventEmitter();
         this.rootContainerRef = rootContainerRef;
         this.createEventListeners();

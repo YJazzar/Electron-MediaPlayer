@@ -52,7 +52,7 @@ export default class HorizontalResizableContainer extends React.Component<
 
     // Initialize the state
     componentDidMount() {
-        log.info(`The horizontally resizable panel finished mounting!`);
+        log.debug(`The horizontally resizable panel finished mounting!`);
 
         this.setState({
             liveHeight: this.getPaneHeight(),

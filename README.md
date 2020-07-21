@@ -35,3 +35,14 @@ Possible features: - Have users create and define their own themes
     -   `height: number`: The height of the main window spawned in pixels (Ex: `800`)
     -   `navPanelWidth: number`: The default width of the navigation pane set as a percent of the screen's width (Ex: `0.2` for `20%` of the screen's width)
     -   `playerControlsHeight: number`: The default height of the navigation pane set as a percent of the screen's height (Ex: `0.15` for `15%` of the screen's height)
+-   `logger: object` defines logger behavior:
+    -   `minLogLevel: string (default = "debug")` defines what logging level to use (anything below that level will be ignored). Logging levels are in the following order:
+        -   `"error"`
+        -   `"warning"`
+        -   `"database"`
+        -   `"info"`
+        -   `"debug"`
+    -   `fileOutput: boolean`:
+        -   use `true` to save the logs to a file, `false` otherwise.
+    -   `fileName: string (default = "LoggerOutput.log")`
+        -   Use to specify the name of the log file. The location will be relative to the config file.

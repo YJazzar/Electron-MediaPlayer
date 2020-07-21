@@ -54,15 +54,20 @@ export default class ConfigManager {
     }
 
     getLoggingLevel(): string {
-        return this.store.get('maxLogLevel', logLevelNames.debug) as string;
+        return this.store.get(
+            'logger.minLogLevel',
+            logLevelNames.debug
+        ) as string;
     }
 
     getLogToFile(): boolean {
-        return this.store.get('logToFile', true) as boolean;
+        return this.store.get('logger.fileOutput', true) as boolean;
     }
 
     getLogFileName(): string {
-        console.log('INSIDE OF CONFIG MANAGER LOG FILE NAME');
-        return this.store.get('logFileName', './LoggerOutput.log') as string;
+        return this.store.get(
+            'logger.fileName',
+            './LoggerOutput.log'
+        ) as string;
     }
 }

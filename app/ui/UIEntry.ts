@@ -13,7 +13,7 @@ export default class UIEntry {
 
     // Called by index.tsx
     constructor(rootComponentRef: React.RefObject<RootContainer>) {
-        log.info('Starting UIEntry instance');
+        log.debug('Starting UIEntry instance');
 
         this.rootComponentRef = rootComponentRef;
 
