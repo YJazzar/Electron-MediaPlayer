@@ -1,26 +1,22 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
+import mainConfig from '../configs/impl/MainConfigImpl';
+import navConfig from '../configs/impl/NavConfigImpl';
 import '../styles/app.global.css';
 import '../styles/contentResizables.global.css';
 import '../styles/navResizables.global.css';
+import '../styles/theme.global.css';
 import HorizontalResizableContainer from './HorizontalResizableContainer';
 import MainContentsPanelContainer from './panels/MainContentsPanelContainer';
 import NavigationPanelContainer from './panels/NavigationPanelContainer';
 import PlayerPanelContainer from './panels/PlayerPanelContainer';
 import VerticalResizableContainer from './VerticalResizableContainer';
-import navConfig from '../configs/impl/NavConfigImpl';
-import mainConfig from '../configs/impl/MainConfigImpl';
+
 
 const log = LoggerFactory.getUILogger(__filename);
 
 const theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
-log.debug('setting theme to: ' + theme);
-if (theme === 'light') {
-    require('../styles/lightTheme.css');
-} else {
-    require('../styles/darkTheme.css');
-}
 
 interface Props {}
 
@@ -89,7 +85,7 @@ export default class RootContainer extends React.Component<Props, State> {
 
     render() {
         return (
-            <div id="root-container">
+            <div id="root-container" className={theme}>
                 <VerticalResizableContainer
                     ref={this.verticalResizableContainerRef}
                     leftDivId={'nav-panel-resizable-left'}

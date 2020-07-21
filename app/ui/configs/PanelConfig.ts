@@ -20,8 +20,10 @@ export default interface PanelConfig {
     };
 }
 
-const darkThemeClassStyles = 'bg-transparent p-10 text-gray-400 panel-border';
-const lightThemeClassStyles = 'bg-transparent p-10 text-black panel-border';
+const darkThemeClassStyles =
+    'dark bg-transparent p-10 text-gray-400 panel-border-dark';
+const lightThemeClassStyles =
+    'light bg-transparent p-10 text-black panel-border-light';
 
 export const SharedPanelClassStyles =
     ipcRenderer.sendSync('config:getTheme').toLowerCase() === 'light'

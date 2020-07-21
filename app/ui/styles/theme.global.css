@@ -1,0 +1,33 @@
+.light {
+    background-color: rgb(249, 244, 228);
+}
+
+.panel-border-light {
+    border-color: rgb(52, 122, 173);
+}
+
+/* The actual scroll handle (the one users can move by clicking and dragging) */
+.light::-webkit-scrollbar-thumb {
+    background-color: rgb(168, 147, 112);
+}
+
+/* Website to generate these colors:
+    https://coolors.co/f9f4e4-347aad-ae8ca3-ff3a20-502274
+*/
+
+.dark {
+    background-color: rgb(33, 33, 34);
+}
+
+.panel-border-dark {
+    border-color: rgb(0, 170, 235);
+}
+
+/* The actual scroll handle (the one users can move by clicking and dragging) */
+.dark::-webkit-scrollbar-thumb {
+    background-color: rgb(232, 144, 64);
+}
+
+/* Website to generate these colors:
+    https://coolors.co/212122-00aaeb-ffecd1-ff7d00-2cda9d
+*/
