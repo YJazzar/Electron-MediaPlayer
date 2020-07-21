@@ -3,7 +3,7 @@
 entry for render:
 /app/index.tsx
 
-enrty for main:
+entry for main:
 /app/main.dev.ts
 
 ## Tutorial for making electron notifications:
@@ -16,7 +16,6 @@ examples:
 
 # TODO:
 
--   separate style sheets for different themes (light and dark themes)
 -   find a way to dynamically change the style sheet or styles added to each element without needing a refresh
 
 *   use the chalk package to make interesting changes

@@ -71,6 +71,7 @@ export default merge.smart(baseConfig, {
                         loader: 'css-loader',
                         options: {
                             sourceMap: true,
+                            // modules: true,
                         },
                     },
                     {

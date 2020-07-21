@@ -1,9 +1,7 @@
 import { app } from 'electron';
 import Store from 'electron-store';
 import path from 'path';
-import LoggerFactory from '../logger/LoggerFactory';
-
-const log = LoggerFactory.getLogger(__filename);
+import { logLevelNames } from '../logger/logLevelConstants';
 
 /**
  * This class will be used to get config file options used throughout the application
@@ -15,14 +13,13 @@ export default class ConfigManager {
     private store: Store<Record<string, unknown>>;
 
     private constructor() {
-        log.database('Creating an instance of ConfigManager.ts');
         this.store = new Store({
             cwd: path.join(app.getPath('music'), 'tnyPlayer'),
             name: 'config',
         });
     }
 
-    static getInstance() {
+    static getInstance(): ConfigManager {
         if (!ConfigManager.instance) {
             ConfigManager.instance = new ConfigManager();
         }
@@ -34,25 +31,38 @@ export default class ConfigManager {
         return this.store.get('theme', 'dark') as string;
     }
 
-    getApplicationWindowWidth() {
+    getApplicationWindowWidth(): number {
         return this.store.get('applicationWindow.width', 1420) as number;
     }
 
-    getApplicationWindowHeight() {
+    getApplicationWindowHeight(): number {
         return this.store.get('applicationWindow.height', 850) as number;
     }
 
-    getNavPanelWidth() {
+    getNavPanelWidth(): number {
         return this.store.get(
             'applicationWindow.navPanelWidth',
             0.25
         ) as number;
     }
 
-    getPlayerControlsHeight() {
+    getPlayerControlsHeight(): number {
         return this.store.get(
             'applicationWindow.playerControlsHeight',
             0.15
         ) as number;
+    }
+
+    getLoggingLevel(): string {
+        return this.store.get('maxLogLevel', logLevelNames.debug) as string;
+    }
+
+    getLogToFile(): boolean {
+        return this.store.get('logToFile', true) as boolean;
+    }
+
+    getLogFileName(): string {
+        console.log('INSIDE OF CONFIG MANAGER LOG FILE NAME');
+        return this.store.get('logFileName', './LoggerOutput.log') as string;
     }
 }

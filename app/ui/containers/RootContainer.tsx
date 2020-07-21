@@ -17,9 +17,9 @@ const log = LoggerFactory.getUILogger(__filename);
 const theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
 log.debug('setting theme to: ' + theme);
 if (theme === 'light') {
-    require('../styles/lightTheme.global.css');
+    require('../styles/lightTheme.css');
 } else {
-    require('../styles/darkTheme.global.css');
+    require('../styles/darkTheme.css');
 }
 
 interface Props {}
