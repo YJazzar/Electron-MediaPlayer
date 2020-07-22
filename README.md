@@ -17,6 +17,10 @@ examples:
 # TODO:
 
 -   find a way to dynamically change the style sheet or styles added to each element without needing a refresh
+-   Create a custom context menu in which the user has the following operations:
+    -   add to queue
+    -   clear view
+    -
 
 *   use the chalk package to make interesting changes
 
