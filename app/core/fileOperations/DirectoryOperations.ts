@@ -1,11 +1,17 @@
 export default class DirectoryOperations {
-    public static async getFolderContents(): Promise<string> {
-        return this.readDirectory();
+    static async getFolderContents() {
+        console.log('now calling async funct');
+        // const result: string = await this.readDirectory();
+        // console.log(result);
+        console.log(await this.readDirectory());
+        console.log(this.readDirectory());
+        console.log('exiting applicaton');
+        // return result;
     }
 
-    private static async readDirectory(): Promise<string> {
+    private static readDirectory(): Promise<string> {
         return new Promise((resolve, reject) => {
-            return 'hello from Directory Operations';
+            resolve('hello from Directory Operations');
         });
     }
 }
