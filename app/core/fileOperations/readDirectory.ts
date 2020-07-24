@@ -28,7 +28,6 @@ export default async function readDirectory(
     const promises = files.map(async (fileName: string) => {
         const fileDetail = await readFileStat(dirPath, fileName)
             .then((result) => {
-                console.log(result);
                 return result;
             })
             .catch((err) => {

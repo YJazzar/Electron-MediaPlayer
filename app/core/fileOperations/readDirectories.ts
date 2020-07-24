@@ -14,15 +14,18 @@ const log = LoggerFactory.getLogger(__filename);
  *  (... all other directories read in)
  * }
  */
-export default function readDirectories(dirPaths: string[]): void {
+export default async function readDirectories(
+    dirPaths: string[]
+): Promise<DirectoryDetails[]> {
     log.debug(`Now reading the directory contents of: ${dirPaths.toString()}`);
 
     const result: DirectoryDetails[] = [];
     // Read every directory (to get the list of files in the directory)
-    dirPaths.forEach((dirPath: string) => {
-        result.push(readDirectory(dirPath));
+    const promises = dirPaths.map(async (dirPath: string) => {
+        const dirResult = await readDirectory(dirPath);
+        result.push(dirResult);
     });
-
-    console.log(JSON.stringify(result));
-    exit(0);
+    // Run all of the promises
+    await Promise.all(promises);
+    return result;
 }
