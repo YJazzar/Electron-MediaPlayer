@@ -1,17 +1,17 @@
-export default class DirectoryOperations {
-    static async getFolderContents() {
-        console.log('now calling async funct');
-        // const result: string = await this.readDirectory();
-        // console.log(result);
-        console.log(await this.readDirectory());
-        console.log(this.readDirectory());
-        console.log('exiting applicaton');
-        // return result;
-    }
+import { app } from 'electron';
+import LoggerFactory from '../../libs/logger/LoggerFactory';
+import readDirectories from './readDirectories';
 
-    private static readDirectory(): Promise<string> {
-        return new Promise((resolve, reject) => {
-            resolve('hello from Directory Operations');
-        });
+const log = LoggerFactory.getLogger(__filename);
+
+export default class DirectoryOperations {
+    static async testFunction() {
+        log.info('now calling readDirectory function');
+
+        const paths: string[] = [app.getPath('videos')];
+        readDirectories(paths);
+
+        log.debug('After the calll');
+        // return result;
     }
 }

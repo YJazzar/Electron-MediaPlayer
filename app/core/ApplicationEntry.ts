@@ -31,6 +31,6 @@ export default class ApplicationEntry {
         this.ipcMainController.init();
         // TODO: make a custom menu
         // this.menuBuilder.buildMenu();
-        DirectoryOperations.getFolderContents();
+        // DirectoryOperations.getFolderContents();
     }
 }
