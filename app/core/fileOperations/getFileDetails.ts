@@ -54,7 +54,7 @@ export default async function getFileDetails(
     filePath: string, // The full resolvable path
     fileName: string, // Filename with with extension included
     fileStatObj: Stats
-): FileDetails {
+): Promise<FileDetails> {
     const fdResult: FileDetails = {
         isFile: !fileStatObj.isDirectory(),
         isDirectory: fileStatObj.isDirectory(),
