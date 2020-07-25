@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import LoggerFactory from '../../libs/logger/LoggerFactory';
-import FileDetails from '../../libs/utils/FileDetails';
+import LoggerFactory from '../../../libs/logger/LoggerFactory';
+import FileDetails from '../../../libs/utils/FileDetails';
 import getFileDetails from './getFileDetails';
 
 const log = LoggerFactory.getLogger(__filename);

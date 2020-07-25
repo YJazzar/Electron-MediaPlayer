@@ -1,7 +1,6 @@
-import { exit } from 'process';
-import LoggerFactory from '../../libs/logger/LoggerFactory';
+import LoggerFactory from '../../../libs/logger/LoggerFactory';
+import DirectoryDetails from '../../../libs/utils/DirectoryDetails';
 import readDirectory from './readDirectory';
-import DirectoryDetails from '../../libs/utils/DirectoryDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 

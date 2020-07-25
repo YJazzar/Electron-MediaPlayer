@@ -1,7 +1,7 @@
 import { Stats } from 'fs';
 import { getVideoDurationInSeconds } from 'get-video-duration';
-import LoggerFactory from '../../libs/logger/LoggerFactory';
-import FileDetails from '../../libs/utils/FileDetails';
+import LoggerFactory from '../../../libs/logger/LoggerFactory';
+import FileDetails from '../../../libs/utils/FileDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 
