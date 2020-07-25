@@ -1,3 +1,13 @@
+export interface DateElements {
+    hours: number;
+    minutes: number;
+    seconds: number;
+    month: number;
+    day: number;
+    year: number;
+    formattedDate: string;
+}
+
 export default interface FileDetails {
     isFile: boolean;
     isDirectory: boolean;
@@ -6,4 +16,5 @@ export default interface FileDetails {
     fileExtension: string;
     size: string;
     duration: number;
+    dateElements: DateElements;
 }

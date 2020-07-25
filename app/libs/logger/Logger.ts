@@ -13,6 +13,7 @@ export default class LoggerImpl {
 
     constructor() {
         this.logLevel = ConfigManager.getInstance().getLoggingLevel();
+        console.log(`PATH TO LOG: ${this.getLogFileName()}`);
     }
 
     // TODO: Make a config file to create this portion of the logger

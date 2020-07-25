@@ -1,7 +1,7 @@
 import { Stats } from 'fs';
 import { getVideoDurationInSeconds } from 'get-video-duration';
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
-import FileDetails from '../../../libs/templates/FileDetails';
+import FileDetails, { DateElements } from '../../../libs/templates/FileDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -50,11 +50,32 @@ function getDuration(filePath: string): Promise<number> {
         });
 }
 
+function getFormattedDate(date: Date): string {
+    return date
+        .toISOString()
+        .replace(/T/, ' ') // replace T with a space
+        .replace(/\..+/, ''); // delete the dot and everything after
+}
+
+function getDateElements(date: Date): DateElements {
+    return {
+        hours: date.getHours(),
+        minutes: date.getMinutes(),
+        seconds: date.getSeconds(),
+        month: date.getMonth() + 1,
+        day: date.getDay(),
+        year: date.getFullYear(),
+        formattedDate: getFormattedDate(date),
+    };
+}
+
 export default async function getFileDetails(
     filePath: string, // The full resolvable path
     fileName: string, // Filename with with extension included
     fileStatObj: Stats
 ): Promise<FileDetails> {
+    const date: Date = new Date(fileStatObj.mtimeMs);
+
     const fdResult: FileDetails = {
         isFile: !fileStatObj.isDirectory(),
         isDirectory: fileStatObj.isDirectory(),
@@ -63,6 +84,7 @@ export default async function getFileDetails(
         fileExtension: getExtension(fileName),
         size: convertBytes(fileStatObj.size),
         duration: await getDuration(filePath),
+        dateElements: getDateElements(date),
     };
 
     return fdResult; // fdResult;
