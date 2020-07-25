@@ -1,8 +1,8 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import mainConfig from '../configs/impl/MainConfigImpl';
-import navConfig from '../configs/impl/NavConfigImpl';
+import mainConfig from '../configs/MainConfigImpl';
+import navConfig from '../configs/NavConfigImpl';
 import '../styles/app.global.css';
 import '../styles/contentResizables.global.css';
 import '../styles/navResizables.global.css';
@@ -63,13 +63,8 @@ export default class RootContainer extends React.Component<Props, State> {
         newScreenWidth: number,
         newScreenHeight: number
     ) {
-        // console.log('updating root');
         const deltaWidth = newScreenWidth - this.state.width;
         const deltaHeight = newScreenHeight - this.state.height;
-
-        // console.log('newScreenWidth = ' + newScreenWidth);
-        // console.log('state width = ' + this.state.width);
-        // console.log('delta = ' + delta);
 
         this.verticalResizableContainerRef.current?.mainWindowResized(
             deltaWidth

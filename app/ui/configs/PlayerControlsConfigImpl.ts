@@ -1,5 +1,7 @@
-import PanelConfig, { SharedPanelClassStyles } from '../PanelConfig';
-import PanelType from '../PanelType';
+import PanelConfig, {
+    SharedPanelClassStyles,
+} from '../../libs/templates/PanelConfig';
+import PanelType from '../../libs/templates/PanelType';
 import mainConfig from './MainConfigImpl';
 import navConfig from './NavConfigImpl';
 

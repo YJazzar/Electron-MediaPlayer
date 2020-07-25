@@ -1,6 +1,6 @@
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import PanelConfig from '../configs/PanelConfig';
+import PanelConfig from '../../libs/templates/PanelConfig';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -87,7 +87,6 @@ export default class HorizontalResizableContainer extends React.Component<
         // If the dragging just finished, then store the new size
         const primaryButtonPressed = event.buttons === 1;
         if (!primaryButtonPressed) {
-            console.log('here');
             this.setPaneHeight(
                 Math.min(
                     Math.max(this.getPaneHeight(), this.getMinHeight()),
@@ -113,7 +112,7 @@ export default class HorizontalResizableContainer extends React.Component<
         const height =
             this.props.topPanelConfig.sizeProps.defaultHeight *
             window.innerHeight;
-        console.log('calculated height = ' + height);
+
         this.setPaneHeight(height);
     }
 
@@ -122,7 +121,6 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     removeListener() {
-        console.log('removing listener mousemove');
         window.removeEventListener('mousemove', this.newMethod);
     }
 
@@ -183,7 +181,7 @@ export default class HorizontalResizableContainer extends React.Component<
         );
 
         const newBottomHeight = window.innerHeight - height;
-        console.log(`${newBottomHeight} :: ${height}`);
+
         this.getBottomResizableElement()?.style.setProperty(
             this.props.cssBottomHeightVarName,
             `${newBottomHeight}px`

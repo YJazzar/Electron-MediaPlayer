@@ -1,7 +1,7 @@
 import { Stats } from 'fs';
 import { getVideoDurationInSeconds } from 'get-video-duration';
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
-import FileDetails from '../../../libs/utils/FileDetails';
+import FileDetails from '../../../libs/templates/FileDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -23,7 +23,7 @@ function getExtension(fileName: string) {
 
 // Converts bytes to the most appropriate size indicator
 //      Source: https://coderrocketfuel.com/article/how-to-convert-bytes-to-kb-mb-gb-or-tb-format-in-node-js
-const convertBytes = function (bytes: number) {
+function convertBytes(bytes: number) {
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 
     if (bytes === 0) {
@@ -37,14 +37,14 @@ const convertBytes = function (bytes: number) {
     }
 
     return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
-};
+}
 
 function getDuration(filePath: string): Promise<number> {
     return getVideoDurationInSeconds(filePath)
         .then((duration: number) => {
             return duration;
         })
-        .catch((err: Error) => {
+        .catch(() => {
             log.warning(`Could not get the duration of file: ${filePath}`);
             return 0;
         });

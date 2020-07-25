@@ -1,6 +1,8 @@
 import { ipcRenderer } from 'electron';
-import PanelConfig, { SharedPanelClassStyles } from '../PanelConfig';
-import PanelType from '../PanelType';
+import PanelConfig, {
+    SharedPanelClassStyles,
+} from '../../libs/templates/PanelConfig';
+import PanelType from '../../libs/templates/PanelType';
 
 const navConfig = {
     panelType: PanelType.navPanel,

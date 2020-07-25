@@ -68,6 +68,7 @@ const createWindow = async () => {
     // Entry point for my application
     const appEntry = new ApplicationEntry(mainWindow);
     appEntry.init();
+    DirectoryOperations.testFunction();
 };
 
 /**
@@ -82,7 +83,7 @@ app.on('window-all-closed', () => {
     }
 });
 
-// app.on('ready', createWindow);
+app.on('ready', createWindow);
 
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
@@ -90,8 +91,8 @@ app.on('activate', () => {
     if (mainWindow === null) createWindow();
 });
 
-const testFunction = () => {
-    DirectoryOperations.testFunction();
-};
+// const testFunction = () => {
+//     DirectoryOperations.testFunction();
+// };
 
-app.on('ready', testFunction);
+// app.on('ready', testFunction);

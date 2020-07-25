@@ -1,7 +1,7 @@
 import fs from 'fs';
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
-import DirectoryDetails from '../../../libs/utils/DirectoryDetails';
 import readFileStat from './readFileStat';
+import DirectoryDetails from '../../../libs/templates/DirectoryDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -30,7 +30,7 @@ export default async function readDirectory(
                 return result;
             })
             .catch((err) => {
-                console.log(err);
+                log.error(err);
             });
 
         if (fileDetail) {

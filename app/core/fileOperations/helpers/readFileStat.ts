@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
-import FileDetails from '../../../libs/utils/FileDetails';
 import getFileDetails from './getFileDetails';
+import FileDetails from '../../../libs/templates/FileDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -13,7 +13,6 @@ export default async function readFileStat(
     // Construct the full path of the current file
     const filePath: string = path.join(dirPath, fileName);
 
-    console.log(`now processing file: ${filePath}`);
     try {
         const statResult = fs.statSync(filePath);
         return await getFileDetails(filePath, fileName, statResult);

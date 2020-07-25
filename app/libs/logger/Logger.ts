@@ -50,7 +50,6 @@ export default class LoggerImpl {
     }
 
     private getTransports(): winston.transport[] {
-        console.log('GETTING TRANSPORTS');
         const transports: winston.transport[] = [];
         transports.push(
             new winston.transports.Console({

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import React from 'react';
-import mainConfig from '../../configs/impl/MainConfigImpl';
+import mainConfig from '../../configs/MainConfigImpl';
 export default class MainContentsPanelContainer extends React.Component<
     {},
     {}

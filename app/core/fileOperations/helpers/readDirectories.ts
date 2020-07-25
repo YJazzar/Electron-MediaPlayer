@@ -1,6 +1,6 @@
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
-import DirectoryDetails from '../../../libs/utils/DirectoryDetails';
 import readDirectory from './readDirectory';
+import DirectoryDetails from '../../../libs/templates/DirectoryDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 

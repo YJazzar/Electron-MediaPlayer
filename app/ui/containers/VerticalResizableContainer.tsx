@@ -1,6 +1,6 @@
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import PanelConfig from '../configs/PanelConfig';
+import PanelConfig from '../../libs/templates/PanelConfig';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -121,7 +121,6 @@ export default class VerticalResizableContainer extends React.Component<
     }
 
     removeListener() {
-        console.log('removing listener mousemove');
         window.removeEventListener('mousemove', this.newMethod);
     }
 
