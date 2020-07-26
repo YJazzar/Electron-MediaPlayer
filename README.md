@@ -48,5 +48,3 @@ Possible features: - Have users create and define their own themes
         -   `"debug"`
     -   `fileOutput: boolean`:
         -   use `true` to save the logs to a file, `false` otherwise.
-    -   `fileName: string (default = "LoggerOutput.log")`
-        -   Use to specify the name of the log file. The location will be relative to the config file.

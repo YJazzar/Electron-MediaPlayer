@@ -1,4 +1,7 @@
+/* eslint-disable class-methods-use-this */
 import { app } from 'electron';
+import fs from 'fs';
+import moment from 'moment';
 import path from 'path';
 import winston, { createLogger } from 'winston';
 import ConfigManager from '../persist/ConfigManager';
@@ -13,7 +16,6 @@ export default class LoggerImpl {
 
     constructor() {
         this.logLevel = ConfigManager.getInstance().getLoggingLevel();
-        console.log(`PATH TO LOG: ${this.getLogFileName()}`);
     }
 
     // TODO: Make a config file to create this portion of the logger
@@ -42,13 +44,9 @@ export default class LoggerImpl {
         return this.logLevel;
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    getLogFileName(): string {
-        return path.resolve(
-            path.join(app.getPath('music'), 'tnyPlayer'), // Get the folder path where all the app's data is stored
-            ConfigManager.getInstance().getLogFileName()
-        );
-    }
+    // closeLogs(): void{
+    //     this.logger?.transports[1].close
+    // }
 
     private getTransports(): winston.transport[] {
         const transports: winston.transport[] = [];
@@ -68,5 +66,46 @@ export default class LoggerImpl {
         }
 
         return transports;
+    }
+
+    private getLogFileName(): string {
+        return path.resolve(
+            this.getLogDirPath(), // Get the folder path where all the app's data is stored
+            `${this.getLogDate()}${this.getLatestNumber()}.latest.log`
+        );
+    }
+
+    private getLogDate(): string {
+        return moment().format('YYYY-MM-DD-');
+    }
+
+    private getLatestNumber(): number {
+        const logDir = this.getLogDirPath();
+        const currLogFileName = this.getLogDate();
+        const existingLogs: string[] = fs.readdirSync(logDir);
+
+        let max = 1;
+        existingLogs.forEach((logFileName: string) => {
+            console.log(`Currently on: ${logFileName}`);
+            if (logFileName.includes(currLogFileName)) {
+                const temp = logFileName.substring(
+                    logFileName.indexOf(currLogFileName) +
+                        currLogFileName.length
+                );
+                const newMax = parseInt(`${temp.match(/(\d+)/)}`, 10);
+                if (
+                    !Number.isNaN(newMax) &&
+                    Number.isFinite(newMax) &&
+                    newMax >= max
+                ) {
+                    max = newMax;
+                }
+            }
+        });
+        return max + 1;
+    }
+
+    private getLogDirPath(): string {
+        return path.join(app.getPath('music'), 'tnyPlayer');
     }
 }

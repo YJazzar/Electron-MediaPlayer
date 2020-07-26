@@ -1,5 +1,6 @@
 import { Stats } from 'fs';
 import { getVideoDurationInSeconds } from 'get-video-duration';
+import moment from 'moment';
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
 import FileDetails, { DateElements } from '../../../libs/templates/FileDetails';
 
@@ -51,10 +52,7 @@ function getDuration(filePath: string): Promise<number> {
 }
 
 function getFormattedDate(date: Date): string {
-    return date
-        .toISOString()
-        .replace(/T/, ' ') // replace T with a space
-        .replace(/\..+/, ''); // delete the dot and everything after
+    return moment(date).format('l');
 }
 
 function getDateElements(date: Date): DateElements {

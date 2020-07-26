@@ -12,6 +12,7 @@ export default class ConfigManager {
 
     private store: Store<Record<string, unknown>>;
 
+    // TODO: validate the config file here
     private constructor() {
         this.store = new Store({
             cwd: path.join(app.getPath('music'), 'tnyPlayer'),
@@ -62,12 +63,5 @@ export default class ConfigManager {
 
     getLogToFile(): boolean {
         return this.store.get('logger.fileOutput', true) as boolean;
-    }
-
-    getLogFileName(): string {
-        return this.store.get(
-            'logger.fileName',
-            './LoggerOutput.log'
-        ) as string;
     }
 }
