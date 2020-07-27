@@ -71,7 +71,7 @@ export default class LoggerImpl {
     private getLogFileName(): string {
         return path.resolve(
             this.getLogDirPath(), // Get the folder path where all the app's data is stored
-            `${this.getLogDate()}${this.getLatestNumber()}.latest.log`
+            `${this.getLogDate()}${this.getLatestNumber()}.log`
         );
     }
 
