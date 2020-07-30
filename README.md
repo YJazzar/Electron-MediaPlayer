@@ -16,6 +16,8 @@ examples:
 
 # TODO:
 
+---
+
 -   [Make a slider component using react](https://www.youtube.com/watch?v=U16seM2a8OY)
 -   find a way to dynamically change the style sheet or styles added to each element without needing a refresh
 -   Create a custom context menu in which the user has the following operations:
