@@ -51,10 +51,6 @@ function getDuration(filePath: string): Promise<number> {
         });
 }
 
-function getFormattedDate(date: Date): string {
-    return moment(date).format('l');
-}
-
 function getDateElements(date: Date): DateElements {
     return {
         hours: date.getHours(),
@@ -63,7 +59,8 @@ function getDateElements(date: Date): DateElements {
         month: date.getMonth() + 1,
         day: date.getDay(),
         year: date.getFullYear(),
-        formattedDate: getFormattedDate(date),
+        formattedDate: moment(date).format('l'),
+        formattedTime: moment(date).format('LTS'),
     };
 }
 
