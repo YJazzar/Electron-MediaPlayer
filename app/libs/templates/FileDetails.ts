@@ -5,7 +5,8 @@ export interface DateElements {
     month: number;
     day: number;
     year: number;
-    formattedDate: string;
+    formattedDate: string; // Will be in the form of: MM/DD/YYYY (Ex: 5/7/2020)
+    formattedTime: string; // Will be in the form of: HH:MM:SS (Ex: )
 }
 
 export default interface FileDetails {
