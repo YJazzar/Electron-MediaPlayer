@@ -19,6 +19,7 @@ examples:
 CRITICAL:
 
 -   Application fails to start if the 'logs' file does not exist
+-   Add support for different file formats to be read in by ffprobe (i.e. get the correct duration for filetypes other than .mkv)
 
 ---
 

@@ -16,6 +16,6 @@ export default interface FileDetails {
     fileName: string; // The pure name of the file (without the file extension or the full path)
     fileExtension: string;
     size: string;
-    duration: number;
+    duration: string;
     dateElements: DateElements;
 }

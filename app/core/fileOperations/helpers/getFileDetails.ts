@@ -42,10 +42,12 @@ function convertBytes(bytes: number) {
     return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
 }
 
-function getDuration(filePath: string): Promise<number> {
+function getDuration(filePath: string): Promise<string> {
     return ffprobe(filePath, { path: ffprobeStatic.path })
         .then((data: any) => {
-            return 6969;
+            log.debug(filePath);
+            log.debug(JSON.stringify(data));
+            return data.streams[0].tags.DURATION;
             // return duration;
         })
         .catch(() => {
