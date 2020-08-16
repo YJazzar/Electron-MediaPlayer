@@ -28,6 +28,8 @@ if (
     require('electron-debug')();
 }
 
+process.env.NODE_OPTIONS = '--no-force-async-hooks-checks';
+
 const createWindow = async () => {
     mainWindow = new BrowserWindow({
         show: false,

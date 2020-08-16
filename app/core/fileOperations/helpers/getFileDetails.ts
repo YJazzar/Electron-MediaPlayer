@@ -2,9 +2,7 @@ import { Stats } from 'fs';
 import moment from 'moment';
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
 import FileDetails, { DateElements } from '../../../libs/templates/FileDetails';
-
-const ffprobe = require('ffprobe');
-const ffprobeStatic = require('ffprobe-static');
+import getInfo from './getInfo';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -43,16 +41,18 @@ function convertBytes(bytes: number) {
 }
 
 function getDuration(filePath: string): Promise<string> {
-    return ffprobe(filePath, { path: ffprobeStatic.path })
+    log.debug(`getting file duration for file: ${filePath}`);
+    return getInfo(filePath)
         .then((data: any) => {
             log.debug(filePath);
             log.debug(JSON.stringify(data));
-            return data.streams[0].tags.DURATION;
-            // return duration;
+            // return data.streams[0].tags.DURATION;
+            return '699';
         })
-        .catch(() => {
+        .catch((err: Error) => {
             log.warning(`Could not get the duration of file: ${filePath}`);
-            return -1;
+            log.error(JSON.stringify(err));
+            return '-1';
         });
 }
 

@@ -20,6 +20,7 @@ CRITICAL:
 
 -   Application fails to start if the 'logs' file does not exist
 -   Add support for different file formats to be read in by ffprobe (i.e. get the correct duration for filetypes other than .mkv)
+-   Fix ffprobe-static binary filepaths when running 'yarn start'
 
 ---
 
@@ -28,7 +29,6 @@ CRITICAL:
 -   Create a custom context menu in which the user has the following operations:
     -   add to queue
     -   clear view
-    -
 
 *   use the chalk package to make interesting changes
 
