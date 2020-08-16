@@ -16,6 +16,10 @@ examples:
 
 # TODO:
 
+CRITICAL:
+
+-   Application fails to start if the 'logs' file does not exist
+
 ---
 
 -   [Make a slider component using react](https://www.youtube.com/watch?v=U16seM2a8OY)

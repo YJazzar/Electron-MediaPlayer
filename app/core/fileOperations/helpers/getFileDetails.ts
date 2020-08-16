@@ -1,8 +1,10 @@
 import { Stats } from 'fs';
-import { getVideoDurationInSeconds } from 'get-video-duration';
 import moment from 'moment';
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
 import FileDetails, { DateElements } from '../../../libs/templates/FileDetails';
+
+const ffprobe = require('ffprobe');
+const ffprobeStatic = require('ffprobe-static');
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -41,13 +43,14 @@ function convertBytes(bytes: number) {
 }
 
 function getDuration(filePath: string): Promise<number> {
-    return getVideoDurationInSeconds(filePath)
-        .then((duration: number) => {
-            return duration;
+    return ffprobe(filePath, { path: ffprobeStatic.path })
+        .then((data: any) => {
+            return 6969;
+            // return duration;
         })
         .catch(() => {
             log.warning(`Could not get the duration of file: ${filePath}`);
-            return 0;
+            return -1;
         });
 }
 
