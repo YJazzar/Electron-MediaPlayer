@@ -42,7 +42,7 @@ const cmd = `${path.join(
     process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe'
 )}`;
 
-export default function getInfo(filePath: any): Promise<number> {
+export default function ffprobeGetDuration(filePath: any): Promise<number> {
     const params = [];
     // ffprobe -i <file> -show_entries format=duration -v quiet -of csv="p=0"
     params.push(

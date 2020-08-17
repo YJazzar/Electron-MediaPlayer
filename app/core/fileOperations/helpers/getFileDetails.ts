@@ -2,7 +2,7 @@ import { Stats } from 'fs';
 import moment from 'moment';
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
 import FileDetails, { DateElements } from '../../../libs/templates/FileDetails';
-import getInfo from './getInfo';
+import ffprobeGetDuration from './ffprobeGetDuration';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -42,7 +42,7 @@ function convertBytes(bytes: number) {
 
 function getDuration(filePath: string): Promise<number> {
     log.debug(`getting file duration for file: ${filePath}`);
-    return getInfo(filePath)
+    return ffprobeGetDuration(filePath)
         .then((duration: number) => {
             return duration;
         })
