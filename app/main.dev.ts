@@ -28,8 +28,6 @@ if (
     require('electron-debug')();
 }
 
-process.env.NODE_OPTIONS = '--no-force-async-hooks-checks';
-
 const createWindow = async () => {
     mainWindow = new BrowserWindow({
         show: false,
@@ -82,6 +80,7 @@ app.on('window-all-closed', () => {
     // after all windows have been closed
     if (process.platform !== 'darwin') {
         app.quit();
+        process.exit(0);
     }
 });
 
@@ -92,9 +91,3 @@ app.on('activate', () => {
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) createWindow();
 });
-
-// const testFunction = () => {
-//     DirectoryOperations.testFunction();
-// };
-
-// app.on('ready', testFunction);
