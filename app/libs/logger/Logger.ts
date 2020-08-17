@@ -106,6 +106,6 @@ export default class LoggerImpl {
     }
 
     private getLogDirPath(): string {
-        return path.join(path.join(app.getPath('music'), 'tnyPlayer'), 'logs');
+        return path.join(app.getPath('music'), 'tnyPlayer', 'logs');
     }
 }
