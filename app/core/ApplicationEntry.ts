@@ -1,6 +1,7 @@
 import { BrowserWindow } from 'electron';
 import LoggerFactory from '../libs/logger/LoggerFactory';
 import IpcMainController from './controllers/IpcMainController';
+import DirectoryOperations from './fileOperations/DirectoryOperations';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -27,9 +28,13 @@ export default class ApplicationEntry {
     }
 
     init(): void {
+        // Set up the Event Listeners
         this.ipcMainController.init();
+
         // TODO: make a custom menu
         // this.menuBuilder.buildMenu();
-        // DirectoryOperations.getFolderContents();
+
+        // Create the skeletal folder system needed by the application
+        DirectoryOperations.initAppFolders();
     }
 }

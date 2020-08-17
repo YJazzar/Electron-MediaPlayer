@@ -68,7 +68,6 @@ const createWindow = async () => {
     // Entry point for my application
     const appEntry = new ApplicationEntry(mainWindow);
     appEntry.init();
-    DirectoryOperations.testFunction();
 };
 
 /**
