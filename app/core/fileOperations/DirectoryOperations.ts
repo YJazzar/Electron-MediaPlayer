@@ -5,6 +5,7 @@ import path from 'path';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import DirectoryDetails from '../../libs/templates/DirectoryDetails';
 import readDirectories from './helpers/readDirectories';
+import sampleConfig from './sampleConfigs/sampleConfig';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -33,6 +34,25 @@ export default class DirectoryOperations {
                 log.info(`Successfully created the data directory: ${dataDir}`);
             }
         });
+
+        // Check if the config file exists:
+        const configPath = path.join(
+            app.getPath('music'),
+            'tnyPlayer',
+            'config.json'
+        );
+        try {
+            if (fs.existsSync(configPath)) {
+                log.debug('The config file already exists...');
+            } else {
+                log.info(
+                    'The config file does not exist... Copying sample config file'
+                );
+                fs.writeFileSync(configPath, JSON.stringify(sampleConfig));
+            }
+        } catch (error) {
+            log.error(JSON.stringify(error));
+        }
     }
 
     static async testFunction() {

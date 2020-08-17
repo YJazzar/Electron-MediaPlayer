@@ -86,7 +86,6 @@ export default class LoggerImpl {
 
         let max = 0;
         existingLogs.forEach((logFileName: string) => {
-            console.log(`Currently on: ${logFileName}`);
             if (logFileName.includes(currLogFileName)) {
                 const temp = logFileName.substring(
                     logFileName.indexOf(currLogFileName) +
