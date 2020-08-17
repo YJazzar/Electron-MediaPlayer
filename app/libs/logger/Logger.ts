@@ -84,7 +84,7 @@ export default class LoggerImpl {
         const currLogFileName = this.getLogDate();
         const existingLogs: string[] = fs.readdirSync(logDir);
 
-        let max = 1;
+        let max = 0;
         existingLogs.forEach((logFileName: string) => {
             console.log(`Currently on: ${logFileName}`);
             if (logFileName.includes(currLogFileName)) {
