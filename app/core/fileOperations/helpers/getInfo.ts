@@ -1,4 +1,4 @@
-import { spawnSync } from 'child_process';
+import { exec } from 'child_process';
 import { app } from 'electron';
 import path from 'path';
 import LoggerFactory from '../../../libs/logger/LoggerFactory';
@@ -46,8 +46,10 @@ export default function getInfo(filePath: any): Promise<number> {
     const params = [];
     // ffprobe -i <file> -show_entries format=duration -v quiet -of csv="p=0"
     params.push(
-        '-v error',
-        '-show_entries format=duration',
+        '-v',
+        'error',
+        '-show_entries',
+        'format=duration',
         '-of default=noprint_wrappers=1:nokey=1',
         `"${filePath}"`
     );
@@ -57,19 +59,22 @@ export default function getInfo(filePath: any): Promise<number> {
     log.debug('Now running the following command:');
     log.debug(command);
 
-    const ffprobe = spawnSync(command, function (
-        error: any,
-        stdout: string,
-        stderr: string
-    ) {
-        if (error) {
-            console.log(error.stack);
-            console.log(`Error code: ${error.code}`);
-            console.log(`Signal received: ${error.signal}`);
-        }
-        console.log(`Child Process STDOUT: ${stdout}`);
-        console.log(`Child Process STDERR: ${stderr}`);
+    // const ffprobeResponse =
+    return new Promise((resolve, reject) => {
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                return reject(error);
+            }
+            log.debug(`stdout: ${stdout}`);
+            log.database(`stderr: ${parseFloat(stdout)}`);
+            return resolve(parseFloat(stdout));
+        });
     });
 
-    return Promise.resolve(6999);
+    // const duration = parseFloat(ffprobeResponse.toString());
+    // log.debug(`object: ${JSON.stringify(ffprobeResponse.toString())}`);
+    // log.debug(`returning number: ${duration}`);
+    // log.debug(`done running for ${filePath}`);
+
+    // return Promise.resolve(duration);
 }

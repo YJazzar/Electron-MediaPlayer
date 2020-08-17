@@ -40,19 +40,16 @@ function convertBytes(bytes: number) {
     return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
 }
 
-function getDuration(filePath: string): Promise<string> {
+function getDuration(filePath: string): Promise<number> {
     log.debug(`getting file duration for file: ${filePath}`);
     return getInfo(filePath)
-        .then((data: any) => {
-            log.debug(filePath);
-            log.debug(JSON.stringify(data));
-            // return data.streams[0].tags.DURATION;
-            return '699';
+        .then((duration: number) => {
+            return duration;
         })
         .catch((err: Error) => {
             log.warning(`Could not get the duration of file: ${filePath}`);
             log.error(JSON.stringify(err));
-            return '-1';
+            return -1;
         });
 }
 
