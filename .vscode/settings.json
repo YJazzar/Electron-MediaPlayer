@@ -19,7 +19,7 @@
         "**/dll": true,
         "**/.idea": true,
         "**/yarn.lock": true,
-        "**/.eslintcache": true,
+        // "**/.eslintcache": true,
         "**/.eslintignore": true,
         "**/internals": true,
         "**/configs": true,
