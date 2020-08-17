@@ -1,11 +1,8 @@
 import { exec } from 'child_process';
 import { app } from 'electron';
 import path from 'path';
-import LoggerFactory from '../../../libs/logger/LoggerFactory';
 
 const appRootDir = require('app-root-dir');
-
-const log = LoggerFactory.getLogger(__filename);
 
 function getPlatform(): string {
     switch (process.platform) {
@@ -42,9 +39,8 @@ const cmd = `${path.join(
     process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe'
 )}`;
 
-export default function ffprobeGetDuration(filePath: any): Promise<number> {
+export default function ffprobeGetDuration(filePath: string): Promise<number> {
     const params = [];
-    // ffprobe -i <file> -show_entries format=duration -v quiet -of csv="p=0"
     params.push(
         '-v',
         'error',
@@ -54,27 +50,17 @@ export default function ffprobeGetDuration(filePath: any): Promise<number> {
         `"${filePath}"`
     );
 
+    // The command to run is constructed:
     const command = `${cmd} ${params.join(' ')}`;
 
-    log.debug('Now running the following command:');
-    log.debug(command);
-
-    // const ffprobeResponse =
     return new Promise((resolve, reject) => {
-        exec(command, (error, stdout, stderr) => {
+        exec(command, (error, stdout) => {
             if (error) {
                 return reject(error);
             }
-            log.debug(`stdout: ${stdout}`);
-            log.database(`stderr: ${parseFloat(stdout)}`);
+            // log.debug(`stdout: ${stdout}`);
+            // log.database(`stderr: ${stderr}`);
             return resolve(parseFloat(stdout));
         });
     });
-
-    // const duration = parseFloat(ffprobeResponse.toString());
-    // log.debug(`object: ${JSON.stringify(ffprobeResponse.toString())}`);
-    // log.debug(`returning number: ${duration}`);
-    // log.debug(`done running for ${filePath}`);
-
-    // return Promise.resolve(duration);
 }
