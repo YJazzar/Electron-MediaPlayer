@@ -8,9 +8,9 @@ import '../styles/contentResizables.global.css';
 import '../styles/navResizables.global.css';
 import '../styles/theme.global.css';
 import HorizontalResizableContainer from './HorizontalResizableContainer';
-import MainContentsPanelContainer from './panels/MainContentsPanelContainer';
-import NavigationPanelContainer from './panels/NavigationPanelContainer';
-import PlayerPanelContainer from './panels/PlayerPanelContainer';
+import MainContentsPanelContainer from '../panels/MainContentsPanelContainer';
+import NavigationPanelContainer from '../panels/NavigationPanelContainer';
+import PlayerPanelContainer from '../panels/PlayerPanelContainer';
 import VerticalResizableContainer from './VerticalResizableContainer';
 
 

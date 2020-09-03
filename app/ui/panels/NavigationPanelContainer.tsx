@@ -1,5 +1,5 @@
 import React from 'react';
-import navConfig from '../../configs/NavConfigImpl';
+import navConfig from '../configs/NavConfigImpl';
 
 export default class NavigationPanelContainer extends React.Component<{}, {}> {
     render() {

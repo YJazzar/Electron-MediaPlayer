@@ -1,5 +1,5 @@
 import React from 'react';
-import playerControlsConfig from '../../configs/PlayerControlsConfigImpl';
+import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
 
 export default class PlayerPanelContainer extends React.Component<{}, {}> {
     render() {
