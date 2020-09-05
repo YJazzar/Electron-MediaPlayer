@@ -37,16 +37,14 @@ export default class MainPanelTable extends React.Component<{}, {}> {
             <div className={''}>
                 <h1>TEST</h1>
                 <Table>
-                    <THead>
-                        <TRow>{this.getTableHeaders()}</TRow>
-                    </THead>
+                    <THead >{this.getTableHeaders()}</THead>
                     <TBody>{this.getTableBody()}</TBody>
                 </Table>
             </div>
         );
     }
 
-    getTableHeaders(): React.ReactChild[] {
+    getTableHeaders(): React.ReactChild {
         const tableHeaders = [
             'Name',
             'Length',
@@ -57,10 +55,10 @@ export default class MainPanelTable extends React.Component<{}, {}> {
 
         const th = [];
         for (let i = 0; i < tableHeaders.length; i++) {
-            th.push(<TData key={i}>{tableHeaders[i]}</TData>);
+            th.push(<TData key={i} className="sticky">{tableHeaders[i]}</TData>);
         }
 
-        return th;
+        return <TRow className=" top-0 bg-red-600">{th}</TRow>;
     }
 
     getTableBody(): React.ReactChild[] {
