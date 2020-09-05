@@ -32,7 +32,8 @@ CRITICAL:
 
 *   use the chalk package to make interesting changes
 
-Possible features: - Have users create and define their own themes
+-   Implemenet a React Table
+    Possible features: - Have users create and define their own themes
 
 <br/>
 
