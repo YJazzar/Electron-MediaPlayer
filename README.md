@@ -1,41 +1,10 @@
-# tnyPlayer - Status: migrating to use webpack
+# tnyPlayer - A tiny media player (under construction)
 
-entry for render:
-/app/index.tsx
+Note for readers:
 
-entry for main:
-/app/main.dev.ts
+-   Application entry point (for the renderer process): `/app/index.tsx`
 
-## Tutorial for making electron notifications:
-
--   https://stackoverflow.com/questions/42851198/how-can-i-send-a-notification-in-electron
-
-## Running the program
-
-examples:
-
-# TODO:
-
-CRITICAL:
-
--   Application fails to start if the 'logs' file does not exist
--   Add support for different file formats to be read in by ffprobe (i.e. get the correct duration for filetypes other than .mkv)
--   Fix ffprobe-static binary filepaths when running 'yarn start'
-
----
-
--   [Make a slider component using react](https://www.youtube.com/watch?v=U16seM2a8OY)
--   find a way to dynamically change the style sheet or styles added to each element without needing a refresh
--   Create a custom context menu in which the user has the following operations:
-    -   add to queue
-    -   clear view
-
-*   use the chalk package to make interesting changes
-
--   Implemenet a React Table
-    Possible features: - Have users create and define their own themes
-
-<br/>
+-   Application entry point (for the main process): `/app/main.dev.ts`
 
 # Config file options:
 
@@ -57,3 +26,18 @@ CRITICAL:
         -   `"debug"`
     -   `fileOutput: boolean`:
         -   use `true` to save the logs to a file, `false` otherwise.
+
+<br>
+
+# TODO:
+
+-   Perform further testing for cross-platform support with ffprobe's integration
+    -   Update ffprobe-static binary filepaths when running 'yarn start'
+-   Perform further testing for application self-repairing config folders when deleted
+-   Create a custom context menu in which the user has the following operations:
+    -   add to queue
+    -   clear view
+-   Implement a React Table
+    Possible features: - Have users create and define their own themes
+
+<br/>
