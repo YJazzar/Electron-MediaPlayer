@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import DirectoryDetails from '../../libs/templates/DirectoryDetails';
+import FileDetails from '../../libs/templates/FileDetails';
 import readDirectories from './helpers/readDirectories';
 import sampleConfig from './sampleConfigs/sampleConfig';
 
@@ -13,7 +14,7 @@ export default class DirectoryOperations {
     // This function will make sure the data and log folders already exist
     // It will also make sure the user has a config file
     static initAppFolders() {
-        // Create the log folder
+        // Create the tnyPlayer/log folder
         const logDir = path.join(app.getPath('music'), 'tnyPlayer', 'logs');
         if (!this.pathExists(logDir)) {
             fs.mkdir(logDir, (err) => {
@@ -27,7 +28,7 @@ export default class DirectoryOperations {
             log.info(`Successfully detected the log directory: ${logDir}`);
         }
 
-        // Create the data folder
+        // Create the tnyPlayer/data folder
         const dataDir = path.join(app.getPath('music'), 'tnyPlayer', 'data');
         if (!this.pathExists(dataDir)) {
             fs.mkdir(dataDir, (err) => {
@@ -41,11 +42,24 @@ export default class DirectoryOperations {
             log.info(`Successfully detected the data directory: ${dataDir}`);
         }
 
-        // Check if the config file exists:
+        // Check if the tnyPlayer/data/index.json file exists:
+        const indexPath = path.join(app.getPath('music'), 'tnyPlayer', 'data', 'index.json');
+        try {
+            if (this.pathExists(indexPath)) {
+                log.debug(`Successfully detected the data/index.json file at: ${indexPath}`);
+            } else {
+                log.info(`The config file does not exist... Creating empty file at: ${indexPath}`);
+                fs.writeFileSync(indexPath, '{"size": 0}');
+            }
+        } catch (error) {
+            log.error(JSON.stringify(error));
+        }
+
+        // Check if the tnyPlayer/config.json file exists:
         const configPath = path.join(app.getPath('music'), 'tnyPlayer', 'config.json');
         try {
             if (this.pathExists(configPath)) {
-                log.debug(`Successfully detected the config file at: ${configPath}`);
+                log.debug(`Successfully detected the config.json file at: ${configPath}`);
             } else {
                 log.info(`The config file does not exist... Copying sample config file to : ${configPath}`);
                 fs.writeFileSync(configPath, JSON.stringify(sampleConfig));
@@ -53,6 +67,11 @@ export default class DirectoryOperations {
         } catch (error) {
             log.error(JSON.stringify(error));
         }
+
+        const indexStore = new Store({
+            cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
+            name: 'index',
+        });
     }
 
     // Returns true if the path already exists
@@ -62,6 +81,13 @@ export default class DirectoryOperations {
         }
         return false;
     }
+
+    // This function will be called when a media file needs to be imported to tnyPlayer/data/index.js
+    // It will return the new state of adding the file to the JSON object array
+    // static async importToData(indexCurrState: FileDetails[], fileDetails: FileDetails): FileDetails[] {
+    //     indexCurrState.push(fileDetails);
+    //     return indexCurrState;
+    // }
 
     static async testFunction() {
         log.debug('now calling readDirectory function');
@@ -77,5 +103,27 @@ export default class DirectoryOperations {
         // NOTE: will need to iterate and store them in separate files later on
         store.store = { ...result[0] };
         log.info('SAVED!!');
+    }
+
+    static async importTest() {
+        const indexStore = new Store({
+            cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
+            name: 'index',
+        });
+
+        log.debug('Running importTest()');
+        const paths: string[] = [path.join(app.getPath('videos'), 'Filler Vids')];
+        const result: DirectoryDetails[] = await readDirectories(paths);
+
+        let i = indexStore.get('size') as number;
+
+        // After getting all the details, add them to the current index file:
+        for (let dir = 0; dir < result.length; dir += 1) {
+            for (let file = 0; file < result[dir].fileStatDetails.length; file += 1) {
+                indexStore.set(`${i}`, result[dir].fileStatDetails[file]);
+                i += 1;
+            }
+        }
+        indexStore.set('size', i);
     }
 }

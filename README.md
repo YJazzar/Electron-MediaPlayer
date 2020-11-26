@@ -34,6 +34,18 @@ Note for readers:
 
 <br>
 
+# File structure in the 'Music' home directory:
+
+-   `tnyPlayer` (parent folder):
+    -   `data`: folder
+        -   `index.json`: stores a list of all current media files
+        -   Contains all of the media files processed in the `index.json` file
+    -   `log`: folder
+        -   Contains log files for each run
+    -   `config.json`: Configuration file
+    -   `history.json`: To be used later
+    -   `index.json`: Will store information such as playlists, and other meta-data needed for the navigation panel
+
 # TODO:
 
 -   Perform further testing for cross-platform support with ffprobe's integration

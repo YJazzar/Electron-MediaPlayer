@@ -41,24 +41,15 @@ export default class ConfigManager {
     }
 
     getNavPanelWidth(): number {
-        return this.store.get(
-            'applicationWindow.navPanelWidth',
-            0.25
-        ) as number;
+        return this.store.get('applicationWindow.navPanelWidth', 0.25) as number;
     }
 
     getPlayerControlsHeight(): number {
-        return this.store.get(
-            'applicationWindow.playerControlsHeight',
-            0.15
-        ) as number;
+        return this.store.get('applicationWindow.playerControlsHeight', 0.15) as number;
     }
 
     getLoggingLevel(): string {
-        return this.store.get(
-            'logger.minLogLevel',
-            logLevelNames.debug
-        ) as string;
+        return this.store.get('logger.minLogLevel', logLevelNames.debug) as string;
     }
 
     getLogToFile(): boolean {
@@ -66,9 +57,6 @@ export default class ConfigManager {
     }
 
     getTableHeaderOptions(): string[] {
-        return this.store.get(
-            'tableOptions.tableHeaderTitles',
-            logLevelNames.debug
-        ) as string[];
+        return this.store.get('tableOptions.tableHeaderTitles', logLevelNames.debug) as string[];
     }
 }

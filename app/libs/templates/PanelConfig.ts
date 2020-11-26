@@ -20,15 +20,11 @@ export default interface PanelConfig {
     };
 }
 
-const darkThemeClassStyles =
-    'dark bg-transparent p-10 text-gray-400 panel-border-dark';
-const lightThemeClassStyles =
-    'light bg-transparent p-10 text-black panel-border-light';
+const darkThemeClassStyles = 'dark bg-transparent p-10 text-gray-400 panel-border-dark';
+const lightThemeClassStyles = 'light bg-transparent p-10 text-black panel-border-light';
 
 export const SharedPanelClassStyles =
-    ipcRenderer.sendSync('config:getTheme').toLowerCase() === 'light'
-        ? lightThemeClassStyles
-        : darkThemeClassStyles;
+    ipcRenderer.sendSync('config:getTheme').toLowerCase() === 'light' ? lightThemeClassStyles : darkThemeClassStyles;
 
 /** Styles Explanation (tailwind styles):
  * .bg-transparent = transparent background

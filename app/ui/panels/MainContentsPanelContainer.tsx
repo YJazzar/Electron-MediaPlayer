@@ -26,9 +26,4 @@ export default class MainContentsPanelContainer extends React.Component<
             </div>
         );
     }
-
-    testClickListener() {
-        log.debug("Player clicked");
-        this.setState({test: true});
-    }
 }

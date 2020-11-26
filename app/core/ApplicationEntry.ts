@@ -1,9 +1,39 @@
-import { BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import LoggerFactory from '../libs/logger/LoggerFactory';
 import IpcMainController from './controllers/IpcMainController';
 import DirectoryOperations from './fileOperations/DirectoryOperations';
 
 const log = LoggerFactory.getLogger(__filename);
+
+const mainMenuTemplate = [
+    {
+        label: 'File',
+        submenu: [
+            {
+                label: 'Import Folder',
+                accelerator: process.platform === 'darwin' ? 'Command+I' : 'Ctrl+I',
+                click() {
+                    // Action:
+                    DirectoryOperations.importTest();
+                },
+            },
+            {
+                label: 'Clear Items',
+                // accelerator: process.platform == 'darwin' ? 'Command+A' : 'Ctrl+A',
+                click() {
+                    // Action:
+                },
+            },
+            {
+                label: 'Quit',
+                accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+                click() {
+                    app.quit();
+                },
+            },
+        ],
+    },
+] as any;
 
 export default class ApplicationEntry {
     private mainWindow: BrowserWindow;
@@ -25,6 +55,16 @@ export default class ApplicationEntry {
         this.mainWindow = mainWindow;
         this.ipcMainController = new IpcMainController(this.mainWindow);
         // this.menuBuilder = new MenuBuilder(this.mainWindow);
+
+        // If the current system is a mac, then add an empty object to the beginning of the
+        // mainMenuTemplate array.
+        if (process.platform === 'darwin') {
+            mainMenuTemplate.unshift({});
+        }
+
+        // Insert menu:
+        const menuTemplate = Menu.buildFromTemplate(mainMenuTemplate);
+        Menu.setApplicationMenu(menuTemplate);
     }
 
     init(): void {
@@ -36,6 +76,6 @@ export default class ApplicationEntry {
 
         // Create the skeletal folder system needed by the application
         DirectoryOperations.initAppFolders();
-        DirectoryOperations.testFunction();
+        // DirectoryOperations.testFunction();
     }
 }
