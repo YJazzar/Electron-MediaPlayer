@@ -36,5 +36,6 @@ export default class ApplicationEntry {
 
         // Create the skeletal folder system needed by the application
         DirectoryOperations.initAppFolders();
+        DirectoryOperations.testFunction();
     }
 }
