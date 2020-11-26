@@ -1,3 +1,4 @@
+// TODO: Update this before shipping
 const sampleConfig = {
     README: 'https://github.com/YJazzar/tnyPlayer',
     theme: 'dark',

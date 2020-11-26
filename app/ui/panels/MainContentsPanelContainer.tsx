@@ -1,6 +1,6 @@
 import React from 'react';
 import mainConfig from '../configs/MainConfigImpl';
-import MainPanelTable from './MainPanelTable';
+import Table from '../components/Table';
 
 
 
@@ -12,7 +12,7 @@ export default class MainContentsPanelContainer extends React.Component<
         return (
             <div className={mainConfig.cssClassStyles}>
                 <h1>Main Contents Panel</h1>
-                <MainPanelTable/>
+                <Table/>
             </div>
         );
     }

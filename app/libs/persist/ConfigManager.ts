@@ -64,4 +64,11 @@ export default class ConfigManager {
     getLogToFile(): boolean {
         return this.store.get('logger.fileOutput', true) as boolean;
     }
+
+    getTableHeaderOptions(): string[] {
+        return this.store.get(
+            'tableOptions.tableHeaderTitles',
+            logLevelNames.debug
+        ) as string[];
+    }
 }

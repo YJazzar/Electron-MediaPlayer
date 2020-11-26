@@ -13,7 +13,6 @@ import NavigationPanelContainer from '../panels/NavigationPanelContainer';
 import PlayerPanelContainer from '../panels/PlayerPanelContainer';
 import VerticalResizableContainer from './VerticalResizableContainer';
 
-
 const log = LoggerFactory.getUILogger(__filename);
 
 const theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
@@ -27,9 +26,7 @@ interface State {
 
 export default class RootContainer extends React.Component<Props, State> {
     verticalResizableContainerRef: React.RefObject<VerticalResizableContainer>;
-    horizontalResizableContainerRef: React.RefObject<
-        HorizontalResizableContainer
-    >;
+    horizontalResizableContainerRef: React.RefObject<HorizontalResizableContainer>;
 
     constructor(props: {}) {
         super(props);

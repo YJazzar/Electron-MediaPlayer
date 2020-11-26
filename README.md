@@ -26,6 +26,11 @@ Note for readers:
         -   `"debug"`
     -   `fileOutput: boolean`:
         -   use `true` to save the logs to a file, `false` otherwise.
+-   `tableOptions: object` Can set the default options for the table view in the main panel
+    -   `tableHeaderTitles: string[]` Can set the table headers
+        -   Ex: `tableHeaderTitles: ["Name", "Length", "Type", "Size", "Date Modified"]`
+-   `fileExtensions: string[]` Sets the types of files the application should search for
+    -   Ex: `fileExtensions: ["mp3", "mp4", "mkv"]`
 
 <br>
 

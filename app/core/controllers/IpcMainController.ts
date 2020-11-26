@@ -42,6 +42,11 @@ export default class IpcMainController {
             this.configGetPlayerControlsHeight.bind(this)
         );
 
+        ipcMain.on(
+            'config:getTableHeaderOptions',
+            this.configGetTableHeaderOptions.bind(this)
+        );
+
         /**
          * The following are events that are not implemented but could be useful in the future
          */
@@ -101,5 +106,11 @@ export default class IpcMainController {
     // This is made to be used synchronously
     configGetPlayerControlsHeight(event: IpcMainEvent) {
         event.returnValue = this.configManager.getPlayerControlsHeight();
+    }
+
+    // eventName = 'config:getTableHeaderOptions'
+    // This is made to be used synchronously
+    configGetTableHeaderOptions(event: IpcMainEvent) {
+        event.returnValue = this.configManager.getTableHeaderOptions();
     }
 }
