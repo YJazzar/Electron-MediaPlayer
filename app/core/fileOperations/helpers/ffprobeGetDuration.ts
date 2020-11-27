@@ -23,21 +23,12 @@ function getPlatform(): string {
     }
 }
 
-const prodExecPath = path.join(
-    path.resolve(app.getPath('exe')),
-    '..',
-    'resources',
-    'bin'
-);
+const prodExecPath = path.join(path.resolve(app.getPath('exe')), '..', 'resources', 'bin');
 const devExecPath = path.join(appRootDir.get(), 'resources', getPlatform());
 
-const execPath =
-    process.env.NODE_ENV === 'production' ? prodExecPath : devExecPath;
+const execPath = process.env.NODE_ENV === 'production' ? prodExecPath : devExecPath;
 
-const cmd = `${path.join(
-    execPath,
-    process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe'
-)}`;
+const cmd = `${path.join(execPath, process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe')}`;
 
 export default function ffprobeGetDuration(filePath: string): Promise<number> {
     const params = [];

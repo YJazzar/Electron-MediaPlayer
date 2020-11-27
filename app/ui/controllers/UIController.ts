@@ -1,6 +1,7 @@
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { EventEmitter } from 'events';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
+import FileDetails from '../../libs/templates/FileDetails';
 import RootContainer from '../containers/RootContainer';
 
 const log = LoggerFactory.getUILogger(__filename);
@@ -15,16 +16,12 @@ export default class UIController {
     private rootContainerRef: React.RefObject<RootContainer>;
 
     // Called by UIEntry.ts
-    static getInstance(
-        rootContainerRef?: React.RefObject<RootContainer>
-    ): UIController {
+    static getInstance(rootContainerRef?: React.RefObject<RootContainer>): UIController {
         if (!UIController.instance && rootContainerRef) {
             UIController.instance = new UIController(rootContainerRef);
         }
         if (!UIController.instance && !rootContainerRef) {
-            log.error(
-                'Could not create an instance of UIController without a reference to rootContainer'
-            );
+            log.error('Could not create an instance of UIController without a reference to rootContainer');
         }
         return UIController.instance;
     }
@@ -38,14 +35,11 @@ export default class UIController {
 
     // Setting up all event handlers:
 
+    // Note: the event 'window-resized' was implemented in RootContainer.tsx
     private createEventListeners(): void {
         // Event to get the initial window size after the mainWindow was finished being created
-        ipcRenderer.on(
-            'initial-window-size',
-            this.setInitialWindowSize.bind(this)
-        );
-
-        // ipcRenderer.on('window-resized', this.windowResizedEvent.bind(this));
+        ipcRenderer.on('initial-window-size', this.setInitialWindowSize.bind(this));
+        ipcRenderer.on('status:data/index.json updated', this.handleNewImports.bind(this));
     }
 
     setInitialWindowSize(_e: IpcRendererEvent, width: number, height: number) {
@@ -53,8 +47,13 @@ export default class UIController {
         this.rootContainerRef.current?.initialWindowSize(width, height);
     }
 
-    // For any class to use when they want to get the event emitter instance
-    getEventEmitter(): EventEmitter {
-        return this.events;
+    // This will be called to notify the renderer process that the data/index.json has changed
+    handleNewImports(_e: IpcRendererEvent, newContents: FileDetails[]) {
+        this.rootContainerRef.current?.mainPanelRef.current?.updateTable(newContents);
     }
+
+    // // For any class to use when they want to get the event emitter instance
+    // getEventEmitter(): EventEmitter {
+    //     return this.events;
+    // }
 }

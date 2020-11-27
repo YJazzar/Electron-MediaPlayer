@@ -2,13 +2,10 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Hello Electron React!</title>
+        <title>tnyPlayer v3.0 - By: Yousuf Jazzar</title>
         <script>
             (() => {
-                if (
-                    typeof process !== 'object' ||
-                    (typeof process === 'object' && !process.env.START_HOT)
-                ) {
+                if (typeof process !== 'object' || (typeof process === 'object' && !process.env.START_HOT)) {
                     const link = document.createElement('link');
                     link.rel = 'stylesheet';
                     link.href = './dist/style.css';
@@ -32,22 +29,13 @@
                 if (process.env.START_HOT) {
                     // Dynamically insert the bundled app script in the renderer process
                     const port = process.env.PORT || 1212;
-                    scripts.push(
-                        `http://localhost:${port}/dist/renderer.dev.js`
-                    );
+                    scripts.push(`http://localhost:${port}/dist/renderer.dev.js`);
                 } else {
                     scripts.push('./dist/renderer.prod.js');
                 }
 
                 if (scripts.length) {
-                    document.write(
-                        scripts
-                            .map(
-                                (script) =>
-                                    `<script defer src="${script}"><\/script>`
-                            )
-                            .join('')
-                    );
+                    document.write(scripts.map((script) => `<script defer src="${script}"><\/script>`).join(''));
                 }
             }
         </script>

@@ -1,47 +1,10 @@
-import { app, BrowserWindow, Menu } from 'electron';
+import { BrowserWindow, Menu } from 'electron';
 import LoggerFactory from '../libs/logger/LoggerFactory';
+import getMenuTemplate from '../libs/templates/MenuBarTemplate';
 import IpcMainController from './controllers/IpcMainController';
 import DirectoryOperations from './fileOperations/DirectoryOperations';
 
 const log = LoggerFactory.getLogger(__filename);
-
-const mainMenuTemplate = [
-    {
-        label: 'File',
-        submenu: [
-            {
-                label: 'Import Folder',
-                accelerator: process.platform === 'darwin' ? 'Command+I' : 'Ctrl+I',
-                click() {
-                    // Action:
-                    DirectoryOperations.importFolders();
-                },
-            },
-            {
-                label: 'Import File(s)',
-                accelerator: process.platform === 'darwin' ? 'Command+O' : 'Ctrl+O',
-                click() {
-                    // Action:
-                    DirectoryOperations.importFiles();
-                },
-            },
-            {
-                label: 'Clear Items',
-                // accelerator: process.platform == 'darwin' ? 'Command+A' : 'Ctrl+A',
-                click() {
-                    // Action:
-                },
-            },
-            {
-                label: 'Quit',
-                accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-                click() {
-                    app.quit();
-                },
-            },
-        ],
-    },
-] as any;
 
 export default class ApplicationEntry {
     private mainWindow: BrowserWindow;
@@ -62,28 +25,17 @@ export default class ApplicationEntry {
 
         this.mainWindow = mainWindow;
         this.ipcMainController = new IpcMainController(this.mainWindow);
-        // this.menuBuilder = new MenuBuilder(this.mainWindow);
-
-        // If the current system is a mac, then add an empty object to the beginning of the
-        // mainMenuTemplate array.
-        if (process.platform === 'darwin') {
-            mainMenuTemplate.unshift({});
-        }
-
-        // Insert menu:
-        const menuTemplate = Menu.buildFromTemplate(mainMenuTemplate);
-        Menu.setApplicationMenu(menuTemplate);
     }
 
     init(): void {
         // Set up the Event Listeners
         this.ipcMainController.init();
 
-        // TODO: make a custom menu
-        // this.menuBuilder.buildMenu();
+        // Insert menu:
+        const menuTemplate = Menu.buildFromTemplate(getMenuTemplate(this.ipcMainController));
+        Menu.setApplicationMenu(menuTemplate);
 
-        // Create the skeletal folder system needed by the application
+        // Ensure the folder system needed by the application already exists
         DirectoryOperations.initAppFolders();
-        // DirectoryOperations.testFunction();
     }
 }

@@ -1,7 +1,10 @@
-import { ipcMain, BrowserWindow, Rectangle, IpcMainEvent } from 'electron';
+import { app, ipcMain, BrowserWindow, Rectangle, IpcMainEvent } from 'electron';
+import Store from 'electron-store';
+import path from 'path';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import LogMessage from '../../libs/logger/LogMessage';
 import ConfigManager from '../../libs/persist/ConfigManager';
+import FileDetails from '../../libs/templates/FileDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -21,10 +24,7 @@ export default class IpcMainController {
         // An event so the html files from the electron browser can use the logger
         ipcMain.on('Logger', this.sendLogMessage.bind(this));
 
-        this.mainWindow.webContents.on(
-            'did-finish-load',
-            this.emitInitialWindowSize.bind(this)
-        );
+        this.mainWindow.webContents.on('did-finish-load', this.emitInitialWindowSize.bind(this));
 
         this.mainWindow.on('will-resize', this.willResize.bind(this));
 
@@ -32,20 +32,11 @@ export default class IpcMainController {
 
         ipcMain.on('config:getTheme', this.configGetTheme.bind(this));
 
-        ipcMain.on(
-            'config:getNavPanelWidth',
-            this.configGetNavPanelWidth.bind(this)
-        );
+        ipcMain.on('config:getNavPanelWidth', this.configGetNavPanelWidth.bind(this));
 
-        ipcMain.on(
-            'config:getPlayerControlsHeight',
-            this.configGetPlayerControlsHeight.bind(this)
-        );
+        ipcMain.on('config:getPlayerControlsHeight', this.configGetPlayerControlsHeight.bind(this));
 
-        ipcMain.on(
-            'config:getTableHeaderOptions',
-            this.configGetTableHeaderOptions.bind(this)
-        );
+        ipcMain.on('config:getTableHeaderOptions', this.configGetTableHeaderOptions.bind(this));
 
         /**
          * The following are events that are not implemented but could be useful in the future
@@ -57,11 +48,7 @@ export default class IpcMainController {
     // eventName = 'Logger'
     // eslint-disable-next-line class-methods-use-this
     sendLogMessage(_event: Event, message: LogMessage) {
-        LoggerFactory.getLoggerImpl().log(
-            message.logLevelName,
-            message.sourcePath,
-            message.message
-        );
+        LoggerFactory.getLoggerImpl().log(message.logLevelName, message.sourcePath, message.message);
     }
 
     // eventName = 'did-finish-load'
@@ -112,5 +99,25 @@ export default class IpcMainController {
     // This is made to be used synchronously
     configGetTableHeaderOptions(event: IpcMainEvent) {
         event.returnValue = this.configManager.getTableHeaderOptions();
+    }
+
+    // This will be used to notify the renderer that the user has imported new files into the tnyPlayer/data folder
+    statusUpdateDataIndex() {
+        // Get all of the fileDetails stored in data/index.json
+        const indexStore = new Store({
+            cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
+            name: 'index',
+        });
+
+        const newContents: FileDetails[] = [];
+
+        const size: number = indexStore.get('size') as number;
+        for (let i = 0; i < size; i += 1) {
+            newContents.push(indexStore.get(`${i}`) as FileDetails);
+        }
+
+        log.debug(JSON.stringify(newContents));
+
+        this.mainWindow.webContents.send('status:data/index.json updated', newContents);
     }
 }

@@ -28,11 +28,21 @@ export default class RootContainer extends React.Component<Props, State> {
     verticalResizableContainerRef: React.RefObject<VerticalResizableContainer>;
     horizontalResizableContainerRef: React.RefObject<HorizontalResizableContainer>;
 
+    // References for each of the panels:
+    mainPanelRef: React.RefObject<MainContentsPanelContainer>;
+    navigationPanelRef: React.RefObject<NavigationPanelContainer>;
+    playerPanelRef: React.RefObject<PlayerPanelContainer>;
+
     constructor(props: {}) {
         super(props);
 
+        // Create all the refs needed
         this.verticalResizableContainerRef = React.createRef();
         this.horizontalResizableContainerRef = React.createRef();
+        this.mainPanelRef = React.createRef();
+        this.navigationPanelRef = React.createRef();
+        this.playerPanelRef = React.createRef();
+
         this.state = {
             width: 0,
             height: 0,
@@ -116,14 +126,14 @@ export default class RootContainer extends React.Component<Props, State> {
 
     // Helper functions to get the contents of each panel
     getNavigationPanel(): React.ReactChild {
-        return <NavigationPanelContainer />;
+        return <NavigationPanelContainer ref={this.navigationPanelRef}/>;
     }
 
     getMainContentsPanel(): React.ReactChild {
-        return <MainContentsPanelContainer />;
+        return <MainContentsPanelContainer ref={this.mainPanelRef}/>;
     }
 
     getPlayerPanel(): React.ReactChild {
-        return <PlayerPanelContainer />;
+        return <PlayerPanelContainer ref={this.playerPanelRef}/>;
     }
 }

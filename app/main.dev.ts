@@ -12,7 +12,6 @@ import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import ApplicationEntry from './core/ApplicationEntry';
 import ConfigManager from './libs/persist/ConfigManager';
-import DirectoryOperations from './core/fileOperations/DirectoryOperations';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -21,10 +20,7 @@ if (process.env.NODE_ENV === 'production') {
     sourceMapSupport.install();
 }
 
-if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-) {
+if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     require('electron-debug')();
 }
 
@@ -34,8 +30,7 @@ const createWindow = async () => {
         width: ConfigManager.getInstance().getApplicationWindowWidth(),
         height: ConfigManager.getInstance().getApplicationWindowHeight(),
         webPreferences:
-            (process.env.NODE_ENV === 'development' ||
-                process.env.E2E_BUILD === 'true') &&
+            (process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true') &&
             process.env.ERB_SECURE !== 'true'
                 ? {
                       nodeIntegration: true,

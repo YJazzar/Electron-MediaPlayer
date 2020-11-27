@@ -130,7 +130,7 @@ export default class DirectoryOperations {
         return result;
     }
 
-    static async importFolders() {
+    static async importFolders(callBack: () => void) {
         const indexStore = new Store({
             cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
             name: 'index',
@@ -153,9 +153,10 @@ export default class DirectoryOperations {
             }
         }
         indexStore.set('size', i);
+        callBack();
     }
 
-    static async importFiles() {
+    static async importFiles(callBack: () => void) {
         const indexStore = new Store({
             cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
             name: 'index',
@@ -176,6 +177,7 @@ export default class DirectoryOperations {
             i += 1;
         }
         indexStore.set('size', i);
+        callBack();
     }
 }
 
