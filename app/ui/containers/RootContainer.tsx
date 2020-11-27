@@ -12,6 +12,7 @@ import MainContentsPanelContainer from '../panels/MainContentsPanelContainer';
 import NavigationPanelContainer from '../panels/NavigationPanelContainer';
 import PlayerPanelContainer from '../panels/PlayerPanelContainer';
 import VerticalResizableContainer from './VerticalResizableContainer';
+import StateController from '../controllers/StateController';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -42,6 +43,9 @@ export default class RootContainer extends React.Component<Props, State> {
         this.mainPanelRef = React.createRef();
         this.navigationPanelRef = React.createRef();
         this.playerPanelRef = React.createRef();
+
+        // Create the instance of StateController:
+        new StateController(this.mainPanelRef, this.navigationPanelRef, this.playerPanelRef);
 
         this.state = {
             width: 0,

@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import FileDetails from '../../libs/templates/FileDetails';
 import RootContainer from '../containers/RootContainer';
+import StateController from './StateController';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -49,6 +50,12 @@ export default class UIController {
 
     // This will be called to notify the renderer process that the data/index.json has changed
     handleNewImports(_e: IpcRendererEvent, newContents: FileDetails[]) {
+        const { instance } = StateController;
+        if (instance == null) {
+            log.error('A new import was detected, but StateController.instance was not defined. Could not forward the new data');
+        }
+        instance.ipcHandleNewImports(newContents);
+
         this.rootContainerRef.current?.mainPanelRef.current?.updateTable(newContents);
     }
 
