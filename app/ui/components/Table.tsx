@@ -32,16 +32,10 @@ const TData = styled.td`
     }
 `;
 
-// A listener to check the row that was clicked
-function getClickListener(rowNum: number) {
-    return () => {
-        console.log('clicked');
-        console.log(rowNum);
-    };
-}
-
 interface Props {
     bodyContents: FileDetails[];
+    clickListener: (rowNum: number) => () => void;  // A clickListener function that returns a function
+                                                    // I know ill get confused by this later on (this is passed from main panel)
 }
 
 interface State {
@@ -63,7 +57,7 @@ export default class Table extends React.Component<Props, {}> {
     // }
 
     render() {
-        log.debug('New contents were received at Table.tsx');
+        log.debug('Re-rendering Table.tsx');
         return (
             <div className="">
                 <h1>TEST</h1>
@@ -93,7 +87,6 @@ export default class Table extends React.Component<Props, {}> {
         console.log('Received contents for the table: ');
         console.dir(contents);
 
-
         // This will contain all of the table body rows to be displayed
         const tableRows: React.ReactChild[] = [];
         let tempData: React.ReactChild[];
@@ -104,7 +97,7 @@ export default class Table extends React.Component<Props, {}> {
                 tempData.push(<TData key={key}>{this.getDataCellContents(contents[rowNum], col)}</TData>);
             }
             tableRows.push(
-                <TRow key={rowNum} onClick={getClickListener(rowNum)}>
+                <TRow key={rowNum} onClick={this.props.clickListener(rowNum)}>
                     {tempData}
                 </TRow>
             );

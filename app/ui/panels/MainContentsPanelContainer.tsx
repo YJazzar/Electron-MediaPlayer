@@ -7,7 +7,13 @@ import FileDetails from '../../libs/templates/FileDetails';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-export default class MainContentsPanelContainer extends React.Component<{}, { tableContents: FileDetails[] }> {
+interface State {
+    tableContents: FileDetails[];
+    playing: boolean;
+    currFilePlaying: string;
+}
+
+export default class MainContentsPanelContainer extends React.Component<{}, State> {
     tableRef: React.RefObject<Table>;
 
     constructor(props: {}) {
@@ -17,6 +23,8 @@ export default class MainContentsPanelContainer extends React.Component<{}, { ta
         this.tableRef = React.createRef();
         this.state = {
             tableContents: [],
+            playing: false,
+            currFilePlaying: '',
         };
     }
 
@@ -25,11 +33,31 @@ export default class MainContentsPanelContainer extends React.Component<{}, { ta
         this.setState({ tableContents: newContents });
     }
 
+    // A listener to check the row that was clicked
+    rowClickListener(rowNum: number) {
+        return () => {
+            console.log('clicked' + rowNum);
+            this.setState({
+                playing: true,
+                currFilePlaying: this.state.tableContents[rowNum].filePath,
+            });
+        };
+    }
+
     render() {
         return (
             <div className={mainConfig.cssClassStyles}>
                 <h1>Main Contents Panel</h1>
-                <Table ref={this.tableRef} bodyContents={this.state.tableContents} />
+                <Table
+                    ref={this.tableRef}
+                    bodyContents={this.state.tableContents}
+                    clickListener={this.rowClickListener.bind(this)}
+                />
+                {this.state.playing &&
+                    <div id="audio-player" style={{display: "none"}}>
+                        <ReactAudioPlayer src={this.state.currFilePlaying} autoPlay controls />
+                    </div>
+                }
             </div>
         );
     }
