@@ -13,9 +13,7 @@ const log = LoggerFactory.getLogger(__filename);
  *  (... all other directories read in)
  * }
  */
-export default async function readDirectories(
-    dirPaths: string[]
-): Promise<DirectoryDetails[]> {
+export default async function readDirectories(dirPaths: string[]): Promise<DirectoryDetails[]> {
     log.debug(`Now reading the directory contents of: ${dirPaths.toString()}`);
 
     const result: DirectoryDetails[] = [];

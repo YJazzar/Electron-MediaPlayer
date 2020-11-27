@@ -10,9 +10,7 @@ const log = LoggerFactory.getLogger(__filename);
  * @param dirPath: string path for directory to read
  * @returns a DirectoryDetails Object
  */
-export default async function readDirectory(
-    dirPath: string
-): Promise<DirectoryDetails> {
+export default async function readDirectory(dirPath: string): Promise<DirectoryDetails> {
     // Create the initial object to return later on
     const ddResult: DirectoryDetails = {
         dirPath,

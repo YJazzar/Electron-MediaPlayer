@@ -6,10 +6,7 @@ import FileDetails from '../../../libs/templates/FileDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 
-export default async function readFileStat(
-    dirPath: string,
-    fileName: string
-): Promise<FileDetails | undefined> {
+export default async function readFileStat(dirPath: string, fileName: string): Promise<FileDetails | undefined> {
     // Construct the full path of the current file
     const filePath: string = path.join(dirPath, fileName);
 

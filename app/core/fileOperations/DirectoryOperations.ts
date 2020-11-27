@@ -1,4 +1,4 @@
-import { app } from 'electron';
+import { app, dialog } from 'electron';
 import Store from 'electron-store';
 import fs from 'fs';
 import path from 'path';
@@ -6,6 +6,7 @@ import LoggerFactory from '../../libs/logger/LoggerFactory';
 import DirectoryDetails from '../../libs/templates/DirectoryDetails';
 import FileDetails from '../../libs/templates/FileDetails';
 import readDirectories from './helpers/readDirectories';
+import readFileList from './helpers/readFileList';
 import sampleConfig from './sampleConfigs/sampleConfig';
 
 const log = LoggerFactory.getLogger(__filename);
@@ -67,11 +68,6 @@ export default class DirectoryOperations {
         } catch (error) {
             log.error(JSON.stringify(error));
         }
-
-        const indexStore = new Store({
-            cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
-            name: 'index',
-        });
     }
 
     // Returns true if the path already exists
@@ -82,42 +78,74 @@ export default class DirectoryOperations {
         return false;
     }
 
-    // This function will be called when a media file needs to be imported to tnyPlayer/data/index.js
-    // It will return the new state of adding the file to the JSON object array
-    // static async importToData(indexCurrState: FileDetails[], fileDetails: FileDetails): FileDetails[] {
-    //     indexCurrState.push(fileDetails);
-    //     return indexCurrState;
-    // }
+    // This will open the operating system's file chooser and let the users choose a folder
+    // The resulting array of paths will be returned as promise.
+    static chooseFolder(): Promise<string[] | null> {
+        log.debug(`running chooseFolder();`);
 
-    static async testFunction() {
-        log.debug('now calling readDirectory function');
+        const result: Promise<string[] | null> = dialog
+            .showOpenDialog({ properties: ['openDirectory'] })
+            .then((folders) => {
+                // Check if the operation was cancelled
+                if (folders.canceled) {
+                    log.info('Folder choosing operation was cancelled');
+                    return null;
+                }
 
-        const paths: string[] = [app.getPath('videos')];
-        const result: DirectoryDetails[] = await readDirectories(paths);
+                log.info('Folder choosing operation was completed');
 
-        // TODO: temp code
-        const store = new Store({
-            cwd: path.join(app.getPath('music'), 'tnyPlayer'),
-            name: 'history',
-        });
-        // NOTE: will need to iterate and store them in separate files later on
-        store.store = { ...result[0] };
-        log.info('SAVED!!');
+                return folders.filePaths;
+            })
+            .catch((err) => {
+                log.error(err);
+                return null;
+            });
+
+        return result;
     }
 
-    static async importTest() {
+    // This will open the operating system's file chooser and let the users choose a file or folder
+    // The resulting array of paths will be returned as promise.
+    static chooseFiles(): Promise<string[] | null> {
+        log.debug(`running chooseFolder();`);
+
+        const result: Promise<string[] | null> = dialog
+            .showOpenDialog({ properties: ['openFile', 'multiSelections'] })
+            .then((folders) => {
+                // Check if the operation was cancelled
+                if (folders.canceled) {
+                    log.info('Folder choosing operation was cancelled');
+                    return null;
+                }
+
+                log.info('Folder choosing operation was completed');
+
+                return folders.filePaths;
+            })
+            .catch((err) => {
+                log.error(err);
+                return null;
+            });
+
+        return result;
+    }
+
+    static async importFolders() {
         const indexStore = new Store({
             cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
             name: 'index',
         });
 
         log.debug('Running importTest()');
-        const paths: string[] = [path.join(app.getPath('videos'), 'Filler Vids')];
+        const paths: string[] | null = await this.chooseFolder();
+        if (paths == null) {
+            return;
+        }
+
         const result: DirectoryDetails[] = await readDirectories(paths);
 
-        let i = indexStore.get('size') as number;
-
         // After getting all the details, add them to the current index file:
+        let i = indexStore.get('size') as number;
         for (let dir = 0; dir < result.length; dir += 1) {
             for (let file = 0; file < result[dir].fileStatDetails.length; file += 1) {
                 indexStore.set(`${i}`, result[dir].fileStatDetails[file]);
@@ -126,4 +154,52 @@ export default class DirectoryOperations {
         }
         indexStore.set('size', i);
     }
+
+    static async importFiles() {
+        const indexStore = new Store({
+            cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
+            name: 'index',
+        });
+
+        log.debug('Running importTest()');
+        const paths: string[] | null = await this.chooseFiles();
+        if (paths == null) {
+            return;
+        }
+
+        const result: FileDetails[] = await readFileList(paths);
+
+        // After getting all the details, add them to the current index file:
+        let i = indexStore.get('size') as number;
+        for (let file = 0; file < result.length; file += 1) {
+            indexStore.set(`${i}`, result[file]);
+            i += 1;
+        }
+        indexStore.set('size', i);
+    }
 }
+
+// The following is an example of how to add files to the data/index.json file:
+/** *
+static async importTest() {
+    const indexStore = new Store({
+        cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
+        name: 'index',
+    });
+
+    log.debug('Running importTest()');
+    const paths: string[] = [path.join(app.getPath('videos'), 'Filler Vids')];
+    const result: DirectoryDetails[] = await readDirectories(paths);
+
+    let i = indexStore.get('size') as number;
+
+    // After getting all the details, add them to the current index file:
+    for (let dir = 0; dir < result.length; dir += 1) {
+        for (let file = 0; file < result[dir].fileStatDetails.length; file += 1) {
+            indexStore.set(`${i}`, result[dir].fileStatDetails[file]);
+            i += 1;
+        }
+    }
+    indexStore.set('size', i);
+}
+* */

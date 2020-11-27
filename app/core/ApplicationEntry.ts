@@ -14,7 +14,15 @@ const mainMenuTemplate = [
                 accelerator: process.platform === 'darwin' ? 'Command+I' : 'Ctrl+I',
                 click() {
                     // Action:
-                    DirectoryOperations.importTest();
+                    DirectoryOperations.importFolders();
+                },
+            },
+            {
+                label: 'Import File(s)',
+                accelerator: process.platform === 'darwin' ? 'Command+O' : 'Ctrl+O',
+                click() {
+                    // Action:
+                    DirectoryOperations.importFiles();
                 },
             },
             {
