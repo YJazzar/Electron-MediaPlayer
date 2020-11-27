@@ -48,24 +48,22 @@ interface State {
     bodyContents: FileDetails[];
 }
 
-export default class Table extends React.Component<Props, State> {
+export default class Table extends React.Component<Props, {}> {
     headerOptions: string[];
 
     constructor(props: Props) {
         super(props);
 
-        this.state = { bodyContents: props.bodyContents };
-
         this.headerOptions = ipcRenderer.sendSync('config:getTableHeaderOptions');
     }
 
     // This function will be used by the ref maintained in MainContentsPanelContainer.tsx
-    updateTableBody(newContents: FileDetails[]) {
-        log.debug('New contents were received at Table.tsx');
-        this.setState({ bodyContents: newContents });
-    }
+    // updateTableBody(newContents: FileDetails[]) {
+
+    // }
 
     render() {
+        log.debug('New contents were received at Table.tsx');
         return (
             <div className="">
                 <h1>TEST</h1>
@@ -91,22 +89,10 @@ export default class Table extends React.Component<Props, State> {
     }
 
     getTableBody(): React.ReactChild[] {
-        const contents: FileDetails[] = this.state.bodyContents;
+        const contents: FileDetails[] = this.props.bodyContents;
         console.log('Received contents for the table: ');
         console.dir(contents);
 
-        // const tr: React.ReactChild[] = [];
-        // for (let row = 0; row < 50; row++) {
-        //     const td = [];
-        //     for (let i = 0; i < 5; i++) {
-        //         td.push(<TData key={i + row * 3}>{i + row * 3}</TData>);
-        //     }
-        //     tr.push(
-        //         <TRow key={row} onClick={getClickListener(row)}>
-        //             {td}
-        //         </TRow>
-        //     );
-        // }
 
         // This will contain all of the table body rows to be displayed
         const tableRows: React.ReactChild[] = [];

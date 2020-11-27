@@ -24,7 +24,7 @@ export default class IpcMainController {
         // An event so the html files from the electron browser can use the logger
         ipcMain.on('Logger', this.sendLogMessage.bind(this));
 
-        this.mainWindow.webContents.on('did-finish-load', this.emitInitialWindowSize.bind(this));
+        this.mainWindow.webContents.on('did-finish-load', this.initializeRenderer.bind(this));
 
         this.mainWindow.on('will-resize', this.willResize.bind(this));
 
@@ -52,9 +52,17 @@ export default class IpcMainController {
     }
 
     // eventName = 'did-finish-load'
+    // Used to init the renderer's window
+    initializeRenderer() {
+        log.debug('Did-Finish-Load event was received');
+        this.emitInitialWindowSize();
+
+        // Send the data to be displayed to the table
+        this.statusUpdateDataIndex();
+    }
+
     // Used for the resizable components to correctly set their initial widths and heights
     emitInitialWindowSize() {
-        log.debug('Did-Finish-Load event was received');
         const size = this.mainWindow.getSize();
         const width = size[0];
         const height = size[1];

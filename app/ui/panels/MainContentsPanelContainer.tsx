@@ -7,8 +7,7 @@ import FileDetails from '../../libs/templates/FileDetails';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-export default class MainContentsPanelContainer extends React.Component<{}, { test: boolean }> {
-
+export default class MainContentsPanelContainer extends React.Component<{}, { tableContents: FileDetails[] }> {
     tableRef: React.RefObject<Table>;
 
     constructor(props: {}) {
@@ -17,21 +16,20 @@ export default class MainContentsPanelContainer extends React.Component<{}, { te
         // Create the needed ref and init the state
         this.tableRef = React.createRef();
         this.state = {
-            test: false,
+            tableContents: [],
         };
     }
 
     updateTable(newContents: FileDetails[]) {
         log.debug('Updating table from main contents panel container.tsx');
-
-        this.tableRef.current?.updateTableBody(newContents);
+        this.setState({ tableContents: newContents });
     }
 
     render() {
         return (
             <div className={mainConfig.cssClassStyles}>
                 <h1>Main Contents Panel</h1>
-                <Table ref={this.tableRef} bodyContents={[]} />
+                <Table ref={this.tableRef} bodyContents={this.state.tableContents} />
             </div>
         );
     }
