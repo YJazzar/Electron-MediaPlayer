@@ -81,7 +81,7 @@ export default class DirectoryOperations {
     // This will open the operating system's file chooser and let the users choose a folder
     // The resulting array of paths will be returned as promise.
     static chooseFolder(): Promise<string[] | null> {
-        log.debug(`running chooseFolder();`);
+        log.debug(`User was prompted to choose a folder`);
 
         const result: Promise<string[] | null> = dialog
             .showOpenDialog({ properties: ['openDirectory'] })
@@ -107,7 +107,7 @@ export default class DirectoryOperations {
     // This will open the operating system's file chooser and let the users choose a file or folder
     // The resulting array of paths will be returned as promise.
     static chooseFiles(): Promise<string[] | null> {
-        log.debug(`running chooseFolder();`);
+        log.debug(`User was prompted to choose a file`);
 
         const result: Promise<string[] | null> = dialog
             .showOpenDialog({ properties: ['openFile', 'multiSelections'] })
@@ -136,7 +136,7 @@ export default class DirectoryOperations {
             name: 'index',
         });
 
-        log.debug('Running importTest()');
+        log.debug('Importing folders using DirectoryOperations.importFolders()');
         const paths: string[] | null = await this.chooseFolder();
         if (paths == null) {
             return;
@@ -162,7 +162,7 @@ export default class DirectoryOperations {
             name: 'index',
         });
 
-        log.debug('Running importTest()');
+        log.debug('Importing files using DirectoryOperations.importFiles()');
         const paths: string[] | null = await this.chooseFiles();
         if (paths == null) {
             return;

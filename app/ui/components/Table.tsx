@@ -54,7 +54,7 @@ export default class Table extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
-        this.state = {bodyContents: props.bodyContents};
+        this.state = { bodyContents: props.bodyContents };
 
         this.headerOptions = ipcRenderer.sendSync('config:getTableHeaderOptions');
     }
@@ -67,7 +67,7 @@ export default class Table extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className={''}>
+            <div className="">
                 <h1>TEST</h1>
                 <TableStyledComp>
                     <THead>{this.getTableHeaders()}</THead>
@@ -95,19 +95,58 @@ export default class Table extends React.Component<Props, State> {
         console.log('Received contents for the table: ');
         console.dir(contents);
 
-        let tr: React.ReactChild[] = [];
-        for (let row = 0; row < 50; row++) {
-            let td = [];
-            for (let i = 0; i < 5; i++) {
-                td.push(<TData key={i + row * 3}>{i + row * 3}</TData>);
+        // const tr: React.ReactChild[] = [];
+        // for (let row = 0; row < 50; row++) {
+        //     const td = [];
+        //     for (let i = 0; i < 5; i++) {
+        //         td.push(<TData key={i + row * 3}>{i + row * 3}</TData>);
+        //     }
+        //     tr.push(
+        //         <TRow key={row} onClick={getClickListener(row)}>
+        //             {td}
+        //         </TRow>
+        //     );
+        // }
+
+        // This will contain all of the table body rows to be displayed
+        const tableRows: React.ReactChild[] = [];
+        let tempData: React.ReactChild[];
+        for (let rowNum = 0; rowNum < contents.length; rowNum += 1) {
+            tempData = [];
+            for (let col = 0; col < this.headerOptions.length; col += 1) {
+                const key = rowNum * this.headerOptions.length + col;
+                tempData.push(<TData key={key}>{this.getDataCellContents(contents[rowNum], col)}</TData>);
             }
-            tr.push(
-                <TRow key={row} onClick={getClickListener(row)}>
-                    {td}
+            tableRows.push(
+                <TRow key={rowNum} onClick={getClickListener(rowNum)}>
+                    {tempData}
                 </TRow>
             );
         }
 
-        return tr;
+        return tableRows;
+    }
+
+    getDataCellContents(fileDetails: FileDetails, colNumber: number): string {
+        const header = this.headerOptions[colNumber];
+
+        //  ["Name", "Length", "Type", "Size", "Date Modified"]
+        if (header === 'Name') {
+            return fileDetails.fileName;
+        }
+        if (header === 'Length') {
+            return fileDetails.duration + '';
+        }
+        if (header === 'Type') {
+            return fileDetails.fileExtension;
+        }
+        if (header === 'Size') {
+            return fileDetails.size;
+        }
+        if (header === 'Date Modified') {
+            return fileDetails.dateElements.formattedDate;
+        }
+
+        return `null for ${header}`;
     }
 }

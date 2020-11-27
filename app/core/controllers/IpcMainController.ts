@@ -116,8 +116,6 @@ export default class IpcMainController {
             newContents.push(indexStore.get(`${i}`) as FileDetails);
         }
 
-        log.debug(JSON.stringify(newContents));
-
         this.mainWindow.webContents.send('status:data/index.json updated', newContents);
     }
 }
