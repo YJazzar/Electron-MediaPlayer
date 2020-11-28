@@ -51,13 +51,7 @@ export default class Table extends React.Component<Props, {}> {
         this.headerOptions = ipcRenderer.sendSync('config:getTableHeaderOptions');
     }
 
-    // This function will be used by the ref maintained in MainContentsPanelContainer.tsx
-    // updateTableBody(newContents: FileDetails[]) {
-
-    // }
-
     render() {
-        log.debug('Re-rendering Table.tsx');
         return (
             <div className="">
                 <h1>TEST</h1>
