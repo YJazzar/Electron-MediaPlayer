@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactAudioPlayer from 'react-audio-player';
 import mainConfig from '../configs/MainConfigImpl';
 import Table from '../components/Table';
 import LoggerFactory from '../../libs/logger/LoggerFactory';

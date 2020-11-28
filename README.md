@@ -48,6 +48,10 @@ Note for readers:
 
 # TODO:
 
+-   Implement a verification function inside of DirectoryOperations to make sure data/index.json and index.json are not corrupted
+-   make sure to copy all media files into the /data/ folder
+-   In file details, add an option `isSymbolicLink` to prevent from copying the media file to the /data/ directory
+
 -   Perform further testing for cross-platform support with ffprobe's integration
     -   Update ffprobe-static binary filepaths when running 'yarn start'
 -   Perform further testing for application self-repairing config folders when deleted

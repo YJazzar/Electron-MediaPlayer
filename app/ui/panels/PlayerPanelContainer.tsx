@@ -1,37 +1,68 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
 
-export default class PlayerPanelContainer extends React.Component<ApplicationState, {}> {
+interface State {
+    currentTime: number;
+    duration: number;
+}
+
+export default class PlayerPanelContainer extends React.Component<ApplicationState, State> {
+    audioPlayerRef: React.RefObject<HTMLAudioElement>;
+
     constructor(props: ApplicationState) {
         super(props);
+
+        this.state = {
+            currentTime: 0,
+            duration: 0,
+        };
+
+        this.audioPlayerRef = React.createRef();
+    }
+
+    onTimeUpdate(event: SyntheticEvent<HTMLAudioElement, Event>) {
+        console.log("Updating time");
+        this.setState({
+            currentTime: event.currentTarget.currentTime as number,
+            duration: event.currentTarget.duration as number,
+        });
+    }
+
+    play() {
+        this.audioPlayerRef.current?.play();
+    }
+
+    pause() {
+        this.audioPlayerRef.current?.pause();
     }
 
     render() {
         return (
             <div className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
-                <h1>Player Panel</h1>
+                <button onClick={this.play.bind(this)}>play</button>
+                <br />
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Sapien eget mi proin sed libero enim sed faucibus.
-                    Nisi est sit amet facilisis magna etiam tempor orci eu.
-                    Pharetra convallis posuere morbi leo urna. Id nibh tortor id
-                    aliquet lectus. Turpis egestas pretium aenean pharetra magna
-                    ac. Aliquet lectus proin nibh nisl condimentum id venenatis
-                    a condimentum. Molestie ac feugiat sed lectus vestibulum
-                    mattis. Sit amet facilisis magna etiam tempor orci eu
-                    lobortis. Libero justo laoreet sit amet cursus sit amet
-                    dictum sit. At auctor urna nunc id cursus metus aliquam
-                    eleifend. Nec ultrices dui sapien eget mi proin sed libero.
-                    Tempor id eu nisl nunc mi ipsum faucibus vitae. Egestas dui
-                    id ornare arcu odio ut. Sit amet aliquam id diam maecenas
-                    ultricies.
+                    {this.state.currentTime} / {this.state.duration}
                 </p>
+                <br />
+                <button onClick={this.pause.bind(this)}> pause</button>
+
+                <h1>Player Panel</h1>
                 {this.props.playing && this.props.currFilePlaying != null && (
                     <div id="audio-player">
-                        <ReactAudioPlayer src={this.props.currFilePlaying} autoPlay controls />
+                        {/* <ReactAudioPlayer src={this.props.currFilePlaying} autoPlay controls /> */}
+                        <audio
+                            controls
+                            autoPlay
+                            src={this.props.currFilePlaying}
+                            style={{ width: '100%' }}
+                            ref={this.audioPlayerRef}
+                            onTimeUpdate={this.onTimeUpdate.bind(this)}
+                        >
+                            Your browser does not support <code>audio</code> tag
+                        </audio>
                     </div>
                 )}
             </div>
