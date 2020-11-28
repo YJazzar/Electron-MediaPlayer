@@ -32,7 +32,7 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
     // A listener to check the row that was clicked
     rowClickListener(rowNum: number) {
         return () => {
-            console.log('Playing: ' + this.state.tableContents[rowNum].filePath);
+            log.debug('Playing: ' + this.state.tableContents[rowNum].filePath);
             this.props.playNewFile(this.state.tableContents[rowNum].filePath);
         };
     }

@@ -1,7 +1,19 @@
 import React, { SyntheticEvent } from 'react';
+import styled from 'styled-components';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import Slider from '../components/Slider';
 import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
+
+const Button = styled.button`
+    display: inline-block;
+    color: palevioletred;
+    font-size: 1em;
+    margin: 1em;
+    padding: 0.25em 1em;
+    border: 2px solid palevioletred;
+    border-radius: 3px;
+    display: block;
+`;
 
 interface State {
     currentTime: number;
@@ -24,7 +36,6 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
 
     // This will be passed to the <audio> tag so currTime can be updated regularly
     onTimeUpdate(event: SyntheticEvent<HTMLAudioElement, Event>) {
-        console.log('Updating time');
         this.setState({
             currentTime: event.currentTarget.currentTime as number,
             duration: event.currentTarget.duration as number,
@@ -57,11 +68,11 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
 
             return (
                 <div className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
-                    <button onClick={this.play.bind(this)}>play</button>
+                    <Button onClick={this.play.bind(this)}>play</Button>
                     <p>
                         {isNaN(duration) ? '-' : this.state.currentTime} / {isNaN(duration) ? '-' : duration}
                     </p>
-                    <button onClick={this.pause.bind(this)}> pause</button>
+                    <Button onClick={this.pause.bind(this)}> pause</Button>
 
                     <div id="audio-player">
                         <Slider

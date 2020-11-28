@@ -20,14 +20,7 @@ export default class UILoggerInstance {
     // Method used to actually send log commands to winston
     log(logLevelName: string, sourcePath: string, message: string) {
         if (this.logToDevTools) {
-            console.log(
-                loggingStringFormatter(
-                    logLevelName,
-                    getDateTime(),
-                    sourcePath,
-                    message
-                )
-            );
+            console.log(loggingStringFormatter(logLevelName, getDateTime(), sourcePath, message));
         }
 
         // interface definition of this message structure is found in LogMessage.ts
