@@ -13,6 +13,7 @@ import NavigationPanelContainer from '../panels/NavigationPanelContainer';
 import PlayerPanelContainer from '../panels/PlayerPanelContainer';
 import VerticalResizableContainer from './VerticalResizableContainer';
 import StateController from '../controllers/StateController';
+import ApplicationState from '../../libs/templates/ApplicationState';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -20,12 +21,7 @@ const theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
 
 interface Props {}
 
-interface State {
-    width: number;
-    height: number;
-}
-
-export default class RootContainer extends React.Component<Props, State> {
+export default class RootContainer extends React.Component<Props, ApplicationState> {
     verticalResizableContainerRef: React.RefObject<VerticalResizableContainer>;
     horizontalResizableContainerRef: React.RefObject<HorizontalResizableContainer>;
 
@@ -47,9 +43,15 @@ export default class RootContainer extends React.Component<Props, State> {
         // Create the instance of StateController:
         new StateController(this.mainPanelRef, this.navigationPanelRef, this.playerPanelRef);
 
+        this.playNewFile = this.playNewFile.bind(this);
         this.state = {
-            width: 0,
-            height: 0,
+            playing: false,
+            currFilePlaying: null,
+            window: {
+                width: 0,
+                height: 0,
+            },
+            playNewFile: this.playNewFile,
         };
 
         ipcRenderer.on('resize-window', this.mainWindowResized.bind(this));
@@ -59,33 +61,36 @@ export default class RootContainer extends React.Component<Props, State> {
         log.debug(`Root container finished mounting.`);
     }
 
+    playNewFile(filePath: string) {
+        this.setState({
+            playing: true,
+            currFilePlaying: filePath,
+        });
+    }
+
     initialWindowSize(width: number, height: number) {
         log.debug(`now setting the width ${width} ${height}`);
         this.setState({
-            width: width,
-            height: height,
+            window: {
+                width: width,
+                height: height,
+            },
         });
         this.verticalResizableContainerRef.current?.initWindowSize();
         this.horizontalResizableContainerRef.current?.initWindowSize();
     }
 
-    mainWindowResized(
-        e: Event,
-        newScreenWidth: number,
-        newScreenHeight: number
-    ) {
-        const deltaWidth = newScreenWidth - this.state.width;
-        const deltaHeight = newScreenHeight - this.state.height;
+    mainWindowResized(e: Event, newScreenWidth: number, newScreenHeight: number) {
+        const deltaWidth = newScreenWidth - this.state.window.width;
+        const deltaHeight = newScreenHeight - this.state.window.height;
 
-        this.verticalResizableContainerRef.current?.mainWindowResized(
-            deltaWidth
-        );
-        this.horizontalResizableContainerRef.current?.mainWindowResized(
-            deltaHeight
-        );
+        this.verticalResizableContainerRef.current?.mainWindowResized(deltaWidth);
+        this.horizontalResizableContainerRef.current?.mainWindowResized(deltaHeight);
         this.setState({
-            width: newScreenWidth,
-            height: newScreenHeight,
+            window: {
+                width: newScreenWidth,
+                height: newScreenHeight,
+            },
         });
     }
 
@@ -116,9 +121,7 @@ export default class RootContainer extends React.Component<Props, State> {
                 bottomDivId={'player-panel-resizable-bottom'}
                 handleDivId={'content-panel-handle'}
                 cssTopHeightVarName={'--content-panel-resizable-height-top'}
-                cssBottomHeightVarName={
-                    '--player-panel-resizable-height-bottom'
-                }
+                cssBottomHeightVarName={'--player-panel-resizable-height-bottom'}
                 cssMinHeightVarName={'--content-panel-min-height'}
                 cssMaxHeightVarName={'--content-panel-max-height'}
                 topPanelComponent={this.getMainContentsPanel()}
@@ -130,14 +133,14 @@ export default class RootContainer extends React.Component<Props, State> {
 
     // Helper functions to get the contents of each panel
     getNavigationPanel(): React.ReactChild {
-        return <NavigationPanelContainer ref={this.navigationPanelRef}/>;
+        return <NavigationPanelContainer ref={this.navigationPanelRef} />;
     }
 
     getMainContentsPanel(): React.ReactChild {
-        return <MainContentsPanelContainer ref={this.mainPanelRef}/>;
+        return <MainContentsPanelContainer ref={this.mainPanelRef} {...this.state} />;
     }
 
     getPlayerPanel(): React.ReactChild {
-        return <PlayerPanelContainer ref={this.playerPanelRef}/>;
+        return <PlayerPanelContainer ref={this.playerPanelRef} {...this.state} />;
     }
 }

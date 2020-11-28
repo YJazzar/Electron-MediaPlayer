@@ -4,27 +4,24 @@ import mainConfig from '../configs/MainConfigImpl';
 import Table from '../components/Table';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import FileDetails from '../../libs/templates/FileDetails';
+import ApplicationState from '../../libs/templates/ApplicationState';
 
 const log = LoggerFactory.getUILogger(__filename);
 
 interface State {
     tableContents: FileDetails[];
-    playing: boolean;
-    currFilePlaying: string;
 }
 
-export default class MainContentsPanelContainer extends React.Component<{}, State> {
+export default class MainContentsPanelContainer extends React.Component<ApplicationState, State> {
     tableRef: React.RefObject<Table>;
 
-    constructor(props: {}) {
+    constructor(props: ApplicationState) {
         super(props);
 
         // Create the needed ref and init the state
         this.tableRef = React.createRef();
         this.state = {
             tableContents: [],
-            playing: false,
-            currFilePlaying: '',
         };
     }
 
@@ -36,11 +33,8 @@ export default class MainContentsPanelContainer extends React.Component<{}, Stat
     // A listener to check the row that was clicked
     rowClickListener(rowNum: number) {
         return () => {
-            console.log('clicked' + rowNum);
-            this.setState({
-                playing: true,
-                currFilePlaying: this.state.tableContents[rowNum].filePath,
-            });
+            console.log('Playing: ' + this.state.tableContents[rowNum].filePath);
+            this.props.playNewFile(this.state.tableContents[rowNum].filePath);
         };
     }
 
@@ -53,11 +47,6 @@ export default class MainContentsPanelContainer extends React.Component<{}, Stat
                     bodyContents={this.state.tableContents}
                     clickListener={this.rowClickListener.bind(this)}
                 />
-                {this.state.playing &&
-                    <div id="audio-player" style={{display: "none"}}>
-                        <ReactAudioPlayer src={this.state.currFilePlaying} autoPlay controls />
-                    </div>
-                }
             </div>
         );
     }

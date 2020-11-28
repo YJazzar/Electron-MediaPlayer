@@ -84,7 +84,7 @@ export default class Table extends React.Component<Props, {}> {
 
     getTableBody(): React.ReactChild[] {
         const contents: FileDetails[] = this.props.bodyContents;
-        console.log('Received contents for the table: ');
+        console.log('Current contents for the table: ');
         console.dir(contents);
 
         // This will contain all of the table body rows to be displayed

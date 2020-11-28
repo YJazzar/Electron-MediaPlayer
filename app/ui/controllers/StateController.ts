@@ -33,6 +33,7 @@ export default class StateController {
         log.debug('Initialized StateController');
     }
 
+    // This method will be invoked after an ipc event
     // This will be called to notify the renderer process that the data/index.json has changed
     ipcHandleNewImports(newContents: FileDetails[]) {
         this.mainPanelRef.current?.updateTable(newContents);

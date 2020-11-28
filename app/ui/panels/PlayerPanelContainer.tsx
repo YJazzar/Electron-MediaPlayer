@@ -1,7 +1,13 @@
 import React from 'react';
+import ReactAudioPlayer from 'react-audio-player';
+import ApplicationState from '../../libs/templates/ApplicationState';
 import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
 
-export default class PlayerPanelContainer extends React.Component<{}, {}> {
+export default class PlayerPanelContainer extends React.Component<ApplicationState, {}> {
+    constructor(props: ApplicationState) {
+        super(props);
+    }
+
     render() {
         return (
             <div className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
@@ -23,7 +29,12 @@ export default class PlayerPanelContainer extends React.Component<{}, {}> {
                     id ornare arcu odio ut. Sit amet aliquam id diam maecenas
                     ultricies.
                 </p>
+                {this.props.playing && this.props.currFilePlaying != null && (
+                    <div id="audio-player">
+                        <ReactAudioPlayer src={this.props.currFilePlaying} autoPlay controls />
+                    </div>
+                )}
             </div>
-        );
+        ); //  style={{ display: 'none' }}
     }
 }
