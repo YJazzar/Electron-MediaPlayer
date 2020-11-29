@@ -3,8 +3,17 @@ import styled from "styled-components";
 // const darkThemeClassStyles = 'dark bg-transparent p-10 text-gray-400 panel-border-dark';
 // const lightThemeClassStyles = 'light bg-transparent p-10 text-black panel-border-light';
 
-export const LightTheme = styled.div`
+const BaseTheme = styled.div`
+    background-color: transparent;
+`;
+
+const LightTheme = styled(BaseTheme)`
     background-color: rgb(249, 244, 228);
+
+    /* Set the text color */
+    --tw-text-opacity: 1;
+    color: rgba(0, 0, 0, var(--tw-text-opacity));
+
 
     /* The actual scroll handle (the one users can move by clicking and dragging) */
     .panel-border {
@@ -18,9 +27,12 @@ export const LightTheme = styled.div`
 `;
 
 
-export const DarkTheme = styled.div`
+const DarkTheme = styled(BaseTheme)`
     background-color: rgb(33, 33, 34);
 
+    /* Set the text color */
+    --tw-text-opacity: 1;
+    color: rgba(156, 163, 175, var(--tw-text-opacity));
 
     /* The actual scroll handle (the one users can move by clicking and dragging) */
     &::-webkit-scrollbar-thumb {
@@ -34,4 +46,4 @@ export const DarkTheme = styled.div`
 `;
 
 
-// export { DarkTheme, LightTheme };
+export { DarkTheme, LightTheme };

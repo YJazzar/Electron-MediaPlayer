@@ -2,7 +2,7 @@ import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { StyledComponent } from 'styled-components';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import FileDetails from '../../libs/templates/FileDetails';
-import { DarkTheme, LightTheme } from '../components/Themes';
+import * as Themes from '../components/Themes';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -60,10 +60,14 @@ export default class UIController {
         }
 
         if (this.theme === 'light') {
-            return LightTheme;
+            return Themes.LightTheme;
+        }
+
+        if (this.theme === 'dark') {
+            return Themes.DarkTheme;
         }
 
         log.error(`The theme ${this.theme} could not be resolved. Using default fallback theme: 'dark'`);
-        return DarkTheme;
+        return Themes.DarkTheme;
     }
 }
