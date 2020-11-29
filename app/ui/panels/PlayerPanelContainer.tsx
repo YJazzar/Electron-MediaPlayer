@@ -5,8 +5,11 @@ import Slider from '../components/Slider';
 import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
 import UIController from '../controllers/UIController';
 
-const PlayerPanelDiv = styled(UIController.getInstance().getTheme())`
+// const log = LoggerFactory.getUILogger(__filename);
 
+const PlayerPanelDiv = styled(UIController.getInstance().getTheme())`
+    border-top-width: 4px;
+    border-radius: 0.25rem;
 `;
 
 const Button = styled.button`
@@ -23,6 +26,7 @@ const Button = styled.button`
 interface State {
     currentTime: number;
     duration: number;
+    paused: boolean;
 }
 
 export default class PlayerPanelContainer extends React.Component<ApplicationState, State> {
@@ -34,6 +38,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
         this.state = {
             currentTime: 0,
             duration: 0,
+            paused: false,
         };
 
         this.audioPlayerRef = React.createRef();
@@ -58,53 +63,65 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
         }
     }
 
-    play() {
-        this.audioPlayerRef.current?.play();
-    }
+    togglePlay() {
+        if (!this.props.playing) {
+            // Return early here to avoid changing the component's state is something is not playing
+            return;
+        }
 
-    pause() {
-        this.audioPlayerRef.current?.pause();
+        if (this.state.paused === false) {
+            this.audioPlayerRef.current?.pause();
+            this.setState({
+                paused: true,
+            });
+        }
+        else if (this.state.paused === true) {
+            this.audioPlayerRef.current?.play();
+            this.setState({
+                paused: false,
+            });
+        }
     }
 
     render() {
         // If something is playing, then load an audio tag and play the audio:
+        const duration = this.state.duration;
+
+        return (
+            <PlayerPanelDiv className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
+                <Button onClick={this.togglePlay.bind(this)}>{this.state.paused || !this.props.playing? 'Play' : 'Pause'}</Button>
+
+                <div id="audio-player">
+                    <Slider
+                        minValue={0}
+                        maxValue={duration}
+                        currValue={this.state.currentTime}
+                        onSliderDrag={this.onSliderDrag.bind(this)}
+                    />
+                </div>
+                <p>
+                    {isNaN(duration) ? '-' : this.state.currentTime} / {isNaN(duration) ? '-' : duration}
+                </p>
+                {this.getAudioPlayer()}
+            </PlayerPanelDiv>
+        );
+    }
+
+    getAudioPlayer(): React.ReactChild {
         if (this.props.currFilePlaying != null) {
-            const duration = this.state.duration;
-
             return (
-                <PlayerPanelDiv className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
-                    <Button onClick={this.play.bind(this)}>play</Button>
-                    <p>
-                        {isNaN(duration) ? '-' : this.state.currentTime} / {isNaN(duration) ? '-' : duration}
-                    </p>
-                    <Button onClick={this.pause.bind(this)}> pause</Button>
-
-                    <div id="audio-player">
-                        <Slider
-                            minValue={0}
-                            maxValue={duration}
-                            currValue={this.state.currentTime}
-                            onSliderDrag={this.onSliderDrag.bind(this)}
-                        />
-                        <audio
-                            autoPlay
-                            src={this.props.currFilePlaying}
-                            style={{ width: '100%' }}
-                            ref={this.audioPlayerRef}
-                            onTimeUpdate={this.onTimeUpdate.bind(this)}
-                        >
-                            An error ocurred when loading the <code>audio</code> tag!
-                        </audio>
-                    </div>
-                </PlayerPanelDiv>
+                <audio
+                    autoPlay
+                    src={this.props.currFilePlaying}
+                    style={{ width: '100%' }}
+                    ref={this.audioPlayerRef}
+                    onTimeUpdate={this.onTimeUpdate.bind(this)}
+                >
+                    An error ocurred when loading the <code>audio</code> tag!
+                </audio>
             );
         }
 
-        // If nothing is playing, then don't load an audio tag
-        return (
-            <div className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
-                <h4>Not playing</h4>
-            </div>
-        );
+        return <div id={'NoAudioPlaying'} />;
     }
 }

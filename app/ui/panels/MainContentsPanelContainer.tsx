@@ -12,7 +12,9 @@ const log = LoggerFactory.getUILogger(__filename);
 
 
 const MainPanelDiv = styled(UIController.getInstance().getTheme())`
-
+    height: 100%;
+    overflow: auto;
+    padding: 1rem;
 `;
 
 interface State {

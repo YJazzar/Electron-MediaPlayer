@@ -6,7 +6,7 @@ const navConfig = {
     panelType: PanelType.navPanel,
     panelName: 'Navigation panel',
     className: 'h-full overflow-auto',
-    cssClassStyles: `panel-border border-r-4 rounded`,
+    cssClassStyles: `panel-border`,
     /** Styles explained:
      * .h-full = height: 100%
      * .border-r-4 = border right 4px

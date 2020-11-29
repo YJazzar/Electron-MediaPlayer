@@ -4,7 +4,8 @@ import navConfig from '../configs/NavConfigImpl';
 import UIController from '../controllers/UIController';
 
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
-
+    border-right-width: 4px;
+    border-radius: 0.25rem;
 `;
 
 export default class NavigationPanelContainer extends React.Component<{}, {}> {

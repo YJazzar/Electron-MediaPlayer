@@ -55,14 +55,13 @@ export default class UIController {
 
     getTheme(): StyledComponent<'div', never, Record<string, unknown>, never> {
         if (this.theme === '') {
-            log.info('Fetching theme from server side');
+            log.info('Fetching theme from server side and caching it in UIController.ts');
             this.theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
         }
 
         if (this.theme === 'light') {
             return Themes.LightTheme;
         }
-
         if (this.theme === 'dark') {
             return Themes.DarkTheme;
         }

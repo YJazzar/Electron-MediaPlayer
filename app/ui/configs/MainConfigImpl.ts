@@ -7,7 +7,7 @@ const mainConfig = {
     panelType: PanelType.mainPanel,
     panelName: 'Main panel',
     className: '',
-    cssClassStyles: `h-full overflow-auto`,
+    cssClassStyles: '',
     // cssClassStyles: 'floatLeft bg-gray-400 border border-gray-600',
 
     sizeProps: {
