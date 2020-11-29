@@ -1,6 +1,4 @@
-import PanelConfig, {
-    SharedPanelClassStyles,
-} from '../../libs/templates/PanelConfig';
+import PanelConfig from '../../libs/templates/PanelConfig';
 import PanelType from '../../libs/templates/PanelType';
 import mainConfig from './MainConfigImpl';
 import navConfig from './NavConfigImpl';
@@ -9,7 +7,7 @@ const playerControlsConfig = {
     panelType: PanelType.playerControlsPanel,
     panelName: 'Player Controls panel',
     className: ' h-full overflow-auto',
-    cssClassStyles: `${SharedPanelClassStyles} border-t-4 rounded`,
+    cssClassStyles: `panel-border border-t-4 rounded`,
     // cssClassStyles: 'floatLeft bg-gray-400 border border-gray-600',
 
     sizeProps: {

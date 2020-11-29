@@ -1,14 +1,12 @@
 import { ipcRenderer } from 'electron';
-import PanelConfig, {
-    SharedPanelClassStyles,
-} from '../../libs/templates/PanelConfig';
+import PanelConfig from '../../libs/templates/PanelConfig';
 import PanelType from '../../libs/templates/PanelType';
 
 const navConfig = {
     panelType: PanelType.navPanel,
     panelName: 'Navigation panel',
     className: 'h-full overflow-auto',
-    cssClassStyles: `${SharedPanelClassStyles} border-r-4 rounded`,
+    cssClassStyles: `panel-border border-r-4 rounded`,
     /** Styles explained:
      * .h-full = height: 100%
      * .border-r-4 = border right 4px

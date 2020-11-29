@@ -5,12 +5,12 @@ import LoggerFactory from '../../libs/logger/LoggerFactory';
 import FileDetails from '../../libs/templates/FileDetails';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import styled from 'styled-components';
-import { DarkTheme } from '../components/Themes';
+import UIController from '../controllers/UIController';
 
 const log = LoggerFactory.getUILogger(__filename);
 
 
-const MainPanelDiv = styled(DarkTheme)`
+const MainPanelDiv = styled(UIController.getInstance().getTheme())`
 
 `;
 
