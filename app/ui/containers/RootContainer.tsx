@@ -56,9 +56,8 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         };
 
         // Create the handles for the ipc messages
-        ipcRenderer.on('initial-window-size', this.initialWindowSize.bind(this));
+        UIController.getInstance().setInitialWindowSizeCB(this.initialWindowSize.bind(this));
         ipcRenderer.on('resize-window', this.mainWindowResized.bind(this));
-
     }
 
     componentDidMount() {
@@ -73,7 +72,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     }
 
     initialWindowSize(_e: IpcRendererEvent, width: number, height: number) {
-        log.debug(`now setting the width ${width} ${height}`);
+        log.debug(`initial-window-size was received... now setting the width ${width} ${height}`);
         this.setState({
             window: {
                 width: width,

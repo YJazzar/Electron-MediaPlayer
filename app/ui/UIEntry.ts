@@ -17,8 +17,8 @@ export default class UIEntry {
 
         this.rootComponentRef = rootComponentRef;
 
-        // Call all other init functions needed
-        UIController.getInstance(this.rootComponentRef);
+        // Initialize the UIController instance
+        UIController.getInstance();
 
         this.theme = ipcRenderer.sendSync('config:getTheme');
         log.info(`Current theme set is [${this.theme}]`);

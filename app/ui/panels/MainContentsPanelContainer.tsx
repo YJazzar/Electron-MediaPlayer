@@ -6,6 +6,7 @@ import FileDetails from '../../libs/templates/FileDetails';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import styled from 'styled-components';
 import UIController from '../controllers/UIController';
+import { IpcRendererEvent } from 'electron';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -29,9 +30,11 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
         this.state = {
             tableContents: [],
         };
+
+        UIController.getInstance().setHandleNewImportsCB(this.updateTable.bind(this));
     }
 
-    updateTable(newContents: FileDetails[]) {
+    updateTable(_e: IpcRendererEvent, newContents: FileDetails[]) {
         log.debug('Updating table from main contents panel container.tsx');
         this.setState({ tableContents: newContents });
     }

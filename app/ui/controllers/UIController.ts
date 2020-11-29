@@ -1,9 +1,8 @@
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import { EventEmitter } from 'events';
+import { StyledComponent } from 'styled-components';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import FileDetails from '../../libs/templates/FileDetails';
-import RootContainer from '../containers/RootContainer';
-import StateController from './StateController';
+import { DarkTheme, LightTheme } from '../components/Themes';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -11,56 +10,60 @@ const log = LoggerFactory.getUILogger(__filename);
 export default class UIController {
     private static instance: UIController;
 
-    // Custom EventEmitter to be used within the render process:
-    private events: EventEmitter;
+    // This is used to cache the application's theme
+    private theme: string;
 
-    private rootContainerRef: React.RefObject<RootContainer>;
+    // Callback to set the initial window size:
+    private initialWindowSizeCallback: ((_e: IpcRendererEvent, width: number, height: number) => void) | null;
+
+    // Callback to handle new imports:
+    private handleNewImportsCallback: ((_e: IpcRendererEvent, newContents: FileDetails[]) => void) | null;
+
+    private constructor() {
+        log.info('Initializing UIController...');
+        this.theme = '';
+        this.initialWindowSizeCallback = null;
+        this.handleNewImportsCallback = null;
+
+        /** Setting up all event handlers: */
+        // Note: the event 'window-resized' was implemented in RootContainer.tsx
+    }
 
     // Called by UIEntry.ts
-    static getInstance(rootContainerRef?: React.RefObject<RootContainer>): UIController {
-        if (!UIController.instance && rootContainerRef) {
-            UIController.instance = new UIController(rootContainerRef);
-        }
-        if (!UIController.instance && !rootContainerRef) {
-            log.error('Could not create an instance of UIController without a reference to rootContainer');
+    static getInstance(): UIController {
+        if (!UIController.instance) {
+            log.debug('Creating an instance of UIController');
+            UIController.instance = new UIController();
         }
         return UIController.instance;
     }
 
-    private constructor(rootContainerRef: React.RefObject<RootContainer>) {
-        log.info('Initializing UIController...');
-        this.events = new EventEmitter();
-        this.rootContainerRef = rootContainerRef;
-        this.createEventListeners();
-    }
+    // This is called inside of RootComponent.tsx
+    setInitialWindowSizeCB(callBack: (_e: IpcRendererEvent, width: number, height: number) => void) {
+        this.initialWindowSizeCallback = callBack;
 
-    // Setting up all event handlers:
-
-    // Note: the event 'window-resized' was implemented in RootContainer.tsx
-    private createEventListeners(): void {
         // Event to get the initial window size after the mainWindow was finished being created
-        ipcRenderer.on('initial-window-size', this.setInitialWindowSize.bind(this));
-        ipcRenderer.on('status:data/index.json updated', this.handleNewImports.bind(this));
+        ipcRenderer.on('initial-window-size', this.initialWindowSizeCallback);
     }
 
-    setInitialWindowSize(_e: IpcRendererEvent, width: number, height: number) {
-        log.debug('initial-window-size was received');
-        this.rootContainerRef.current?.initialWindowSize(width, height);
+    // This is called inside of MainContentsPanelContainer.tsx
+    setHandleNewImportsCB(callback: (_e: IpcRendererEvent, newContents: FileDetails[]) => void) {
+        this.handleNewImportsCallback = callback;
+
+        ipcRenderer.on('status:data/index.json updated', this.handleNewImportsCallback);
     }
 
-    // This will be called to notify the renderer process that the data/index.json has changed
-    handleNewImports(_e: IpcRendererEvent, newContents: FileDetails[]) {
-        const { instance } = StateController;
-        if (instance == null) {
-            log.error('A new import was detected, but StateController.instance was not defined. Could not forward the new data');
+    getTheme(): StyledComponent<'div', never, Record<string, unknown>, never> {
+        if (this.theme === '') {
+            log.info('Fetching theme from server side');
+            this.theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
         }
-        instance.ipcHandleNewImports(newContents);
 
-        this.rootContainerRef.current?.mainPanelRef.current?.updateTable(newContents);
+        if (this.theme === 'light') {
+            return LightTheme;
+        }
+
+        log.error(`The theme ${this.theme} could not be resolved. Using default fallback theme: 'dark'`);
+        return DarkTheme;
     }
-
-    // // For any class to use when they want to get the event emitter instance
-    // getEventEmitter(): EventEmitter {
-    //     return this.events;
-    // }
 }
