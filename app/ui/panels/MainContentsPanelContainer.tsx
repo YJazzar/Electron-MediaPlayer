@@ -4,8 +4,15 @@ import Table from '../components/Table';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import FileDetails from '../../libs/templates/FileDetails';
 import ApplicationState from '../../libs/templates/ApplicationState';
+import styled from 'styled-components';
+import { DarkTheme } from '../components/Themes';
 
 const log = LoggerFactory.getUILogger(__filename);
+
+
+const MainPanelDiv = styled(DarkTheme)`
+
+`;
 
 interface State {
     tableContents: FileDetails[];
@@ -39,14 +46,14 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
 
     render() {
         return (
-            <div className={mainConfig.cssClassStyles}>
+            <MainPanelDiv className={mainConfig.cssClassStyles}>
                 <h1>Main Contents Panel</h1>
                 <Table
                     ref={this.tableRef}
                     bodyContents={this.state.tableContents}
                     clickListener={this.rowClickListener.bind(this)}
                 />
-            </div>
+            </MainPanelDiv>
         );
     }
 }

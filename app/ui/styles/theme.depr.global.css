@@ -15,18 +15,18 @@
     https://coolors.co/f9f4e4-347aad-ae8ca3-ff3a20-502274
 */
 
-.dark {
+/* .dark {
     background-color: rgb(33, 33, 34);
-}
+} */
 
-.panel-border-dark {
+/* .panel-border-dark {
     border-color: rgb(0, 170, 235);
-}
+} */
 
 /* The actual scroll handle (the one users can move by clicking and dragging) */
-.dark::-webkit-scrollbar-thumb {
+/* .dark::-webkit-scrollbar-thumb {
     background-color: rgb(232, 144, 64);
-}
+} */
 
 /* Website to generate dark theme colors:
     https://coolors.co/212122-00aaeb-ffecd1-ff7d00-2cda9d

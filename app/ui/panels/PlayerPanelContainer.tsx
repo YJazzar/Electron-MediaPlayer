@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import Slider from '../components/Slider';
 import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
+import UIController from '../controllers/UIController';
+
+const PlayerPanelDiv = styled(UIController.getInstance().getTheme())`
+
+`;
 
 const Button = styled.button`
     display: inline-block;
@@ -67,7 +72,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
             const duration = this.state.duration;
 
             return (
-                <div className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
+                <PlayerPanelDiv className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
                     <Button onClick={this.play.bind(this)}>play</Button>
                     <p>
                         {isNaN(duration) ? '-' : this.state.currentTime} / {isNaN(duration) ? '-' : duration}
@@ -91,7 +96,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
                             An error ocurred when loading the <code>audio</code> tag!
                         </audio>
                     </div>
-                </div>
+                </PlayerPanelDiv>
             );
         }
 

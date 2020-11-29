@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import mainConfig from '../configs/MainConfigImpl';
@@ -6,18 +6,19 @@ import navConfig from '../configs/NavConfigImpl';
 import '../styles/app.global.css';
 import '../styles/contentResizables.global.css';
 import '../styles/navResizables.global.css';
-import '../styles/theme.global.css';
+// import '../styles/theme.global.css';
 import HorizontalResizableContainer from './HorizontalResizableContainer';
 import MainContentsPanelContainer from '../panels/MainContentsPanelContainer';
 import NavigationPanelContainer from '../panels/NavigationPanelContainer';
 import PlayerPanelContainer from '../panels/PlayerPanelContainer';
 import VerticalResizableContainer from './VerticalResizableContainer';
-import StateController from '../controllers/StateController';
 import ApplicationState from '../../libs/templates/ApplicationState';
+import UIController from '../controllers/UIController';
+import styled from 'styled-components';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-const theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
+const AppDiv = styled(UIController.getInstance().getTheme())``;
 
 interface Props {}
 
@@ -41,7 +42,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         this.playerPanelRef = React.createRef();
 
         // Create the instance of StateController:
-        new StateController(this.mainPanelRef, this.navigationPanelRef, this.playerPanelRef);
+        // new StateController(this.mainPanelRef, this.navigationPanelRef, this.playerPanelRef);
 
         this.playNewFile = this.playNewFile.bind(this);
         this.state = {
@@ -54,7 +55,10 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playNewFile: this.playNewFile,
         };
 
+        // Create the handles for the ipc messages
+        ipcRenderer.on('initial-window-size', this.initialWindowSize.bind(this));
         ipcRenderer.on('resize-window', this.mainWindowResized.bind(this));
+
     }
 
     componentDidMount() {
@@ -68,7 +72,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         });
     }
 
-    initialWindowSize(width: number, height: number) {
+    initialWindowSize(_e: IpcRendererEvent, width: number, height: number) {
         log.debug(`now setting the width ${width} ${height}`);
         this.setState({
             window: {
@@ -96,7 +100,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
 
     render() {
         return (
-            <div id="root-container" className={theme}>
+            <AppDiv id="root-container">
                 <VerticalResizableContainer
                     ref={this.verticalResizableContainerRef}
                     leftDivId={'nav-panel-resizable-left'}
@@ -109,7 +113,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
                     rightPanelComponent={this.getHorizontalResizableContainer()}
                     leftPanelConfig={navConfig}
                 />
-            </div>
+            </AppDiv>
         );
     }
 
