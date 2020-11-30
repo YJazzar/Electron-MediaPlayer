@@ -9,7 +9,6 @@ const log = LoggerFactory.getUILogger(__filename);
 // The styles of the table:
 const TableStyledComp = styled.table`
     width: 100%;
-    justify: centered;
     background-color: #dadfe3;
 `;
 
@@ -20,6 +19,7 @@ const TBody = styled.tbody`
 const THead = styled.thead`
     text-align: center;
     border: 1px solid white;
+    background-color: #434343;
 `;
 
 const TRow = styled.tr``;
@@ -73,7 +73,7 @@ export default class Table extends React.Component<Props, {}> {
             );
         }
 
-        return <TRow className="top-0 bg-red-600">{th}</TRow>;
+        return <TRow className="">{th}</TRow>;
     }
 
     getTableBody(): React.ReactChild[] {

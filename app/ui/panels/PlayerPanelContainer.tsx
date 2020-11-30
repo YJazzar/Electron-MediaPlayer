@@ -10,17 +10,38 @@ import UIController from '../controllers/UIController';
 const PlayerPanelDiv = styled(UIController.getInstance().getTheme())`
     border-top-width: 4px;
     border-radius: 0.25rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 `;
 
 const Button = styled.button`
-    display: inline-block;
+    width: 5%;
     color: palevioletred;
+    margin: auto;
     font-size: 1em;
-    margin: 1em;
     padding: 0.25em 1em;
     border: 2px solid palevioletred;
     border-radius: 3px;
     display: block;
+    width: 10%;
+`;
+
+const AudioPlayerDiv = styled.div`
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: 'center';
+`;
+
+const TimeStamp = styled.div`
+    width: 10%;
+    display: inline-block;
+    margin: auto;
+    justify-content: center;
+    align-items: left;
+    vertical-align: baseline;
 `;
 
 interface State {
@@ -74,8 +95,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
             this.setState({
                 paused: true,
             });
-        }
-        else if (this.state.paused === true) {
+        } else if (this.state.paused === true) {
             this.audioPlayerRef.current?.play();
             this.setState({
                 paused: false,
@@ -89,19 +109,20 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
 
         return (
             <PlayerPanelDiv className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
-                <Button onClick={this.togglePlay.bind(this)}>{this.state.paused || !this.props.playing? 'Play' : 'Pause'}</Button>
-
-                <div id="audio-player">
+                <Button onClick={this.togglePlay.bind(this)}>
+                    {this.state.paused || !this.props.playing ? 'Play' : 'Pause'}
+                </Button>
+                <AudioPlayerDiv>
                     <Slider
                         minValue={0}
                         maxValue={duration}
                         currValue={this.state.currentTime}
                         onSliderDrag={this.onSliderDrag.bind(this)}
                     />
-                </div>
-                <p>
-                    {isNaN(duration) ? '-' : this.state.currentTime} / {isNaN(duration) ? '-' : duration}
-                </p>
+                </AudioPlayerDiv>
+                <TimeStamp>
+                    {isNaN(duration) ? '-' : Math.round(this.state.currentTime)} / {isNaN(duration) ? '-' : Math.round(duration)}
+                </TimeStamp>
                 {this.getAudioPlayer()}
             </PlayerPanelDiv>
         );
