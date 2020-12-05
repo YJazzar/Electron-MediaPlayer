@@ -10,7 +10,6 @@ import { IpcRendererEvent } from 'electron';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-
 const MainPanelDiv = styled(UIController.getInstance().getTheme())`
     height: 100%;
     overflow: auto;

@@ -1,9 +1,14 @@
+import IconButton from '@material-ui/core/IconButton/IconButton';
 import React, { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import Slider from '../components/Slider';
 import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
 import UIController from '../controllers/UIController';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
+import { VolumeDown } from '@material-ui/icons';
+import VolumeSlider from '../components/VolumeSlider';
 
 // const log = LoggerFactory.getUILogger(__filename);
 
@@ -16,7 +21,7 @@ const PlayerPanelDiv = styled(UIController.getInstance().getTheme())`
     align-items: center;
 `;
 
-const Button = styled.button`
+const Button = styled(IconButton)`
     width: 5%;
     color: palevioletred;
     margin: auto;
@@ -26,6 +31,9 @@ const Button = styled.button`
     border-radius: 3px;
     display: block;
     width: 10%;
+    &:focus {
+        outline: none;
+    }
 `;
 
 const AudioPlayerDiv = styled.div`
@@ -109,8 +117,8 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
 
         return (
             <PlayerPanelDiv className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
-                <Button onClick={this.togglePlay.bind(this)}>
-                    {this.state.paused || !this.props.playing ? 'Play' : 'Pause'}
+                <Button onClick={this.togglePlay.bind(this)} color={'inherit'}>
+                    {this.state.paused || !this.props.playing ? <PlayArrowIcon /> : <PauseIcon />}
                 </Button>
                 <AudioPlayerDiv>
                     <Slider
@@ -124,6 +132,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
                     {isNaN(duration) ? '-' : Math.round(this.state.currentTime)} / {isNaN(duration) ? '-' : Math.round(duration)}
                 </TimeStamp>
                 {this.getAudioPlayer()}
+                <VolumeSlider/>
             </PlayerPanelDiv>
         );
     }

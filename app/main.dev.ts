@@ -9,6 +9,7 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
 import { app, BrowserWindow } from 'electron';
+import { truncateSync } from 'fs';
 import path from 'path';
 import ApplicationEntry from './core/ApplicationEntry';
 import ConfigManager from './libs/persist/ConfigManager';
@@ -29,15 +30,16 @@ const createWindow = async () => {
         show: false,
         width: ConfigManager.getInstance().getApplicationWindowWidth(),
         height: ConfigManager.getInstance().getApplicationWindowHeight(),
-        webPreferences:
-            (process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true') &&
-            process.env.ERB_SECURE !== 'true'
-                ? {
-                      nodeIntegration: true,
-                  }
-                : {
-                      preload: path.join(__dirname, 'dist/renderer.prod.js'),
-                  },
+        webPreferences: {
+            nodeIntegration: true,
+        },
+        // (process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true') && process.env.ERB_SECURE !== 'true'
+        //     ? {
+        //           nodeIntegration: true,
+        //       }
+        //     : {
+        //           preload: path.join(__dirname, 'dist/renderer.prod.js'),
+        //       },
     });
 
     mainWindow.loadURL(`file://${__dirname}/app.html`);
