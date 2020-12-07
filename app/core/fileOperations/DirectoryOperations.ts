@@ -7,7 +7,8 @@ import DirectoryDetails from '../../libs/templates/DirectoryDetails';
 import FileDetails from '../../libs/templates/FileDetails';
 import readDirectories from './helpers/readDirectories';
 import readFileList from './helpers/readFileList';
-import sampleConfig from './sampleConfigs/sampleConfig';
+import SampleConfig from '../../libs/templates/SampleConfig';
+import ConfigManager from '../../libs/persist/ConfigManager';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -49,7 +50,7 @@ export default class DirectoryOperations {
                 log.debug(`Successfully detected the config.json file at: ${configPath}`);
             } else {
                 log.info(`The config file does not exist... Copying sample config file to : ${configPath}`);
-                fs.writeFileSync(configPath, JSON.stringify(sampleConfig));
+                fs.writeFileSync(configPath, JSON.stringify(SampleConfig));
             }
         } catch (error) {
             log.error(JSON.stringify(error));
@@ -167,6 +168,15 @@ export default class DirectoryOperations {
         }
         indexStore.set('size', i);
         callBack();
+    }
+
+    static filterNonMediaFiles(oldDetails: FileDetails[]): FileDetails[] {
+        const allowedExtensions: string[] = ConfigManager.getInstance().getAllowedFileExtensions();
+
+        const newDetails: FileDetails[] = oldDetails.filter((fileDetails: FileDetails) => {
+            return !fileDetails.isDirectory;
+        });
+        return newDetails;
     }
 }
 

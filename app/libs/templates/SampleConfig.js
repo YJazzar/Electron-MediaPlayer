@@ -1,5 +1,5 @@
 // TODO: Update this before shipping
-const sampleConfig = {
+const SampleConfig = {
     README: 'https://github.com/YJazzar/tnyPlayer',
     theme: 'dark',
     applicationWindow: {
@@ -18,4 +18,4 @@ const sampleConfig = {
     },
 };
 
-export default sampleConfig;
+export default SampleConfig;

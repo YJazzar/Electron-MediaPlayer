@@ -117,18 +117,12 @@ export default class IpcMainController {
             name: 'index',
         });
 
-        let newContents: FileDetails[] = [];
+        const newContents: FileDetails[] = [];
 
         const size: number = indexStore.get('size') as number;
         for (let i = 0; i < size; i += 1) {
             newContents.push(indexStore.get(`${i}`) as FileDetails);
         }
-
-        log.debug(`Size of contents sent: ${newContents.length}`);
-        newContents = newContents.filter((fileDetails: FileDetails) => {
-            return !fileDetails.isDirectory;
-        });
-        log.debug(`Size of contents FITLERED: ${newContents.length}`);
 
         this.mainWindow.webContents.send('status:data/index.json updated', newContents);
     }
