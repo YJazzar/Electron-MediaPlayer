@@ -1,7 +1,6 @@
 import { app } from 'electron';
 import Store from 'electron-store';
 import path from 'path';
-import { logLevelNames } from '../logger/logLevelConstants';
 import SampleConfig from '../templates/SampleConfig';
 /**
  * This class will be used to get config file options used throughout the application

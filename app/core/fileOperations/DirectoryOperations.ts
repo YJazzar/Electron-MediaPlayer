@@ -9,6 +9,7 @@ import readDirectories from './helpers/readDirectories';
 import readFileList from './helpers/readFileList';
 import SampleConfig from '../../libs/templates/SampleConfig';
 import ConfigManager from '../../libs/persist/ConfigManager';
+import PlaylistDetails from '../../libs/templates/PlaylistDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -118,18 +119,24 @@ export default class DirectoryOperations {
     }
 
     static async importFolders(callBack: () => void) {
-        const indexStore = new Store({
-            cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
-            name: 'index',
-        });
-
         log.debug('Importing folders using DirectoryOperations.importFolders()');
         const paths: string[] | null = await this.chooseFolder();
         if (paths == null) {
             return;
         }
 
+        // Get the set of directories that will be within the new playlist
         const result: DirectoryDetails[] = await readDirectories(paths);
+        const indexStore = new Store({
+            cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
+            name: 'index',
+        });
+        const playlistName = 'Playlist #1'; // TODO: allow the user to set the name
+        const newPlaylist: PlaylistDetails = {
+            directoryPaths: paths,
+            playlistName,
+            mediaFiles: [],
+        };
 
         // After getting all the details, add them to the current index file:
         let i = indexStore.get('size') as number;
@@ -138,35 +145,13 @@ export default class DirectoryOperations {
         }
         for (let dir = 0; dir < result.length; dir += 1) {
             for (let file = 0; file < result[dir].fileStatDetails.length; file += 1) {
-                indexStore.set(`${i}`, result[dir].fileStatDetails[file]);
-                i += 1;
+                newPlaylist.mediaFiles.push(result[dir].fileStatDetails[file]);
             }
         }
-        indexStore.set('size', i);
-        callBack();
-    }
+        newPlaylist.mediaFiles = DirectoryOperations.filterNonMediaFiles(newPlaylist.mediaFiles);
 
-    static async importFiles(callBack: () => void) {
-        const indexStore = new Store({
-            cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
-            name: 'index',
-        });
-
-        log.debug('Importing files using DirectoryOperations.importFiles()');
-        const paths: string[] | null = await this.chooseFiles();
-        if (paths == null) {
-            return;
-        }
-
-        const result: FileDetails[] = await readFileList(paths);
-
-        // After getting all the details, add them to the current index file:
-        let i = indexStore.get('size') as number;
-        for (let file = 0; file < result.length; file += 1) {
-            indexStore.set(`${i}`, result[file]);
-            i += 1;
-        }
-        indexStore.set('size', i);
+        indexStore.set(`${i}`, newPlaylist);
+        indexStore.set('size', i + 1);
         callBack();
     }
 
@@ -174,7 +159,7 @@ export default class DirectoryOperations {
         const allowedExtensions: string[] = ConfigManager.getInstance().getAllowedFileExtensions();
 
         const newDetails: FileDetails[] = oldDetails.filter((fileDetails: FileDetails) => {
-            return !fileDetails.isDirectory;
+            return !fileDetails.isDirectory && allowedExtensions.includes(fileDetails.fileExtension);
         });
         return newDetails;
     }

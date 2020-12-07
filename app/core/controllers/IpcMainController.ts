@@ -5,6 +5,7 @@ import LoggerFactory from '../../libs/logger/LoggerFactory';
 import LogMessage from '../../libs/logger/LogMessage';
 import ConfigManager from '../../libs/persist/ConfigManager';
 import FileDetails from '../../libs/templates/FileDetails';
+import DirectoryOperations from '../fileOperations/DirectoryOperations';
 
 const log = LoggerFactory.getLogger(__filename);
 

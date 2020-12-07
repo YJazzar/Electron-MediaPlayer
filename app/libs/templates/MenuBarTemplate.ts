@@ -21,9 +21,9 @@ export default function getMenuTemplate(controller: IpcMainController): unknown[
                     accelerator: process.platform === 'darwin' ? 'Command+O' : 'Ctrl+O',
 
                     // Action:
-                    click() {
-                        DirectoryOperations.importFiles(controller.statusUpdateDataIndex.bind(controller));
-                    },
+                    // click() {
+
+                    // },
                 },
                 {
                     label: 'Clear Items',
