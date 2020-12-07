@@ -1,8 +1,8 @@
 import { ipcRenderer, IpcRendererEvent } from 'electron';
 import { StyledComponent } from 'styled-components';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
-import FileDetails from '../../libs/templates/FileDetails';
 import * as Themes from '../components/Themes';
+import PlaylistDetails from '../../libs/templates/PlaylistDetails';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -17,7 +17,7 @@ export default class UIController {
     private initialWindowSizeCallback: ((_e: IpcRendererEvent, width: number, height: number) => void) | null;
 
     // Callback to handle new imports:
-    private handleNewImportsCallback: ((_e: IpcRendererEvent, newContents: FileDetails[]) => void) | null;
+    private handleNewImportsCallback: ((_e: IpcRendererEvent, newContents: PlaylistDetails[]) => void) | null;
 
     private constructor() {
         log.info('Initializing UIController...');
@@ -47,7 +47,7 @@ export default class UIController {
     }
 
     // This is called inside of MainContentsPanelContainer.tsx
-    setHandleNewImportsCB(callback: (_e: IpcRendererEvent, newContents: FileDetails[]) => void) {
+    setHandleNewImportsCB(callback: (_e: IpcRendererEvent, newContents: PlaylistDetails[]) => void) {
         this.handleNewImportsCallback = callback;
 
         ipcRenderer.on('status:data/index.json updated', this.handleNewImportsCallback);

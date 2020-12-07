@@ -1,3 +1,5 @@
+import PlaylistDetails from './PlaylistDetails';
+
 export default interface ApplicationState {
     playing: boolean;
     currFilePlaying: string | null;
@@ -5,5 +7,8 @@ export default interface ApplicationState {
         width: number;
         height: number;
     };
-    playNewFile: (filePath: string) => void;
+    playNewFileCB: (filePath: string) => void;
+    playlistNames: string[];
+    playlists: PlaylistDetails[];
+    currSelectedPlaylist: string;
 }

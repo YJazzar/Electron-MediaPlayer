@@ -5,6 +5,7 @@ import LoggerFactory from '../../libs/logger/LoggerFactory';
 import LogMessage from '../../libs/logger/LogMessage';
 import ConfigManager from '../../libs/persist/ConfigManager';
 import FileDetails from '../../libs/templates/FileDetails';
+import PlaylistDetails from '../../libs/templates/PlaylistDetails';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -117,11 +118,11 @@ export default class IpcMainController {
             name: 'index',
         });
 
-        const newContents: FileDetails[] = [];
+        const newContents: PlaylistDetails[] = [];
 
         const size: number = indexStore.get('size') as number;
         for (let i = 0; i < size; i += 1) {
-            newContents.push(indexStore.get(`${i}`) as FileDetails);
+            newContents.push(indexStore.get(`${i}`) as PlaylistDetails);
         }
 
         this.mainWindow.webContents.send('status:data/index.json updated', newContents);
