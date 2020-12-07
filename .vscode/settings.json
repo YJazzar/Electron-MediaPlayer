@@ -62,5 +62,10 @@
         "test/**/__snapshots__": true,
         "yarn.lock": true,
         "*.{css,sass,scss}.d.ts": true
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true
     }
 }

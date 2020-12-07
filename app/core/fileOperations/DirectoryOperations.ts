@@ -15,20 +15,6 @@ export default class DirectoryOperations {
     // This function will make sure the data and log folders already exist
     // It will also make sure the user has a config file
     static initAppFolders() {
-        // Create the tnyPlayer/log folder
-        const logDir = path.join(app.getPath('music'), 'tnyPlayer', 'logs');
-        if (!this.pathExists(logDir)) {
-            fs.mkdir(logDir, (err) => {
-                if (err) {
-                    log.debug(`Could not create the log folder. fs.mkdir "errno":${err.errno} "code":${err.code}`);
-                } else {
-                    log.info(`Successfully created the log directory: ${logDir}`);
-                }
-            });
-        } else {
-            log.info(`Successfully detected the log directory: ${logDir}`);
-        }
-
         // Create the tnyPlayer/data folder
         const dataDir = path.join(app.getPath('music'), 'tnyPlayer', 'data');
         if (!this.pathExists(dataDir)) {

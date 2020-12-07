@@ -20,6 +20,20 @@ export default class LoggerImpl {
 
     // TODO: Make a config file to create this portion of the logger
     init(): void {
+        // Create the tnyPlayer/log folder
+        const logDir = path.join(app.getPath('music'), 'tnyPlayer', 'logs');
+        if (!fs.existsSync(logDir)) {
+            fs.mkdir(logDir, (err) => {
+                if (err) {
+                    console.log(`[Startup] Could not create the log folder. fs.mkdir "errno":${err.errno} "code":${err.code}`);
+                } else {
+                    console.log(`[Startup] Successfully created the log directory: ${logDir}`);
+                }
+            });
+        } else {
+            console.log(`[Startup] Successfully detected the log directory: ${logDir}`);
+        }
+
         // Create the logger
         this.logger = createLogger({
             format: customWinstonFormatter(),
@@ -87,16 +101,9 @@ export default class LoggerImpl {
         let max = 0;
         existingLogs.forEach((logFileName: string) => {
             if (logFileName.includes(currLogFileName)) {
-                const temp = logFileName.substring(
-                    logFileName.indexOf(currLogFileName) +
-                        currLogFileName.length
-                );
+                const temp = logFileName.substring(logFileName.indexOf(currLogFileName) + currLogFileName.length);
                 const newMax = parseInt(`${temp.match(/(\d+)/)}`, 10);
-                if (
-                    !Number.isNaN(newMax) &&
-                    Number.isFinite(newMax) &&
-                    newMax >= max
-                ) {
+                if (!Number.isNaN(newMax) && Number.isFinite(newMax) && newMax >= max) {
                     max = newMax;
                 }
             }
