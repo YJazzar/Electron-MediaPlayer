@@ -6,7 +6,6 @@ import LoggerFactory from '../../libs/logger/LoggerFactory';
 import DirectoryDetails from '../../libs/templates/DirectoryDetails';
 import FileDetails from '../../libs/templates/FileDetails';
 import readDirectories from './helpers/readDirectories';
-import readFileList from './helpers/readFileList';
 import SampleConfig from '../../libs/templates/SampleConfig';
 import ConfigManager from '../../libs/persist/ConfigManager';
 import PlaylistDetails from '../../libs/templates/PlaylistDetails';

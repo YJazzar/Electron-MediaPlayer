@@ -47,7 +47,7 @@ export default function getMenuTemplate(controller: IpcMainController): unknown[
 
     // If the current system is a mac, then add an empty object to the beginning of the template array.
     if (process.platform === 'darwin') {
-        template.unshift({} as any);
+        template.unshift({} as never);
     }
     return template;
 }
