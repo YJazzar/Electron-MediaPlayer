@@ -132,6 +132,9 @@ export default class DirectoryOperations {
 
         // After getting all the details, add them to the current index file:
         let i = indexStore.get('size') as number;
+        if (Number.isNaN(i) || i == null) {
+            i = 0;
+        }
         for (let dir = 0; dir < result.length; dir += 1) {
             for (let file = 0; file < result[dir].fileStatDetails.length; file += 1) {
                 indexStore.set(`${i}`, result[dir].fileStatDetails[file]);

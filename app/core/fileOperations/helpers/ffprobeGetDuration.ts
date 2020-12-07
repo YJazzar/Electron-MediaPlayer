@@ -36,6 +36,7 @@ export default function ffprobeGetDuration(filePath: string): Promise<number> {
 
     // The command to run is constructed:
     const command = `${cmd} ${params.join(' ')}`;
+    // console.log(`Running commanfd: ${command}`);
 
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout) => {
