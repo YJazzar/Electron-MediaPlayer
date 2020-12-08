@@ -45,6 +45,8 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
 	}
 
 	render() {
+        this.updateState();
+        console.log('MAIN RE_RENDERED');
 		let tableContents: FileDetails[] = [];
 		if (this.currPlaylistIndex == -1) {
 			tableContents = [];
