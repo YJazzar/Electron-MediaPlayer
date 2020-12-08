@@ -10,26 +10,26 @@
     },
 
     "files.exclude": {
-        // "**/.git": true,
-        // "**/.svn": true,
-        // "**/.hg": true,
-        // "**/CVS": true,
-        // "**/.DS_Store": true,
-        // "**/node_modules": true,
-        // "**/dll": true,
-        // "**/.idea": true,
-        // "**/yarn.lock": true,
-        // "**/.eslintcache": true,
-        // "**/.eslintignore": true,
-        // "**/internals": true,
-        // "**/configs": true,
-        // "babel.config.js": true,
-        // "postcss.config.js": true,
-        // "tailwind.config.js": true,
-        // "tsconfig.json": true,
-        // ".eslintrc.js": true,
-        // ".editorconfig": true,
-        // ".gitignore": true
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "**/dll": true,
+        "**/.idea": true,
+        "**/yarn.lock": true,
+        "**/.eslintcache": true,
+        "**/.eslintignore": true,
+        "**/internals": true,
+        "**/configs": true,
+        "babel.config.js": true,
+        "postcss.config.js": true,
+        "tailwind.config.js": true,
+        "tsconfig.json": true,
+        ".eslintrc.js": true,
+        ".editorconfig": true,
+        ".gitignore": true
     },
 
     "prettier.endOfLine": "lf",
@@ -62,5 +62,10 @@
         "test/**/__snapshots__": true,
         "yarn.lock": true,
         "*.{css,sass,scss}.d.ts": true
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true
     }
 }

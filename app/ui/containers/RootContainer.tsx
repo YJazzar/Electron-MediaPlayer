@@ -15,6 +15,7 @@ import VerticalResizableContainer from './VerticalResizableContainer';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import UIController from '../controllers/UIController';
 import styled from 'styled-components';
+import PlaylistDetails from '../../libs/templates/PlaylistDetails';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -52,11 +53,15 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
                 width: 0,
                 height: 0,
             },
-            playNewFile: this.playNewFile,
+            playNewFileCB: this.playNewFile,
+            playlistNames: [],
+            playlists: [],
+            currSelectedPlaylist: 'Playlist #1',
         };
 
         // Create the handles for the ipc messages
         UIController.getInstance().setInitialWindowSizeCB(this.initialWindowSize.bind(this));
+        UIController.getInstance().setHandleNewImportsCB(this.updateApplicationState.bind(this));
         ipcRenderer.on('resize-window', this.mainWindowResized.bind(this));
     }
 
@@ -64,11 +69,32 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         log.debug(`Root container finished mounting.`);
     }
 
+    // This will be called by MainContentsPanelContainer
+    // A callback such as this method is needed to lift the state change to the PlayerPanelContainer class
     playNewFile(filePath: string) {
         this.setState({
             playing: true,
             currFilePlaying: filePath,
         });
+    }
+
+    // This is the callback provided to the UIController class.
+    // This callback will hanlde updating the Application State everytime the user imports a new playlist
+    updateApplicationState(_e: IpcRendererEvent, playlistDetails: PlaylistDetails[]): void {
+        // Extract the list of playlists for updating the state
+        const playlistNames: string[] = [];
+        for (let i = 0; i < playlistDetails.length; i ++) {
+            playlistNames.push(playlistDetails[i].playlistName);
+        }
+
+
+        // Update the applications's state as needed:
+        this.setState({
+            playlistNames,
+            playlists: playlistDetails,
+        });
+
+        // Once the state has been updated, the render() functions for all subcomponents will be called
     }
 
     initialWindowSize(_e: IpcRendererEvent, width: number, height: number) {
@@ -136,7 +162,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
 
     // Helper functions to get the contents of each panel
     getNavigationPanel(): React.ReactChild {
-        return <NavigationPanelContainer ref={this.navigationPanelRef} />;
+        return <NavigationPanelContainer ref={this.navigationPanelRef} {...this.state}/>;
     }
 
     getMainContentsPanel(): React.ReactChild {

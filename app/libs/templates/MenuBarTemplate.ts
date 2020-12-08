@@ -2,7 +2,7 @@ import { app } from 'electron';
 import IpcMainController from '../../core/controllers/IpcMainController';
 import DirectoryOperations from '../../core/fileOperations/DirectoryOperations';
 
-export default function getMenuTemplate(controller: IpcMainController): any[] {
+export default function getMenuTemplate(controller: IpcMainController): unknown[] {
     const template = [
         {
             label: 'File',
@@ -21,9 +21,9 @@ export default function getMenuTemplate(controller: IpcMainController): any[] {
                     accelerator: process.platform === 'darwin' ? 'Command+O' : 'Ctrl+O',
 
                     // Action:
-                    click() {
-                        DirectoryOperations.importFiles(controller.statusUpdateDataIndex.bind(controller));
-                    },
+                    // click() {
+
+                    // },
                 },
                 {
                     label: 'Clear Items',
@@ -43,11 +43,11 @@ export default function getMenuTemplate(controller: IpcMainController): any[] {
                 },
             ],
         },
-    ] as any;
+    ];
 
     // If the current system is a mac, then add an empty object to the beginning of the template array.
     if (process.platform === 'darwin') {
-        template.unshift({});
+        template.unshift({} as never);
     }
     return template;
 }

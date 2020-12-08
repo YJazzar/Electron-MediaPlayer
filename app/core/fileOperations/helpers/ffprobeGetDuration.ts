@@ -32,17 +32,11 @@ const cmd = `${path.join(execPath, process.platform === 'win32' ? 'ffprobe.exe' 
 
 export default function ffprobeGetDuration(filePath: string): Promise<number> {
     const params = [];
-    params.push(
-        '-v',
-        'error',
-        '-show_entries',
-        'format=duration',
-        '-of default=noprint_wrappers=1:nokey=1',
-        `"${filePath}"`
-    );
+    params.push('-v', 'error', '-show_entries', 'format=duration', '-of default=noprint_wrappers=1:nokey=1', `"${filePath}"`);
 
     // The command to run is constructed:
     const command = `${cmd} ${params.join(' ')}`;
+    // console.log(`Running commanfd: ${command}`);
 
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout) => {

@@ -1,10 +1,9 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import styled from 'styled-components';
-import LoggerFactory from '../../libs/logger/LoggerFactory';
 import FileDetails from '../../libs/templates/FileDetails';
 
-const log = LoggerFactory.getUILogger(__filename);
+// const log = LoggerFactory.getUILogger(__filename);
 
 // The styles of the table:
 const TableStyledComp = styled.table`
@@ -38,9 +37,9 @@ interface Props {
                                                     // I know ill get confused by this later on (this is passed from main panel)
 }
 
-interface State {
-    bodyContents: FileDetails[];
-}
+// interface State {
+//     bodyContents: FileDetails[];
+// }
 
 export default class Table extends React.Component<Props, {}> {
     headerOptions: string[];

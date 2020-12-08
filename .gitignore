@@ -51,3 +51,4 @@ npm-debug.log.*
 .eslintcache
 
 Program-recordings/
+dll/
