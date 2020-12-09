@@ -79,7 +79,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     }
 
     // This will be called from within NavigationPanelContainer
-    // It will be used to change the ApplicationState so it points to a different paylist
+    // It will be used to change the ApplicationState so it points to a different playlist
     changePlaylist(newPlaylist: string) {
         this.setState({
             currSelectedPlaylist: newPlaylist,
@@ -87,7 +87,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     }
 
     // This is the callback provided to the UIController class.
-    // This callback will hanlde updating the Application State everytime the user imports a new playlist
+    // This callback will handel updating the Application State every time the user imports a new playlist
     updateApplicationState(_e: IpcRendererEvent, playlistDetails: PlaylistDetails[]): void {
         // Extract the list of playlists for updating the state
         const playlistNames: string[] = [];

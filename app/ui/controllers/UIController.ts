@@ -69,4 +69,9 @@ export default class UIController {
         log.error(`The theme ${this.theme} could not be resolved. Using default fallback theme: 'dark'`);
         return Themes.DarkTheme;
     }
+
+    // eslint-disable-next-line class-methods-use-this
+    addNewPlaylist(name: string) {
+        ipcRenderer.send('actions:addNewPlaylist', name);
+    }
 }

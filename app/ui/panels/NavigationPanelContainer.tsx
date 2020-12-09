@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import navConfig from '../configs/NavConfigImpl';
 import UIController from '../controllers/UIController';
 import ApplicationState from '../../libs/templates/ApplicationState';
+import { Button } from '@material-ui/core';
 
 
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
@@ -34,10 +35,17 @@ export default class NavigationPanelContainer extends React.Component<Props, {}>
         );
 	}
 
+    addPlaylist() {
+        UIController.getInstance().addNewPlaylist('tessttingg');
+    }
+
 	render() {
 		return (
 			<NavPanelDiv className={navConfig.className + ' ' + navConfig.cssClassStyles}>
 				<h1>Navigation Panel</h1>
+                <Button onClick={this.addPlaylist.bind(this)}>
+                    Add new Playlist
+                </Button>
 				<br />
 				{this.getPlaylists()}
 			</NavPanelDiv>

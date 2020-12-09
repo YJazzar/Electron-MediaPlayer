@@ -4,8 +4,8 @@ import path from 'path';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import LogMessage from '../../libs/logger/LogMessage';
 import ConfigManager from '../../libs/persist/ConfigManager';
-import FileDetails from '../../libs/templates/FileDetails';
 import PlaylistDetails from '../../libs/templates/PlaylistDetails';
+import DirectoryOperations from '../fileOperations/DirectoryOperations';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -15,10 +15,13 @@ export default class IpcMainController {
 
     private configManager: ConfigManager;
 
+    private static instance: IpcMainController;
+
     constructor(mainWindow: BrowserWindow) {
         log.info('Initializing ipcMainController...');
         this.mainWindow = mainWindow;
         this.configManager = ConfigManager.getInstance();
+        IpcMainController.instance = this;
     }
 
     init(): void {
@@ -39,11 +42,17 @@ export default class IpcMainController {
 
         ipcMain.on('config:getTableHeaderOptions', this.configGetTableHeaderOptions.bind(this));
 
+        ipcMain.on('actions:addNewPlaylist', this.actionAddNewPlaylist.bind(this));
+
         /**
          * The following are events that are not implemented but could be useful in the future
          */
         // This allows for the script to wait until the webpage is loaded
         // ipcMain.on('loadDone', () => {});
+    }
+
+    static getInstance(): IpcMainController {
+        return IpcMainController.instance;
     }
 
     // eventName = 'Logger'
@@ -59,7 +68,7 @@ export default class IpcMainController {
         this.emitInitialWindowSize();
 
         // Send the data to be displayed to the table
-        this.statusUpdateDataIndex();
+        this.sendStatusUpdateDataIndex();
     }
 
     // Used for the resizable components to correctly set their initial widths and heights
@@ -111,7 +120,7 @@ export default class IpcMainController {
     }
 
     // This will be used to notify the renderer that the user has imported new files into the tnyPlayer/data folder
-    statusUpdateDataIndex() {
+    sendStatusUpdateDataIndex() {
         // Get all of the fileDetails stored in data/index.json
         const indexStore = new Store({
             cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
@@ -126,5 +135,21 @@ export default class IpcMainController {
         }
 
         this.mainWindow.webContents.send('status:data/index.json updated', newContents);
+    }
+
+    // eventName = 'actions:addNewPlaylist'
+    // @param name: the name of the new playlist being added
+    actionAddNewPlaylist(_event: IpcMainEvent, name: string) {
+        DirectoryOperations.addNewPlaylist(name)
+            .then(() => {
+                log.debug('Sending new data/index.json');
+
+                // Notify the renderer process about the changes
+                this.sendStatusUpdateDataIndex();
+                return true;
+            })
+            .catch(() => {
+                log.error('DirectoryOperations.addNewPlaylist() returned a rejected promise');
+            });
     }
 }

@@ -1,4 +1,4 @@
-import { app, dialog } from 'electron';
+import { app } from 'electron';
 import Store from 'electron-store';
 import fs from 'fs';
 import path from 'path';
@@ -9,6 +9,7 @@ import readDirectories from './helpers/readDirectories';
 import SampleConfig from '../../libs/templates/SampleConfig';
 import ConfigManager from '../../libs/persist/ConfigManager';
 import PlaylistDetails from '../../libs/templates/PlaylistDetails';
+import SystemFiles from './helpers/SystemFiles';
 
 const log = LoggerFactory.getLogger(__filename);
 
@@ -18,7 +19,7 @@ export default class DirectoryOperations {
     static initAppFolders() {
         // Create the tnyPlayer/data folder
         const dataDir = path.join(app.getPath('music'), 'tnyPlayer', 'data');
-        if (!this.pathExists(dataDir)) {
+        if (!SystemFiles.pathExists(dataDir)) {
             fs.mkdir(dataDir, (err) => {
                 if (err) {
                     log.debug(`Could not create the data folder. fs.mkdir "errno":${err.errno} "code":${err.code}`);
@@ -33,7 +34,7 @@ export default class DirectoryOperations {
         // Check if the tnyPlayer/data/index.json file exists:
         const indexPath = path.join(app.getPath('music'), 'tnyPlayer', 'data', 'index.json');
         try {
-            if (this.pathExists(indexPath)) {
+            if (SystemFiles.pathExists(indexPath)) {
                 log.debug(`Successfully detected the data/index.json file at: ${indexPath}`);
             } else {
                 log.info(`The config file does not exist... Creating empty file at: ${indexPath}`);
@@ -46,7 +47,7 @@ export default class DirectoryOperations {
         // Check if the tnyPlayer/config.json file exists:
         const configPath = path.join(app.getPath('music'), 'tnyPlayer', 'config.json');
         try {
-            if (this.pathExists(configPath)) {
+            if (SystemFiles.pathExists(configPath)) {
                 log.debug(`Successfully detected the config.json file at: ${configPath}`);
             } else {
                 log.info(`The config file does not exist... Copying sample config file to : ${configPath}`);
@@ -57,69 +58,10 @@ export default class DirectoryOperations {
         }
     }
 
-    // Returns true if the path already exists
-    static pathExists(filePath: string): boolean {
-        if (fs.existsSync(filePath)) {
-            return true;
-        }
-        return false;
-    }
-
-    // This will open the operating system's file chooser and let the users choose a folder
-    // The resulting array of paths will be returned as promise.
-    static chooseFolder(): Promise<string[] | null> {
-        log.debug(`User was prompted to choose a folder`);
-
-        const result: Promise<string[] | null> = dialog
-            .showOpenDialog({ properties: ['openDirectory'] })
-            .then((folders) => {
-                // Check if the operation was cancelled
-                if (folders.canceled) {
-                    log.info('Folder choosing operation was cancelled');
-                    return null;
-                }
-
-                log.info('Folder choosing operation was completed');
-
-                return folders.filePaths;
-            })
-            .catch((err) => {
-                log.error(err);
-                return null;
-            });
-
-        return result;
-    }
-
-    // This will open the operating system's file chooser and let the users choose a file or folder
-    // The resulting array of paths will be returned as promise.
-    static chooseFiles(): Promise<string[] | null> {
-        log.debug(`User was prompted to choose a file`);
-
-        const result: Promise<string[] | null> = dialog
-            .showOpenDialog({ properties: ['openFile', 'multiSelections'] })
-            .then((folders) => {
-                // Check if the operation was cancelled
-                if (folders.canceled) {
-                    log.info('Folder choosing operation was cancelled');
-                    return null;
-                }
-
-                log.info('Folder choosing operation was completed');
-
-                return folders.filePaths;
-            })
-            .catch((err) => {
-                log.error(err);
-                return null;
-            });
-
-        return result;
-    }
-
-    static async importFolders(callBack: () => void) {
+    // @param name: the name of the new playlist being added
+    static async addNewPlaylist(name: string) {
         log.debug('Importing folders using DirectoryOperations.importFolders()');
-        const paths: string[] | null = await this.chooseFolder();
+        const paths: string[] | null = await SystemFiles.chooseFolder();
         if (paths == null) {
             return;
         }
@@ -130,10 +72,11 @@ export default class DirectoryOperations {
             cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
             name: 'index',
         });
-        const playlistName = 'Playlist #1'; // TODO: allow the user to set the name
+
+        // Make the new general structure of the playlist to be added
         const newPlaylist: PlaylistDetails = {
             directoryPaths: paths,
-            playlistName,
+            playlistName: name,
             mediaFiles: [],
         };
 
@@ -151,7 +94,6 @@ export default class DirectoryOperations {
 
         indexStore.set(`${i}`, newPlaylist);
         indexStore.set('size', i + 1);
-        callBack();
     }
 
     static filterNonMediaFiles(oldDetails: FileDetails[]): FileDetails[] {
@@ -164,28 +106,3 @@ export default class DirectoryOperations {
         return newDetails;
     }
 }
-
-// The following is an example of how to add files to the data/index.json file:
-/** *
-static async importTest() {
-    const indexStore = new Store({
-        cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
-        name: 'index',
-    });
-
-    log.debug('Running importTest()');
-    const paths: string[] = [path.join(app.getPath('videos'), 'Filler Vids')];
-    const result: DirectoryDetails[] = await readDirectories(paths);
-
-    let i = indexStore.get('size') as number;
-
-    // After getting all the details, add them to the current index file:
-    for (let dir = 0; dir < result.length; dir += 1) {
-        for (let file = 0; file < result[dir].fileStatDetails.length; file += 1) {
-            indexStore.set(`${i}`, result[dir].fileStatDetails[file]);
-            i += 1;
-        }
-    }
-    indexStore.set('size', i);
-}
-* */

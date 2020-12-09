@@ -13,7 +13,7 @@ export default function getMenuTemplate(controller: IpcMainController): unknown[
 
                     // Action:
                     click() {
-                        DirectoryOperations.importFolders(controller.statusUpdateDataIndex.bind(controller));
+                        DirectoryOperations.importFolders();
                     },
                 },
                 {
