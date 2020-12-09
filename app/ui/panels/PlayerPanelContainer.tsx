@@ -7,7 +7,6 @@ import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
 import UIController from '../controllers/UIController';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
-import { VolumeDown } from '@material-ui/icons';
 import VolumeSlider from '../components/VolumeSlider';
 
 // const log = LoggerFactory.getUILogger(__filename);

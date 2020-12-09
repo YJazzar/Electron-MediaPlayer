@@ -160,6 +160,7 @@ export default class DirectoryOperations {
         const newDetails: FileDetails[] = oldDetails.filter((fileDetails: FileDetails) => {
             return !fileDetails.isDirectory && allowedExtensions.includes(fileDetails.fileExtension);
         });
+
         return newDetails;
     }
 }

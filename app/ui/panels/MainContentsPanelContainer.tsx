@@ -35,12 +35,9 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
 	}
 
 	// A listener to check the row that was clicked
-	rowClickListener(rowNum: number) {
+	rowClickListener(filePath: string) {
 		return () => {
-			const fileDets = this.props.playlists[this.currPlaylistIndex].mediaFiles[rowNum];
-
-			log.debug('Playing: ' + fileDets.filePath);
-			this.props.playNewFileCB(fileDets.filePath);
+			this.props.playNewFileCB(filePath);
 		};
 	}
 

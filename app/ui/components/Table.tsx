@@ -33,7 +33,7 @@ const TData = styled.td`
 
 interface Props {
     bodyContents: FileDetails[];
-    clickListener: (rowNum: number) => () => void;  // A clickListener function that returns a function
+    clickListener: (newDilePath: string) => () => void;  // A clickListener function that returns a function
                                                     // I know ill get confused by this later on (this is passed from main panel)
 }
 
@@ -76,8 +76,12 @@ export default class Table extends React.Component<Props, {}> {
     }
 
     getTableBody(): React.ReactChild[] {
-        const contents: FileDetails[] = this.props.bodyContents;
+
+        const contents: FileDetails[] = this.props.bodyContents.filter((file: FileDetails) => {
+            return !file.isDirectory && file.duration != -1;
+        });
         console.log('Current contents for the table: ');
+        console.dir(this.props.bodyContents);
         console.dir(contents);
 
         // This will contain all of the table body rows to be displayed
@@ -90,7 +94,7 @@ export default class Table extends React.Component<Props, {}> {
                 tempData.push(<TData key={key}>{this.getDataCellContents(contents[rowNum], col)}</TData>);
             }
             tableRows.push(
-                <TRow key={rowNum} onClick={this.props.clickListener(rowNum)}>
+                <TRow key={rowNum} onClick={this.props.clickListener(contents[rowNum].filePath)}>
                     {tempData}
                 </TRow>
             );

@@ -56,7 +56,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playNewFileCB: this.playNewFile,
             playlistNames: [],
             playlists: [],
-            currSelectedPlaylist: 'Playlist #1',
+            currSelectedPlaylist: '',
         };
 
         // Create the handles for the ipc messages
@@ -78,21 +78,30 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         });
     }
 
+    // This will be called from within NavigationPanelContainer
+    // It will be used to change the ApplicationState so it points to a different paylist
+    changePlaylist(newPlaylist: string) {
+        this.setState({
+            currSelectedPlaylist: newPlaylist,
+        });
+    }
+
     // This is the callback provided to the UIController class.
     // This callback will hanlde updating the Application State everytime the user imports a new playlist
     updateApplicationState(_e: IpcRendererEvent, playlistDetails: PlaylistDetails[]): void {
         // Extract the list of playlists for updating the state
         const playlistNames: string[] = [];
-        for (let i = 0; i < playlistDetails.length; i ++) {
+        for (let i = 0; i < playlistDetails.length; i++) {
             playlistNames.push(playlistDetails[i].playlistName);
         }
-
 
         // Update the applications's state as needed:
         this.setState({
             playlistNames,
             playlists: playlistDetails,
         });
+        console.log('[MAIN] Current state');
+        console.dir(this.state);
 
         // this.mainPanelRef.current?.updateState();
         // Once the state has been updated, the render() functions for all subcomponents will be called
@@ -106,6 +115,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
                 height: height,
             },
         });
+
         this.verticalResizableContainerRef.current?.initWindowSize();
         this.horizontalResizableContainerRef.current?.initWindowSize();
     }
@@ -163,7 +173,13 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
 
     // Helper functions to get the contents of each panel
     getNavigationPanel(): React.ReactChild {
-        return <NavigationPanelContainer ref={this.navigationPanelRef} {...this.state}/>;
+        return (
+            <NavigationPanelContainer
+                ref={this.navigationPanelRef}
+                {...this.state}
+                changePlaylist={this.changePlaylist.bind(this)}
+            />
+        );
     }
 
     getMainContentsPanel(): React.ReactChild {
