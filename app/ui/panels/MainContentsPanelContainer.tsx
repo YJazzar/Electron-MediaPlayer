@@ -43,12 +43,11 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
 
 	render() {
         this.updateState();
-        console.log('MAIN RE_RENDERED');
+
 		let tableContents: FileDetails[] = [];
 		if (this.currPlaylistIndex == -1) {
 			tableContents = [];
 		} else {
-            console.log("THESE: " + this.currPlaylistIndex);
             tableContents = this.props.playlists[this.currPlaylistIndex].mediaFiles;
             console.dir(tableContents);
 		}
@@ -67,13 +66,21 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
 
 	// This function will control what files are displayed by the table rendered within this component
 	updateState(): void {
-        console.log(`Finding the new playlist id: {${this.props.currSelectedPlaylist}}`);
+        // Return early if no playlist was selected yet
+        if (this.props.currSelectedPlaylist === '') {
+            this.currPlaylistIndex = -1;
+            return;
+        }
+
+
+        log.debug(`Finding the new playlist id: {${this.props.currSelectedPlaylist}}`);
 		for (let i = 0; i < this.props.playlists.length; i++) {
 			if (this.props.currSelectedPlaylist === this.props.playlists[i].playlistName) {
 				this.currPlaylistIndex = i;
                 return;
             }
-		}
+        }
+
 		log.warning(`Could not find the playlist: "${this.props.currSelectedPlaylist}"`);
         this.currPlaylistIndex = -1;
 	}

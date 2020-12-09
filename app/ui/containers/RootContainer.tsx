@@ -100,8 +100,6 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playlistNames,
             playlists: playlistDetails,
         });
-        console.log('[MAIN] Current state');
-        console.dir(this.state);
 
         // this.mainPanelRef.current?.updateState();
         // Once the state has been updated, the render() functions for all subcomponents will be called

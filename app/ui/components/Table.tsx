@@ -81,7 +81,6 @@ export default class Table extends React.Component<Props, {}> {
             return !file.isDirectory && file.duration != -1;
         });
         console.log('Current contents for the table: ');
-        console.dir(this.props.bodyContents);
         console.dir(contents);
 
         // This will contain all of the table body rows to be displayed
