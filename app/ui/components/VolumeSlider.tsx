@@ -5,6 +5,11 @@ import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import React from 'react';
 import { SyntheticEvent } from 'react';
+import styled from 'styled-components';
+
+const ParentDiv = styled.div`
+    width: 65%;
+`;
 
 interface Props {
     // minValue: number;
@@ -24,9 +29,9 @@ export default class VolumeSlider extends React.Component<Props, {}> {
 
     render() {
         return (
-            <div className={'VolumeSlider'}>
+            <ParentDiv className={'VolumeSlider'}>
                 <Typography id="continuous-slider" gutterBottom>
-                    Volume
+                    {/* Volume */}
                 </Typography>
                 <Grid container spacing={2}>
                     <Grid item>
@@ -39,7 +44,7 @@ export default class VolumeSlider extends React.Component<Props, {}> {
                         <VolumeUp />
                     </Grid>
                 </Grid>
-            </div>
+            </ParentDiv>
         );
     }
 }

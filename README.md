@@ -1,4 +1,4 @@
-# tnyPlayer - A tiny media player (under construction)
+# tnyPlayer - A tiny media player
 
 Note for readers:
 
@@ -58,7 +58,5 @@ Note for readers:
 -   Create a custom context menu in which the user has the following operations:
     -   add to queue
     -   clear view
--   Implement a React Table
-    Possible features: - Have users create and define their own themes
 
 <br/>
