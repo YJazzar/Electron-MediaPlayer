@@ -15,6 +15,7 @@ const PlayerPanelDiv = styled(UIController.getInstance().getTheme())`
     justify-content: center;
     align-items: center;
     padding: 2em;
+    height: 100%;
 `;
 
 const Row = styled.div`
@@ -22,15 +23,33 @@ const Row = styled.div`
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    border: 3px solid green;
+    /* border: 3px solid green; */
     text-align: center;
 `;
 
 export default class PlayerPanelContainer extends React.Component<ApplicationState, {}> {
+    private playerSliderRef: React.RefObject<PlayerSlider>;
+
     constructor(props: ApplicationState) {
         super(props);
+
+        this.playerSliderRef = React.createRef();
     }
 
+    // Used by the VolumeSlider component to change the volume
+    onVolumeChange(newVolume: number) {
+        this.playerSliderRef.current?.setVolume(newVolume);
+    }
+
+    render() {
+        return (
+            <PlayerPanelDiv className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
+                {this.getTitleRow()}
+                {this.getPlayerRow()}
+                {this.getControlsRow()}
+            </PlayerPanelDiv>
+        );
+    }
     getTitleRow(): React.ReactChild {
         const TitleRow = styled(Row)`
             display: block;
@@ -44,7 +63,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
     getPlayerRow(): React.ReactChild {
         return (
             <Row id={'PlayerSlider'}>
-                <PlayerSlider playing={this.props.playing} currFilePlaying={this.props.currFilePlaying} />
+                <PlayerSlider ref={this.playerSliderRef} playing={this.props.playing} currFilePlaying={this.props.currFilePlaying} />
             </Row>
         );
     }
@@ -52,18 +71,8 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
     getControlsRow(): React.ReactChild {
         return (
             <Row id={'VolumeSlider'}>
-                <VolumeSlider />
+                <VolumeSlider onVolumeChange={this.onVolumeChange.bind(this)}/>
             </Row>
-        );
-    }
-
-    render() {
-        return (
-            <PlayerPanelDiv className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
-                {this.getTitleRow()}
-                {this.getPlayerRow()}
-                {this.getControlsRow()}
-            </PlayerPanelDiv>
         );
     }
 }

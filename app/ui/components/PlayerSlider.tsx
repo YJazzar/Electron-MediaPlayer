@@ -40,25 +40,14 @@ const TimeStamp = styled.div`
     vertical-align: baseline;
 `;
 
-// const AudioPlayerDiv = styled.div`
-//     width: 70%;
-//     display: flex;
-//     justify-content: center;
-//     align-items: 'center';
-// `;
-
-
 interface Props {
-    // togglePlay: () => void;
-    // onSliderDrag: (event: React.ChangeEvent<{}>, newTime: number | number[]) => void;
-    // paused: boolean;
     playing: boolean;
     currFilePlaying: string | null;
 }
 
 interface State {
     currentTime: number;
-    duration: number;   // This will be the max value of the slider (min value always = 0)
+    duration: number; // This will be the max value of the slider (min value always = 0)
     paused: boolean;
 }
 
@@ -75,10 +64,6 @@ export default class PlayerSlider extends React.Component<Props, State> {
         };
 
         this.audioPlayerRef = React.createRef();
-    }
-
-    handleChange(event: SyntheticEvent<HTMLInputElement, Event>) {
-        // this.props.onSliderDrag((event.currentTarget.value as unknown) as number);
     }
 
     togglePlay() {
@@ -100,17 +85,17 @@ export default class PlayerSlider extends React.Component<Props, State> {
         }
     }
 
-     // This will be passed to the <Slider> component so the user can drag the slider
-     onSliderDrag(event: React.ChangeEvent<{}>, newTime: number | number[]) {
+    // This will be passed to the <Slider> component so the user can drag the slider
+    onSliderDrag(event: React.ChangeEvent<{}>, newTime: number | number[]) {
         this.setState({
             currentTime: newTime as number,
         });
 
+        // Change the player's current time
         if (this.audioPlayerRef.current) {
             this.audioPlayerRef.current.currentTime = newTime as number;
         }
     }
-
 
     // This will be passed to the <audio> tag so currTime can be updated regularly
     onTimeUpdate(event: SyntheticEvent<HTMLAudioElement, Event>) {
@@ -120,6 +105,16 @@ export default class PlayerSlider extends React.Component<Props, State> {
         });
     }
 
+    // Note: newVolume will be in the range of [0, 100]
+    setVolume(newVolume: number) {
+        // Change the volume range from [0, 100] to [0, 1]
+        newVolume = newVolume / 100.0;
+
+        // Change the players volume
+        if (this.audioPlayerRef.current) {
+            this.audioPlayerRef.current.volume = newVolume;
+        }
+    }
 
     render() {
         return (
@@ -127,7 +122,14 @@ export default class PlayerSlider extends React.Component<Props, State> {
                 <Button onClick={this.togglePlay.bind(this)} color={'inherit'}>
                     {this.state.paused || !this.props.playing ? <PlayArrowIcon /> : <PauseIcon />}
                 </Button>
-                <StyledSlider min={0} max={this.state.duration} value={this.state.currentTime} aria-labelledby="continuous-slider" onChange={this.onSliderDrag.bind(this)} />
+                <StyledSlider
+                    min={0}
+                    max={this.state.duration}
+                    value={this.state.currentTime}
+                    aria-labelledby="continuous-slider"
+                    onChange={this.onSliderDrag.bind(this)}
+                    valueLabelDisplay="auto"
+                />
                 <TimeStamp>
                     {isNaN(this.state.duration) ? '-' : Math.round(this.state.currentTime)} /{' '}
                     {isNaN(this.state.duration) ? '-' : Math.round(this.state.duration)}

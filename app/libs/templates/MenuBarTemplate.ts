@@ -1,6 +1,5 @@
 import { app } from 'electron';
 import IpcMainController from '../../core/controllers/IpcMainController';
-import DirectoryOperations from '../../core/fileOperations/DirectoryOperations';
 
 export default function getMenuTemplate(controller: IpcMainController): unknown[] {
     const template = [
@@ -13,7 +12,7 @@ export default function getMenuTemplate(controller: IpcMainController): unknown[
 
                     // Action:
                     click() {
-                        DirectoryOperations.importFolders();
+                        // DirectoryOperations.importFolders();
                     },
                 },
                 {

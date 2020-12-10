@@ -1,49 +1,56 @@
-import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
 import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import React from 'react';
-import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 
 const ParentDiv = styled.div`
-    width: 65%;
+    width: inherit;
+    display: flex;
+    padding-left: 2em;
+    padding-right: 2em;
 `;
 
 interface Props {
-    // minValue: number;
-    // maxValue: number;
-    // currValue: number;
-    // onSliderDrag: (newTime: number) => void;
+    onVolumeChange: (newVolume: number) => void;
 }
 
-export default class VolumeSlider extends React.Component<Props, {}> {
+interface State {
+    currVolume: number;
+}
+
+export default class VolumeSlider extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
+
+        this.state = {
+            currVolume: 50,
+        };
     }
 
-    handleChange(event: SyntheticEvent<HTMLInputElement, Event>) {
-        // this.props.onSliderDrag((event.currentTarget.value as unknown) as number);
+    // This will be passed to the <Slider> component so the user can drag the slider
+    onSliderDrag(event: React.ChangeEvent<{}>, newVolume: number | number[]) {
+        // Change the state accordingly
+        this.setState({
+            currVolume: newVolume as number,
+        });
+
+        // Lift up the state change so it can reach the PlayerSlider component
+        this.props.onVolumeChange(this.state.currVolume);
     }
 
     render() {
         return (
             <ParentDiv className={'VolumeSlider'}>
-                <Typography id="continuous-slider" gutterBottom>
-                    {/* Volume */}
-                </Typography>
-                <Grid container spacing={2}>
-                    <Grid item>
-                        <VolumeDown />
-                    </Grid>
-                    <Grid item xs>
-                        <Slider value={50} aria-labelledby="continuous-slider" />
-                    </Grid>
-                    <Grid item>
-                        <VolumeUp />
-                    </Grid>
-                </Grid>
+                <VolumeDown />
+                <Slider
+                    min={0}
+                    max={100}
+                    value={this.state.currVolume}
+                    aria-labelledby="continuous-slider"
+                    onChange={this.onSliderDrag.bind(this)}
+                />
+                <VolumeUp />
             </ParentDiv>
         );
     }
