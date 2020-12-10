@@ -1,7 +1,9 @@
+import { createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
 import React from 'react';
 import { render } from 'react-dom';
 import LoggerFactory from './libs/logger/LoggerFactory';
 import RootContainer from './ui/containers/RootContainer';
+import UIController from './ui/controllers/UIController';
 import UIEntry from './ui/UIEntry';
 
 // import './ui/styles/test.global.css';
@@ -14,7 +16,20 @@ document.addEventListener('DOMContentLoaded', initUI);
 function initUI() {
     const ref = React.createRef<RootContainer>();
 
-    render(<RootContainer ref={ref} />, document.getElementById('root'));
+    const theme = createMuiTheme({
+        palette: {
+          type: UIController.getInstance().getThemeName() === 'dark' ? 'dark' : 'light',
+        }
+      });
+
+    const UIBase = (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <RootContainer ref={ref} />
+        </ThemeProvider>
+    );
+
+    render(UIBase, document.getElementById('root'));
 
     new UIEntry(ref);
 }

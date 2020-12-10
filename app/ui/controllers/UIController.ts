@@ -71,6 +71,15 @@ export default class UIController {
         return Themes.DarkTheme;
     }
 
+    getThemeName(): string {
+        if (this.theme === '') {
+            log.info('Fetching theme from server side and caching it in UIController.ts');
+            this.theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
+        }
+
+        return this.theme;
+    }
+
     // getThemeCSS(): string {
     //     if (this.theme === '') {
     //         log.info('Fetching theme from server side and caching it in UIController.ts');
