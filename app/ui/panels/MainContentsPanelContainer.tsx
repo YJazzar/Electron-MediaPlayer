@@ -54,7 +54,7 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
         }
 
         return (
-            <MainPanelDiv className={mainConfig.cssClassStyles}>
+            <MainPanelDiv id={'MainPanelDiv'} className={mainConfig.cssClassStyles}>
                 <h1>Main Contents Panel</h1>
                 <Table ref={this.tableRef} bodyContents={tableContents} clickListener={this.rowClickListener.bind(this)} />
             </MainPanelDiv>

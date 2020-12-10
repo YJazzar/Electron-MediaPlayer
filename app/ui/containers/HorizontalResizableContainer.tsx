@@ -1,3 +1,4 @@
+import { Box } from '@material-ui/core';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import PanelConfig from '../../libs/templates/PanelConfig';
@@ -33,10 +34,7 @@ interface State {
     isBeingResized: boolean;
 }
 
-export default class HorizontalResizableContainer extends React.Component<
-    Props,
-    State
-> {
+export default class HorizontalResizableContainer extends React.Component<Props, State> {
     newMethod = this.onMouseMove.bind(this);
 
     constructor(props: Props) {
@@ -80,38 +78,26 @@ export default class HorizontalResizableContainer extends React.Component<
         }
 
         const paneOriginAdjustment = -1; //'left' === 'right' ? 1 : -1;
-        const newHeight =
-            (this.state.liveHeight - event.pageY) * paneOriginAdjustment +
-            this.state.currHeight;
+        const newHeight = (this.state.liveHeight - event.pageY) * paneOriginAdjustment + this.state.currHeight;
 
         // If the dragging just finished, then store the new size
         const primaryButtonPressed = event.buttons === 1;
         if (!primaryButtonPressed) {
-            this.setPaneHeight(
-                Math.min(
-                    Math.max(this.getPaneHeight(), this.getMinHeight()),
-                    this.getMaxHeight()
-                )
-            );
+            this.setPaneHeight(Math.min(Math.max(this.getPaneHeight(), this.getMinHeight()), this.getMaxHeight()));
             this.setState({
                 isBeingResized: false,
             });
             this.removeListener();
             return;
         }
-        if (
-            newHeight > this.getMinHeight() &&
-            newHeight < this.getMaxHeight()
-        ) {
+        if (newHeight > this.getMinHeight() && newHeight < this.getMaxHeight()) {
             this.setPaneHeight(newHeight);
         }
     }
 
     // This function makes it so that both divs can reliably show up upon starting the application
     initWindowSize() {
-        const height =
-            this.props.topPanelConfig.sizeProps.defaultHeight *
-            window.innerHeight;
+        const height = this.props.topPanelConfig.sizeProps.defaultHeight * window.innerHeight;
 
         this.setPaneHeight(height);
     }
@@ -133,13 +119,16 @@ export default class HorizontalResizableContainer extends React.Component<
         style[this.props.cssMinHeightVarName] = `${this.getMinHeight()}px`;
 
         return (
-            <div className="box">
+            <div id="box">
                 <div id={this.props.topDivId} style={style}>
                     {this.props.topPanelComponent}
                 </div>
-                <div
+                {/* The next element is used to show the border colors */}
+                <Box
                     id={this.props.handleDivId}
                     onMouseDown={this.onMouseDown.bind(this)}
+                    border={1}
+                    borderColor={'purple[500'}
                 />
                 <div id={this.props.bottomDivId} style={style}>
                     {this.props.bottomPanelComponent}
@@ -165,9 +154,7 @@ export default class HorizontalResizableContainer extends React.Component<
         const element = this.getTopResizableElement();
 
         if (element) {
-            const pxHeight = getComputedStyle(element).getPropertyValue(
-                this.props.cssTopHeightVarName
-            );
+            const pxHeight = getComputedStyle(element).getPropertyValue(this.props.cssTopHeightVarName);
             return parseInt(pxHeight, 10);
         }
 
@@ -175,38 +162,25 @@ export default class HorizontalResizableContainer extends React.Component<
     }
 
     setPaneHeight(height: number) {
-        this.getTopResizableElement()?.style.setProperty(
-            this.props.cssTopHeightVarName,
-            `${height}px`
-        );
+        this.getTopResizableElement()?.style.setProperty(this.props.cssTopHeightVarName, `${height}px`);
 
         const newBottomHeight = window.innerHeight - height;
 
-        this.getBottomResizableElement()?.style.setProperty(
-            this.props.cssBottomHeightVarName,
-            `${newBottomHeight}px`
-        );
+        this.getBottomResizableElement()?.style.setProperty(this.props.cssBottomHeightVarName, `${newBottomHeight}px`);
     }
 
     mainWindowResized(deltaHeight: number) {
         const newHeight = this.getPaneHeight() + deltaHeight / 5;
-        if (
-            newHeight > this.getMinHeight() &&
-            newHeight < this.getMaxHeight()
-        ) {
+        if (newHeight > this.getMinHeight() && newHeight < this.getMaxHeight()) {
             this.setPaneHeight(newHeight);
         }
     }
 
     getMinHeight(): number {
-        return (
-            this.props.topPanelConfig.sizeProps.minHeight * window.innerHeight
-        );
+        return this.props.topPanelConfig.sizeProps.minHeight * window.innerHeight;
     }
 
     getMaxHeight(): number {
-        return (
-            this.props.topPanelConfig.sizeProps.maxHeight * window.innerHeight
-        );
+        return this.props.topPanelConfig.sizeProps.maxHeight * window.innerHeight;
     }
 }

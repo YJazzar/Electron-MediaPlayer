@@ -40,7 +40,7 @@ export default class Table extends React.Component<Props, {}> {
         const th = [];
         for (let i = 0; i < this.headerOptions.length; i++) {
             th.push(
-                <TableCell key={i} className="sticky">
+                <TableCell key={i}>
                     {this.headerOptions[i]}
                 </TableCell>
             );

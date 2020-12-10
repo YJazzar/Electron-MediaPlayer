@@ -11,7 +11,7 @@ const LightTheme = styled(BaseTheme)`
     background-color: rgb(216, 216, 216);
 
     /* The actual scroll handle (the one users can move by clicking and dragging) */
-    .panel-border {
+    &.panel-border {
         border-color: rgb(52, 122, 173);
     }
 
@@ -31,9 +31,9 @@ const DarkTheme = styled(BaseTheme)`
     }
 
     /* The border colors between each panel */
-    .panel-border {
+    /* &.panel-border {
         border-color: rgb(0, 170, 235);
-    }
+    } */
 `;
 
 

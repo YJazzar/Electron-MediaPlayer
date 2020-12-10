@@ -16,7 +16,7 @@
     /* float: top; */
 }
 
-content-panel-handle {
+#content-panel-handle {
     float: bottom;
     height: 1px;
     width: 100%;

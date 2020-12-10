@@ -1,4 +1,5 @@
 import { createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
+import { blue, red } from '@material-ui/core/colors';
 import React from 'react';
 import { render } from 'react-dom';
 import LoggerFactory from './libs/logger/LoggerFactory';
@@ -18,9 +19,11 @@ function initUI() {
 
     const theme = createMuiTheme({
         palette: {
-          type: UIController.getInstance().getThemeName() === 'dark' ? 'dark' : 'light',
-        }
-      });
+            type: UIController.getInstance().getThemeName() === 'dark' ? 'dark' : 'light',
+            primary: blue,
+            secondary: red,
+        },
+    });
 
     const UIBase = (
         <ThemeProvider theme={theme}>

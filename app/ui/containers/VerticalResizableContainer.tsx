@@ -1,3 +1,4 @@
+import { Box } from '@material-ui/core';
 import React from 'react';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import PanelConfig from '../../libs/templates/PanelConfig';
@@ -34,10 +35,7 @@ interface State {
     isBeingResized: boolean;
 }
 
-export default class VerticalResizableContainer extends React.Component<
-    Props,
-    State
-> {
+export default class VerticalResizableContainer extends React.Component<Props, State> {
     newMethod = this.onMouseMove.bind(this);
 
     constructor(props: Props) {
@@ -82,19 +80,12 @@ export default class VerticalResizableContainer extends React.Component<
         }
 
         const paneOriginAdjustment = -1; //'left' === 'right' ? 1 : -1;
-        const newWidth =
-            (this.state.liveWidth - event.pageX) * paneOriginAdjustment +
-            this.state.currWidth;
+        const newWidth = (this.state.liveWidth - event.pageX) * paneOriginAdjustment + this.state.currWidth;
 
         // If the dragging just finished, then store the new size
         const primaryButtonPressed = event.buttons === 1;
         if (!primaryButtonPressed) {
-            this.setPaneWidth(
-                Math.min(
-                    Math.max(this.getPaneWidth(), this.getMinWidth()),
-                    this.getMaxWidth()
-                )
-            );
+            this.setPaneWidth(Math.min(Math.max(this.getPaneWidth(), this.getMinWidth()), this.getMaxWidth()));
             this.setState({
                 isBeingResized: false,
             });
@@ -110,9 +101,7 @@ export default class VerticalResizableContainer extends React.Component<
     // TODO: get the default width here
     // This function makes it so that both divs can reliably show up upon starting the application
     initWindowSize() {
-        const width =
-            this.props.leftPanelConfig.sizeProps.defaultWidth *
-            document.body.clientWidth;
+        const width = this.props.leftPanelConfig.sizeProps.defaultWidth * document.body.clientWidth;
         this.setPaneWidth(width);
     }
 
@@ -135,9 +124,11 @@ export default class VerticalResizableContainer extends React.Component<
         return (
             <div>
                 <div id={this.props.leftDivId} className={''} style={style}>
-                    <div
+                    <Box
                         id={this.props.handleDivId}
                         onMouseDown={this.onMouseDown.bind(this)}
+                        border={1}
+                        borderColor={'primary'}
                     />
                     {this.props.leftPanelComponent}
                 </div>
@@ -157,9 +148,7 @@ export default class VerticalResizableContainer extends React.Component<
         const element = this.getLeftResizableElement();
 
         if (element) {
-            const pxWidth = getComputedStyle(element).getPropertyValue(
-                this.props.cssLeftWidthVarName
-            );
+            const pxWidth = getComputedStyle(element).getPropertyValue(this.props.cssLeftWidthVarName);
             return parseInt(pxWidth, 10);
         }
 
@@ -167,10 +156,7 @@ export default class VerticalResizableContainer extends React.Component<
     }
 
     setPaneWidth(width: number) {
-        this.getLeftResizableElement()?.style.setProperty(
-            this.props.cssLeftWidthVarName,
-            `${width}px`
-        );
+        this.getLeftResizableElement()?.style.setProperty(this.props.cssLeftWidthVarName, `${width}px`);
     }
 
     mainWindowResized(deltaWidth: number) {
@@ -181,16 +167,10 @@ export default class VerticalResizableContainer extends React.Component<
     }
 
     getMinWidth(): number {
-        return (
-            this.props.leftPanelConfig.sizeProps.minWidth *
-            document.body.clientWidth
-        );
+        return this.props.leftPanelConfig.sizeProps.minWidth * document.body.clientWidth;
     }
 
     getMaxWidth(): number {
-        return (
-            this.props.leftPanelConfig.sizeProps.maxWidth *
-            document.body.clientWidth
-        );
+        return this.props.leftPanelConfig.sizeProps.maxWidth * document.body.clientWidth;
     }
 }

@@ -5,12 +5,6 @@
 
 /* @import '~@fortawesome/fontawesome-free/css/all.css'; */
 
-@tailwind base;
-
-@tailwind components;
-
-@tailwind utilities;
-
 @import url('https://fonts.googleapis.com/css?family=Cambay&display=swap');
 
 body {
@@ -21,7 +15,7 @@ body {
 /* Create the scroll-bar design */
 /* The scroll bar's overall width */
 *::-webkit-scrollbar {
-    width: 16px;
+    width: 6px;
 }
 
 /* The actual scroll handle (the one users can move by clicking and dragging) */
@@ -30,3 +24,14 @@ body {
     border-radius: 100px;
     background-clip: padding-box;
 }
+
+.h-full {
+    height: 100%;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+/* className: 'h-full overflow-auto',
+cssClassStyles: `panel-border`, */

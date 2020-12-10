@@ -60,7 +60,7 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
 
 	render() {
 		return (
-			<NavPanelDiv className={navConfig.className + ' ' + navConfig.cssClassStyles}>
+			<NavPanelDiv id={'NavPanelDiv'} className={navConfig.className + ' ' + navConfig.cssClassStyles}>
 				<h1>Navigation Panel</h1>
                 <Button onClick={(() => this.setState({showAddPlaylistWindow: true})).bind(this)}>
                     Add new Playlist

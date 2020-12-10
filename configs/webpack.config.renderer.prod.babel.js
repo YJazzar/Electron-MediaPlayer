@@ -105,8 +105,7 @@ export default merge.smart(baseConfig, {
                         loader: 'css-loader',
                         options: {
                             modules: {
-                                localIdentName:
-                                    '[name]__[local]__[hash:base64:5]',
+                                localIdentName: '[name]__[local]__[hash:base64:5]',
                             },
                             importLoaders: 1,
                             sourceMap: true,
@@ -218,8 +217,7 @@ export default merge.smart(baseConfig, {
         }),
 
         new BundleAnalyzerPlugin({
-            analyzerMode:
-                process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
+            analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
             openAnalyzer: process.env.OPEN_ANALYZER === 'true',
         }),
     ],
