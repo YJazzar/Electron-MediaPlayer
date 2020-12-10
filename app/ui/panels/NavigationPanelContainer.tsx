@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import navConfig from '../configs/NavConfigImpl';
 import UIController from '../controllers/UIController';
 import ApplicationState from '../../libs/templates/ApplicationState';
-import { Button } from '@material-ui/core';
+import { Button, List, ListItem } from '@material-ui/core';
 import AddPlaylist from '../components/AddPlaylist';
 
 
@@ -37,13 +37,13 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
 
     getPlaylists(): React.ReactChild {
 		const list: React.ReactChild[] = this.props.playlistNames.map((name) => {
-			return <li key={name} onClick={(this.getClickListener(name)).bind(this)}>{name}</li>;
+			return <ListItem button key={name} onClick={(this.getClickListener(name)).bind(this)}>{name}</ListItem>;
 		});
 
 		return (
-            <ol>
+            <List>
                 {list}
-            </ol>
+            </List>
         );
 	}
 

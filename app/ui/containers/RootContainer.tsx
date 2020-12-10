@@ -19,6 +19,7 @@ import PlaylistDetails from '../../libs/templates/PlaylistDetails';
 
 const log = LoggerFactory.getUILogger(__filename);
 
+/* ${UIController.getInstance().getThemeCSS()} */
 const AppDiv = styled(UIController.getInstance().getTheme())``;
 
 interface Props {}

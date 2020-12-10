@@ -1,5 +1,5 @@
 import { ipcRenderer, IpcRendererEvent } from 'electron';
-import { StyledComponent } from 'styled-components';
+import styled, { StyledComponent } from 'styled-components';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import * as Themes from '../components/Themes';
 import PlaylistDetails from '../../libs/templates/PlaylistDetails';
@@ -67,8 +67,26 @@ export default class UIController {
         }
 
         log.error(`The theme ${this.theme} could not be resolved. Using default fallback theme: 'dark'`);
+        this.theme = 'dark';
         return Themes.DarkTheme;
     }
+
+    // getThemeCSS(): string {
+    //     if (this.theme === '') {
+    //         log.info('Fetching theme from server side and caching it in UIController.ts');
+    //         this.theme = ipcRenderer.sendSync('config:getTheme').toLowerCase();
+    //     }
+
+    //     if (this.theme === 'light') {
+    //         return `${Themes.LightTheme}`;
+    //     }
+    //     if (this.theme === 'dark') {
+    //         return `${Themes.DarkTheme}`;
+    //     }
+
+    //     log.error(`The theme ${this.theme} could not be resolved. Using default fallback theme: 'dark'`);
+    //     return `${Themes.DarkTheme}`;
+    // }
 
     // eslint-disable-next-line class-methods-use-this
     addNewPlaylist(name: string) {

@@ -9,6 +9,7 @@ import UIController from '../controllers/UIController';
 
 const log = LoggerFactory.getUILogger(__filename);
 
+// ${UIController.getInstance().getThemeCSS()}
 const MainPanelDiv = styled(UIController.getInstance().getTheme())`
     height: 100%;
     overflow: auto;
@@ -16,72 +17,67 @@ const MainPanelDiv = styled(UIController.getInstance().getTheme())`
 `;
 
 interface State {
-	currPlaylistIndex: number;
+    currPlaylistIndex: number;
 }
 
 export default class MainContentsPanelContainer extends React.Component<ApplicationState, State> {
     tableRef: React.RefObject<Table>;
     private currPlaylistIndex: number;
 
-	constructor(props: ApplicationState) {
-		super(props);
+    constructor(props: ApplicationState) {
+        super(props);
 
-		// Create the needed ref and init the state
-		this.tableRef = React.createRef();
-		this.state = {
-			currPlaylistIndex: -1
+        // Create the needed ref and init the state
+        this.tableRef = React.createRef();
+        this.state = {
+            currPlaylistIndex: -1,
         };
         this.currPlaylistIndex = -1;
-	}
+    }
 
-	// A listener to check the row that was clicked
-	rowClickListener(filePath: string) {
-		return () => {
-			this.props.playNewFileCB(filePath);
-		};
-	}
+    // A listener to check the row that was clicked
+    rowClickListener(filePath: string) {
+        return () => {
+            this.props.playNewFileCB(filePath);
+        };
+    }
 
-	render() {
+    render() {
         this.updateState();
 
-		let tableContents: FileDetails[] = [];
-		if (this.currPlaylistIndex == -1) {
-			tableContents = [];
-		} else {
+        let tableContents: FileDetails[] = [];
+        if (this.currPlaylistIndex == -1) {
+            tableContents = [];
+        } else {
             tableContents = this.props.playlists[this.currPlaylistIndex].mediaFiles;
             console.dir(tableContents);
-		}
+        }
 
-		return (
-			<MainPanelDiv className={mainConfig.cssClassStyles}>
-				<h1>Main Contents Panel</h1>
-				<Table
-					ref={this.tableRef}
-					bodyContents={tableContents}
-					clickListener={this.rowClickListener.bind(this)}
-				/>
-			</MainPanelDiv>
-		);
-	}
+        return (
+            <MainPanelDiv className={mainConfig.cssClassStyles}>
+                <h1>Main Contents Panel</h1>
+                <Table ref={this.tableRef} bodyContents={tableContents} clickListener={this.rowClickListener.bind(this)} />
+            </MainPanelDiv>
+        );
+    }
 
-	// This function will control what files are displayed by the table rendered within this component
-	updateState(): void {
+    // This function will control what files are displayed by the table rendered within this component
+    updateState(): void {
         // Return early if no playlist was selected yet
         if (this.props.currSelectedPlaylist === '') {
             this.currPlaylistIndex = -1;
             return;
         }
 
-
         log.debug(`Finding the new playlist id: {${this.props.currSelectedPlaylist}}`);
-		for (let i = 0; i < this.props.playlists.length; i++) {
-			if (this.props.currSelectedPlaylist === this.props.playlists[i].playlistName) {
-				this.currPlaylistIndex = i;
+        for (let i = 0; i < this.props.playlists.length; i++) {
+            if (this.props.currSelectedPlaylist === this.props.playlists[i].playlistName) {
+                this.currPlaylistIndex = i;
                 return;
             }
         }
 
-		log.warning(`Could not find the playlist: "${this.props.currSelectedPlaylist}"`);
+        log.warning(`Could not find the playlist: "${this.props.currSelectedPlaylist}"`);
         this.currPlaylistIndex = -1;
-	}
+    }
 }

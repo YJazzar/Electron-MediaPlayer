@@ -43,7 +43,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
 
     render() {
         return (
-            <PlayerPanelDiv className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
+            <PlayerPanelDiv id={'PlayerPanelDiv'} className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
                 {this.getTitleRow()}
                 {this.getPlayerRow()}
                 {this.getControlsRow()}

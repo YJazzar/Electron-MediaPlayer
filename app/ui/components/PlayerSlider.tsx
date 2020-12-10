@@ -13,14 +13,11 @@ const ParentDiv = styled.div`
 
 const Button = styled(IconButton)`
     width: 5%;
-    color: palevioletred;
     margin: auto;
     font-size: 1em;
-    padding: 0.25em 1em;
-    border: 2px solid palevioletred;
+    padding: 0.25em 0.25em;
     border-radius: 3px;
     display: block;
-    width: 10%;
     &:focus {
         outline: none;
     }
@@ -128,7 +125,6 @@ export default class PlayerSlider extends React.Component<Props, State> {
                     value={this.state.currentTime}
                     aria-labelledby="continuous-slider"
                     onChange={this.onSliderDrag.bind(this)}
-                    valueLabelDisplay="auto"
                 />
                 <TimeStamp>
                     {isNaN(this.state.duration) ? '-' : Math.round(this.state.currentTime)} /{' '}

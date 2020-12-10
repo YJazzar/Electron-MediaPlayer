@@ -49,6 +49,7 @@ export default class VolumeSlider extends React.Component<Props, State> {
                     value={this.state.currVolume}
                     aria-labelledby="continuous-slider"
                     onChange={this.onSliderDrag.bind(this)}
+                    valueLabelDisplay="auto"
                 />
                 <VolumeUp />
             </ParentDiv>
