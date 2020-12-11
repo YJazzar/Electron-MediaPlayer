@@ -11,6 +11,18 @@ const ParentDiv = styled.div`
     padding-right: 2em;
 `;
 
+const StyledVolumeUp = styled(VolumeUp)`
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 1em;
+`;
+
+const StyledVolumeDown = styled(VolumeUp)`
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 1em;
+`;
+
 interface Props {
     onVolumeChange: (newVolume: number) => void;
 }
@@ -42,7 +54,7 @@ export default class VolumeSlider extends React.Component<Props, State> {
     render() {
         return (
             <ParentDiv className={'VolumeSlider'}>
-                <VolumeDown />
+                <StyledVolumeDown />
                 <Slider
                     min={0}
                     max={100}
@@ -51,7 +63,7 @@ export default class VolumeSlider extends React.Component<Props, State> {
                     onChange={this.onSliderDrag.bind(this)}
                     valueLabelDisplay="auto"
                 />
-                <VolumeUp />
+                <StyledVolumeUp />
             </ParentDiv>
         );
     }
