@@ -128,7 +128,7 @@ export default class VerticalResizableContainer extends React.Component<Props, S
                         id={this.props.handleDivId}
                         onMouseDown={this.onMouseDown.bind(this)}
                         border={1}
-                        borderColor={'primary'}
+                        borderColor="primary.main"
                     />
                     {this.props.leftPanelComponent}
                 </div>

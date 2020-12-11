@@ -32,6 +32,3 @@ body {
 .overflow-auto {
     overflow: auto;
 }
-
-/* className: 'h-full overflow-auto',
-cssClassStyles: `panel-border`, */

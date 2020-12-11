@@ -128,7 +128,7 @@ export default class HorizontalResizableContainer extends React.Component<Props,
                     id={this.props.handleDivId}
                     onMouseDown={this.onMouseDown.bind(this)}
                     border={1}
-                    borderColor={'purple[500'}
+                    borderColor="primary.main"
                 />
                 <div id={this.props.bottomDivId} style={style}>
                     {this.props.bottomPanelComponent}

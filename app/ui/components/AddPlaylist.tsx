@@ -2,37 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // The parent div of this component
-const ParentDiv = styled.div`
-    /* Grays out the screen */
-    display: table;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(200, 200, 200, 0.75);
-    top: 0;
-    left: 0;
-    z-index: 999;
-    opacity: 1;
-    transition: all 0.3s;
-`;
-
-// Stylize the sub-window that will show up on the screen
-const SubWindow = styled.div`
-    display: table-cell;
-    vertical-align: middle;
-    height: 400px;
-    z-index: 1000;
-`;
-
-const SubWindow2 = styled.div`
-    margin-left: auto;
-    margin-right: auto;
-    width: 400px;
-    background: #fff;
-    z-index: 1001;
-`;
+const ParentDiv = styled.div``;
 
 export default class AddPlaylist extends React.Component<{}, {}> {
     render() {
@@ -40,15 +10,11 @@ export default class AddPlaylist extends React.Component<{}, {}> {
 
         return (
             <ParentDiv id="open-modal" className="modal-window">
-                <SubWindow>
-                    <SubWindow2>
-                        <a href="#modal-close" title="Close" className="modal-close">
-                            close &times;
-                        </a>
-                        <h1>CSS Modal</h1>
-                        <div>The quick brown fox jumped over the lazy dog.</div>
-                    </SubWindow2>
-                </SubWindow>
+                The standard Lorem Ipsum passage, used since the 1500s "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                in culpa qui officia deserunt mollit anim id est laborum."
             </ParentDiv>
         );
     }

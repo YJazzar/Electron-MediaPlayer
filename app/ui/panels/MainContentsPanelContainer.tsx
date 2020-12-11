@@ -1,11 +1,11 @@
 import React from 'react';
 import mainConfig from '../configs/MainConfigImpl';
-import Table from '../components/Table';
 import LoggerFactory from '../../libs/logger/LoggerFactory';
 import FileDetails from '../../libs/templates/FileDetails';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import styled from 'styled-components';
 import UIController from '../controllers/UIController';
+import MainTable from '../components/MainTable';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -21,7 +21,7 @@ interface State {
 }
 
 export default class MainContentsPanelContainer extends React.Component<ApplicationState, State> {
-    tableRef: React.RefObject<Table>;
+    tableRef: React.RefObject<MainTable>;
     private currPlaylistIndex: number;
 
     constructor(props: ApplicationState) {
@@ -56,7 +56,7 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
         return (
             <MainPanelDiv id={'MainPanelDiv'} className={mainConfig.cssClassStyles}>
                 <h1>Main Contents Panel</h1>
-                <Table ref={this.tableRef} bodyContents={tableContents} clickListener={this.rowClickListener.bind(this)} />
+                <MainTable ref={this.tableRef} bodyContents={tableContents} clickListener={this.rowClickListener.bind(this)} />
             </MainPanelDiv>
         );
     }

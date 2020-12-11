@@ -1,5 +1,5 @@
-import { TableBody, TableContainer, TableRow } from '@material-ui/core';
-import { Table as TableMaterial} from '@material-ui/core';
+import { TableBody, TableContainer, TableRow, styled } from '@material-ui/core';
+import Table from '@material-ui/core/Table';
 import Paper from '@material-ui/core/Paper/Paper';
 import TableCell from '@material-ui/core/TableCell/TableCell';
 import TableHead from '@material-ui/core/TableHead/TableHead';
@@ -9,14 +9,18 @@ import FileDetails from '../../libs/templates/FileDetails';
 
 // const log = LoggerFactory.getUILogger(__filename);
 
-// The styles of the table:
+const StyledTable = styled(Table)({ backgroundColor: 'inherit',  position: 'sticky', top: 0 });
+
+const StyledTableHeader = styled(TableHead)({ backgroundColor: 'inherit', position: 'sticky', top: 0 });
+
+
 interface Props {
     bodyContents: FileDetails[];
     clickListener: (newDilePath: string) => () => void; // A clickListener function that returns a function
-                                                        // I know ill get confused by this later on (this is passed from main panel)
+    // I know ill get confused by this later on (this is passed from main panel)
 }
 
-export default class Table extends React.Component<Props, {}> {
+export default class MainTable extends React.Component<Props, {}> {
     headerOptions: string[];
 
     constructor(props: Props) {
@@ -28,10 +32,10 @@ export default class Table extends React.Component<Props, {}> {
     render() {
         return (
             <TableContainer component={Paper}>
-                <TableMaterial stickyHeader={true}>
-                    <TableHead>{this.getTableHeaders()}</TableHead>
+                <StyledTable stickyHeader>
+                    <StyledTableHeader>{this.getTableHeaders()}</StyledTableHeader>
                     <TableBody>{this.getTableBody()}</TableBody>
-                </TableMaterial>
+                </StyledTable>
             </TableContainer>
         );
     }
@@ -39,18 +43,13 @@ export default class Table extends React.Component<Props, {}> {
     getTableHeaders(): React.ReactChild {
         const th = [];
         for (let i = 0; i < this.headerOptions.length; i++) {
-            th.push(
-                <TableCell key={i}>
-                    {this.headerOptions[i]}
-                </TableCell>
-            );
+            th.push(<TableCell key={i}>{this.headerOptions[i]}</TableCell>);
         }
 
         return <TableRow className="">{th}</TableRow>;
     }
 
     getTableBody(): React.ReactChild[] {
-
         const contents: FileDetails[] = this.props.bodyContents.filter((file: FileDetails) => {
             return !file.isDirectory && file.duration != -1;
         });

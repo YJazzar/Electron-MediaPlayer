@@ -4,8 +4,8 @@ import navConfig from '../configs/NavConfigImpl';
 import UIController from '../controllers/UIController';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import { Button, List, ListItem } from '@material-ui/core';
+import PopUpPanel from './PopUpPanel';
 import AddPlaylist from '../components/AddPlaylist';
-
 
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
     border-right-width: 4px;
@@ -21,32 +21,30 @@ interface State {
 }
 
 export default class NavigationPanelContainer extends React.Component<Props, State> {
-
     constructor(props: Props) {
         super(props);
         this.state = {
             showAddPlaylistWindow: false,
-        }
+        };
     }
 
     // This click listener will be used to lift the state change to the root component
     // It will be invoked when a user changes the playlist that they want to access
     getClickListener(name: string): () => void {
-		return () => this.props.changePlaylist(name);
-	}
+        return () => this.props.changePlaylist(name);
+    }
 
     getPlaylists(): React.ReactChild {
-		const list: React.ReactChild[] = this.props.playlistNames.map((name) => {
-			return <ListItem button key={name} onClick={(this.getClickListener(name)).bind(this)}>{name}</ListItem>;
-		});
+        const list: React.ReactChild[] = this.props.playlistNames.map((name) => {
+            return (
+                <ListItem button key={name} onClick={this.getClickListener(name).bind(this)}>
+                    {name}
+                </ListItem>
+            );
+        });
 
-		return (
-            <List>
-                {list}
-            </List>
-        );
-	}
-
+        return <List>{list}</List>;
+    }
 
     addPlaylist() {
         UIController.getInstance().addNewPlaylist('tessttingg');
@@ -56,21 +54,23 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
         });
     }
 
+    render() {
+        const AddPlayListMenu = this.state.showAddPlaylistWindow ? (
+            <PopUpPanel title={'Add Playlist:'} contents={(<AddPlaylist/>)} />
+        ) : (
+            <p>Nothing to add yet</p>
+        );
 
-
-	render() {
-		return (
-			<NavPanelDiv id={'NavPanelDiv'} className={navConfig.className + ' ' + navConfig.cssClassStyles}>
-				<h1>Navigation Panel</h1>
-                <Button onClick={(() => this.setState({showAddPlaylistWindow: true})).bind(this)}>
-                    Add new Playlist
-                </Button>
-				<br />
-				{this.getPlaylists()}
+        return (
+            <NavPanelDiv id={'NavPanelDiv'} className={navConfig.className + ' ' + navConfig.cssClassStyles}>
+                <h1>Navigation Panel</h1>
+                <Button onClick={(() => this.setState({ showAddPlaylistWindow: true })).bind(this)}>Add new Playlist</Button>
+                <br />
+                {this.getPlaylists()}
 
                 {/* Show the "Import playlist menu if needed" */}
-                {this.state.showAddPlaylistWindow ? <AddPlaylist/> : <p>Nothing to add yet</p>}
+                {AddPlayListMenu}
             </NavPanelDiv>
-		);
-	}
+        );
+    }
 }
