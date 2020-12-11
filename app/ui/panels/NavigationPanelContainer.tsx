@@ -4,8 +4,7 @@ import navConfig from '../configs/NavConfigImpl';
 import UIController from '../controllers/UIController';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import { Button, List, ListItem } from '@material-ui/core';
-import PopUpPanel from './PopUpPanel';
-import AddPlaylist from '../components/AddPlaylist';
+import AddPlaylistMenu from '../components/AddPlaylistMenu';
 
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
     border-right-width: 4px;
@@ -46,22 +45,14 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
         return <List>{list}</List>;
     }
 
-    addPlaylist() {
-        UIController.getInstance().addNewPlaylist('tessttingg');
-
+    cancelAddPlaylist() {
         this.setState({
             showAddPlaylistWindow: false,
         });
     }
 
     render() {
-        const AddPlayListMenu = this.state.showAddPlaylistWindow ? (
-            <PopUpPanel title={'Add Playlist:'} contents={(<AddPlaylist/>)} />
-        ) : (
-            <p>Nothing to add yet</p>
-        );
-
-        return (
+                return (
             <NavPanelDiv id={'NavPanelDiv'} className={navConfig.className + ' ' + navConfig.cssClassStyles}>
                 <h1>Navigation Panel</h1>
                 <Button onClick={(() => this.setState({ showAddPlaylistWindow: true })).bind(this)}>Add new Playlist</Button>
@@ -69,7 +60,7 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
                 {this.getPlaylists()}
 
                 {/* Show the "Import playlist menu if needed" */}
-                {AddPlayListMenu}
+                {this.state.showAddPlaylistWindow ? <AddPlaylistMenu onClose={this.cancelAddPlaylist.bind(this)}/> : <div/>}
             </NavPanelDiv>
         );
     }
