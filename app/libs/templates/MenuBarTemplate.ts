@@ -1,8 +1,31 @@
+/* eslint-disable global-require */
 import { app } from 'electron';
 import IpcMainController from '../../core/controllers/IpcMainController';
 
+const isMac = process.platform === 'darwin';
+
 export default function getMenuTemplate(controller: IpcMainController): unknown[] {
     const template = [
+        // { role: 'appMenu' }
+        ...(isMac
+            ? [
+                  {
+                      label: app.name,
+                      submenu: [
+                          { role: 'about' },
+                          { type: 'separator' },
+                          { role: 'services' },
+                          { type: 'separator' },
+                          { role: 'hide' },
+                          { role: 'hideothers' },
+                          { role: 'unhide' },
+                          { type: 'separator' },
+                          { role: 'quit' },
+                      ],
+                  },
+              ]
+            : []),
+        // { role: 'fileMenu' }
         {
             label: 'File',
             submenu: [
@@ -12,41 +35,63 @@ export default function getMenuTemplate(controller: IpcMainController): unknown[
 
                     // Action:
                     click() {
-                        // DirectoryOperations.importFolders();
+                        controller.actionAddNewPlaylistDisplay();
                     },
                 },
+                isMac ? { role: 'close' } : { role: 'quit' },
+            ],
+        },
+        // { role: 'editMenu' }
+        {
+            label: 'Edit',
+            submenu: [
+                { role: 'undo' },
+                { role: 'redo' },
+                { type: 'separator' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' },
+            ],
+        },
+        // { role: 'viewMenu' }
+        {
+            label: 'View',
+            submenu: [
+                { role: 'reload' },
+                { role: 'forceReload' },
+                { role: 'toggleDevTools' },
+                { type: 'separator' },
+                { role: 'resetZoom' },
+                { role: 'zoomIn' },
+                { role: 'zoomOut' },
+                { type: 'separator' },
+                { role: 'togglefullscreen' },
+            ],
+        },
+        // { role: 'windowMenu' }
+        {
+            label: 'Window',
+            submenu: [
+                { role: 'minimize' },
+                { role: 'zoom' },
+                ...(isMac
+                    ? [{ type: 'separator' }, { role: 'front' }, { type: 'separator' }, { role: 'window' }]
+                    : [{ role: 'close' }]),
+            ],
+        },
+        {
+            role: 'help',
+            submenu: [
                 {
-                    label: 'Import File(s)',
-                    accelerator: process.platform === 'darwin' ? 'Command+O' : 'Ctrl+O',
-
-                    // Action:
-                    // click() {
-
-                    // },
-                },
-                {
-                    label: 'Clear Items',
-                    // accelerator: process.platform == 'darwin' ? 'Command+A' : 'Ctrl+A',
-                    click() {
-                        // Action:
-                    },
-                },
-                {
-                    label: 'Quit',
-                    accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-
-                    // Action:
-                    click() {
-                        app.quit();
+                    label: 'Learn More',
+                    click: async () => {
+                        const { shell } = require('electron');
+                        await shell.openExternal('https://electronjs.org');
                     },
                 },
             ],
         },
     ];
 
-    // If the current system is a mac, then add an empty object to the beginning of the template array.
-    if (process.platform === 'darwin') {
-        template.unshift({} as never);
-    }
     return template;
 }

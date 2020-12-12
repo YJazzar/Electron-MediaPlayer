@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import navConfig from '../configs/NavConfigImpl';
 import UIController from '../controllers/UIController';
 import ApplicationState from '../../libs/templates/ApplicationState';
-import { Button, List, ListItem } from '@material-ui/core';
-import AddPlaylistMenu from '../components/AddPlaylistMenu';
+import { List, ListItem } from '@material-ui/core';
 
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
     border-right-width: 4px;
@@ -15,16 +14,12 @@ interface Props extends ApplicationState {
     changePlaylist: (newPlaylist: string) => void;
 }
 
-interface State {
-    showAddPlaylistWindow: boolean;
-}
+interface State {}
 
 export default class NavigationPanelContainer extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        this.state = {
-            showAddPlaylistWindow: false,
-        };
+        this.state = {};
     }
 
     // This click listener will be used to lift the state change to the root component
@@ -45,22 +40,12 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
         return <List>{list}</List>;
     }
 
-    cancelAddPlaylist() {
-        this.setState({
-            showAddPlaylistWindow: false,
-        });
-    }
-
     render() {
-                return (
+        return (
             <NavPanelDiv id={'NavPanelDiv'} className={navConfig.className + ' ' + navConfig.cssClassStyles}>
                 <h1>Navigation Panel</h1>
-                <Button onClick={(() => this.setState({ showAddPlaylistWindow: true })).bind(this)}>Add new Playlist</Button>
                 <br />
                 {this.getPlaylists()}
-
-                {/* Show the "Import playlist menu if needed" */}
-                {this.state.showAddPlaylistWindow ? <AddPlaylistMenu onClose={this.cancelAddPlaylist.bind(this)}/> : <div/>}
             </NavPanelDiv>
         );
     }

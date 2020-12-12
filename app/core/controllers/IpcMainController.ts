@@ -42,7 +42,7 @@ export default class IpcMainController {
 
         ipcMain.on('config:getTableHeaderOptions', this.configGetTableHeaderOptions.bind(this));
 
-        ipcMain.on('actions:addNewPlaylist', this.actionAddNewPlaylist.bind(this));
+        ipcMain.on('actions:addNewPlaylist:submit', this.actionAddNewPlaylistSubmit.bind(this));
 
         /**
          * The following are events that are not implemented but could be useful in the future
@@ -139,17 +139,39 @@ export default class IpcMainController {
 
     // eventName = 'actions:addNewPlaylist'
     // @param name: the name of the new playlist being added
-    actionAddNewPlaylist(_event: IpcMainEvent, name: string) {
+    actionAddNewPlaylistSubmit(_event: IpcMainEvent, name: string) {
         DirectoryOperations.addNewPlaylist(name)
-            .then(() => {
+            .then((cancelled: boolean | null) => {
+                // Check if an error had occurred
+                if (cancelled === null) {
+                    log.error('DirectoryOperations.addNewPlaylist() returned a rejected promise');
+                    // Send to the main window that the operation was not successful
+                    this.mainWindow.webContents.send('actions:addNewPlaylist:error');
+                }
+
                 log.debug('Sending new data/index.json');
 
                 // Notify the renderer process about the changes
                 this.sendStatusUpdateDataIndex();
+
+                if (!cancelled) {
+                    // Send to the main window that the operation was successful
+                    this.mainWindow.webContents.send('actions:addNewPlaylist:success');
+                } else {
+                    // Send to the main window that the operation was cancelled
+                    this.mainWindow.webContents.send('actions:addNewPlaylist:failed');
+                }
+
                 return true;
             })
             .catch(() => {
                 log.error('DirectoryOperations.addNewPlaylist() returned a rejected promise');
+                // Send to the main window that the operation was not successful
+                this.mainWindow.webContents.send('actions:addNewPlaylist:error');
             });
+    }
+
+    actionAddNewPlaylistDisplay() {
+        this.mainWindow.webContents.send('actions:addNewPlaylist:display');
     }
 }

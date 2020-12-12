@@ -7,16 +7,17 @@ const log = LoggerFactory.getLogger(__filename);
 export default class SystemFiles {
     // This will open the operating system's file chooser and let the users choose a folder
     // The resulting array of paths will be returned as promise.
-    static chooseFolder(): Promise<string[] | null> {
+    // Note: a 'null' value from SystemFiles.chooseFolder() implies an error
+    static chooseFolder(): Promise<string[] | boolean | null> {
         log.debug(`User was prompted to choose a folder`);
 
-        const result: Promise<string[] | null> = dialog
+        const result: Promise<string[] | boolean | null> = dialog
             .showOpenDialog({ properties: ['openDirectory'] })
             .then((folders) => {
                 // Check if the operation was cancelled
                 if (folders.canceled) {
                     log.info('Folder choosing operation was cancelled');
-                    return null;
+                    return false;
                 }
 
                 log.info('Folder choosing operation was completed');

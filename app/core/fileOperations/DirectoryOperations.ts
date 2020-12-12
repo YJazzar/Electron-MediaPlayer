@@ -59,15 +59,20 @@ export default class DirectoryOperations {
     }
 
     // @param name: the name of the new playlist being added
-    static async addNewPlaylist(name: string) {
+    // Note: a 'null' value from SystemFiles.chooseFolder() implies an error
+    static async addNewPlaylist(name: string): Promise<boolean | null> {
         log.debug('Importing folders using DirectoryOperations.importFolders()');
-        const paths: string[] | null = await SystemFiles.chooseFolder();
+        const paths: string[] | boolean | null = await SystemFiles.chooseFolder();
         if (paths == null) {
-            return;
+            return null;
+        }
+
+        if (typeof paths === 'boolean' && paths === false) {
+            return false;
         }
 
         // Get the set of directories that will be within the new playlist
-        const result: DirectoryDetails[] = await readDirectories(paths);
+        const result: DirectoryDetails[] = await readDirectories(paths as string[]);
         const indexStore = new Store({
             cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
             name: 'index',
@@ -75,7 +80,7 @@ export default class DirectoryOperations {
 
         // Make the new general structure of the playlist to be added
         const newPlaylist: PlaylistDetails = {
-            directoryPaths: paths,
+            directoryPaths: paths as string[],
             playlistName: name,
             mediaFiles: [],
         };
@@ -94,6 +99,7 @@ export default class DirectoryOperations {
 
         indexStore.set(`${i}`, newPlaylist);
         indexStore.set('size', i + 1);
+        return true;
     }
 
     static filterNonMediaFiles(oldDetails: FileDetails[]): FileDetails[] {

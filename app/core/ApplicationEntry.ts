@@ -32,10 +32,10 @@ export default class ApplicationEntry {
         this.ipcMainController.init();
 
         // Insert menu:
-        // const menuTemplate = Menu.buildFromTemplate(
-        //     getMenuTemplate(this.ipcMainController) as (MenuItemConstructorOptions | MenuItem)[]
-        // );
-        // Menu.setApplicationMenu(menuTemplate);
+        const menuTemplate = Menu.buildFromTemplate(
+            getMenuTemplate(this.ipcMainController) as (MenuItemConstructorOptions | MenuItem)[]
+        );
+        Menu.setApplicationMenu(menuTemplate);
 
         // Ensure the folder system needed by the application already exists
         DirectoryOperations.initAppFolders();

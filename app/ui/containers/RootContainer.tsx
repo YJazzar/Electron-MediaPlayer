@@ -16,6 +16,7 @@ import ApplicationState from '../../libs/templates/ApplicationState';
 import UIController from '../controllers/UIController';
 import styled from 'styled-components';
 import PlaylistDetails from '../../libs/templates/PlaylistDetails';
+import DialogManager from '../panels/DialogManager';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -136,6 +137,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     render() {
         return (
             <AppDiv id="root-container">
+                <DialogManager/>
                 <VerticalResizableContainer
                     ref={this.verticalResizableContainerRef}
                     leftDivId={'nav-panel-resizable-left'}

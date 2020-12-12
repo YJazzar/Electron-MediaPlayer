@@ -9,21 +9,29 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
 import { app, BrowserWindow } from 'electron';
-import { truncateSync } from 'fs';
-import path from 'path';
+import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import ApplicationEntry from './core/ApplicationEntry';
 import ConfigManager from './libs/persist/ConfigManager';
 
 let mainWindow: BrowserWindow | null = null;
 
-if (process.env.NODE_ENV === 'production') {
-    const sourceMapSupport = require('source-map-support');
-    sourceMapSupport.install();
-}
+// if (process.env.NODE_ENV === 'production') {
+require('source-map-support').install();
+// }
 
-if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-    require('electron-debug')();
-}
+// if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+require('electron-debug')();
+// }
+
+require('electron-react-devtools');
+
+// const installExtensions = async () => {
+//     const installer = require('electron-devtools-installer');
+//     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+//     const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS', 'electron-react-devtools'];
+
+//     return Promise.all(extensions.map((name) => installer.default(installer[name], forceDownload))).catch(console.log);
+// };
 
 const createWindow = async () => {
     mainWindow = new BrowserWindow({
@@ -62,6 +70,15 @@ const createWindow = async () => {
         mainWindow = null;
     });
 
+    installExtension(REACT_DEVELOPER_TOOLS)
+        .then((name: string) => {
+            console.log(`HAHAHAHAHAdded Extension:  ${name}`);
+            return true;
+        })
+        .catch((err: any) => {
+            console.log('HAHAHAHAHAn error occurred: ', err);
+        });
+
     // Entry point for my application
     const appEntry = new ApplicationEntry(mainWindow);
     appEntry.init();
@@ -80,7 +97,9 @@ app.on('window-all-closed', () => {
     }
 });
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+    createWindow();
+});
 
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
