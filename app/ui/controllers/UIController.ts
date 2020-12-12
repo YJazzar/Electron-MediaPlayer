@@ -52,8 +52,9 @@ export default class UIController {
         ipcRenderer.on('feedback:snackbar:error', errorCB);
     }
 
-    setAddPlaylistDisplay(displayCB: () => void) {
+    setAddPlaylistDisplay(displayCB: () => void, hideCB: () => void) {
         ipcRenderer.on('actions:addNewPlaylist:display', displayCB);
+        ipcRenderer.on('actions:addNewPlaylist:hide', hideCB);
     }
 
     getTheme(): StyledComponent<'div', never, Record<string, unknown>, never> {

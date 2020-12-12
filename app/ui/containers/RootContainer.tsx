@@ -28,6 +28,7 @@ interface Props {}
 export default class RootContainer extends React.Component<Props, ApplicationState> {
     verticalResizableContainerRef: React.RefObject<VerticalResizableContainer>;
     horizontalResizableContainerRef: React.RefObject<HorizontalResizableContainer>;
+    dialogManagerRef: React.RefObject<DialogManager>;
 
     // References for each of the panels:
     mainPanelRef: React.RefObject<MainContentsPanelContainer>;
@@ -40,6 +41,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         // Create all the refs needed
         this.verticalResizableContainerRef = React.createRef();
         this.horizontalResizableContainerRef = React.createRef();
+        this.dialogManagerRef = React.createRef();
         this.mainPanelRef = React.createRef();
         this.navigationPanelRef = React.createRef();
         this.playerPanelRef = React.createRef();
@@ -78,16 +80,25 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     // It will also call the needed functions to implement a queue (because the props passed into the component will also be updated)
     playNewFile(filePath: string) {
         // If something is already playing, avoid switching tracks and add it to the queue
-        if (this.state.playing) {
-            this.setState({
-                queue: [...this.state.queue, filePath],
-            });
-        } else {
+        if (!this.state.playing) {
             this.setState({
                 playing: true,
                 currFilePlaying: filePath,
+                queue: [filePath],
+            });
+            this.dialogManagerRef.current?.openInfoSnackbar({} as any, 'Started playing!');
+        }
+        // Add to the queue if it is a new and unique item
+        else if (!this.state.queue.includes(filePath)) {
+            console.dir(this.state.queue)
+            this.setState({
                 queue: [...this.state.queue, filePath],
             });
+
+            this.dialogManagerRef.current?.openInfoSnackbar({} as any, 'Added to queue!');
+        } else {
+            log.debug('User clicked on a duplicate element');
+            this.dialogManagerRef.current?.openWarningSnackbar({} as any, 'Duplicate item detected in queue!');
         }
     }
 
@@ -126,14 +137,14 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playlistNames.push(playlistDetails[i].playlistName);
         }
 
-        // Update the applications's state as needed:
+        // Update the application's state as needed:
         this.setState({
             playlistNames,
             playlists: playlistDetails,
         });
 
         // this.mainPanelRef.current?.updateState();
-        // Once the state has been updated, the render() functions for all subcomponents will be called
+        // Once the state has been updated, the render() functions for all sub-components will be called
     }
 
     initialWindowSize(_e: IpcRendererEvent, width: number, height: number) {
@@ -166,7 +177,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     render() {
         return (
             <AppDiv id="root-container">
-                <DialogManager />
+                <DialogManager ref={this.dialogManagerRef}/>
                 <VerticalResizableContainer
                     ref={this.verticalResizableContainerRef}
                     leftDivId={'nav-panel-resizable-left'}

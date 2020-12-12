@@ -17,9 +17,14 @@ interface Props {}
 
 interface State {
     showAddPlaylistWindow: boolean;
+    snackbars: SnackbarParams[];
+}
+
+interface SnackbarParams {
     openSnackbar: boolean;
-    snackBarSeverity: "success" | "error" | "warning" | "info" | undefined;
+    snackBarSeverity: 'success' | 'error' | 'warning' | 'info' | undefined;
     snackbarMessage: string;
+    index: number;
 }
 
 export default class DialogManager extends React.Component<Props, State> {
@@ -27,13 +32,10 @@ export default class DialogManager extends React.Component<Props, State> {
         super(props);
         this.state = {
             showAddPlaylistWindow: false,
-            openSnackbar: false,
-            snackBarSeverity: undefined,
-            snackbarMessage: '',
+            snackbars: [],
         };
 
-
-        UIController.getInstance().setAddPlaylistDisplay(this.showAddPlaylistWindow.bind(this));
+        UIController.getInstance().setAddPlaylistDisplay(this.showAddPlaylistWindow.bind(this), this.hideAddPlaylist.bind(this));
         UIController.getInstance().setSnackbarCBs(
             this.openSuccessSnackbar.bind(this),
             this.openInfoSnackbar.bind(this),
@@ -41,75 +43,95 @@ export default class DialogManager extends React.Component<Props, State> {
         );
     }
 
-    cancelAddPlaylist() {
+    hideAddPlaylist() {
+        console.log('HIDE RECE');
         this.setState({
             showAddPlaylistWindow: false,
-            openSnackbar: true,
-            snackBarSeverity: 'warning',
-            snackbarMessage: 'The operation was cancelled',
         });
-
-        console.log('CANCELELDEDED');
     }
 
     showAddPlaylistWindow() {
         this.setState({
             showAddPlaylistWindow: true,
-            openSnackbar: false,
         });
     }
 
     openSuccessSnackbar(_e: IpcRendererEvent, message: string) {
-        this.setState({
-            showAddPlaylistWindow: false,
-            openSnackbar: true,
-            snackBarSeverity: 'success',
-            snackbarMessage: message,
-        });
-
+        this.addSnackbar('success', message);
     }
 
     openInfoSnackbar(_e: IpcRendererEvent, message: string) {
-        this.setState({
-            showAddPlaylistWindow: false,
-            openSnackbar: true,
-            snackBarSeverity: 'info',
-            snackbarMessage: message,
-        });
-
+        this.addSnackbar('info', message);
     }
 
     openErrorSnackbar(_e: IpcRendererEvent, message: string) {
-        this.setState({
-            showAddPlaylistWindow: false,
-            openSnackbar: true,
-            snackBarSeverity: 'error',
-            snackbarMessage: message,
-        });
-
+        this.addSnackbar('error', message);
     }
 
-    closeSnackbar() {
+    openWarningSnackbar(_e: IpcRendererEvent, message: string) {
+        this.addSnackbar('warning', message);
+    }
+
+    addSnackbar(severity: 'success' | 'error' | 'warning' | 'info' | undefined, message: string) {
+        const newIndex = this.state.snackbars.length === 0 ? 0 : this.state.snackbars[this.state.snackbars.length - 1].index + 1;
+
+        const newSnackbar: SnackbarParams = {
+            openSnackbar: true,
+            snackBarSeverity: severity,
+            snackbarMessage: message,
+            index: newIndex,
+        };
+
         this.setState({
-            openSnackbar: false,
+            snackbars: [...this.state.snackbars, newSnackbar],
         });
+
+        console.log(`Severity: ${severity}\tmessage: ${message}\nlength: ${this.state.snackbars.length}`);
+    }
+
+    getCloseSnackbarCB(index: number): () => void {
+        return () => {
+            let newSnackbars = [...this.state.snackbars];
+            newSnackbars = newSnackbars.filter((element: SnackbarParams) => {
+                if (element.index === index) {
+                    element.openSnackbar = false;
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+
+            this.setState({
+                snackbars: newSnackbars,
+            });
+        };
     }
 
     render() {
-        if (this.state.openSnackbar) {
+        const snackbars: React.ReactChild[] = this.state.snackbars.map((instance: SnackbarParams) => {
             return (
-                <Snackbar open={this.state.openSnackbar} autoHideDuration={3000} onClose={this.closeSnackbar.bind(this)}>
-                    <Alert severity={this.state.snackBarSeverity} onClose={this.closeSnackbar.bind(this)}>
-                        {this.state.snackbarMessage}
+                <Snackbar
+                    open={instance.openSnackbar}
+                    autoHideDuration={3000}
+                    onClose={this.getCloseSnackbarCB(instance.index).bind(this)}
+                    key={instance.index}
+                >
+                    <Alert severity={instance.snackBarSeverity} onClose={this.getCloseSnackbarCB(instance.index).bind(this)}>
+                        {instance.snackbarMessage}
                     </Alert>
                 </Snackbar>
             );
-        }
+        });
 
         return (
             <ParentDiv id={'DialogManager'} className={navConfig.className + ' ' + navConfig.cssClassStyles}>
                 {/* Show the "Import playlist menu if needed" */}
-                {this.state.showAddPlaylistWindow ? <AddPlaylistMenu onClose={this.cancelAddPlaylist.bind(this)} /> : <div />}
+                {this.state.showAddPlaylistWindow ? (
+                    <AddPlaylistMenu addSnackbar={this.addSnackbar.bind(this)} onClose={this.hideAddPlaylist.bind(this)} />
+                ) : (
+                    <div />
+                )}
+                {snackbars}
             </ParentDiv>
         );
     }

@@ -155,6 +155,7 @@ export default class IpcMainController {
                 if (!cancelled) {
                     // Send to the main window that the operation was successful
                     this.mainWindow.webContents.send('feedback:snackbar:success', 'Added playlist!');
+                    this.mainWindow.webContents.send('actions:addNewPlaylist:hide');
                 } else {
                     // Send to the main window that the operation was cancelled
                     this.mainWindow.webContents.send('feedback:snackbar:info', 'The operation was cancelled');

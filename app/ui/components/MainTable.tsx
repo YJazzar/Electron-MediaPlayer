@@ -53,8 +53,8 @@ export default class MainTable extends React.Component<Props, {}> {
         const contents: FileDetails[] = this.props.bodyContents.filter((file: FileDetails) => {
             return !file.isDirectory && file.duration != -1;
         });
-        console.log('Current contents for the table: ');
-        console.dir(contents);
+        // console.log('Current contents for the table: ');
+        // console.dir(contents);
 
         // This will contain all of the table body rows to be displayed
         const tableRows: React.ReactChild[] = [];

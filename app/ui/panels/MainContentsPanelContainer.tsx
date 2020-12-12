@@ -50,7 +50,6 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
             tableContents = [];
         } else {
             tableContents = this.props.playlists[this.currPlaylistIndex].mediaFiles;
-            console.dir(tableContents);
         }
 
         return (
@@ -69,7 +68,7 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
             return;
         }
 
-        log.debug(`Finding the new playlist id: {${this.props.currSelectedPlaylist}}`);
+        // log.debug(`Finding the new playlist id: {${this.props.currSelectedPlaylist}}`);
         for (let i = 0; i < this.props.playlists.length; i++) {
             if (this.props.currSelectedPlaylist === this.props.playlists[i].playlistName) {
                 this.currPlaylistIndex = i;
