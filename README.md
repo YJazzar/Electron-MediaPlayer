@@ -1,5 +1,11 @@
 # tnyPlayer - A tiny media player
 
+## Installation:
+
+1. Clone the repository
+2. Inside the project's root folder, run: `yarn install`
+3. To run the application: `yarn start`
+
 Note for readers:
 
 -   Application entry point (for the renderer process): `/app/index.tsx`

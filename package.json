@@ -265,7 +265,6 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@reduxjs/toolkit": "^1.4.0",
-    "@types/electron-devtools-installer": "^2.2.0",
     "app-root-dir": "^1.0.2",
     "babel-plugin-macros": "^3.0.0",
     "connected-react-router": "^6.6.1",
