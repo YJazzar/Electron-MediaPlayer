@@ -1,24 +1,19 @@
 import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Slide, TextField, Snackbar } from '@material-ui/core';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Slide, TextField } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions/transition';
 import UIController from '../controllers/UIController';
 
 // The parent div of this component
 const ParentDiv = styled.div``;
 
-// Used to set the transition of the diaglog
+// Used to set the transition of the dialog
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & { children?: React.ReactElement<any, any> },
     ref: React.Ref<unknown>
 ) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-
-function Alert(props: AlertProps) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const title: string = 'Add New Playlist:';
 
@@ -49,31 +44,7 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
             error: false,
             openSnackBar: false,
         };
-
-        UIController.getInstance().setAddPlaylistResultsCBs(
-            this.onSuccess.bind(this),
-            this.onFailure.bind(this),
-            this.onError.bind(this)
-        );
     }
-
-    onSuccess() {
-        this.setState({
-            success: true,
-            openSnackBar: true,
-        });
-        this.closeDialog();
-    }
-
-    onFailure() {
-        this.setState({
-            failure: true,
-            openSnackBar: true,
-        });
-        // this.closeDialog();
-    }
-
-    onError() {}
 
     handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         this.setState({
@@ -88,50 +59,7 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
         // this.closeDialog();
     }
 
-    closeDialog() {
-        this.setState({
-            open: false,
-        });
-    }
-
-    closeSnackbar() {
-        this.setState({
-            openSnackBar: false,
-        });
-        this.closeDialog();
-    }
-
     render() {
-        if (this.state.openSnackBar && this.state.success) {
-            return (
-                <Snackbar open={this.state.openSnackBar} autoHideDuration={3000} onClose={this.closeSnackbar.bind(this)}>
-                    <Alert severity="success" onClose={this.closeSnackbar.bind(this)}>
-                        Playlist added successfully!
-                    </Alert>
-                </Snackbar>
-            );
-        }
-
-        if (this.state.openSnackBar && this.state.failure) {
-            return (
-                <Snackbar open={this.state.openSnackBar} autoHideDuration={3000} onClose={this.closeSnackbar.bind(this)}>
-                    <Alert severity="info" onClose={this.closeSnackbar.bind(this)}>
-                        Operation was canceled
-                    </Alert>
-                </Snackbar>
-            );
-        }
-
-        if (this.state.openSnackBar && this.state.error) {
-            return (
-                <Snackbar open={this.state.openSnackBar} autoHideDuration={3000} onClose={this.closeSnackbar.bind(this)}>
-                    <Alert severity="error" onClose={this.closeSnackbar.bind(this)}>
-                        An error has occurred!
-                    </Alert>
-                </Snackbar>
-            );
-        }
-
         return (
             <ParentDiv id="open-modal" className="modal-window">
                 <Dialog
@@ -146,7 +74,7 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
                         <TextField id="playlist-name-input" label="Playlist name:" onChange={this.handleChange.bind(this)} />
                     </DialogContent>
                     <DialogActions>
-                        <Button color="primary" onClick={this.onFailure.bind(this)}>
+                        <Button color="primary" onClick={this.props.onClose}>
                             Close
                         </Button>
                         <Button color="primary" onClick={this.addPlaylist.bind(this)}>

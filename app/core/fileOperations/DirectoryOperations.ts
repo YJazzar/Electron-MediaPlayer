@@ -68,7 +68,7 @@ export default class DirectoryOperations {
         }
 
         if (typeof paths === 'boolean' && paths === false) {
-            return false;
+            return true;
         }
 
         // Get the set of directories that will be within the new playlist
@@ -99,7 +99,7 @@ export default class DirectoryOperations {
 
         indexStore.set(`${i}`, newPlaylist);
         indexStore.set('size', i + 1);
-        return true;
+        return false;
     }
 
     static filterNonMediaFiles(oldDetails: FileDetails[]): FileDetails[] {

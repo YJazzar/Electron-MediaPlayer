@@ -121,6 +121,8 @@ export default class IpcMainController {
 
     // This will be used to notify the renderer that the user has imported new files into the tnyPlayer/data folder
     sendStatusUpdateDataIndex() {
+        log.debug('Sending new data/index.json');
+
         // Get all of the fileDetails stored in data/index.json
         const indexStore = new Store({
             cwd: path.join(app.getPath('music'), 'tnyPlayer', 'data'),
@@ -144,22 +146,18 @@ export default class IpcMainController {
             .then((cancelled: boolean | null) => {
                 // Check if an error had occurred
                 if (cancelled === null) {
-                    log.error('DirectoryOperations.addNewPlaylist() returned a rejected promise');
-                    // Send to the main window that the operation was not successful
-                    this.mainWindow.webContents.send('actions:addNewPlaylist:error');
+                    this.mainWindow.webContents.send('feedback:snackbar:error', 'An error has occurred');
                 }
-
-                log.debug('Sending new data/index.json');
 
                 // Notify the renderer process about the changes
                 this.sendStatusUpdateDataIndex();
 
                 if (!cancelled) {
                     // Send to the main window that the operation was successful
-                    this.mainWindow.webContents.send('actions:addNewPlaylist:success');
+                    this.mainWindow.webContents.send('feedback:snackbar:success', 'Added playlist!');
                 } else {
                     // Send to the main window that the operation was cancelled
-                    this.mainWindow.webContents.send('actions:addNewPlaylist:failed');
+                    this.mainWindow.webContents.send('feedback:snackbar:info', 'The operation was cancelled');
                 }
 
                 return true;

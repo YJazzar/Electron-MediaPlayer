@@ -42,14 +42,14 @@ export default class UIController {
         ipcRenderer.on('status:data/index.json updated', callback);
     }
 
-    setAddPlaylistResultsCBs(
-        successCB: (_e: IpcRendererEvent) => void,
-        failedCB: (_e: IpcRendererEvent) => void,
-        errorCB: (_e: IpcRendererEvent) => void
+    setSnackbarCBs(
+        successCB: (_e: IpcRendererEvent, message: string) => void,
+        infoCB: (_e: IpcRendererEvent, message: string) => void,
+        errorCB: (_e: IpcRendererEvent, message: string) => void
     ) {
-        ipcRenderer.on('actions:addNewPlaylist:success', successCB);
-        ipcRenderer.on('actions:addNewPlaylist:failed', failedCB);
-        ipcRenderer.on('actions:addNewPlaylist:error', errorCB);
+        ipcRenderer.on('feedback:snackbar:success', successCB);
+        ipcRenderer.on('feedback:snackbar:info', infoCB);
+        ipcRenderer.on('feedback:snackbar:error', errorCB);
     }
 
     setAddPlaylistDisplay(displayCB: () => void) {
