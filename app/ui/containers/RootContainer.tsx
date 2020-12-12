@@ -59,6 +59,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playlistNames: [],
             playlists: [],
             currSelectedPlaylist: '',
+            queue: [],
         };
 
         // Create the handles for the ipc messages
@@ -73,11 +74,20 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
 
     // This will be called by MainContentsPanelContainer
     // A callback such as this method is needed to lift the state change to the PlayerPanelContainer class
+    // It will also call the needed functions to implement a queue (because the props passed into the component will also be updated)
     playNewFile(filePath: string) {
-        this.setState({
-            playing: true,
-            currFilePlaying: filePath,
-        });
+        // If something is already playing, avoid switching tracks and add it to the queue
+        if (this.state.playing) {
+            this.setState({
+                queue: [...this.state.queue, filePath],
+            });
+        } else {
+            this.setState({
+                playing: true,
+                currFilePlaying: filePath,
+                queue: [...this.state.queue, filePath],
+            });
+        }
     }
 
     // This will be called from within NavigationPanelContainer
@@ -137,7 +147,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     render() {
         return (
             <AppDiv id="root-container">
-                <DialogManager/>
+                <DialogManager />
                 <VerticalResizableContainer
                     ref={this.verticalResizableContainerRef}
                     leftDivId={'nav-panel-resizable-left'}

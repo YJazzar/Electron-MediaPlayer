@@ -34,8 +34,6 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
-        console.log('CONSTRUCTOR CALLED');
-
         this.state = {
             textInputValue: '',
             open: true,

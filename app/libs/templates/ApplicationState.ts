@@ -11,4 +11,5 @@ export default interface ApplicationState {
     playlistNames: string[];
     playlists: PlaylistDetails[];
     currSelectedPlaylist: string;
+    queue: string[]; // An array of filepaths that need to be played
 }

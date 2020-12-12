@@ -4,6 +4,8 @@ import navConfig from '../configs/NavConfigImpl';
 import UIController from '../controllers/UIController';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import { List, ListItem } from '@material-ui/core';
+import Queue from '../components/Queue';
+
 
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
     border-right-width: 4px;
@@ -46,6 +48,7 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
                 <h1>Navigation Panel</h1>
                 <br />
                 {this.getPlaylists()}
+                <Queue {...this.props} />
             </NavPanelDiv>
         );
     }
