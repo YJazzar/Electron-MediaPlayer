@@ -23,6 +23,7 @@ interface Props {
 
 interface State {
     textInputValue: string;
+    open: boolean;
 }
 
 export default class AddPlaylistMenu extends React.Component<Props, State> {
@@ -32,6 +33,7 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
 
         this.state = {
             textInputValue: '',
+            open: true,
         };
     }
 
@@ -43,7 +45,13 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
 
     addPlaylist() {
         UIController.getInstance().addNewPlaylist(this.state.textInputValue);
-        this.props.onClose();
+        this.closeDialog();
+    }
+
+    closeDialog() {
+        this.setState({
+            open: false,
+        });
     }
 
     render() {
@@ -52,8 +60,9 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
         return (
             <ParentDiv id="open-modal" className="modal-window">
                 <Dialog
-                    open={true}
+                    open={this.state.open}
                     TransitionComponent={Transition}
+                    onExited={this.props.onClose}
                     keepMounted
                     aria-labelledby="dialog-slide-title"
                     aria-describedby="dialog-slide-description"
@@ -65,7 +74,7 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button color="primary" onClick={this.props.onClose}>Close</Button>
+                        <Button color="primary" onClick={this.closeDialog.bind(this)}>Close</Button>
                         <Button color="primary" onClick={this.addPlaylist.bind(this)}>Add</Button>
                     </DialogActions>
                 </Dialog>
