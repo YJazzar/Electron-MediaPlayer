@@ -5,6 +5,7 @@ import React from 'react';
 import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import { IconButton } from '@material-ui/core';
+import ApplicationState from '../../libs/templates/ApplicationState';
 
 const ParentDiv = styled.div`
     width: inherit;
@@ -37,21 +38,16 @@ const TimeStamp = styled.div`
     vertical-align: baseline;
 `;
 
-interface Props {
-    playing: boolean;
-    currFilePlaying: string | null;
-}
-
 interface State {
     currentTime: number;
     duration: number; // This will be the max value of the slider (min value always = 0)
     paused: boolean;
 }
 
-export default class PlayerSlider extends React.Component<Props, State> {
+export default class PlayerSlider extends React.Component<ApplicationState, State> {
     audioPlayerRef: React.RefObject<HTMLAudioElement>;
 
-    constructor(props: Props) {
+    constructor(props: ApplicationState) {
         super(props);
 
         this.state = {
@@ -145,6 +141,7 @@ export default class PlayerSlider extends React.Component<Props, State> {
                     style={{ width: '100%' }}
                     ref={this.audioPlayerRef}
                     onTimeUpdate={this.onTimeUpdate.bind(this)}
+                    onEnded={this.props.getNextQueue}
                 >
                     An error ocurred when loading the <code>audio</code> tag!
                 </audio>

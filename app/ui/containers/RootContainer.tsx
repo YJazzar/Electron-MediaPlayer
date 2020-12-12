@@ -60,6 +60,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playlists: [],
             currSelectedPlaylist: '',
             queue: [],
+            getNextQueue: this.getNextQueue.bind(this),
         };
 
         // Create the handles for the ipc messages
@@ -96,6 +97,24 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         this.setState({
             currSelectedPlaylist: newPlaylist,
         });
+    }
+
+    // Called from within PlayerSlider.tsx when the current playing file ends playing
+    getNextQueue() {
+        // If nothing new can be chosen from the queue, then pause the player
+        if (this.state.queue.length === 1) {
+            this.setState({
+                playing: false,
+                currFilePlaying: '',
+                queue: [],
+            });
+        } else {
+            this.setState({
+                playing: true,
+                currFilePlaying: this.state.queue[1], // Get the second element
+                queue: this.state.queue.slice(1), // Remove the first element
+            });
+        }
     }
 
     // This is the callback provided to the UIController class.

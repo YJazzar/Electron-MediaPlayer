@@ -43,7 +43,10 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
 
     render() {
         return (
-            <PlayerPanelDiv id={'PlayerPanelDiv'} className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}>
+            <PlayerPanelDiv
+                id={'PlayerPanelDiv'}
+                className={`${playerControlsConfig.className} ${playerControlsConfig.cssClassStyles}`}
+            >
                 {this.getTitleRow()}
                 {this.getPlayerRow()}
                 {this.getControlsRow()}
@@ -63,7 +66,10 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
     getPlayerRow(): React.ReactChild {
         return (
             <Row id={'PlayerSlider'}>
-                <PlayerSlider ref={this.playerSliderRef} playing={this.props.playing} currFilePlaying={this.props.currFilePlaying} />
+                <PlayerSlider
+                    ref={this.playerSliderRef}
+                    {...this.props} // Pass the application state down
+                />
             </Row>
         );
     }
@@ -71,7 +77,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
     getControlsRow(): React.ReactChild {
         return (
             <Row id={'VolumeSlider'}>
-                <VolumeSlider onVolumeChange={this.onVolumeChange.bind(this)}/>
+                <VolumeSlider onVolumeChange={this.onVolumeChange.bind(this)} />
             </Row>
         );
     }
