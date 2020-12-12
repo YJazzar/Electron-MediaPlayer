@@ -17,7 +17,7 @@ const StyledVolumeUp = styled(VolumeUp)`
     margin-left: 1em;
 `;
 
-const StyledVolumeDown = styled(VolumeUp)`
+const StyledVolumeDown = styled(VolumeDown)`
     margin-top: auto;
     margin-bottom: auto;
     margin-right: 1em;

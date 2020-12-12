@@ -55,8 +55,6 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
     }
 
     render() {
-        console.log('SHOWING ADD PANEL');
-
         return (
             <ParentDiv id="open-modal" className="modal-window">
                 <Dialog
@@ -69,9 +67,7 @@ export default class AddPlaylistMenu extends React.Component<Props, State> {
                 >
                     <DialogTitle id="dialog-slide-title">{title}</DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="dialog-slide-description">
                             <TextField id="playlist-name-input" label="Playlist name:" onChange={this.handleChange.bind(this)}/>
-                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button color="primary" onClick={this.closeDialog.bind(this)}>Close</Button>
