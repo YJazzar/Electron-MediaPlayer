@@ -5,7 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ParentDiv = styled.div`
-    width: inherit;
+    width: 100%;
     display: flex;
     padding-left: 2em;
     padding-right: 2em;
@@ -15,6 +15,11 @@ const StyledVolumeUp = styled(VolumeUp)`
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 1em;
+`;
+
+const StyledSlider = styled(Slider)`
+    margin-top: auto;
+    margin-bottom: auto;
 `;
 
 const StyledVolumeDown = styled(VolumeDown)`
@@ -41,7 +46,7 @@ export default class VolumeSlider extends React.Component<Props, State> {
     }
 
     // This will be passed to the <Slider> component so the user can drag the slider
-    onSliderDrag(event: React.ChangeEvent<{}>, newVolume: number | number[]) {
+    onSliderDrag(_event: React.ChangeEvent<{}>, newVolume: number | number[]) {
         // Change the state accordingly
         this.setState({
             currVolume: newVolume as number,
@@ -55,7 +60,7 @@ export default class VolumeSlider extends React.Component<Props, State> {
         return (
             <ParentDiv className={'VolumeSlider'}>
                 <StyledVolumeDown />
-                <Slider
+                <StyledSlider
                     min={0}
                     max={100}
                     value={this.state.currVolume}

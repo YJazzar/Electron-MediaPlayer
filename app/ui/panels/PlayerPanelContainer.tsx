@@ -3,11 +3,8 @@ import styled from 'styled-components';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
 import UIController from '../controllers/UIController';
-import VolumeSlider from '../components/VolumeSlider';
 import PlayerSlider from '../components/PlayerSlider';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
-import { Button } from '@material-ui/core';
+import PlayerControls from '../components/PlayerControls';
 
 // const log = LoggerFactory.getUILogger(__filename);
 
@@ -42,7 +39,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
 
         this.state = {
             paused: false,
-        }
+        };
 
         this.playerSliderRef = React.createRef();
     }
@@ -58,6 +55,10 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
         });
     }
 
+    togglePlay() {
+        this.playerSliderRef.current?.togglePlay();
+    }
+
     render() {
         return (
             <PlayerPanelDiv
@@ -67,11 +68,6 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
                 {this.getTitleRow()}
                 {this.getPlayerRow()}
                 {this.getControlsRow()}
-
-                <Button onClick={this.playerSliderRef.current?.togglePlay} color={'inherit'}>
-                    {this.state.paused || !this.props.playing ? <PlayArrowIcon /> : <PauseIcon />}
-                </Button>
-
             </PlayerPanelDiv>
         );
     }
@@ -100,8 +96,13 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
 
     getControlsRow(): React.ReactChild {
         return (
-            <Row id={'VolumeSlider'}>
-                <VolumeSlider onVolumeChange={this.onVolumeChange.bind(this)} />
+            <Row id={'Controls-row'}>
+                <PlayerControls
+                    togglePlay={this.togglePlay.bind(this)}
+                    paused={this.state.paused}
+                    {...this.props}
+                    onVolumeChange={this.onVolumeChange.bind(this)}
+                />
             </Row>
         );
     }

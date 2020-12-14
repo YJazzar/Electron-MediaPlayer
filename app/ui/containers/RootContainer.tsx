@@ -130,8 +130,13 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         }
         const index = this.state.queue.indexOf(file);
 
+        // Check that it isn't the file playing already
+        if (index === 0) {
+            return;
+        }
+
         // Check the file is already in the queue
-        if (index !== -1 && index !== 0) {
+        if (index !== -1) {
             this.setState({
                 currFilePlaying: file.filePath,
                 queue: this.state.queue.slice(index),
