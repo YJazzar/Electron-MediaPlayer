@@ -50,7 +50,8 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         // Create the instance of StateController:
         // new StateController(this.mainPanelRef, this.navigationPanelRef, this.playerPanelRef);
 
-        this.playNewFile = this.playNewFile.bind(this);
+        this.addToQueue = this.addToQueue.bind(this);
+        this.playFile = this.playFile.bind(this);
         this.state = {
             playing: false,
             currFilePlaying: null,
@@ -58,12 +59,13 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
                 width: 0,
                 height: 0,
             },
-            playNewFileCB: this.playNewFile,
             playlistNames: [],
             playlists: [],
             currSelectedPlaylist: '',
             queue: [],
             getNextQueue: this.getNextQueue.bind(this),
+            addToQueue: this.addToQueue,
+            playFileCB: this.playFile,
         };
 
         // Create the handles for the ipc messages
@@ -79,7 +81,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     // This will be called by MainContentsPanelContainer
     // A callback such as this method is needed to lift the state change to the PlayerPanelContainer class
     // It will also call the needed functions to implement a queue (because the props passed into the component will also be updated)
-    playNewFile(file: FileDetails) {
+    addToQueue(file: FileDetails) {
         // If something is already playing, avoid switching tracks and add it to the queue
         if (!this.state.playing) {
             this.setState({
@@ -87,19 +89,47 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
                 currFilePlaying: file.filePath,
                 queue: [file],
             });
-            this.dialogManagerRef.current?.openInfoSnackbar({} as any, 'Started playing!');
+            this.dialogManagerRef.current?.addSnackbar('info', 'Started playing!');
         }
         // Add to the queue if it is a new and unique item
         else if (!this.state.queue.includes(file)) {
-            console.dir(this.state.queue)
             this.setState({
                 queue: [...this.state.queue, file],
             });
 
-            this.dialogManagerRef.current?.openInfoSnackbar({} as any, 'Added to queue!');
+            this.dialogManagerRef.current?.addSnackbar('info', 'Added to queue!');
         } else {
             log.debug('User clicked on a duplicate element');
-            this.dialogManagerRef.current?.openWarningSnackbar({} as any, 'Duplicate item detected in queue!');
+            this.dialogManagerRef.current?.addSnackbar('warning', 'Duplicate item detected in queue!');
+        }
+    }
+
+    // This will be called by the Queue.tsx component when the user clicks on an item in the queue
+    // Note: for this function to work, the given "file" object must exist in ApplicationState.queue already
+    playFile(file: FileDetails) {
+        // If something is already playing, avoid switching tracks and add it to the queue
+        if (!this.state.playing) {
+            this.setState({
+                playing: true,
+                currFilePlaying: file.filePath,
+                queue: [file],
+            });
+            this.dialogManagerRef.current?.addSnackbar('info', 'Started playing!');
+            return;
+        }
+        const index = this.state.queue.indexOf(file);
+
+        // Check the file is already in the queue
+        if (index !== -1) {
+            this.setState({
+                currFilePlaying: file.filePath,
+                queue: this.state.queue.slice(index),
+            });
+
+            this.dialogManagerRef.current?.addSnackbar('info', `Skipped to ${file.fileName}!`);
+        } else {
+            log.error('The function RootContainer.playFile(file: FileDetails) was called on a file that does not exist in the queue!');
+            this.dialogManagerRef.current?.addSnackbar('error', 'Could not play the file!');
         }
     }
 

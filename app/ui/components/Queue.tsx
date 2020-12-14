@@ -17,14 +17,22 @@ export default class Queue extends React.Component<ApplicationState, State> {
         this.state = {};
     }
 
+    // Used to skip to a certain file from the queue
+    clickListener(file: FileDetails): () => void {
+        return () => {
+            this.props.playFileCB(file);
+        };
+    }
+
     // TODO: skip to a track if a queue item was clicked
     getQueueList(): React.ReactChild {
         const list: React.ReactChild[] = this.props.queue.map((file: FileDetails) => {
             // Place a star in the item entry if it is playing:
             const name = file.fileName;
+            const clickCB = this.clickListener(file).bind(this);
             if (this.props.currFilePlaying === file.filePath) {
                 return (
-                    <ListItem dense button key={`queue.${name}`}>
+                    <ListItem dense button key={`queue.${name}`} onClick={clickCB}>
                         {/* <ListItemIcon >
                             <StarIcon />
                         </ListItemIcon> */}
@@ -34,7 +42,7 @@ export default class Queue extends React.Component<ApplicationState, State> {
             }
 
             return (
-                <ListItem dense button key={`queue.${name}`}>
+                <ListItem dense button key={`queue.${name}`} onClick={clickCB}>
                     <ListItemText primary={name} />
                 </ListItem>
             );

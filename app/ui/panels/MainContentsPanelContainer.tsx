@@ -38,7 +38,7 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
     // A listener to check the row that was clicked
     rowClickListener(file: FileDetails) {
         return () => {
-            this.props.playNewFileCB(file);
+            this.props.addToQueue(file);
         };
     }
 

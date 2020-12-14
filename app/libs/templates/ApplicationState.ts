@@ -8,10 +8,11 @@ export default interface ApplicationState {
         width: number;
         height: number;
     };
-    playNewFileCB: (file: FileDetails) => void;
     playlistNames: string[];
     playlists: PlaylistDetails[];
     currSelectedPlaylist: string;
     queue: FileDetails[]; // An array of filePaths that need to be played
     getNextQueue: () => void; // Modifies ApplicationState to play the next file
+    playFileCB: (file: FileDetails) => void;
+    addToQueue: (file: FileDetails) => void;
 }

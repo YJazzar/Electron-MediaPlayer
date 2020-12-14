@@ -45,7 +45,6 @@ export default class DialogManager extends React.Component<Props, State> {
     }
 
     hideAddPlaylist() {
-        console.log('HIDE RECE');
         this.setState({
             showAddPlaylistWindow: false,
         });
