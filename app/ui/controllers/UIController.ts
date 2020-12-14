@@ -42,6 +42,11 @@ export default class UIController {
         ipcRenderer.on('status:data/index.json updated', callback);
     }
 
+    // TODO: Currently unused
+    setTogglePlayCB(callback: (_e: IpcRendererEvent) => void) {
+        ipcRenderer.on('actions:toggle-play-pause', callback);
+    }
+
     setSnackbarCBs(
         successCB: (_e: IpcRendererEvent, message: string) => void,
         infoCB: (_e: IpcRendererEvent, message: string) => void,

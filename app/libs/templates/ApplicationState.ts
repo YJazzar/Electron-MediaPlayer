@@ -2,7 +2,7 @@ import FileDetails from './FileDetails';
 import PlaylistDetails from './PlaylistDetails';
 
 export default interface ApplicationState {
-    playing: boolean;
+    playing: boolean; // Used to determine if an <audio> tag needs to be loaded
     currFilePlaying: string | null;
     window: {
         width: number;

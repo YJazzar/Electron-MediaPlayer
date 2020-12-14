@@ -28,7 +28,7 @@ export default class Queue extends React.Component<ApplicationState, State> {
     getQueueList(): React.ReactChild {
         const list: React.ReactChild[] = this.props.queue.map((file: FileDetails) => {
             // Place a star in the item entry if it is playing:
-            const name = file.fileName;
+            const name = `${file.fileName} | ${file.duration}`;
             const clickCB = this.clickListener(file).bind(this);
             if (this.props.currFilePlaying === file.filePath) {
                 return (

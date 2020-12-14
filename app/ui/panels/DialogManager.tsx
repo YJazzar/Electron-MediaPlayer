@@ -85,8 +85,6 @@ export default class DialogManager extends React.Component<Props, State> {
         this.setState({
             snackbars: [...this.state.snackbars, newSnackbar],
         });
-
-        console.log(`Severity: ${severity}\tmessage: ${message}\nlength: ${this.state.snackbars.length}`);
     }
 
     getCloseSnackbarCB(index: number): () => void {

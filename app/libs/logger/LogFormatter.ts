@@ -1,11 +1,6 @@
 import winston from 'winston';
 
-export function loggingStringFormatter(
-    level: string,
-    time: string,
-    sourcePath: string,
-    message: string
-): string {
+export function loggingStringFormatter(level: string, time: string, sourcePath: string, message: string): string {
     let formattedLevel = `         [${level}]`;
     formattedLevel = formattedLevel.substring(formattedLevel.length - 10);
 

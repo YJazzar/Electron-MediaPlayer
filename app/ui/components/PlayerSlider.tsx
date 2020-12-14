@@ -1,11 +1,10 @@
 import Slider from '@material-ui/core/Slider';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
 import React from 'react';
 import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import { IconButton } from '@material-ui/core';
 import ApplicationState from '../../libs/templates/ApplicationState';
+
 
 const ParentDiv = styled.div`
     width: inherit;
@@ -38,23 +37,28 @@ const TimeStamp = styled.div`
     vertical-align: baseline;
 `;
 
+interface Props extends ApplicationState {
+    paused: boolean;
+    setPausedState: (newPausedState: boolean) => void;
+}
+
 interface State {
     currentTime: number;
     duration: number; // This will be the max value of the slider (min value always = 0)
-    paused: boolean;
 }
 
-export default class PlayerSlider extends React.Component<ApplicationState, State> {
+export default class PlayerSlider extends React.Component<Props, State> {
     audioPlayerRef: React.RefObject<HTMLAudioElement>;
 
-    constructor(props: ApplicationState) {
+    constructor(props: Props) {
         super(props);
 
         this.state = {
             currentTime: 0,
             duration: 0,
-            paused: false,
         };
+
+        this.togglePlay = this.togglePlay.bind(this);
 
         this.audioPlayerRef = React.createRef();
     }
@@ -65,21 +69,18 @@ export default class PlayerSlider extends React.Component<ApplicationState, Stat
             return;
         }
 
-        if (this.state.paused === false) {
+        if (this.props.paused === false) {
             this.audioPlayerRef.current?.pause();
-            this.setState({
-                paused: true,
-            });
-        } else if (this.state.paused === true) {
+            this.props.setPausedState(true);
+
+        } else if (this.props.paused === true) {
             this.audioPlayerRef.current?.play();
-            this.setState({
-                paused: false,
-            });
+            this.props.setPausedState(false);
         }
     }
 
     // This will be passed to the <Slider> component so the user can drag the slider
-    onSliderDrag(event: React.ChangeEvent<{}>, newTime: number | number[]) {
+    onSliderDrag(_event: React.ChangeEvent<{}>, newTime: number | number[]) {
         this.setState({
             currentTime: newTime as number,
         });
@@ -112,9 +113,9 @@ export default class PlayerSlider extends React.Component<ApplicationState, Stat
     render() {
         return (
             <ParentDiv id={'PlayerSlider'}>
-                <Button onClick={this.togglePlay.bind(this)} color={'inherit'}>
-                    {this.state.paused || !this.props.playing ? <PlayArrowIcon /> : <PauseIcon />}
-                </Button>
+                <TimeStamp>
+                    {isNaN(this.state.duration) ? '-' : Math.round(this.state.currentTime)}
+                </TimeStamp>
                 <StyledSlider
                     min={0}
                     max={this.state.duration}
@@ -123,7 +124,6 @@ export default class PlayerSlider extends React.Component<ApplicationState, Stat
                     onChange={this.onSliderDrag.bind(this)}
                 />
                 <TimeStamp>
-                    {isNaN(this.state.duration) ? '-' : Math.round(this.state.currentTime)} /{' '}
                     {isNaN(this.state.duration) ? '-' : Math.round(this.state.duration)}
                 </TimeStamp>
 

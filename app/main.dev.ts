@@ -6,6 +6,7 @@
  */
 import { app, BrowserWindow } from 'electron';
 import ApplicationEntry from './core/ApplicationEntry';
+import KeyboardController from './core/controllers/KeyboardController';
 import ConfigManager from './libs/persist/ConfigManager';
 
 let mainWindow: BrowserWindow | null = null;
@@ -84,6 +85,7 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
     createWindow();
+    KeyboardController.createGlobalShortcuts();
 });
 
 app.on('activate', () => {

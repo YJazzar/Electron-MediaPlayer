@@ -69,8 +69,10 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         };
 
         // Create the handles for the ipc messages
-        UIController.getInstance().setInitialWindowSizeCB(this.initialWindowSize.bind(this));
-        UIController.getInstance().setHandleNewImportsCB(this.updateApplicationState.bind(this));
+        const tempInstance: UIController = UIController.getInstance();
+        tempInstance.setInitialWindowSizeCB(this.initialWindowSize.bind(this));
+        tempInstance.setHandleNewImportsCB(this.updateApplicationState.bind(this));
+
         ipcRenderer.on('resize-window', this.mainWindowResized.bind(this));
     }
 
@@ -90,9 +92,18 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
                 queue: [file],
             });
             this.dialogManagerRef.current?.addSnackbar('info', 'Started playing!');
+
+            return;
         }
+
+        const canBeAdded = (newFile: FileDetails): boolean => {
+            return this.state.queue.every((currFile: FileDetails) => {
+                return newFile.filePath !== currFile.filePath;
+            });
+        }
+
         // Add to the queue if it is a new and unique item
-        else if (!this.state.queue.includes(file)) {
+        if (canBeAdded(file)) {
             this.setState({
                 queue: [...this.state.queue, file],
             });
@@ -120,7 +131,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         const index = this.state.queue.indexOf(file);
 
         // Check the file is already in the queue
-        if (index !== -1) {
+        if (index !== -1 && index !== 0) {
             this.setState({
                 currFilePlaying: file.filePath,
                 queue: this.state.queue.slice(index),
@@ -191,7 +202,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         this.horizontalResizableContainerRef.current?.initWindowSize();
     }
 
-    mainWindowResized(e: Event, newScreenWidth: number, newScreenHeight: number) {
+    mainWindowResized(_e: Event, newScreenWidth: number, newScreenHeight: number) {
         const deltaWidth = newScreenWidth - this.state.window.width;
         const deltaHeight = newScreenHeight - this.state.window.height;
 

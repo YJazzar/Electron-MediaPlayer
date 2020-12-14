@@ -139,7 +139,7 @@ export default class IpcMainController {
         this.mainWindow.webContents.send('status:data/index.json updated', newContents);
     }
 
-    // eventName = 'actions:addNewPlaylist'
+    // eventName = 'actions:addNewPlaylist:submit'
     // @param name: the name of the new playlist being added
     actionAddNewPlaylistSubmit(_event: IpcMainEvent, name: string) {
         DirectoryOperations.addNewPlaylist(name)
@@ -172,5 +172,10 @@ export default class IpcMainController {
 
     actionAddNewPlaylistDisplay() {
         this.mainWindow.webContents.send('actions:addNewPlaylist:display');
+    }
+
+    // TODO: Currently unused
+    togglePlayPause() {
+        this.mainWindow.webContents.send('actions:toggle-play-pause');
     }
 }

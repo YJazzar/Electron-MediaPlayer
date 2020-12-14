@@ -5,6 +5,9 @@ import playerControlsConfig from '../configs/PlayerControlsConfigImpl';
 import UIController from '../controllers/UIController';
 import VolumeSlider from '../components/VolumeSlider';
 import PlayerSlider from '../components/PlayerSlider';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
+import { Button } from '@material-ui/core';
 
 // const log = LoggerFactory.getUILogger(__filename);
 
@@ -27,11 +30,19 @@ const Row = styled.div`
     text-align: center;
 `;
 
-export default class PlayerPanelContainer extends React.Component<ApplicationState, {}> {
+interface State {
+    paused: boolean; // Used when a file is playing, but the user hit "pause"
+}
+
+export default class PlayerPanelContainer extends React.Component<ApplicationState, State> {
     private playerSliderRef: React.RefObject<PlayerSlider>;
 
     constructor(props: ApplicationState) {
         super(props);
+
+        this.state = {
+            paused: false,
+        }
 
         this.playerSliderRef = React.createRef();
     }
@@ -39,6 +50,12 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
     // Used by the VolumeSlider component to change the volume
     onVolumeChange(newVolume: number) {
         this.playerSliderRef.current?.setVolume(newVolume);
+    }
+
+    setPausedState(newState: boolean) {
+        this.setState({
+            paused: newState,
+        });
     }
 
     render() {
@@ -50,6 +67,11 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
                 {this.getTitleRow()}
                 {this.getPlayerRow()}
                 {this.getControlsRow()}
+
+                <Button onClick={this.playerSliderRef.current?.togglePlay} color={'inherit'}>
+                    {this.state.paused || !this.props.playing ? <PlayArrowIcon /> : <PauseIcon />}
+                </Button>
+
             </PlayerPanelDiv>
         );
     }
@@ -69,6 +91,8 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
                 <PlayerSlider
                     ref={this.playerSliderRef}
                     {...this.props} // Pass the application state down
+                    {...this.state}
+                    setPausedState={this.setPausedState.bind(this)}
                 />
             </Row>
         );
