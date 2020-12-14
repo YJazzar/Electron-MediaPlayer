@@ -17,6 +17,7 @@ import UIController from '../controllers/UIController';
 import styled from 'styled-components';
 import PlaylistDetails from '../../libs/templates/PlaylistDetails';
 import DialogManager from '../panels/DialogManager';
+import FileDetails from '../../libs/templates/FileDetails';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -78,21 +79,21 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     // This will be called by MainContentsPanelContainer
     // A callback such as this method is needed to lift the state change to the PlayerPanelContainer class
     // It will also call the needed functions to implement a queue (because the props passed into the component will also be updated)
-    playNewFile(filePath: string) {
+    playNewFile(file: FileDetails) {
         // If something is already playing, avoid switching tracks and add it to the queue
         if (!this.state.playing) {
             this.setState({
                 playing: true,
-                currFilePlaying: filePath,
-                queue: [filePath],
+                currFilePlaying: file.filePath,
+                queue: [file],
             });
             this.dialogManagerRef.current?.openInfoSnackbar({} as any, 'Started playing!');
         }
         // Add to the queue if it is a new and unique item
-        else if (!this.state.queue.includes(filePath)) {
+        else if (!this.state.queue.includes(file)) {
             console.dir(this.state.queue)
             this.setState({
-                queue: [...this.state.queue, filePath],
+                queue: [...this.state.queue, file],
             });
 
             this.dialogManagerRef.current?.openInfoSnackbar({} as any, 'Added to queue!');
@@ -122,7 +123,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         } else {
             this.setState({
                 playing: true,
-                currFilePlaying: this.state.queue[1], // Get the second element
+                currFilePlaying: this.state.queue[1].filePath, // Get the second element
                 queue: this.state.queue.slice(1), // Remove the first element
             });
         }

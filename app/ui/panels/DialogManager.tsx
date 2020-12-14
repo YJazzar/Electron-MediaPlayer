@@ -4,8 +4,9 @@ import navConfig from '../configs/NavConfigImpl';
 import UIController from '../controllers/UIController';
 import AddPlaylistMenu from '../components/AddPlaylistMenu';
 import { Snackbar } from '@material-ui/core';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import MuiAlert from '@material-ui/lab/Alert';
 import { IpcRendererEvent } from 'electron';
+import { AlertProps } from '@material-ui/lab/Alert/Alert';
 
 const ParentDiv = styled(UIController.getInstance().getTheme())``;
 

@@ -16,7 +16,7 @@ const StyledTableHeader = styled(TableHead)({ backgroundColor: 'inherit', positi
 
 interface Props {
     bodyContents: FileDetails[];
-    clickListener: (newDilePath: string) => () => void; // A clickListener function that returns a function
+    clickListener: (newFile: FileDetails) => () => void; // A clickListener function that returns a function
     // I know ill get confused by this later on (this is passed from main panel)
 }
 
@@ -66,7 +66,7 @@ export default class MainTable extends React.Component<Props, {}> {
                 tempData.push(<TableCell key={key}>{this.getDataCellContents(contents[rowNum], col)}</TableCell>);
             }
             tableRows.push(
-                <TableRow key={rowNum} hover={true} onClick={this.props.clickListener(contents[rowNum].filePath)}>
+                <TableRow key={rowNum} hover={true} onClick={this.props.clickListener(contents[rowNum])}>
                     {tempData}
                 </TableRow>
             );

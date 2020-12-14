@@ -1,3 +1,4 @@
+import FileDetails from './FileDetails';
 import PlaylistDetails from './PlaylistDetails';
 
 export default interface ApplicationState {
@@ -7,10 +8,10 @@ export default interface ApplicationState {
         width: number;
         height: number;
     };
-    playNewFileCB: (filePath: string) => void;
+    playNewFileCB: (file: FileDetails) => void;
     playlistNames: string[];
     playlists: PlaylistDetails[];
     currSelectedPlaylist: string;
-    queue: string[]; // An array of filePaths that need to be played
+    queue: FileDetails[]; // An array of filePaths that need to be played
     getNextQueue: () => void; // Modifies ApplicationState to play the next file
 }

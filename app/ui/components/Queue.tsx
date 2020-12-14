@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import { List, ListItem, ListItemText, ListItemIcon, Box } from '@material-ui/core';
+import FileDetails from '../../libs/templates/FileDetails';
 // import StarIcon from '@material-ui/icons/Star';
 
 // The parent div of this component
@@ -18,9 +19,10 @@ export default class Queue extends React.Component<ApplicationState, State> {
 
     // TODO: skip to a track if a queue item was clicked
     getQueueList(): React.ReactChild {
-        const list: React.ReactChild[] = this.props.queue.map((name) => {
+        const list: React.ReactChild[] = this.props.queue.map((file: FileDetails) => {
             // Place a star in the item entry if it is playing:
-            if (this.props.currFilePlaying === name) {
+            const name = file.fileName;
+            if (this.props.currFilePlaying === file.filePath) {
                 return (
                     <ListItem dense button key={`queue.${name}`}>
                         {/* <ListItemIcon >
