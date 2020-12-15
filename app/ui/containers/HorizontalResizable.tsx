@@ -35,8 +35,6 @@ const ResizableHandle = styled(Box)`
         width: 5px;
         height: 100%;
         position: absolute;
-        /* left: 0;
-        right: 0; */
         margin-top: -4px;
         background-color: transparent;
         cursor: ew-resize;
@@ -117,7 +115,6 @@ export default class HorizontalResizable extends React.Component<Props, State> {
         // If the dragging just finished, then store the new size
         const primaryButtonPressed = event.buttons === 1;
         if (!primaryButtonPressed) {
-            console.log('Button unpressed at: ' + newWidth);
             this.setWidth(Math.min(Math.max(newWidth, this.getMinWidth()), this.getMaxWidth()));
             this.setState({
                 isBeingResized: false,
@@ -134,12 +131,10 @@ export default class HorizontalResizable extends React.Component<Props, State> {
 
     addListener() {
         window.addEventListener('mousemove', this.onMouseMove);
-        console.log('Adding listener');
     }
 
     removeListener() {
         window.removeEventListener('mousemove', this.onMouseMove);
-        console.log('Removing listener');
     }
 
     render() {
@@ -184,11 +179,13 @@ export default class HorizontalResizable extends React.Component<Props, State> {
         const temp: string | undefined = this.rightRef.current?.style.getPropertyValue('--width-var');
 
         if (typeof temp === undefined) {
-            return 111;
+            log.error(`The variable '--width-var' was unexpectedly 'undefined' for a horizontal resizable component`);
+            return 402;
         } else if (temp) {
             return parseInt(temp, 10);
         }
-        console.log('Failed: ' + temp);
+
+        log.error(`Could not parse the variable '--width-var'. {--width-var=${temp}}`);
         return 112;
     }
 }

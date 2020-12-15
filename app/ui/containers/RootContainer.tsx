@@ -4,8 +4,6 @@ import LoggerFactory from '../../libs/logger/LoggerFactory';
 import mainConfig from '../configs/MainConfigImpl';
 import navConfig from '../configs/NavConfigImpl';
 import '../styles/app.global.css';
-import '../styles/contentResizables.global.css';
-import '../styles/navResizables.global.css';
 // import '../styles/theme.global.css';
 import MainContentsPanelContainer from '../panels/MainContentsPanelContainer';
 import NavigationPanelContainer from '../panels/NavigationPanelContainer';
@@ -30,8 +28,8 @@ const AppDiv = styled(UIController.getInstance().getTheme())`
 interface Props {}
 
 export default class RootContainer extends React.Component<Props, ApplicationState> {
-    verticalResizableContainerRef: React.RefObject<VerticalResizable>;
-    horizontalResizableContainerRef: React.RefObject<HorizontalResizable>;
+    verticalResizableRef: React.RefObject<VerticalResizable>;
+    horizontalResizableRef: React.RefObject<HorizontalResizable>;
     dialogManagerRef: React.RefObject<DialogManager>;
 
     // References for each of the panels:
@@ -39,12 +37,15 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     navigationPanelRef: React.RefObject<NavigationPanelContainer>;
     playerPanelRef: React.RefObject<PlayerPanelContainer>;
 
+    windowHeight: number;
+    windowWidth: number;
+
     constructor(props: {}) {
         super(props);
 
         // Create all the refs needed
-        this.verticalResizableContainerRef = React.createRef();
-        this.horizontalResizableContainerRef = React.createRef();
+        this.verticalResizableRef = React.createRef();
+        this.horizontalResizableRef = React.createRef();
         this.dialogManagerRef = React.createRef();
         this.mainPanelRef = React.createRef();
         this.navigationPanelRef = React.createRef();
@@ -58,10 +59,10 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         this.state = {
             playing: false,
             currFilePlaying: null,
-            window: {
-                width: 0,
-                height: 0,
-            },
+            // window: {
+            //     width: 0,
+            //     height: 0,
+            // },
             playlistNames: [],
             playlists: [],
             currSelectedPlaylist: '',
@@ -70,6 +71,8 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             addToQueue: this.addToQueue,
             playFileCB: this.playFile,
         };
+        this.windowHeight = 0;
+        this.windowWidth = 0;
 
         // Create the handles for the ipc messages
         const tempInstance: UIController = UIController.getInstance();
@@ -201,40 +204,45 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
 
     initialWindowSize(_e: IpcRendererEvent, width: number, height: number) {
         log.debug(`initial-window-size was received... now setting the width ${width} ${height}`);
-        this.setState({
-            window: {
-                width: width,
-                height: height,
-            },
-        });
+        // this.setState({
+        //     window: {
+        //         width: width,
+        //         height: height,
+        //     },
+        // });
+        this.windowWidth = width;
+        this.windowHeight = height;
 
         // this.verticalResizableContainerRef.current?.initWindowSize();
         // this.horizontalResizableContainerRef.current?.initWindowSize();
     }
 
     mainWindowResized(_e: Event, newScreenWidth: number, newScreenHeight: number) {
-        const deltaWidth = newScreenWidth - this.state.window.width;
-        const deltaHeight = newScreenHeight - this.state.window.height;
+        const deltaWidth = newScreenWidth - this.windowWidth;
+        const deltaHeight = newScreenHeight - this.windowHeight;
 
-        this.verticalResizableContainerRef.current?.mainWindowResized(deltaWidth);
-        this.horizontalResizableContainerRef.current?.mainWindowResized(deltaHeight);
-        this.setState({
-            window: {
-                width: newScreenWidth,
-                height: newScreenHeight,
-            },
-        });
+        this.horizontalResizableRef .current?.mainWindowResized(deltaWidth);
+        this.verticalResizableRef.current?.mainWindowResized(deltaHeight);
+        // this.setState({
+        //     window: {
+        //         width: newScreenWidth,
+        //         height: newScreenHeight,
+        //     },
+        // });
+        this.windowHeight = newScreenHeight;
+        this.windowWidth = newScreenWidth;
     }
 
     render() {
         return (
             <AppDiv id="root-container">
                 <HorizontalResizable
+                    ref={this.horizontalResizableRef}
                     leftChild={this.getNavigationPanel()}
                     rightChild={this.getVerticalResizable()}
-                    leftChildDefaultWidth={0.5}
-                    leftChildMaxWidth={1.0}
-                    leftChildMinWidth={0.1}
+                    leftChildDefaultWidth={navConfig.sizeProps.defaultWidth}
+                    leftChildMaxWidth={navConfig.sizeProps.maxWidth}
+                    leftChildMinWidth={navConfig.sizeProps.minWidth}
                 />
 
                 <DialogManager ref={this.dialogManagerRef} />
@@ -245,11 +253,12 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     getVerticalResizable(): React.ReactChild {
         return (
             <VerticalResizable
+                ref={this.verticalResizableRef}
                 topChild={this.getMainContentsPanel()}
                 bottomChild={this.getPlayerPanel()}
-                topChildMaxHeight={0.9}
-                topChildMinHeight={0.1}
-                topChildDefaultHeight={0.5}
+                topChildDefaultHeight={mainConfig.sizeProps.defaultHeight}
+                topChildMaxHeight={mainConfig.sizeProps.maxHeight}
+                topChildMinHeight={mainConfig.sizeProps.minHeight}
             />
         );
     }

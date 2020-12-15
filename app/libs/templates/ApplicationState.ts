@@ -4,10 +4,10 @@ import PlaylistDetails from './PlaylistDetails';
 export default interface ApplicationState {
     playing: boolean; // Used to determine if an <audio> tag needs to be loaded
     currFilePlaying: string | null;
-    window: {
-        width: number;
-        height: number;
-    };
+    // window: {
+    //     width: number;
+    //     height: number;
+    // };
     playlistNames: string[];
     playlists: PlaylistDetails[];
     currSelectedPlaylist: string;
