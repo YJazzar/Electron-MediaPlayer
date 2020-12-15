@@ -35,7 +35,8 @@ interface State {
     isBeingResized: boolean;
 }
 
-export default class VerticalResizableContainer extends React.Component<Props, State> {
+// WARNING: NO LONGER USED
+class VerticalResizableContainer extends React.Component<Props, State> {
     newMethod = this.onMouseMove.bind(this);
 
     constructor(props: Props) {

@@ -4,7 +4,6 @@ import LoggerFactory from '../../libs/logger/LoggerFactory';
 import mainConfig from '../configs/MainConfigImpl';
 import navConfig from '../configs/NavConfigImpl';
 import '../styles/app.global.css';
-// import '../styles/theme.global.css';
 import MainContentsPanelContainer from '../panels/MainContentsPanelContainer';
 import NavigationPanelContainer from '../panels/NavigationPanelContainer';
 import PlayerPanelContainer from '../panels/PlayerPanelContainer';
@@ -12,7 +11,7 @@ import ApplicationState from '../../libs/templates/ApplicationState';
 import UIController from '../controllers/UIController';
 import styled from 'styled-components';
 import PlaylistDetails from '../../libs/templates/PlaylistDetails';
-import DialogManager from '../panels/DialogManager';
+import DialogManager from './DialogManager';
 import FileDetails from '../../libs/templates/FileDetails';
 import VerticalResizable from './VerticalResizable';
 import HorizontalResizable from './HorizontalResizable';
@@ -59,10 +58,6 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         this.state = {
             playing: false,
             currFilePlaying: null,
-            // window: {
-            //     width: 0,
-            //     height: 0,
-            // },
             playlistNames: [],
             playlists: [],
             currSelectedPlaylist: '',
@@ -184,7 +179,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     }
 
     // This is the callback provided to the UIController class.
-    // This callback will handel updating the Application State every time the user imports a new playlist
+    // This callback will handle updating the Application State every time the user imports a new playlist
     updateApplicationState(_e: IpcRendererEvent, playlistDetails: PlaylistDetails[]): void {
         // Extract the list of playlists for updating the state
         const playlistNames: string[] = [];
@@ -204,17 +199,9 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
 
     initialWindowSize(_e: IpcRendererEvent, width: number, height: number) {
         log.debug(`initial-window-size was received... now setting the width ${width} ${height}`);
-        // this.setState({
-        //     window: {
-        //         width: width,
-        //         height: height,
-        //     },
-        // });
+
         this.windowWidth = width;
         this.windowHeight = height;
-
-        // this.verticalResizableContainerRef.current?.initWindowSize();
-        // this.horizontalResizableContainerRef.current?.initWindowSize();
     }
 
     mainWindowResized(_e: Event, newScreenWidth: number, newScreenHeight: number) {
@@ -223,12 +210,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
 
         this.horizontalResizableRef .current?.mainWindowResized(deltaWidth);
         this.verticalResizableRef.current?.mainWindowResized(deltaHeight);
-        // this.setState({
-        //     window: {
-        //         width: newScreenWidth,
-        //         height: newScreenHeight,
-        //     },
-        // });
+
         this.windowHeight = newScreenHeight;
         this.windowWidth = newScreenWidth;
     }

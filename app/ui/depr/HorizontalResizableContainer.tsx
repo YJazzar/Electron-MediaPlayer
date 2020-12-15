@@ -34,7 +34,8 @@ interface State {
     isBeingResized: boolean;
 }
 
-export default class HorizontalResizableContainer extends React.Component<Props, State> {
+// WARNING: NO LONGER USED
+class HorizontalResizableContainer extends React.Component<Props, State> {
     newMethod = this.onMouseMove.bind(this);
 
     constructor(props: Props) {

@@ -5,7 +5,7 @@ import UIController from '../controllers/UIController';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import { List, ListItem } from '@material-ui/core';
 import Queue from '../components/Queue';
-
+import VerticalResizable from '../containers/VerticalResizable';
 
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
     border-right-width: 4px;
@@ -45,11 +45,30 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
     render() {
         return (
             <NavPanelDiv id={'NavPanelDiv'} className={navConfig.className + ' ' + navConfig.cssClassStyles}>
+                <VerticalResizable
+                    topChild={this.getTop()}
+                    bottomChild={this.getBottom()}
+                    topChildDefaultHeight={0.7}
+                    topChildMaxHeight={0.9}
+                    topChildMinHeight={0.3}
+                />
+            </NavPanelDiv>
+        );
+    }
+
+    getTop() {
+        return (
+            <div>
                 <h1>Navigation Panel</h1>
                 <br />
                 {this.getPlaylists()}
-                <Queue {...this.props} />
-            </NavPanelDiv>
+            </div>
+        );
+    }
+
+    getBottom() {
+        return (
+            <Queue {...this.props} />
         );
     }
 }
