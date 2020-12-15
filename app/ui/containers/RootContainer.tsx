@@ -18,11 +18,15 @@ import styled from 'styled-components';
 import PlaylistDetails from '../../libs/templates/PlaylistDetails';
 import DialogManager from '../panels/DialogManager';
 import FileDetails from '../../libs/templates/FileDetails';
+import VerticalResizable from '../panels/VerticalResizable';
 
 const log = LoggerFactory.getUILogger(__filename);
 
 /* ${UIController.getInstance().getThemeCSS()} */
-const AppDiv = styled(UIController.getInstance().getTheme())``;
+const AppDiv = styled(UIController.getInstance().getTheme())`
+    width: 100vh;
+    height: 100vh;
+`;
 
 interface Props {}
 
@@ -224,7 +228,14 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     render() {
         return (
             <AppDiv id="root-container">
-                <DialogManager ref={this.dialogManagerRef}/>
+                <VerticalResizable
+                    topChild={this.getNavigationPanel()}
+                    bottomChild={this.getMainContentsPanel()}
+                    topChildMaxHeight={0.90}
+                    topChildMinHeight={0.10}
+                    topChildDefaultHeight={0.50}
+                />
+                {/* <DialogManager ref={this.dialogManagerRef}/>
                 <VerticalResizableContainer
                     ref={this.verticalResizableContainerRef}
                     leftDivId={'nav-panel-resizable-left'}
@@ -236,7 +247,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
                     leftPanelComponent={this.getNavigationPanel()}
                     rightPanelComponent={this.getHorizontalResizableContainer()}
                     leftPanelConfig={navConfig}
-                />
+                /> */}
             </AppDiv>
         );
     }
