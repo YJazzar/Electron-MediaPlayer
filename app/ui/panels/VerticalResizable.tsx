@@ -13,8 +13,21 @@ const log = LoggerFactory.getUILogger(__filename);
 //     );
 // }
 
+// function Test(props: { id: string; defaultHeight: number; child: React.ReactChild; className: string }) {
+//     console.log('CALLED');
+//     document.getElementById(topID)?.style.setProperty('--height-var', `${props.defaultHeight}px`);
+//     return (
+//         <div id={props.id} className={props.className}>
+//             {props.child}
+//         </div>
+//     );
+// }
+
+const ParentDiv = styled.div`
+
+`;
+
 const TopComponent = styled.div`
-    /* --height-var: 100px; */
     height: var(--height-var);
     width: 100%;
     float: top;
@@ -63,15 +76,18 @@ interface State {
 const topID = 'unique';
 
 export default class VerticalResizable extends React.Component<Props, State> {
+    topRef: React.RefObject<HTMLDivElement>;
+
     constructor(props: Props) {
         super(props);
 
-        this.setLiveHeight(400);
+
         this.state = {
             mouseOffset: 0,
             isBeingResized: false,
         };
 
+        this.topRef = React.createRef();
         this.onMouseMove = this.onMouseMove.bind(this);
     }
 
@@ -80,31 +96,21 @@ export default class VerticalResizable extends React.Component<Props, State> {
         log.debug(`Vertically resizable panel was mounted!`);
 
         this.initWindowSize; // Callback after the state has been set
+        this.setLiveHeight(500);
     }
 
     // This function makes it so that both div can reliably show up upon starting the application
     initWindowSize() {
-        const topHeight = this.props.topChildDefaultHeight * document.body.clientHeight;
+        // const topHeight = this.props.topChildDefaultHeight * document.body.clientHeight;
 
-        this.setLiveHeight(topHeight);
+        // this.setLiveHeight(topHeight);
+        // this.setLiveHeight(400);
     }
 
-    // setNewTopHeight(newTopHeight: number, isBeingResized: boolean) {
-    //     const bottomHeight = document.body.clientHeight - newTopHeight;
-
-    //     console.log(`[Setting] height  |  top: ${newTopHeight}  | bottom: ${bottomHeight}`);
-    //     this.removeListener();
-    //     this.setLiveHeight(newTopHeight);
-    //     this.setState({
-    //         topCurrHeight: newTopHeight,
-    //         isBeingResized: isBeingResized,
-    //     });
-    //     this.addListener();
-    // }
 
     onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
         event.preventDefault();
-        console.log(`Mouse offset: ${event.pageY}`);
+        console.log(`Mouse offset: ${event.pageY} | currHeight: ${this.getLiveHeight()}`);
         this.setState(
             {
                 mouseOffset: this.getLiveHeight() - event.clientY,
@@ -124,15 +130,13 @@ export default class VerticalResizable extends React.Component<Props, State> {
 
         // Calculate the new top height
         const newHeight = event.clientY + this.state.mouseOffset;
-        console.log(`Delta: ${newHeight} | clientY: ${event.clientY} | mouseoff: ${this.state.mouseOffset}`);
-        // console.log(
-        //     `newHeight: ${newHeight}  |  currHeight: ${this.state.topCurrHeight}  |  liveHeight: ${this.getLiveHeight()}`
-        // );
+        console.log(`Delta: ${newHeight} | clientY: ${event.clientY} | mouseoff: ${this.state.mouseOffset} | currHeight: ${this.getLiveHeight()}`);
+
 
         // If the dragging just finished, then store the new size
         const primaryButtonPressed = event.buttons === 1;
         if (!primaryButtonPressed) {
-            console.log('Button unpressed');
+            console.log('Button unpressed at: ' + newHeight);
             this.setLiveHeight(Math.min(Math.max(newHeight, this.getMinHeight()), this.getMaxHeight()));
             this.setState({
                 isBeingResized: false,
@@ -163,13 +167,11 @@ export default class VerticalResizable extends React.Component<Props, State> {
         // const bottomHeight = document.body.clientHeight - this.state.topLiveHeight;
 
         return (
-            <div>
-                <TopComponent id={topID} className={''}>
-                    {this.props.topChild}
-                </TopComponent>
+            <ParentDiv>
+                <TopComponent id={topID} className={''} ref={this.topRef}>{this.props.topChild}</TopComponent>
                 <ResizableHandle onMouseDown={this.onMouseDown.bind(this)} border={1} borderColor="primary.main" />
                 <BottomComponent className={''}>{this.props.bottomChild}</BottomComponent>
-            </div>
+            </ParentDiv>
         );
     }
 
@@ -181,16 +183,20 @@ export default class VerticalResizable extends React.Component<Props, State> {
     // }
 
     getMaxHeight(): number {
-        return this.props.topChildMaxHeight * document.body.clientHeight;
+        return 10000000;
+        // return this.props.topChildMaxHeight * document.body.clientHeight;
     }
 
     getMinHeight(): number {
-        return this.props.topChildMinHeight * document.body.clientHeight;
+        return 10;
+        // return this.props.topChildMinHeight * document.body.clientHeight;
     }
 
     setLiveHeight(newHeight: number) {
         // console.log(`Setting with: ${newHeight}`);
-        document.getElementById(topID)?.style.setProperty('--height-var', `${newHeight}px`);
+        // document.getElementById(topID)?.style.setProperty('--height-var', `${newHeight}px`); //works
+        if (this.topRef.current)
+            this.topRef.current.style.setProperty('--height-var', `${newHeight}px`);
     }
 
     getLiveHeight(): number {
