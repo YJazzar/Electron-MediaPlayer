@@ -1,8 +1,11 @@
 import { exec } from 'child_process';
 import { app } from 'electron';
 import path from 'path';
+import LoggerFactory from '../../../libs/logger/LoggerFactory';
 
 const appRootDir = require('app-root-dir');
+
+const log = LoggerFactory.getLogger(__filename);
 
 function getPlatform(): string {
     switch (process.platform) {
@@ -33,13 +36,12 @@ const cmd = `${path.join(execPath, process.platform === 'win32' ? 'ffprobe.exe' 
 export default function ffprobeGetDuration(filePath: string): Promise<number> {
     const params = [];
     params.push('-v', 'error', '-show_entries', 'format=duration', '-of default=noprint_wrappers=1:nokey=1', `"${filePath}"`);
-
     // The command to run is constructed:
     const command = `${cmd} ${params.join(' ')}`;
-    // console.log(`Running commanfd: ${command}`);
+    console.log(`Running command: ${command}`);
 
     return new Promise((resolve, reject) => {
-        exec(command, (error, stdout) => {
+        exec(command, (error, stdout, stderr) => {
             if (error) {
                 return reject(error);
             }
