@@ -19,7 +19,6 @@ const LeftComponent = styled.div`
 `;
 
 const RightComponent = styled.div`
-    width: 100%;
     height: 100%;
     flex-grow: 1;
 `;
@@ -50,9 +49,9 @@ interface Props {
     leftChild: React.ReactChild;
 
     // All prop lengths must be in percentages
-    rightChildMaxWidth: number;
-    rightChildMinWidth: number;
-    rightChildDefaultWidth: number;
+    leftChildMaxWidth: number;
+    leftChildMinWidth: number;
+    leftChildDefaultWidth: number;
 }
 
 interface State {
@@ -79,8 +78,11 @@ export default class HorizontalResizable extends React.Component<Props, State> {
     componentDidMount() {
         log.debug(`Horizontally resizable panel was mounted!`);
 
+        console.log(`Max: ${this.getMaxWidth()} | Min: ${this.getMinWidth()}`);
+        console.log(`Width: ${document.body.clientWidth} | Height: ${document.body.clientHeight}`);
+
         // Set the default width only after the component has finished mounting
-        this.setWidth(this.props.rightChildDefaultWidth * document.body.clientWidth);
+        this.setWidth(this.props.leftChildDefaultWidth * document.body.clientWidth);
     }
 
     onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -89,7 +91,7 @@ export default class HorizontalResizable extends React.Component<Props, State> {
         // console.log(`Mouse offset: ${event.pageY} | currWidth: ${this.getLiveWidth()}`);
         this.setState(
             {
-                mouseOffset: event.clientX - this.getWidth(),
+                mouseOffset: this.getWidth() - event.clientX,
                 isBeingResized: true,
             },
             this.addListener
@@ -106,11 +108,11 @@ export default class HorizontalResizable extends React.Component<Props, State> {
 
         // Calculate the new right width
         const newWidth = event.clientX + this.state.mouseOffset;
-        console.log(
-            `newWidth: ${newWidth} | clientY: ${event.clientX} | mouseOff: ${
-                this.state.mouseOffset
-            } | currWidth: ${this.getWidth()}`
-        );
+        // console.log(
+        //     `newWidth: ${newWidth} | clientY: ${event.clientX} | mouseOff: ${
+        //         this.state.mouseOffset
+        //     } | currWidth: ${this.getWidth()}`
+        // );
 
         // If the dragging just finished, then store the new size
         const primaryButtonPressed = event.buttons === 1;
@@ -159,17 +161,19 @@ export default class HorizontalResizable extends React.Component<Props, State> {
 
     // Gets the max of the top component (in pixels)
     getMaxWidth(): number {
-        return this.props.rightChildMaxWidth * document.body.clientWidth;
+        // return 1400;
+        return this.props.leftChildMaxWidth * document.body.clientWidth;
     }
 
     // Gets the min of the top component (in pixels)
     getMinWidth(): number {
-        return this.props.rightChildMinWidth * document.body.clientWidth;
+        // return 10;
+        return this.props.leftChildMinWidth * document.body.clientWidth;
     }
 
     // Sets the width of the top component (in pixels)
     setWidth(newWidth: number) {
-        // console.log(`Setting with: ${newWidth}`);
+        // console.log(`Setting width: ${newWidth}`);
         if (this.rightRef.current) {
             this.rightRef.current.style.setProperty('--width-var', `${newWidth}px`);
         }

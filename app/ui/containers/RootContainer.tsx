@@ -231,10 +231,10 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             <AppDiv id="root-container">
                 <HorizontalResizable
                     leftChild={this.getNavigationPanel()}
-                    rightChild={this.getMainContentsPanel()}
-                    rightChildDefaultWidth={0.5}
-                    rightChildMaxWidth={0.9}
-                    rightChildMinWidth={0.1}
+                    rightChild={this.getVerticalResizable()}
+                    leftChildDefaultWidth={0.5}
+                    leftChildMaxWidth={1.0}
+                    leftChildMinWidth={0.1}
                 />
 
                 <DialogManager ref={this.dialogManagerRef} />

@@ -21,24 +21,25 @@ const TopComponent = styled.div`
 const BottomComponent = styled.div`
     width: 100%;
     height: 100%;
-    flex-grow: 1;
+    overflow: auto;
 `;
 
 const ResizableHandle = styled(Box)`
     float: right;
-    height: 99%;
-    width: 1px;
+    width: 99%;
+    height: 1px;
     z-index: 1;
 
     &::after {
         content: '';
-        width: 5px;
+        height: 5px;
+        width: 100%;
         position: absolute;
-        top: 0;
-        bottom: 0;
+        /* top: 0;
+        bottom: 0; */
         margin-left: -4px;
         background-color: transparent;
-        cursor: ew-resize;
+        cursor: ns-resize;
         z-index: 2;
     }
 `;

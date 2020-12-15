@@ -16,6 +16,7 @@ const PlayerPanelDiv = styled(UIController.getInstance().getTheme())`
     align-items: center;
     padding: 2em;
     height: 100%;
+    /* border: 3px solid whitesmoke; */
 `;
 
 const Row = styled.div`
