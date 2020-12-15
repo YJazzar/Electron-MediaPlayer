@@ -10,6 +10,8 @@
 body {
     overflow: hidden;
     font-family: 'Cambay';
+    height: 100vh;
+    width: 100vh;
 }
 
 /* Create the scroll-bar design */

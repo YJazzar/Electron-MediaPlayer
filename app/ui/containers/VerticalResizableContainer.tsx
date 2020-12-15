@@ -99,7 +99,7 @@ export default class VerticalResizableContainer extends React.Component<Props, S
     }
 
     // TODO: get the default width here
-    // This function makes it so that both divs can reliably show up upon starting the application
+    // This function makes it so that both div tags can reliably show up upon starting the application
     initWindowSize() {
         const width = this.props.leftPanelConfig.sizeProps.defaultWidth * document.body.clientWidth;
         this.setPaneWidth(width);

@@ -2,6 +2,7 @@ import { createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import React from 'react';
 import { render } from 'react-dom';
+import styled from 'styled-components';
 import LoggerFactory from './libs/logger/LoggerFactory';
 import RootContainer from './ui/containers/RootContainer';
 import UIController from './ui/controllers/UIController';
@@ -11,6 +12,7 @@ import UIEntry from './ui/UIEntry';
 
 const log = LoggerFactory.getUILogger(__filename);
 log.debug('UI now starting to initialize');
+
 
 document.addEventListener('DOMContentLoaded', initUI);
 

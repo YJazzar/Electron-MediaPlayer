@@ -24,9 +24,13 @@ const log = LoggerFactory.getUILogger(__filename);
 
 /* ${UIController.getInstance().getThemeCSS()} */
 const AppDiv = styled(UIController.getInstance().getTheme())`
-    width: 100vh;
-    height: 100vh;
-    margin-top: 30px;
+    /* position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0; */
+    width: 100%;
+    height: 100%;
 `;
 
 interface Props {}
@@ -105,7 +109,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             return this.state.queue.every((currFile: FileDetails) => {
                 return newFile.filePath !== currFile.filePath;
             });
-        }
+        };
 
         // Add to the queue if it is a new and unique item
         if (canBeAdded(file)) {
@@ -149,7 +153,9 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
 
             this.dialogManagerRef.current?.addSnackbar('info', `Skipped to ${file.fileName}!`);
         } else {
-            log.error('The function RootContainer.playFile(file: FileDetails) was called on a file that does not exist in the queue!');
+            log.error(
+                'The function RootContainer.playFile(file: FileDetails) was called on a file that does not exist in the queue!'
+            );
             this.dialogManagerRef.current?.addSnackbar('error', 'Could not play the file!');
         }
     }
@@ -229,15 +235,17 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     render() {
         return (
             <AppDiv id="root-container">
+                {/* <DialogManager ref={this.dialogManagerRef} /> */}
+
                 <VerticalResizable
-                    topChild={this.getNavigationPanel()}
-                    bottomChild={this.getMainContentsPanel()}
-                    topChildMaxHeight={0.90}
-                    topChildMinHeight={0.10}
-                    topChildDefaultHeight={0.50}
+                    topChild={this.getMainContentsPanel()}
+                    bottomChild={this.getNavigationPanel()}
+                    topChildMaxHeight={0.9}
+                    topChildMinHeight={0.1}
+                    topChildDefaultHeight={0.5}
                 />
-                {/* <DialogManager ref={this.dialogManagerRef}/>
-                <VerticalResizableContainer
+
+                {/* <VerticalResizableContainer
                     ref={this.verticalResizableContainerRef}
                     leftDivId={'nav-panel-resizable-left'}
                     rightDivId={'main-player-panel-combined-resizable-right'}
