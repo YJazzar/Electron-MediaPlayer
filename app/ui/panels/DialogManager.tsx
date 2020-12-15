@@ -113,6 +113,7 @@ export default class DialogManager extends React.Component<Props, State> {
                     autoHideDuration={3000}
                     onClose={this.getCloseSnackbarCB(instance.index).bind(this)}
                     key={instance.index}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 >
                     <Alert severity={instance.snackBarSeverity} onClose={this.getCloseSnackbarCB(instance.index).bind(this)}>
                         {instance.snackbarMessage}
