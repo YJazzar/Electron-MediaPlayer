@@ -6,8 +6,8 @@ import navConfig from './NavConfigImpl';
 const playerControlsConfig = {
     panelType: PanelType.playerControlsPanel,
     panelName: 'Player Controls panel',
-    className: ' h-full overflow-auto',
-    cssClassStyles: `panel-border`,
+    // className: ' h-full overflow-auto',
+    // cssClassStyles: `panel-border`,
     // cssClassStyles: 'floatLeft bg-gray-400 border border-gray-600',
 
     sizeProps: {

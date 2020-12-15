@@ -5,8 +5,8 @@ import PanelType from '../../libs/templates/PanelType';
 const navConfig = {
     panelType: PanelType.navPanel,
     panelName: 'Navigation panel',
-    className: 'h-full overflow-auto',
-    cssClassStyles: `panel-border`,
+    // className: 'h-full overflow-auto',
+    // cssClassStyles: `panel-border`,
     /** Styles explained:
      * .h-full = height: 100%
      * .border-r-4 = border right 4px
