@@ -26,6 +26,7 @@ const log = LoggerFactory.getUILogger(__filename);
 const AppDiv = styled(UIController.getInstance().getTheme())`
     width: 100vh;
     height: 100vh;
+    margin-top: 30px;
 `;
 
 interface Props {}
