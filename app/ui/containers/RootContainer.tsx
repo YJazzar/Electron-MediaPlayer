@@ -7,28 +7,22 @@ import '../styles/app.global.css';
 import '../styles/contentResizables.global.css';
 import '../styles/navResizables.global.css';
 // import '../styles/theme.global.css';
-import HorizontalResizableContainer from './HorizontalResizableContainer';
 import MainContentsPanelContainer from '../panels/MainContentsPanelContainer';
 import NavigationPanelContainer from '../panels/NavigationPanelContainer';
 import PlayerPanelContainer from '../panels/PlayerPanelContainer';
-import VerticalResizableContainer from './VerticalResizableContainer';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import UIController from '../controllers/UIController';
 import styled from 'styled-components';
 import PlaylistDetails from '../../libs/templates/PlaylistDetails';
 import DialogManager from '../panels/DialogManager';
 import FileDetails from '../../libs/templates/FileDetails';
-import VerticalResizable from '../panels/VerticalResizable';
+import VerticalResizable from './VerticalResizable';
+import HorizontalResizable from './HorizontalResizable';
 
 const log = LoggerFactory.getUILogger(__filename);
 
 /* ${UIController.getInstance().getThemeCSS()} */
 const AppDiv = styled(UIController.getInstance().getTheme())`
-    /* position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0; */
     width: 100%;
     height: 100%;
 `;
@@ -36,8 +30,8 @@ const AppDiv = styled(UIController.getInstance().getTheme())`
 interface Props {}
 
 export default class RootContainer extends React.Component<Props, ApplicationState> {
-    verticalResizableContainerRef: React.RefObject<VerticalResizableContainer>;
-    horizontalResizableContainerRef: React.RefObject<HorizontalResizableContainer>;
+    verticalResizableContainerRef: React.RefObject<VerticalResizable>;
+    horizontalResizableContainerRef: React.RefObject<HorizontalResizable>;
     dialogManagerRef: React.RefObject<DialogManager>;
 
     // References for each of the panels:
@@ -214,8 +208,8 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             },
         });
 
-        this.verticalResizableContainerRef.current?.initWindowSize();
-        this.horizontalResizableContainerRef.current?.initWindowSize();
+        // this.verticalResizableContainerRef.current?.initWindowSize();
+        // this.horizontalResizableContainerRef.current?.initWindowSize();
     }
 
     mainWindowResized(_e: Event, newScreenWidth: number, newScreenHeight: number) {
@@ -235,46 +229,27 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     render() {
         return (
             <AppDiv id="root-container">
-                {/* <DialogManager ref={this.dialogManagerRef} /> */}
-
-                <VerticalResizable
-                    topChild={this.getMainContentsPanel()}
-                    bottomChild={this.getNavigationPanel()}
-                    topChildMaxHeight={0.9}
-                    topChildMinHeight={0.1}
-                    topChildDefaultHeight={0.5}
+                <HorizontalResizable
+                    leftChild={this.getNavigationPanel()}
+                    rightChild={this.getMainContentsPanel()}
+                    rightChildDefaultWidth={0.5}
+                    rightChildMaxWidth={0.9}
+                    rightChildMinWidth={0.1}
                 />
 
-                {/* <VerticalResizableContainer
-                    ref={this.verticalResizableContainerRef}
-                    leftDivId={'nav-panel-resizable-left'}
-                    rightDivId={'main-player-panel-combined-resizable-right'}
-                    handleDivId={'nav-panel-handle'}
-                    cssLeftWidthVarName={'--nav-panel-resizable-width-left'}
-                    cssMinWidthVarName={'--nav-panel-min-width'}
-                    cssMaxWidthVarName={'--nav-panel-max-width'}
-                    leftPanelComponent={this.getNavigationPanel()}
-                    rightPanelComponent={this.getHorizontalResizableContainer()}
-                    leftPanelConfig={navConfig}
-                /> */}
+                <DialogManager ref={this.dialogManagerRef} />
             </AppDiv>
         );
     }
 
-    getHorizontalResizableContainer(): React.ReactChild {
+    getVerticalResizable(): React.ReactChild {
         return (
-            <HorizontalResizableContainer
-                ref={this.horizontalResizableContainerRef}
-                topDivId={'content-panel-resizable-top'}
-                bottomDivId={'player-panel-resizable-bottom'}
-                handleDivId={'content-panel-handle'}
-                cssTopHeightVarName={'--content-panel-resizable-height-top'}
-                cssBottomHeightVarName={'--player-panel-resizable-height-bottom'}
-                cssMinHeightVarName={'--content-panel-min-height'}
-                cssMaxHeightVarName={'--content-panel-max-height'}
-                topPanelComponent={this.getMainContentsPanel()}
-                bottomPanelComponent={this.getPlayerPanel()}
-                topPanelConfig={mainConfig}
+            <VerticalResizable
+                topChild={this.getMainContentsPanel()}
+                bottomChild={this.getPlayerPanel()}
+                topChildMaxHeight={0.9}
+                topChildMinHeight={0.1}
+                topChildDefaultHeight={0.5}
             />
         );
     }
