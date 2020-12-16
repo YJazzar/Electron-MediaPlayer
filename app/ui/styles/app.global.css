@@ -12,21 +12,11 @@ body {
 
 /* Create the scroll-bar design */
 /* The scroll bar's overall width */
-*::-webkit-scrollbar {
+/* *::-webkit-scrollbar {
     width: 6px;
-}
+} */
 
 /* The actual scroll handle (the one users can move by clicking and dragging) */
-*::-webkit-scrollbar-thumb {
-    border: 5px solid rgba(0, 0, 0, 0);
-    border-radius: 100px;
-    background-clip: padding-box;
-}
-
-.h-full {
-    height: 100%;
-}
-
-.overflow-auto {
-    overflow: auto;
-}
+/* *::-webkit-scrollbar-thumb {
+    border: 5px solid rgb(48, 141, 255);
+} */

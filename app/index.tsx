@@ -13,7 +13,6 @@ import UIEntry from './ui/UIEntry';
 const log = LoggerFactory.getUILogger(__filename);
 log.debug('UI now starting to initialize');
 
-
 document.addEventListener('DOMContentLoaded', initUI);
 
 function initUI() {
@@ -24,6 +23,25 @@ function initUI() {
             type: UIController.getInstance().getThemeName() === 'dark' ? 'dark' : 'light',
             primary: blue,
             secondary: red,
+        },
+        overrides: {
+            MuiCssBaseline: {
+                '@global': {
+                    '*::-webkit-scrollbar': {
+                        width: '5px',
+                        height: '5px',
+                    },
+                    '*::-webkit-scrollbar-track': {
+                        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.3)',
+                        borderRadius: '10px',
+                    },
+                    '*::-webkit-scrollbar-thumb': {
+                        backgroundColor: 'rgb(56, 139, 255)',
+                        borderRadius: '10px',
+                        outline: '1px solid slategrey',
+                    },
+                },
+            },
         },
     });
 
