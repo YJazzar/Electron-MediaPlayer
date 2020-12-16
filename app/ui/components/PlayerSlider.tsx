@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { IconButton } from '@material-ui/core';
 import ApplicationState from '../../libs/templates/ApplicationState';
 
-
 const ParentDiv = styled.div`
     width: inherit;
     display: flex;
@@ -72,7 +71,6 @@ export default class PlayerSlider extends React.Component<Props, State> {
         if (this.props.paused === false) {
             this.audioPlayerRef.current?.pause();
             this.props.setPausedState(true);
-
         } else if (this.props.paused === true) {
             this.audioPlayerRef.current?.play();
             this.props.setPausedState(false);
@@ -113,9 +111,7 @@ export default class PlayerSlider extends React.Component<Props, State> {
     render() {
         return (
             <ParentDiv id={'PlayerSlider'}>
-                <TimeStamp>
-                    {isNaN(this.state.duration) ? '-' : Math.round(this.state.currentTime)}
-                </TimeStamp>
+                <TimeStamp>{isNaN(this.state.duration) ? '-' : Math.round(this.state.currentTime)}</TimeStamp>
                 <StyledSlider
                     min={0}
                     max={this.state.duration}
@@ -123,9 +119,7 @@ export default class PlayerSlider extends React.Component<Props, State> {
                     aria-labelledby="continuous-slider"
                     onChange={this.onSliderDrag.bind(this)}
                 />
-                <TimeStamp>
-                    {isNaN(this.state.duration) ? '-' : Math.round(this.state.duration)}
-                </TimeStamp>
+                <TimeStamp>{isNaN(this.state.duration) ? '-' : Math.round(this.state.duration)}</TimeStamp>
 
                 {this.getAudioPlayer()}
             </ParentDiv>
@@ -133,20 +127,17 @@ export default class PlayerSlider extends React.Component<Props, State> {
     }
 
     getAudioPlayer(): React.ReactChild {
-        if (this.props.currFilePlaying != null) {
-            return (
-                <audio
-                    autoPlay
-                    src={this.props.currFilePlaying}
-                    style={{ width: '100%' }}
-                    ref={this.audioPlayerRef}
-                    onTimeUpdate={this.onTimeUpdate.bind(this)}
-                    onEnded={this.props.playNextQueue}
-                >
-                    An error ocurred when loading the <code>audio</code> tag!
-                </audio>
-            );
-        }
-        return <div id={'NoAudioPlaying'} />;
+        return (
+            <audio
+                autoPlay
+                src={this.props.currFilePlaying != null ? this.props.currFilePlaying : ''}
+                style={{ width: '100%' }}
+                ref={this.audioPlayerRef}
+                onTimeUpdate={this.onTimeUpdate.bind(this)}
+                onEnded={this.props.playNextQueue}
+            >
+                An error ocurred when loading the <code>audio</code> tag!
+            </audio>
+        );
     }
 }

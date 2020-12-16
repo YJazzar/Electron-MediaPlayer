@@ -26,6 +26,9 @@ export default interface ApplicationState {
     // Modifies ApplicationState to play the next file
     playNextQueue: () => void;
 
+    // Modifies ApplicationState to play the prev file
+    playPrevQueue: () => void;
+
     // Plays a specific file (needs the full FileDetails)
     playFileCB: (file: FileDetails) => void;
 

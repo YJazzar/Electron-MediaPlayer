@@ -10,6 +10,7 @@ import VerticalResizable from '../containers/VerticalResizable';
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
     border-right-width: 4px;
     border-radius: 0.25rem;
+    height: 100%;
 `;
 
 const FullHeight = styled.div`

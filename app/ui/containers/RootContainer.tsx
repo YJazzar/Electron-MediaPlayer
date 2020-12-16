@@ -18,7 +18,6 @@ import HorizontalResizable from './HorizontalResizable';
 
 const log = LoggerFactory.getUILogger(__filename);
 
-/* ${UIController.getInstance().getThemeCSS()} */
 const AppDiv = styled(UIController.getInstance().getTheme())`
     width: 100%;
     height: 100%;
@@ -64,6 +63,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             queue: [],
             currQueueIndex: -1,
             playNextQueue: this.playNextQueue.bind(this),
+            playPrevQueue: this.playPrevQueue.bind(this),
             addToQueue: this.addToQueue,
             playFileCB: this.playFile,
         };
@@ -154,12 +154,14 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     }
 
     // Called from within PlayerSlider.tsx when the current playing file ends playing
+    // Or called from within PlayerControls.tsx when the 'skip forwards button' is used
     playNextQueue() {
         // If nothing new can be chosen from the queue, then pause the player
         if (this.state.queue.length === 1 || this.state.currQueueIndex === this.state.queue.length - 1) {
             this.setState({
                 playing: false,
                 currFilePlaying: '',
+                currQueueIndex: -1,
             });
         } else {
             this.setState({
@@ -167,6 +169,27 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
                 currFilePlaying: this.state.queue[this.state.currQueueIndex + 1].filePath, // Get the second element
                 // queue: this.state.queue.slice(1), // Remove the first element
                 currQueueIndex: this.state.currQueueIndex + 1,
+            });
+        }
+    }
+
+     // Called from within PlayerControls.tsx when the 'skip backwards button' is used
+    playPrevQueue() {
+        // If nothing can be chosen from the queue, then pause the player
+        if (this.state.currQueueIndex === 0) {
+            this.setState({
+                playing: false,
+                currFilePlaying: '',
+                currQueueIndex: -1,
+            });
+        } else {
+            // Either wrap around the queue, or get the prev file
+            const newIndex = this.state.currQueueIndex === -1 ? this.state.queue.length - 1 : this.state.currQueueIndex - 1;
+            this.setState({
+                playing: true,
+                currFilePlaying: this.state.queue[newIndex].filePath, // Get the second element
+                // queue: this.state.queue.slice(1), // Remove the first element
+                currQueueIndex: newIndex,
             });
         }
     }

@@ -45,12 +45,17 @@ export default class PlayerControls extends React.Component<Props, {}> {
         this.state = {};
     }
 
+    // Force an update if ApplicationState.paused or ApplicationState.playing changed values:
+    shouldComponentUpdate(nextProps: Props){
+        return (nextProps.playing !== this.props.playing) || (nextProps.paused !== this.props.paused);
+    }
+
     render() {
         return (
             <ParentDiv id={'Player-Controls-Panel'}>
                 <Column></Column>
                 <Column>
-                    <Button>
+                    <Button onClick={this.props.playPrevQueue}>
                         <SkipPreviousIcon />
                     </Button>
 
@@ -58,7 +63,7 @@ export default class PlayerControls extends React.Component<Props, {}> {
                         {this.props.paused || !this.props.playing ? <PlayArrowIcon /> : <PauseIcon />}
                     </Button>
 
-                    <Button>
+                    <Button onClick={this.props.playNextQueue}>
                         <SkipNextIcon />
                     </Button>
                 </Column>
