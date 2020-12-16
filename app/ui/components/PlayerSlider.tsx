@@ -141,7 +141,7 @@ export default class PlayerSlider extends React.Component<Props, State> {
                     style={{ width: '100%' }}
                     ref={this.audioPlayerRef}
                     onTimeUpdate={this.onTimeUpdate.bind(this)}
-                    onEnded={this.props.getNextQueue}
+                    onEnded={this.props.playNextQueue}
                 >
                     An error ocurred when loading the <code>audio</code> tag!
                 </audio>

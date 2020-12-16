@@ -63,7 +63,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             currSelectedPlaylist: '',
             queue: [],
             currQueueIndex: -1,
-            getNextQueue: this.getNextQueue.bind(this),
+            playNextQueue: this.playNextQueue.bind(this),
             addToQueue: this.addToQueue,
             playFileCB: this.playFile,
         };
@@ -154,7 +154,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     }
 
     // Called from within PlayerSlider.tsx when the current playing file ends playing
-    getNextQueue() {
+    playNextQueue() {
         // If nothing new can be chosen from the queue, then pause the player
         if (this.state.queue.length === 1 || this.state.currQueueIndex === this.state.queue.length - 1) {
             this.setState({

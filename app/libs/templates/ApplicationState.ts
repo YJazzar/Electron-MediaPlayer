@@ -24,7 +24,7 @@ export default interface ApplicationState {
     currQueueIndex: number;
 
     // Modifies ApplicationState to play the next file
-    getNextQueue: () => void;
+    playNextQueue: () => void;
 
     // Plays a specific file (needs the full FileDetails)
     playFileCB: (file: FileDetails) => void;
