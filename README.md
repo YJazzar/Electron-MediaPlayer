@@ -54,7 +54,19 @@ Note for readers:
 
 # TODO:
 
--   Implement a verification function inside of DirectoryOperations to make sure data/index.json and index.json are not corrupted
+## Features:
+
+-   Add a search bar
+-   Add an `<AppBar/>`
+-   Bind the 'skip forward' and 'skip backwards' playback buttons that are already in the player panel
+-   Add the following buttons to the queue panel:
+    -   `clear queue`
+    -   `hide played`: to hide the already completed tracks
+    -   `Disable queue`: to avoid adding to queue and immediately playing a specific file
+
+<br/>
+
+- Implement a verification function inside of DirectoryOperations to make sure data/index.json and index.json are not corrupted
 -   make sure to copy all media files into the /data/ folder
 -   In file details, add an option `isSymbolicLink` to prevent from copying the media file to the /data/ directory
 
