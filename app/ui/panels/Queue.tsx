@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import ApplicationState from '../../libs/templates/ApplicationState';
-import { List, ListItem, ListItemText, ListItemIcon, Box } from '@material-ui/core';
+import { List, ListItem, ListItemText, Box, Button, Tooltip } from '@material-ui/core';
 import FileDetails from '../../libs/templates/FileDetails';
-// import StarIcon from '@material-ui/icons/Star';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
+import LayersClearIcon from '@material-ui/icons/LayersClear';
+import BlockIcon from '@material-ui/icons/Block';
 
 // The parent div of this component
 const ParentDiv = styled(Box)``;
@@ -24,7 +26,7 @@ export default class Queue extends React.Component<ApplicationState, State> {
         };
     }
 
-    // TODO: skip to a track if a queue item was clicked
+    // TODO: https://material-ui.com/components/accordion/
     getQueueList(): React.ReactChild {
         const list: React.ReactChild[] = this.props.queue.map((file: FileDetails) => {
             // Place a star in the item entry if it is playing:
@@ -56,6 +58,22 @@ export default class Queue extends React.Component<ApplicationState, State> {
         return (
             <ParentDiv id={'Queue-Panel'} borderTop={1} borderColor="primary.main">
                 Queue:
+                <br />
+                <Tooltip title="Clear Queue">
+                    <Button>
+                        <ClearAllIcon />
+                    </Button>
+                </Tooltip>
+                <Tooltip title="Remove Played">
+                    <Button>
+                        <LayersClearIcon />
+                    </Button>
+                </Tooltip>
+                <Tooltip title="Disable Queue">
+                    <Button>
+                        <BlockIcon />
+                    </Button>
+                </Tooltip>
                 {this.getQueueList()}
             </ParentDiv>
         );

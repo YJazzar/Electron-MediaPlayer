@@ -4,7 +4,7 @@ import navConfig from '../configs/NavConfigImpl';
 import UIController from '../controllers/UIController';
 import ApplicationState from '../../libs/templates/ApplicationState';
 import { List, ListItem } from '@material-ui/core';
-import Queue from '../components/Queue';
+import Queue from './Queue';
 import VerticalResizable from '../containers/VerticalResizable';
 
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
