@@ -12,6 +12,11 @@ const NavPanelDiv = styled(UIController.getInstance().getTheme())`
     border-radius: 0.25rem;
 `;
 
+const FullHeight = styled.div`
+    height: 100%;
+    overflow: auto;
+`;
+
 interface Props extends ApplicationState {
     changePlaylist: (newPlaylist: string) => void;
 }
@@ -48,9 +53,9 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
                 <VerticalResizable
                     topChild={this.getTop()}
                     bottomChild={this.getBottom()}
-                    topChildDefaultHeight={0.7}
-                    topChildMaxHeight={0.9}
-                    topChildMinHeight={0.3}
+                    topChildDefaultHeight={0.5}
+                    topChildMaxHeight={1}
+                    topChildMinHeight={0}
                 />
             </NavPanelDiv>
         );
@@ -58,17 +63,19 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
 
     getTop() {
         return (
-            <div>
+            <FullHeight>
                 <h1>Navigation Panel</h1>
                 <br />
                 {this.getPlaylists()}
-            </div>
+            </FullHeight>
         );
     }
 
     getBottom() {
         return (
-            <Queue {...this.props} />
+            <FullHeight>
+                <Queue {...this.props} />
+            </FullHeight>
         );
     }
 }
