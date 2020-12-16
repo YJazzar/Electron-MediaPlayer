@@ -62,6 +62,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playlists: [],
             currSelectedPlaylist: '',
             queue: [],
+            currQueueIndex: -1,
             getNextQueue: this.getNextQueue.bind(this),
             addToQueue: this.addToQueue,
             playFileCB: this.playFile,
@@ -83,7 +84,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
 
     // This will be called by MainContentsPanelContainer
     // A callback such as this method is needed to lift the state change to the PlayerPanelContainer class
-    // It will also call the needed functions to implement a queue (because the props passed into the component will also be updated)
+    // It will also call the needed functions to control the queue (because the props passed into the component will also be updated)
     addToQueue(file: FileDetails) {
         // If something is already playing, avoid switching tracks and add it to the queue
         if (!this.state.playing) {
@@ -91,6 +92,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
                 playing: true,
                 currFilePlaying: file.filePath,
                 queue: [file],
+                currQueueIndex: 0,
             });
             this.dialogManagerRef.current?.addSnackbar('info', 'Started playing!');
 
@@ -119,19 +121,10 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     // This will be called by the Queue.tsx component when the user clicks on an item in the queue
     // Note: for this function to work, the given "file" object must exist in ApplicationState.queue already
     playFile(file: FileDetails) {
-        // If something is already playing, avoid switching tracks and add it to the queue
-        if (!this.state.playing) {
-            this.setState({
-                playing: true,
-                currFilePlaying: file.filePath,
-                queue: [file],
-            });
-            this.dialogManagerRef.current?.addSnackbar('info', 'Started playing!');
-            return;
-        }
-        const index = this.state.queue.indexOf(file);
+        console.log('PlayFile called');
 
         // Check that it isn't the file playing already
+        const index = this.state.queue.indexOf(file);
         if (index === 0) {
             return;
         }
@@ -140,7 +133,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         if (index !== -1) {
             this.setState({
                 currFilePlaying: file.filePath,
-                queue: this.state.queue.slice(index),
+                currQueueIndex: index,
             });
 
             this.dialogManagerRef.current?.addSnackbar('info', `Skipped to ${file.fileName}!`);
@@ -163,17 +156,17 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     // Called from within PlayerSlider.tsx when the current playing file ends playing
     getNextQueue() {
         // If nothing new can be chosen from the queue, then pause the player
-        if (this.state.queue.length === 1) {
+        if (this.state.queue.length === 1 || this.state.currQueueIndex === this.state.queue.length - 1) {
             this.setState({
                 playing: false,
                 currFilePlaying: '',
-                queue: [],
             });
         } else {
             this.setState({
                 playing: true,
-                currFilePlaying: this.state.queue[1].filePath, // Get the second element
-                queue: this.state.queue.slice(1), // Remove the first element
+                currFilePlaying: this.state.queue[this.state.currQueueIndex + 1].filePath, // Get the second element
+                // queue: this.state.queue.slice(1), // Remove the first element
+                currQueueIndex: this.state.currQueueIndex + 1,
             });
         }
     }

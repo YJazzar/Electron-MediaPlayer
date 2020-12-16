@@ -2,13 +2,33 @@ import FileDetails from './FileDetails';
 import PlaylistDetails from './PlaylistDetails';
 
 export default interface ApplicationState {
-    playing: boolean; // Used to determine if an <audio> tag needs to be loaded
+    // Used to determine if an <audio> tag needs to be loaded
+    playing: boolean;
+
+    // The full filePath of the file playing
     currFilePlaying: string | null;
+
+    // An array containing the playlists stored in data/index.json
     playlistNames: string[];
+
+    // The full contents of data stored in data/index.json
     playlists: PlaylistDetails[];
+
+    // The name of the playlist selected by the user (used to display its contents in MainContentsPanel)
     currSelectedPlaylist: string;
-    queue: FileDetails[]; // An array of filePaths that need to be played
-    getNextQueue: () => void; // Modifies ApplicationState to play the next file
+
+    // An array of filePaths that need to be played
+    queue: FileDetails[];
+
+    // The index to use for controlling the queue
+    currQueueIndex: number;
+
+    // Modifies ApplicationState to play the next file
+    getNextQueue: () => void;
+
+    // Plays a specific file (needs the full FileDetails)
     playFileCB: (file: FileDetails) => void;
+
+    // Adds a specific file to the queue
     addToQueue: (file: FileDetails) => void;
 }
