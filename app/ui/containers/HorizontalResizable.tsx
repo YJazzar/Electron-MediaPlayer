@@ -9,7 +9,7 @@ const ParentDiv = styled.div`
     display: flex;
     flex-flow: row;
     height: 100%;
-    width: 100%;
+    width: inherit;
 `;
 
 const LeftComponent = styled.div`
@@ -20,6 +20,7 @@ const LeftComponent = styled.div`
 
 const RightComponent = styled.div`
     height: 100%;
+    width: inherit;
     flex-grow: 1;
 `;
 

@@ -9,7 +9,7 @@ const ParentDiv = styled.div`
     display: flex;
     flex-flow: column;
     height: 100%;
-    width: 100%;
+    width: inherit;
 `;
 
 const TopComponent = styled.div`
@@ -26,14 +26,14 @@ const BottomComponent = styled.div`
 
 const ResizableHandle = styled(Box)`
     float: right;
-    width: 100%;
+    width: inherit;
     height: 1px;
     z-index: 1;
 
     &::after {
         content: '';
         height: 5px;
-        width: 100%;
+        width: inherit;
         position: absolute;
         background-color: transparent;
         cursor: ns-resize;
@@ -134,7 +134,7 @@ export default class VerticalResizable extends React.Component<Props, State> {
         return (
             <ParentDiv>
                 <TopComponent ref={this.topRef}>{this.props.topChild}</TopComponent>
-                <ResizableHandle onMouseDown={this.onMouseDown.bind(this)} border={1} borderColor="primary.main" />
+                <ResizableHandle  onMouseDown={this.onMouseDown.bind(this)} border={1} borderColor="primary.main" />
                 <BottomComponent>{this.props.bottomChild}</BottomComponent>
             </ParentDiv>
         );
@@ -178,17 +178,4 @@ export default class VerticalResizable extends React.Component<Props, State> {
         log.error(`Could not parse the variable '--height-var'. {--height-var=${temp}}`);
         return 401;
     }
-
-    // TODO: fix this (the queue panel's draggable div extends too far out)
-    // This is used to avoid a bug in which the divider is extended to 100% of the viewport's length
-    // initWidth() {
-    //     if (this.topRef.current) {
-    //         const temp: string | undefined = this.topRef.current?.style.getPropertyValue('--width-var');
-    //         console.log('Recieved width: ' + temp);
-    //         if (temp !== undefined) {
-    //             console.log('Setting width');
-    //             this.topRef.current.style.setProperty('--width-var', `100%`);
-    //         }
-    //     }
-    // }
 }
