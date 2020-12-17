@@ -78,6 +78,7 @@ export default class VerticalResizable extends React.Component<Props, State> {
         // Set the default height only after the component has finished mounting
         console.log(`umm ${this.props.topChildDefaultHeight} ${document.body.clientHeight}`);
         this.setLiveHeight(this.props.topChildDefaultHeight * document.body.clientHeight);
+        // this.initWidth();
     }
 
     onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -177,4 +178,17 @@ export default class VerticalResizable extends React.Component<Props, State> {
         log.error(`Could not parse the variable '--height-var'. {--height-var=${temp}}`);
         return 401;
     }
+
+    // TODO: fix this (the queue panel's draggable div extends too far out)
+    // This is used to avoid a bug in which the divider is extended to 100% of the viewport's length
+    // initWidth() {
+    //     if (this.topRef.current) {
+    //         const temp: string | undefined = this.topRef.current?.style.getPropertyValue('--width-var');
+    //         console.log('Recieved width: ' + temp);
+    //         if (temp !== undefined) {
+    //             console.log('Setting width');
+    //             this.topRef.current.style.setProperty('--width-var', `100%`);
+    //         }
+    //     }
+    // }
 }

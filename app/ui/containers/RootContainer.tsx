@@ -25,6 +25,8 @@ const AppDiv = styled(UIController.getInstance().getTheme())`
 
 interface Props {}
 
+// Because the application state is maintained here, this class will contain all
+// the functions necessary to change and modify the state
 export default class RootContainer extends React.Component<Props, ApplicationState> {
     verticalResizableRef: React.RefObject<VerticalResizable>;
     horizontalResizableRef: React.RefObject<HorizontalResizable>;
@@ -60,10 +62,13 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playlistNames: [],
             playlists: [],
             currSelectedPlaylist: '',
+            queueEnabled: true,
             queue: [],
             currQueueIndex: -1,
             playNextQueue: this.playNextQueue.bind(this),
             playPrevQueue: this.playPrevQueue.bind(this),
+            clearQueue: this.clearQueue.bind(this),
+            clearPlayed: this.clearPlayed.bind(this),
             addToQueue: this.addToQueue,
             playFileCB: this.playFile,
         };
@@ -173,7 +178,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         }
     }
 
-     // Called from within PlayerControls.tsx when the 'skip backwards button' is used
+    // Called from within PlayerControls.tsx when the 'skip backwards button' is used
     playPrevQueue() {
         // If nothing can be chosen from the queue, then pause the player
         if (this.state.currQueueIndex === 0) {
@@ -188,11 +193,30 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             this.setState({
                 playing: true,
                 currFilePlaying: this.state.queue[newIndex].filePath, // Get the second element
-                // queue: this.state.queue.slice(1), // Remove the first element
                 currQueueIndex: newIndex,
             });
         }
     }
+
+    // Called from within Queue.tsx component
+    clearQueue() {
+        this.setState({
+            playing: false,
+            currFilePlaying: '',
+            currQueueIndex: -1,
+            queue: [],
+        });
+    }
+
+    // Called from within Queue.tsx
+    // Removes anything that was played/completed (according to state.currQueueIndex)
+    clearPlayed() {
+        this.setState({
+            currQueueIndex: 0,
+            queue: [...this.state.queue.splice(this.state.currQueueIndex)],
+        });
+    }
+
 
     // This is the callback provided to the UIController class.
     // This callback will handle updating the Application State every time the user imports a new playlist

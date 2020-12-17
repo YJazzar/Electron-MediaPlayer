@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import ApplicationState from '../../libs/templates/ApplicationState';
-import { List, ListItem, ListItemText, Box, Button, Tooltip } from '@material-ui/core';
+import { List, ListItem, ListItemText, Box, Tooltip } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import FileDetails from '../../libs/templates/FileDetails';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import LayersClearIcon from '@material-ui/icons/LayersClear';
 import BlockIcon from '@material-ui/icons/Block';
+import LoopIcon from '@material-ui/icons/Loop';
 
 // The parent div of this component
 const ParentDiv = styled(Box)``;
@@ -60,20 +62,27 @@ export default class Queue extends React.Component<ApplicationState, State> {
                 Queue:
                 <br />
                 <Tooltip title="Clear Queue">
-                    <Button>
-                        <ClearAllIcon />
-                    </Button>
+                    <IconButton onClick={this.props.clearQueue}>
+                        <ClearAllIcon fontSize={'small'}/>
+                    </IconButton>
                 </Tooltip>
                 <Tooltip title="Remove Played">
-                    <Button>
-                        <LayersClearIcon />
-                    </Button>
+                    <IconButton onClick={this.props.clearPlayed}>
+                        <LayersClearIcon fontSize={'small'}/>
+                    </IconButton>
                 </Tooltip>
                 <Tooltip title="Disable Queue">
-                    <Button>
-                        <BlockIcon />
-                    </Button>
+                    <IconButton>
+                        <BlockIcon fontSize={'small'}/>
+                    </IconButton>
                 </Tooltip>
+
+                <Tooltip title="Loop Queue">
+                    <IconButton>
+                        <LoopIcon fontSize={'small'}/>
+                    </IconButton>
+                </Tooltip>
+
                 {this.getQueueList()}
             </ParentDiv>
         );

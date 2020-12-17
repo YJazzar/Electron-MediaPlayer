@@ -17,6 +17,9 @@ export default interface ApplicationState {
     // The name of the playlist selected by the user (used to display its contents in MainContentsPanel)
     currSelectedPlaylist: string;
 
+    // Used to enable and disable adding new items to the queue
+    queueEnabled: boolean;
+
     // An array of filePaths that need to be played
     queue: FileDetails[];
 
@@ -28,6 +31,12 @@ export default interface ApplicationState {
 
     // Modifies ApplicationState to play the prev file
     playPrevQueue: () => void;
+
+    // Clears the queue
+    clearQueue: () => void;
+
+    // Clears all items in the queue until the item playing currently
+    clearPlayed: () => void;
 
     // Plays a specific file (needs the full FileDetails)
     playFileCB: (file: FileDetails) => void;
