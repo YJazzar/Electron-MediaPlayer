@@ -4,7 +4,9 @@
 
 1. Clone the repository
 2. Inside the project's root folder, run: `yarn install`
-3. To run the application: `yarn start`
+3. Navigate to the folder `~[PATH_OF_PROJECT]/resources/[PLATFORM]/` and run `chmod +x ffprobe` if needed
+   a. Note: this is for Mac and Linux platforms only
+4. To run the application: `yarn start`
 
 Note for readers:
 
@@ -58,10 +60,6 @@ Note for readers:
 
 -   Add a search bar
 -   Add an `<AppBar/>`
--   Add the following buttons to the queue panel:
-    -   `clear queue`
-    -   `remove played`: to hide the already completed tracks
-    -   `Disable queue`: to avoid adding to queue and immediately playing a specific file
 
 <br/>
 
