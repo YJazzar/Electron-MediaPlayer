@@ -6,6 +6,7 @@ import TableHead from '@material-ui/core/TableHead/TableHead';
 import { ipcRenderer } from 'electron';
 import React from 'react';
 import FileDetails from '../../libs/templates/FileDetails';
+import { formatSeconds } from '../../libs/utils/DateTime';
 
 // const log = LoggerFactory.getUILogger(__filename);
 
@@ -83,7 +84,7 @@ export default class MainTable extends React.Component<Props, {}> {
             return fileDetails.fileName;
         }
         if (header === 'Length') {
-            return fileDetails.duration + '';
+            return formatSeconds(fileDetails.duration);
         }
         if (header === 'Type') {
             return fileDetails.fileExtension;
