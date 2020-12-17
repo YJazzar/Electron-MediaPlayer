@@ -127,10 +127,12 @@ export default class PlayerSlider extends React.Component<Props, State> {
     }
 
     getAudioPlayer(): React.ReactChild {
+        const currFilePlaying = this.props.currQueueIndex === -1 ? '' : this.props.queue[this.props.currQueueIndex].filePath;
+
         return (
             <audio
                 autoPlay
-                src={this.props.currFilePlaying != null ? this.props.currFilePlaying : ''}
+                src={currFilePlaying}
                 style={{ width: '100%' }}
                 ref={this.audioPlayerRef}
                 onTimeUpdate={this.onTimeUpdate.bind(this)}

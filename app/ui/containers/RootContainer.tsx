@@ -58,7 +58,6 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         this.playFile = this.playFile.bind(this);
         this.state = {
             playing: false,
-            currFilePlaying: null,
             playlistNames: [],
             playlists: [],
             currSelectedPlaylist: '',
@@ -69,7 +68,8 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playPrevQueue: this.playPrevQueue.bind(this),
             clearQueue: this.clearQueue.bind(this),
             clearPlayed: this.clearPlayed.bind(this),
-            addToQueue: this.addToQueue,
+            toggleQueue: this.toggleQueue.bind(this),
+            addToQueue: this.addToQueue.bind(this),
             playFileCB: this.playFile,
         };
         this.windowHeight = 0;
@@ -95,7 +95,6 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         if (!this.state.playing) {
             this.setState({
                 playing: true,
-                currFilePlaying: file.filePath,
                 queue: [file],
                 currQueueIndex: 0,
             });
@@ -137,7 +136,6 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         // Check the file is already in the queue
         if (index !== -1) {
             this.setState({
-                currFilePlaying: file.filePath,
                 currQueueIndex: index,
             });
 
@@ -165,14 +163,11 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         if (this.state.queue.length === 1 || this.state.currQueueIndex === this.state.queue.length - 1) {
             this.setState({
                 playing: false,
-                currFilePlaying: '',
                 currQueueIndex: -1,
             });
         } else {
             this.setState({
                 playing: true,
-                currFilePlaying: this.state.queue[this.state.currQueueIndex + 1].filePath, // Get the second element
-                // queue: this.state.queue.slice(1), // Remove the first element
                 currQueueIndex: this.state.currQueueIndex + 1,
             });
         }
@@ -184,7 +179,6 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         if (this.state.currQueueIndex === 0) {
             this.setState({
                 playing: false,
-                currFilePlaying: '',
                 currQueueIndex: -1,
             });
         } else {
@@ -192,7 +186,6 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             const newIndex = this.state.currQueueIndex === -1 ? this.state.queue.length - 1 : this.state.currQueueIndex - 1;
             this.setState({
                 playing: true,
-                currFilePlaying: this.state.queue[newIndex].filePath, // Get the second element
                 currQueueIndex: newIndex,
             });
         }
@@ -202,9 +195,25 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     clearQueue() {
         this.setState({
             playing: false,
-            currFilePlaying: '',
             currQueueIndex: -1,
             queue: [],
+        });
+    }
+
+    toggleQueue() {
+        // Check if it should be disabled
+        if (this.state.queueEnabled) {
+            this.setState({
+                queueEnabled: false,
+                queue: [this.state.queue[this.state.currQueueIndex]],
+                currQueueIndex: 0,
+            });
+            return;
+        }
+
+        // Do this if it needs to enabled
+        this.setState({
+            queueEnabled: true,
         });
     }
 

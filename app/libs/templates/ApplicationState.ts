@@ -5,9 +5,6 @@ export default interface ApplicationState {
     // Used to determine if an <audio> tag needs to be loaded
     playing: boolean;
 
-    // The full filePath of the file playing
-    currFilePlaying: string | null;
-
     // An array containing the playlists stored in data/index.json
     playlistNames: string[];
 
@@ -37,6 +34,9 @@ export default interface ApplicationState {
 
     // Clears all items in the queue until the item playing currently
     clearPlayed: () => void;
+
+    // Callback to toggle ApplicationState.queueEnabled
+    toggleQueue: () => void;
 
     // Plays a specific file (needs the full FileDetails)
     playFileCB: (file: FileDetails) => void;

@@ -77,7 +77,7 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
             display: block;
         `;
 
-        const title = this.props.playing === true ? this.props.currFilePlaying : 'Nothing playing yet';
+        const title = this.props.playing === true ? this.props.queue[this.props.currQueueIndex].fileName : 'Nothing playing yet';
 
         return <TitleRow>{title}</TitleRow>;
     }

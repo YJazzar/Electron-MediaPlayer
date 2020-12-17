@@ -35,7 +35,7 @@ export default class Queue extends React.Component<ApplicationState, State> {
             const name = `${file.fileName}`;
             const clickCB = this.clickListener(file).bind(this);
 
-            if (this.props.currFilePlaying === file.filePath) {
+            if (this.props.queue[this.props.currQueueIndex].filePath === file.filePath) {
                 return (
                     <ListItem dense button key={`queue.${name}`} onClick={clickCB}>
                         {/* <ListItemIcon >
