@@ -77,9 +77,6 @@ export default class HorizontalResizable extends React.Component<Props, State> {
     componentDidMount() {
         log.debug(`Horizontally resizable panel was mounted!`);
 
-        console.log(`Max: ${this.getMaxWidth()} | Min: ${this.getMinWidth()}`);
-        console.log(`Width: ${document.body.clientWidth} | Height: ${document.body.clientHeight}`);
-
         // Set the default width only after the component has finished mounting
         this.setWidth(this.props.leftChildDefaultWidth * document.body.clientWidth);
     }

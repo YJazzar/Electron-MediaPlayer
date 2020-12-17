@@ -60,6 +60,11 @@ export default class PlayerPanelContainer extends React.Component<ApplicationSta
         this.playerSliderRef.current?.togglePlay();
     }
 
+    // This will be used by RootComponent.tsx to set currentTime to zero for the underlying <audio/> tag
+    restartTrack() {
+        this.playerSliderRef.current?.restartTrack();
+    }
+
     render() {
         return (
             <PlayerPanelDiv

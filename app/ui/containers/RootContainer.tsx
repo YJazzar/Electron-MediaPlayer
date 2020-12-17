@@ -62,6 +62,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             playlists: [],
             currSelectedPlaylist: '',
             queueEnabled: true,
+            queueLoopEnabled: false,
             queue: [],
             currQueueIndex: -1,
             playNextQueue: this.playNextQueue.bind(this),
@@ -69,6 +70,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             clearQueue: this.clearQueue.bind(this),
             clearPlayed: this.clearPlayed.bind(this),
             toggleQueue: this.toggleQueue.bind(this),
+            toggleQueueLoop: this.toggleQueueLoop.bind(this),
             addToQueue: this.addToQueue.bind(this),
             playFileCB: this.playFile,
         };
@@ -91,6 +93,22 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     // A callback such as this method is needed to lift the state change to the PlayerPanelContainer class
     // It will also call the needed functions to control the queue (because the props passed into the component will also be updated)
     addToQueue(file: FileDetails) {
+        // console.log(`Adding to queue:`);
+        // console.dir(file);
+        // console.trace();
+
+        // Check if queuing is disabled:
+        if (!this.state.queueEnabled) {
+            this.setState({
+                playing: true,
+                queue: [file],
+                currQueueIndex: 0,
+            });
+            this.dialogManagerRef.current?.addSnackbar('info', 'Started playing!');
+
+            return;
+        }
+
         // If something is already playing, avoid switching tracks and add it to the queue
         if (!this.state.playing) {
             this.setState({
@@ -125,16 +143,16 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     // This will be called by the Queue.tsx component when the user clicks on an item in the queue
     // Note: for this function to work, the given "file" object must exist in ApplicationState.queue already
     playFile(file: FileDetails) {
-        console.log('PlayFile called');
-
         // Check that it isn't the file playing already
         const index = this.state.queue.indexOf(file);
-        if (index === 0) {
-            return;
+
+        // If the currently playing item is clicked, then restart playing the file
+        if (index === this.state.currQueueIndex) {
+            this.playerPanelRef.current?.restartTrack();
         }
 
         // Check the file is already in the queue
-        if (index !== -1) {
+        else if (index !== -1) {
             this.setState({
                 currQueueIndex: index,
             });
@@ -160,12 +178,32 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     // Or called from within PlayerControls.tsx when the 'skip forwards button' is used
     playNextQueue() {
         // If nothing new can be chosen from the queue, then pause the player
-        if (this.state.queue.length === 1 || this.state.currQueueIndex === this.state.queue.length - 1) {
+        //      Checks if the end of the queue has been reached and looping was disabled:
+        if (this.state.currQueueIndex === this.state.queue.length - 1 && !this.state.queueLoopEnabled) {
             this.setState({
                 playing: false,
                 currQueueIndex: -1,
             });
-        } else {
+        }
+        // Checks if the end of the queue has been reached and looping was enabled
+        else if (this.state.currQueueIndex === this.state.queue.length - 1 && this.state.queueLoopEnabled) {
+            this.setState(
+                {
+                    playing: false,
+                    currQueueIndex: -1,
+                },
+                // Note: The reason for setting the state in two stages is to force an update on the audio player
+                // This is necessary because of the edge case when queue.length === 1.
+                () => {
+                    this.setState({
+                        playing: true,
+                        currQueueIndex: 0,
+                    });
+                }
+            );
+        }
+        // If the first two cases fail, then there must be more items in the queue.
+        else {
             this.setState({
                 playing: true,
                 currQueueIndex: this.state.currQueueIndex + 1,
@@ -203,10 +241,12 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     toggleQueue() {
         // Check if it should be disabled
         if (this.state.queueEnabled) {
-            this.setState({
-                queueEnabled: false,
-                queue: [this.state.queue[this.state.currQueueIndex]],
-                currQueueIndex: 0,
+            this.setState((prevState: ApplicationState) => {
+                return {
+                    queueEnabled: false,
+                    queue: prevState.queue.length === 0 ? [] : [prevState.queue[prevState.currQueueIndex]],
+                    currQueueIndex: prevState.queue.length === 0 ? -1 : 0,
+                };
             });
             return;
         }
@@ -217,6 +257,25 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         });
     }
 
+    toggleQueueLoop() {
+        // Check if it should be disabled
+        if (this.state.queueLoopEnabled) {
+            this.setState({
+                queueLoopEnabled: false,
+            });
+
+            console.log('Looping disabled');
+            return;
+        }
+
+        // Do this if it needs to enabled
+        this.setState({
+            queueLoopEnabled: true,
+        });
+
+        console.log('Looping enabled');
+    }
+
     // Called from within Queue.tsx
     // Removes anything that was played/completed (according to state.currQueueIndex)
     clearPlayed() {
@@ -225,7 +284,6 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
             queue: [...this.state.queue.splice(this.state.currQueueIndex)],
         });
     }
-
 
     // This is the callback provided to the UIController class.
     // This callback will handle updating the Application State every time the user imports a new playlist
@@ -257,7 +315,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
         const deltaWidth = newScreenWidth - this.windowWidth;
         const deltaHeight = newScreenHeight - this.windowHeight;
 
-        this.horizontalResizableRef .current?.mainWindowResized(deltaWidth);
+        this.horizontalResizableRef.current?.mainWindowResized(deltaWidth);
         this.verticalResizableRef.current?.mainWindowResized(deltaHeight);
 
         this.windowHeight = newScreenHeight;

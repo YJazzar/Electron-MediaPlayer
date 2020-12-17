@@ -17,6 +17,9 @@ export default interface ApplicationState {
     // Used to enable and disable adding new items to the queue
     queueEnabled: boolean;
 
+    // Used to enable and disable adding looping on the queue once all items inside it were played
+    queueLoopEnabled: boolean;
+
     // An array of filePaths that need to be played
     queue: FileDetails[];
 
@@ -37,6 +40,9 @@ export default interface ApplicationState {
 
     // Callback to toggle ApplicationState.queueEnabled
     toggleQueue: () => void;
+
+    // Callback to toggle ApplicationState.queueLoopEnabled
+    toggleQueueLoop: () => void;
 
     // Plays a specific file (needs the full FileDetails)
     playFileCB: (file: FileDetails) => void;

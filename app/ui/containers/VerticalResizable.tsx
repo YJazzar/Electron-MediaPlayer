@@ -76,9 +76,7 @@ export default class VerticalResizable extends React.Component<Props, State> {
         log.debug(`Vertically resizable panel was mounted!`);
 
         // Set the default height only after the component has finished mounting
-        console.log(`umm ${this.props.topChildDefaultHeight} ${document.body.clientHeight}`);
         this.setLiveHeight(this.props.topChildDefaultHeight * document.body.clientHeight);
-        // this.initWidth();
     }
 
     onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {

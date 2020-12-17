@@ -35,7 +35,7 @@ export default class Queue extends React.Component<ApplicationState, State> {
             const name = `${file.fileName}`;
             const clickCB = this.clickListener(file).bind(this);
 
-            if (this.props.queue[this.props.currQueueIndex].filePath === file.filePath) {
+            if (this.props.currQueueIndex !== -1 && this.props.queue[this.props.currQueueIndex].filePath === file.filePath) {
                 return (
                     <ListItem dense button key={`queue.${name}`} onClick={clickCB}>
                         {/* <ListItemIcon >
@@ -63,26 +63,24 @@ export default class Queue extends React.Component<ApplicationState, State> {
                 <br />
                 <Tooltip title="Clear Queue">
                     <IconButton onClick={this.props.clearQueue}>
-                        <ClearAllIcon fontSize={'small'}/>
+                        <ClearAllIcon fontSize={'small'} />
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Remove Played">
                     <IconButton onClick={this.props.clearPlayed}>
-                        <LayersClearIcon fontSize={'small'}/>
+                        <LayersClearIcon fontSize={'small'} />
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Disable Queue">
-                    <IconButton>
-                        <BlockIcon fontSize={'small'}/>
+                    <IconButton onClick={this.props.toggleQueue}>
+                        <BlockIcon fontSize={'small'} color={this.props.queueEnabled ? 'primary' : 'secondary'} />
                     </IconButton>
                 </Tooltip>
-
                 <Tooltip title="Loop Queue">
-                    <IconButton>
-                        <LoopIcon fontSize={'small'}/>
+                    <IconButton onClick={this.props.toggleQueueLoop}>
+                        <LoopIcon fontSize={'small'} color={this.props.queueLoopEnabled ? 'primary' : 'secondary'} />
                     </IconButton>
                 </Tooltip>
-
                 {this.getQueueList()}
             </ParentDiv>
         );

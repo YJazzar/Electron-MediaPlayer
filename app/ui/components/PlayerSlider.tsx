@@ -79,6 +79,11 @@ export default class PlayerSlider extends React.Component<Props, State> {
 
     // This will be passed to the <Slider> component so the user can drag the slider
     onSliderDrag(_event: React.ChangeEvent<{}>, newTime: number | number[]) {
+        // Prevent changing the value of the slider if nothing is playing
+        if (this.props.playing === false) {
+            return;
+        }
+
         this.setState({
             currentTime: newTime as number,
         });
@@ -105,6 +110,22 @@ export default class PlayerSlider extends React.Component<Props, State> {
         // Change the players volume
         if (this.audioPlayerRef.current) {
             this.audioPlayerRef.current.volume = newVolume;
+        }
+    }
+
+    onPlayerEnded() {
+        this.setState(
+            {
+                currentTime: 0,
+                duration: 1,
+            },
+            this.props.playNextQueue
+        );
+    }
+
+    restartTrack() {
+        if (this.props.playing && this.audioPlayerRef.current) {
+            this.audioPlayerRef.current.currentTime = 0;
         }
     }
 
@@ -136,7 +157,7 @@ export default class PlayerSlider extends React.Component<Props, State> {
                 style={{ width: '100%' }}
                 ref={this.audioPlayerRef}
                 onTimeUpdate={this.onTimeUpdate.bind(this)}
-                onEnded={this.props.playNextQueue}
+                onEnded={this.onPlayerEnded.bind(this)}
             >
                 An error ocurred when loading the <code>audio</code> tag!
             </audio>
