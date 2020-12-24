@@ -60,6 +60,7 @@ Note for readers:
 
 -   Add a search bar
 -   Add an `<AppBar/>`
+- If `disable queue` was clicked, warn the user the queued tracks will be removed (if they have things queued already)
 
 <br/>
 

@@ -6,6 +6,7 @@ import ApplicationState from '../../libs/templates/ApplicationState';
 import { List, ListItem } from '@material-ui/core';
 import Queue from './Queue';
 import VerticalResizable from '../containers/VerticalResizable';
+import AppBarPanel from './AppBarPanel';
 
 const NavPanelDiv = styled(UIController.getInstance().getTheme())`
     border-right-width: 4px;
@@ -66,6 +67,7 @@ export default class NavigationPanelContainer extends React.Component<Props, Sta
     getTop() {
         return (
             <FullHeight>
+                <AppBarPanel />
                 <h1>Navigation Panel</h1>
                 <br />
                 {this.getPlaylists()}

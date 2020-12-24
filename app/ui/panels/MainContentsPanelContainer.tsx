@@ -13,6 +13,10 @@ const log = LoggerFactory.getUILogger(__filename);
 const MainPanelDiv = styled(UIController.getInstance().getTheme())`
     height: 100%;
     overflow: auto;
+`;
+
+
+const PaddedDiv = styled.div`
     padding: 1rem;
 `;
 
@@ -54,8 +58,14 @@ export default class MainContentsPanelContainer extends React.Component<Applicat
 
         return (
             <MainPanelDiv id={'MainPanelDiv'} className={mainConfig.cssClassStyles}>
-                <h1>Main Contents Panel</h1>
-                <MainTable ref={this.tableRef} bodyContents={tableContents} clickListener={this.rowClickListener.bind(this)} />
+                <PaddedDiv>
+                    <h1>Main Contents Panel</h1>
+                    <MainTable
+                        ref={this.tableRef}
+                        bodyContents={tableContents}
+                        clickListener={this.rowClickListener.bind(this)}
+                    />
+                </PaddedDiv>
             </MainPanelDiv>
         );
     }
