@@ -5,16 +5,18 @@
 1. Clone the repository
 2. Inside the project's root folder, run: `yarn install`
 3. Navigate to the folder `~[PATH_OF_PROJECT]/resources/[PLATFORM]/` and run `chmod +x ffprobe` if needed
-   a. Note: this is for Mac and Linux platforms only
+    - Note: this is for Mac and Linux platforms only
 4. To run the application: `yarn start`
 
-Note for readers:
+### Note for readers:
 
 -   Application entry point (for the renderer process): `/app/index.tsx`
 
 -   Application entry point (for the main process): `/app/main.dev.ts`
 
 # Config file options:
+
+### The application will generate an initial configuration file that can be changed using this guide:
 
 -   `theme: string` to set the theme of the application
     -   Possible values:
@@ -60,6 +62,11 @@ Note for readers:
 
 -   Add a search bar
 -   Add an `<AppBar/>`
+-   On the controls row of the player panel, add buttons to speed up and slow down the playback speed
+
+## Known bugs
+
+-   Release version of the app does not initialize the resizable height correctly until refreshed?
 
 <br/>
 
