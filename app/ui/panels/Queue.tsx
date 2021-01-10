@@ -59,7 +59,7 @@ export default class Queue extends React.Component<ApplicationState, State> {
     render() {
         return (
             <ParentDiv id={'Queue-Panel'} borderTop={1} borderColor="primary.main">
-                Queue:
+                Queue Panel:
                 <br />
                 <Tooltip title="Clear Queue">
                     <IconButton onClick={this.props.clearQueue}>

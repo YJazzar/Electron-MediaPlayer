@@ -15,6 +15,7 @@ import DialogManager from './DialogManager';
 import FileDetails from '../../libs/templates/FileDetails';
 import VerticalResizable from './VerticalResizable';
 import HorizontalResizable from './HorizontalResizable';
+import AppBarPanel from '../panels/AppBarPanel';
 
 const log = LoggerFactory.getUILogger(__filename);
 
@@ -325,6 +326,7 @@ export default class RootContainer extends React.Component<Props, ApplicationSta
     render() {
         return (
             <AppDiv id="root-container">
+                {/* <AppBarPanel/> */}
                 <HorizontalResizable
                     ref={this.horizontalResizableRef}
                     leftChild={this.getNavigationPanel()}

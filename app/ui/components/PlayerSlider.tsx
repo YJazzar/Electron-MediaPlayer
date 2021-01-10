@@ -4,6 +4,7 @@ import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import { IconButton } from '@material-ui/core';
 import ApplicationState from '../../libs/templates/ApplicationState';
+import { formatSeconds } from '../../libs/utils/DateTime';
 
 const ParentDiv = styled.div`
     width: inherit;
@@ -34,6 +35,8 @@ const TimeStamp = styled.div`
     justify-content: center;
     align-items: left;
     vertical-align: baseline;
+    padding-left: 0.5em;
+    padding-right: 0.75em;
 `;
 
 interface Props extends ApplicationState {
@@ -129,10 +132,26 @@ export default class PlayerSlider extends React.Component<Props, State> {
         }
     }
 
+    getFormattedCurrentTime(): string | number {
+        if (isNaN(this.state.duration)) {
+            return '-';
+        }
+
+        return formatSeconds(this.state.currentTime);
+    }
+
+    getFormattedDuration(): string | number {
+        if (isNaN(this.state.duration)) {
+            return '-';
+        }
+
+        return formatSeconds(this.state.duration);
+    }
+
     render() {
         return (
             <ParentDiv id={'PlayerSlider'}>
-                <TimeStamp>{isNaN(this.state.duration) ? '-' : Math.round(this.state.currentTime)}</TimeStamp>
+                <TimeStamp>{this.getFormattedCurrentTime()}</TimeStamp>
                 <StyledSlider
                     min={0}
                     max={this.state.duration}
@@ -140,7 +159,7 @@ export default class PlayerSlider extends React.Component<Props, State> {
                     aria-labelledby="continuous-slider"
                     onChange={this.onSliderDrag.bind(this)}
                 />
-                <TimeStamp>{isNaN(this.state.duration) ? '-' : Math.round(this.state.duration)}</TimeStamp>
+                <TimeStamp>{this.getFormattedDuration()}</TimeStamp>
 
                 {this.getAudioPlayer()}
             </ParentDiv>

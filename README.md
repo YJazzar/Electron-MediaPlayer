@@ -67,6 +67,7 @@
 ## Known bugs
 
 -   Release version of the app does not initialize the resizable height correctly until refreshed?
+-   If `disable queue` was clicked, warn the user the queued tracks will be removed (if they have things queued already)
 
 <br/>
 
